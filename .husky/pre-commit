@@ -1,0 +1,5 @@
+# Run lint-staged for file-specific linting and formatting
+# npx lint-staged
+
+# Run tests to ensure nothing is broken
+npm run test:pre-commit

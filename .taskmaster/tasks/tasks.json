@@ -1,0 +1,724 @@
+{
+  "master": {
+    "tasks": [
+      {
+        9
+        "title": "Fix Next.js 15 Breaking Changes",
+        "description": "Address all Next.js 15 compatibility issues that will cause runtime errors. This is the most critical task that blocks all other work.",
+        "priority": "CRITICAL",
+        "status": "completed",
+        "estimatedHours": 12,
+        "dependencies": [],
+        "details": "Run codemods, update async APIs throughout codebase, fix fetch caching, update middleware with async patterns. Must be completed before any SSR refactoring.",
+        "testStrategy": "Build project, run type checks, verify no runtime errors in development and production builds",
+        "subtasks": [
+          {
+            "id": "1.1",
+            "title": "Run Next.js 15 codemods",
+            "description": "Execute automatic migration tools",
+            "status": "completed",
+            "command": "npx @next/codemod@canary upgrade latest && npx @next/codemod@latest next-async-request-api ."
+          },
+          {
+            "id": "1.2",
+            "title": "Update all page components with Promise types",
+            "description": "Convert params and searchParams to Promise types with await",
+            "status": "completed",
+            "files": [
+              "src/app/**/*.tsx"
+            ]
+          },
+          {
+            "id": "1.3",
+            "title": "Fix fetch caching throughout codebase",
+            "description": "Add explicit cache configuration to all fetch calls",
+            "status": "completed",
+            "pattern": "cache: 'force-cache' or 'no-store'"
+          },
+          {
+            "id": "1.4",
+            "title": "Update middleware with async patterns",
+            "description": "Add await to cookies() and headers() calls",
+            "status": "completed",
+            "file": "src/middleware.ts"
+          },
+          {
+            "id": "1.5",
+            "title": "Test build and runtime",
+            "description": "Verify no breaking changes remain",
+            "status": "completed",
+            "command": "npm run build && npm run start"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement Security Hardening",
+        "description": "Add server-only package, implement Zod validation, add proper error boundaries to prevent security vulnerabilities.",
+        "priority": "CRITICAL",
+        "status": "completed",
+        "estimatedHours": 8,
+        "dependencies": [
+          1
+        ],
+        "details": "Install server-only package, create validation schemas with Zod, implement error boundaries, secure sensitive functions",
+        "testStrategy": "Security audit, verify no client-side exposure of secrets, test error handling",
+        "subtasks": [
+          {
+            "id": "2.1",
+            "title": "Install security packages",
+            "description": "Add server-only and zod packages",
+            "status": "completed",
+            "command": "npm install server-only zod"
+          },
+          {
+            "id": "2.2",
+            "title": "Create server-only utility functions",
+            "description": "Protect sensitive code from client imports",
+            "status": "completed",
+            "files": [
+              "lib/secure/"
+            ]
+          },
+          {
+            "id": "2.3",
+            "title": "Implement validation schemas",
+            "description": "Create Zod schemas for all inputs",
+            "status": "completed",
+            "files": [
+              "lib/validations/"
+            ]
+          },
+          {
+            "id": "2.4",
+            "title": "Add error boundaries",
+            "description": "Create error.tsx, not-found.tsx, loading.tsx files",
+            "status": "completed",
+            "files": [
+              "app/error.tsx",
+              "app/not-found.tsx"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Convert useQuoteManagement to Server Actions (Next.js Way)",
+        "description": "Replace the 171-line useQuoteManagement hook with server actions following Next.js official patterns. Refactor to remove intermediate hook layers and use direct server actions.",
+        "priority": "CRITICAL",
+        "status": "completed",
+        "estimatedHours": 12,
+        "dependencies": [
+          1,
+          2
+        ],
+        "details": "Convert client-side logic to server actions with prevState parameter, implement proper useActionState pattern (not useTransition), remove intermediate hook layers, ensure progressive enhancement",
+        "testStrategy": "Test all quote operations, verify forms work without JavaScript, test progressive enhancement, verify useActionState implementation",
+        "subtasks": [
+          {
+            "id": "3.1",
+            "title": "Create quotes server actions",
+            "description": "Implement saveDraft, submitQuote, applyDiscount actions",
+            "status": "done",
+            "file": "app/actions/quotes.ts"
+          },
+          {
+            "id": "3.2",
+            "title": "Add Zod validation for quotes",
+            "description": "Create QuoteDraftSchema and validation logic",
+            "status": "done"
+          },
+          {
+            "id": "3.3",
+            "title": "Update QuoteForm with useActionState",
+            "description": "Replace hooks with React 19 useActionState (currently using useTransition incorrectly)",
+            "status": "done"
+          },
+          {
+            "id": "3.4",
+            "title": "Delete old API routes",
+            "description": "Remove /api/quotes/* routes",
+            "status": "done",
+            "files": [
+              "app/api/quotes/"
+            ]
+          },
+          {
+            "id": "3.5",
+            "title": "Test quote flow end-to-end",
+            "description": "Verify all quote operations work correctly",
+            "status": "done"
+          },
+          {
+            "id": "3.6",
+            "title": "Remove useQuoteActions hook layer",
+            "description": "Delete the intermediate hook wrapper and use server actions directly",
+            "status": "done"
+          },
+          {
+            "id": "3.7",
+            "title": "Refactor CompactPricingSection to use server actions directly",
+            "description": "Update component to call server actions without hook wrapper, implement useActionState properly",
+            "status": "done"
+          },
+          {
+            "id": "3.8",
+            "title": "Implement progressive enhancement for forms",
+            "description": "Ensure quote forms work without JavaScript enabled, test form submissions - Note: Complex multi-step flow requires client-side state",
+            "status": "done"
+          },
+          {
+            "id": "3.9",
+            "title": "Pass server actions as props to client components",
+            "description": "Follow Next.js pattern of passing actions down as props instead of importing in client components",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Convert Remaining Hooks to Server Actions (Next.js Way)",
+        "description": "Convert all remaining client-side hooks to server actions following Next.js official patterns - no intermediate hook wrappers.",
+        "priority": "HIGH",
+        "status": "completed",
+        "estimatedHours": 20,
+        "dependencies": [
+          3
+        ],
+        "details": "Convert hooks to direct server actions with useActionState (not useTransition), ensure progressive enhancement, pass actions as props to client components",
+        "testStrategy": "Test each conversion for progressive enhancement, verify forms work without JS, test useActionState implementation, delete API routes",
+        "subtasks": [
+          {
+            "id": "4.1",
+            "title": "Convert useTimeSlots to direct server actions",
+            "description": "Create server actions for time slots, use useActionState in client components, no hook wrapper",
+            "status": "completed",
+            "estimatedHours": 3
+          },
+          {
+            "id": "4.2",
+            "title": "Convert useOptionalServices to server actions",
+            "description": "Create pricing server actions, implement with useActionState, ensure progressive enhancement",
+            "status": "completed",
+            "estimatedHours": 3
+          },
+          {
+            "id": "4.3",
+            "title": "Convert useUpgradeRecommendation to server component",
+            "description": "Move to pure server component with server-side data fetching",
+            "status": "completed",
+            "estimatedHours": 2
+          },
+          {
+            "id": "4.4",
+            "title": "Convert usePricingData to server component",
+            "description": "Transform to pure server component with async data fetching",
+            "status": "completed",
+            "estimatedHours": 2
+          },
+          {
+            "id": "4.5",
+            "title": "Convert useAnalytics to server actions",
+            "description": "Create analytics server actions, implement without client-side state management",
+            "status": "completed",
+            "estimatedHours": 3
+          },
+          {
+            "id": "4.6",
+            "title": "Convert useBlogSystem to server components",
+            "description": "Move blog data fetching to server components with streaming",
+            "status": "pending",
+            "estimatedHours": 3
+          },
+          {
+            "id": "4.7",
+            "title": "Implement useActionState for all client interactions",
+            "description": "Replace all useTransition/useState patterns with proper useActionState",
+            "status": "completed",
+            "estimatedHours": 2
+          },
+          {
+            "id": "4.8",
+            "title": "Delete all converted API routes",
+            "description": "Remove 12 API routes after all hooks are converted",
+            "status": "completed",
+            "estimatedHours": 1
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Enable PPR and Streaming",
+        "description": "Configure Partial Pre-rendering in next.config.js, add granular Suspense boundaries, implement React 19 use hook for streaming.",
+        "priority": "HIGH",
+        "status": "pending",
+        "estimatedHours": 12,
+        "dependencies": [
+          4
+        ],
+        "details": "Enable incremental PPR, add experimental_ppr flag to pages, implement granular Suspense boundaries, use React 19 streaming patterns",
+        "testStrategy": "Verify static shell loads instantly, test streaming behavior, measure Core Web Vitals",
+        "subtasks": [
+          {
+            "id": "5.1",
+            "title": "Configure PPR in next.config.js",
+            "description": "Add experimental.ppr: 'incremental'",
+            "status": "pending"
+          },
+          {
+            "id": "5.2",
+            "title": "Add experimental_ppr to pages",
+            "description": "Enable PPR on key pages",
+            "status": "pending"
+          },
+          {
+            "id": "5.3",
+            "title": "Implement granular Suspense boundaries",
+            "description": "Add component-level Suspense, not page-level",
+            "status": "pending"
+          },
+          {
+            "id": "5.4",
+            "title": "Implement React 19 use hook patterns",
+            "description": "Stream promises with use hook",
+            "status": "pending"
+          },
+          {
+            "id": "5.5",
+            "title": "Create loading skeletons",
+            "description": "Design and implement skeleton components",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Create Server Component Wrappers",
+        "description": "Build server component wrappers for all main pages while maintaining client components as children.",
+        "priority": "HIGH",
+        "status": "pending",
+        "estimatedHours": 8,
+        "dependencies": [
+          1
+        ],
+        "details": "Create server wrappers for homepage, pricing, blog, portfolio, services, about, and contact pages",
+        "testStrategy": "Verify server-side rendering, check View Source for content, test hydration",
+        "subtasks": [
+          {
+            "id": "6.1",
+            "title": "Wrap homepage",
+            "description": "Create server wrapper for home page",
+            "status": "pending"
+          },
+          {
+            "id": "6.2",
+            "title": "Wrap pricing page",
+            "description": "Server component for pricing",
+            "status": "pending"
+          },
+          {
+            "id": "6.3",
+            "title": "Wrap remaining pages",
+            "description": "Blog, portfolio, services, about, contact",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Data Fetching Layer",
+        "description": "Create server-side data fetching functions for all data requirements.",
+        "priority": "HIGH",
+        "status": "pending",
+        "estimatedHours": 10,
+        "dependencies": [
+          6
+        ],
+        "details": "Create data fetching functions in lib/data for pricing, blog, portfolio, testimonials",
+        "testStrategy": "Test data fetching, verify caching behavior, check error handling",
+        "subtasks": [
+          {
+            "id": "7.1",
+            "title": "Create pricing data functions",
+            "description": "getPricingTiers, getOptionalServices",
+            "status": "pending"
+          },
+          {
+            "id": "7.2",
+            "title": "Create blog data functions",
+            "description": "getBlogPosts, getPostBySlug",
+            "status": "pending"
+          },
+          {
+            "id": "7.3",
+            "title": "Create portfolio data functions",
+            "description": "getPortfolioItems, getCategories",
+            "status": "pending"
+          },
+          {
+            "id": "7.4",
+            "title": "Create testimonials data functions",
+            "description": "getTestimonials with pagination",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Refactor Authentication to Server-Side (Next.js Pattern)",
+        "description": "Move authentication to server-side using Supabase SSR with server actions for auth operations.",
+        "priority": "HIGH",
+        "status": "pending",
+        "estimatedHours": 14,
+        "dependencies": [
+          7
+        ],
+        "details": "Implement server-side session management with server actions for login/logout/signup, remove client AuthContext, use middleware for route protection",
+        "testStrategy": "Test authentication flow with and without JS, verify session persistence, test protected routes, ensure progressive enhancement",
+        "subtasks": [
+          {
+            "id": "8.1",
+            "title": "Create auth server actions",
+            "description": "login, logout, signup actions with useActionState support",
+            "status": "pending"
+          },
+          {
+            "id": "8.2",
+            "title": "Implement server session management",
+            "description": "getSession, getUser functions for server components",
+            "status": "pending"
+          },
+          {
+            "id": "8.3",
+            "title": "Build auth server components",
+            "description": "UserMenuServer, AuthGuard as server components",
+            "status": "pending"
+          },
+          {
+            "id": "8.4",
+            "title": "Update auth forms to use server actions",
+            "description": "Login/signup forms with action prop, progressive enhancement",
+            "status": "pending"
+          },
+          {
+            "id": "8.5",
+            "title": "Implement middleware route protection",
+            "description": "Use Next.js middleware for protected routes",
+            "status": "pending"
+          },
+          {
+            "id": "8.6",
+            "title": "Remove client AuthContext",
+            "description": "Eliminate client-side auth state and context",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Separate Server and Client Components",
+        "description": "Extract interactive parts into client components while keeping data and content in server components.",
+        "priority": "MEDIUM",
+        "status": "pending",
+        "estimatedHours": 16,
+        "dependencies": [
+          8
+        ],
+        "details": "Refactor Hero section, Pricing cards, Portfolio gallery, Contact form with proper boundaries",
+        "testStrategy": "Verify bundle size reduction, test interactivity, check hydration",
+        "subtasks": [
+          {
+            "id": "9.1",
+            "title": "Split Hero section",
+            "description": "Separate animations from content",
+            "status": "pending"
+          },
+          {
+            "id": "9.2",
+            "title": "Split Pricing cards",
+            "description": "Selection logic vs display",
+            "status": "pending"
+          },
+          {
+            "id": "9.3",
+            "title": "Split Portfolio gallery",
+            "description": "Filtering vs items display",
+            "status": "pending"
+          },
+          {
+            "id": "9.4",
+            "title": "Optimize Contact form",
+            "description": "Minimize client bundle",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement Advanced Caching Strategy",
+        "description": "Setup proper caching with unstable_cache, implement tag-based revalidation, configure ISR.",
+        "priority": "MEDIUM",
+        "status": "pending",
+        "estimatedHours": 10,
+        "dependencies": [
+          9
+        ],
+        "details": "Implement caching for all data fetches, setup revalidation strategies, configure ISR for blog posts",
+        "testStrategy": "Test cache hits/misses, verify revalidation, measure performance",
+        "subtasks": [
+          {
+            "id": "10.1",
+            "title": "Setup unstable_cache patterns",
+            "description": "Cache pricing, blog, portfolio data",
+            "status": "pending"
+          },
+          {
+            "id": "10.2",
+            "title": "Implement tag-based revalidation",
+            "description": "revalidateTag for cache busting",
+            "status": "pending"
+          },
+          {
+            "id": "10.3",
+            "title": "Configure ISR for blog",
+            "description": "Setup incremental static regeneration",
+            "status": "pending"
+          },
+          {
+            "id": "10.4",
+            "title": "Add cache monitoring",
+            "description": "Track cache performance",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Optimize Client Bundle Size",
+        "description": "Move heavy dependencies to server components, implement code splitting, optimize imports.",
+        "priority": "MEDIUM",
+        "status": "pending",
+        "estimatedHours": 8,
+        "dependencies": [
+          9
+        ],
+        "details": "Analyze bundle, move date libraries and markdown processors server-side, implement dynamic imports",
+        "testStrategy": "Measure bundle size before/after, test loading performance",
+        "subtasks": [
+          {
+            "id": "11.1",
+            "title": "Analyze current bundle",
+            "description": "Run bundle analyzer",
+            "status": "pending",
+            "command": "npm run build:analyze"
+          },
+          {
+            "id": "11.2",
+            "title": "Move heavy dependencies",
+            "description": "Date-fns, markdown processors to server",
+            "status": "pending"
+          },
+          {
+            "id": "11.3",
+            "title": "Implement code splitting",
+            "description": "Dynamic imports for large components",
+            "status": "pending"
+          },
+          {
+            "id": "11.4",
+            "title": "Optimize imports",
+            "description": "Tree-shake unused code",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Add Optimistic UI Updates",
+        "description": "Implement optimistic updates for better perceived performance in mutations.",
+        "priority": "LOW",
+        "status": "pending",
+        "estimatedHours": 6,
+        "dependencies": [
+          4
+        ],
+        "details": "Add useOptimistic hook for quote updates, form submissions, and other mutations",
+        "testStrategy": "Test optimistic behavior, verify rollback on errors",
+        "subtasks": [
+          {
+            "id": "12.1",
+            "title": "Add optimistic quote updates",
+            "description": "useOptimistic for quote operations",
+            "status": "pending"
+          },
+          {
+            "id": "12.2",
+            "title": "Add optimistic form submissions",
+            "description": "Instant feedback on forms",
+            "status": "pending"
+          },
+          {
+            "id": "12.3",
+            "title": "Handle rollback scenarios",
+            "description": "Error state management",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Comprehensive Testing",
+        "description": "Update test suite for SSR components, add integration tests, implement E2E tests.",
+        "priority": "HIGH",
+        "status": "pending",
+        "estimatedHours": 16,
+        "dependencies": [
+          10
+        ],
+        "details": "Update unit tests for server components, add integration tests for data flow, implement E2E for critical paths",
+        "testStrategy": "Achieve 80% code coverage, test all critical user journeys",
+        "subtasks": [
+          {
+            "id": "13.1",
+            "title": "Update unit tests",
+            "description": "Test server components and actions",
+            "status": "pending"
+          },
+          {
+            "id": "13.2",
+            "title": "Add integration tests",
+            "description": "Test data fetching and mutations",
+            "status": "pending"
+          },
+          {
+            "id": "13.3",
+            "title": "Implement E2E tests",
+            "description": "Critical user journeys with Playwright",
+            "status": "pending"
+          },
+          {
+            "id": "13.4",
+            "title": "Add performance tests",
+            "description": "Lighthouse CI integration",
+            "status": "pending"
+          },
+          {
+            "id": "13.5",
+            "title": "Setup test automation",
+            "description": "CI/CD pipeline integration",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Production Deployment and Monitoring",
+        "description": "Deploy with feature flags, implement monitoring, staged rollout.",
+        "priority": "CRITICAL",
+        "status": "pending",
+        "estimatedHours": 12,
+        "dependencies": [
+          13
+        ],
+        "details": "Setup feature flags, deploy to staging, implement A/B testing, monitor metrics, gradual rollout",
+        "testStrategy": "Smoke tests in staging, monitor error rates, track performance metrics",
+        "subtasks": [
+          {
+            "id": "14.1",
+            "title": "Setup feature flags",
+            "description": "Implement gradual rollout system",
+            "status": "pending"
+          },
+          {
+            "id": "14.2",
+            "title": "Deploy to staging",
+            "description": "Full staging deployment",
+            "status": "pending"
+          },
+          {
+            "id": "14.3",
+            "title": "Implement monitoring",
+            "description": "Error tracking, performance monitoring",
+            "status": "pending"
+          },
+          {
+            "id": "14.4",
+            "title": "A/B test with 10% traffic",
+            "description": "Initial production test",
+            "status": "pending"
+          },
+          {
+            "id": "14.5",
+            "title": "Gradual rollout to 100%",
+            "description": "Progressive deployment",
+            "status": "pending"
+          },
+          {
+            "id": "14.6",
+            "title": "Post-deployment monitoring",
+            "description": "48-hour monitoring period",
+            "status": "pending"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "project": "Web Agency SSR Refactoring",
+      "description": "Complete refactoring from CSR to SSR using Next.js 15 and React 19 patterns",
+      "created": "2025-01-12",
+      "estimatedHours": 160,
+      "criticalPath": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "metrics": {
+        "performance": {
+          "current": {
+            "fcp": "2.5s",
+            "tti": "4s",
+            "lcp": "3.5s",
+            "bundleSize": "450KB"
+          },
+          "target": {
+            "fcp": "< 1s",
+            "tti": "< 2s",
+            "lcp": "< 1.5s",
+            "bundleSize": "< 250KB"
+          }
+        },
+        "codeReduction": {
+          "apiRoutes": "16 → 0",
+          "hooks": "7 → 0",
+          "linesOfCode": "1200 → 200"
+        }
+      },
+      "resources": [
+        {
+          "name": "Next.js 15 Documentation",
+          "path": "/Users/ruggerodolzi/Documents/git/nextjs-docs/"
+        },
+        {
+          "name": "Audit Report",
+          "path": "docs/nextjs-concepts/08-ssr-audit-report.md"
+        },
+        {
+          "name": "Refactoring Roadmap",
+          "path": "docs/nextjs-concepts/09-ssr-refactoring-roadmap.md"
+        },
+        {
+          "name": "Quick Start Guide",
+          "path": "docs/nextjs-concepts/10-ssr-quick-start-guide.md"
+        },
+        {
+          "name": "Hooks Migration Guide",
+          "path": "docs/nextjs-concepts/11-hooks-to-server-actions-migration.md"
+        }
+      ],
+      "updated": "2025-08-12T11:00:00.000Z",
+      "notes": "Updated tasks to follow Next.js official server actions patterns - no intermediate hooks, use useActionState instead of useTransition, ensure progressive enhancement"
+    }
+  }
+}

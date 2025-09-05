@@ -1,0 +1,7 @@
+# Git Commit Rules
+
+## General Rules
+- Never cite Claude, AI, or any automated tool as author or generator in commit messages
+- Never include "Generated with Claude Code" or similar attributions
+- Never include "Co-Authored-By: Claude" or similar co-author lines
+- Keep commit messages professional and focused on the changes made

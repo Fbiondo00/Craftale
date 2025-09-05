@@ -1,0 +1,113 @@
+# ----------------------------------------
+# 🚫 Node & Build Artifacts
+# ----------------------------------------
+node_modules/
+.next/
+dist/
+out/
+.cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ----------------------------------------
+# ⚙️ Environment & Config
+# ----------------------------------------
+.env
+.env.local
+.env.development
+.env.test
+
+# MCP Configuration (contains sensitive tokens)
+.mcp.json
+.env.production
+
+# ----------------------------------------
+# 💻 Editor & OS Files
+# ----------------------------------------
+.DS_Store
+*.swp
+*.swo
+*.sublime*
+.vscode/
+.idea/
+*.code-workspace
+
+# ----------------------------------------
+# 📦 Dependency Lockfiles (optional – choose one)
+package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ----------------------------------------
+# 📁 Output Media / Assets
+public/static/
+public/temp/
+*.webp
+*.avif
+
+# ----------------------------------------
+# 🧠 AI & Cursor-specific
+# ----------------------------------------
+.cursor/
+.cursor-config/
+.cursor-history/
+.cursorrules
+prompt.md
+PROMPT.md
+*.promptlog
+*.cursorcache
+
+# ----------------------------------------
+# 📚 Markdown & Docs (excluded from versioning)
+*.md
+
+# ----------------------------------------
+# 🧪 Test Artifacts
+coverage/
+playwright-report/
+test-results/
+*.spec.ts.snap
+*.test.ts.snap
+
+# ----------------------------------------
+# 🧩 Next.js App Directory Caches
+app/.next/
+apps/**/.next/
+
+# ----------------------------------------
+# 🔁 Misc
+*.tgz
+*.tmp
+*.bak
+
+# Logs
+logs
+dev-debug.log
+# Dependency directories
+# Environment variables
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+
+# Task files
+# tasks.json
+# tasks/ 
+
+
+.mcp.json
+.vercel
+
+# Color replacement script artifacts
+.color-replacement-backup-*
+color-replacement-*log*.txt
+global-dump.css
+.playwright-mcp/
+tsconfig.tsbuildinfo

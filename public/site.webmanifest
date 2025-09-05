@@ -1,0 +1,11 @@
+{
+  "name": "Craftale - Website Design & Development Agency",
+  "short_name": "Craftale",
+  "description": "We build websites that actually work. Professional web design and development services that convert visitors into customers and grow your business.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": []
+} 

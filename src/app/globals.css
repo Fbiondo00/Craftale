@@ -1,0 +1,561 @@
+/**
+ * globals.css
+ * 
+ * Global styles and APTY Design System implementation.
+ * 
+ * Structure:
+ * 1. Tailwind directives
+ * 2. Font imports
+ * 3. CSS custom properties (design tokens)
+ *    - Default theme variables (light mode)
+ *    - Semantic text, background, border tokens
+ *    - APTY design system tokens (brand colors, typography, shadows)
+ *    - Dark mode overrides in .dark class
+ * 4. Component styles (@layer components)
+ * 5. Utility classes (@layer utilities)
+ * 6. Accessibility utilities (sr-only, reduced-motion)
+ * 
+ * Theme System:
+ * - Uses CSS custom properties for runtime theming
+ * - RGB triplets for opacity support (e.g., --apty-primary: 103 32 255)
+ * - Automatic dark mode via .dark class on <html>
+ * - Semantic tokens for consistent theming
+ * 
+ * Accessibility:
+ * - Screen reader utilities (.sr-only)
+ * - Reduced motion support via prefers-reduced-motion
+ * - High contrast focus states
+ * - WCAG 2.1 compliant color system
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 221 83% 53%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    
+    /* Semantic Text Tokens with color- prefix */
+    --color-text-primary: 17 24 39;           /* gray-900 */
+    --color-text-secondary: 55 65 81;         /* gray-700 */
+    --color-text-tertiary: 75 85 99;          /* gray-600 */
+    --color-text-muted: 107 114 128;          /* gray-500 */
+    --color-text-disabled: 156 163 175;       /* gray-400 */
+    --color-text-placeholder: 156 163 175;    /* gray-400 */
+    --color-text-inverse: 255 255 255;        /* white */
+    --color-text-on-brand: 255 255 255;       /* white */
+    
+    /* Semantic Background Tokens with color- prefix */
+    --color-bg-base: 255 255 255;             /* white */
+    --color-bg-subtle: 249 250 251;           /* gray-50 */
+    --color-bg-muted: 243 244 246;            /* gray-100 */
+    --color-bg-elevated: 255 255 255;         /* white */
+    --color-bg-overlay: 0 0 0;                /* black with opacity */
+    --color-bg-hover: 249 250 251;            /* gray-50 */
+    --color-bg-active: 243 244 246;           /* gray-100 */
+    --color-bg-inverse: 17 24 39;             /* gray-900 */
+    --color-bg-inverse-subtle: 31 41 55;      /* gray-800 */
+    
+    /* Semantic Border Tokens with color- prefix */
+    --color-border-default: 229 231 235;      /* gray-200 */
+    --color-border-subtle: 243 244 246;       /* gray-100 */
+    --color-border-muted: 229 231 235;        /* gray-200 */
+    --color-border-strong: 209 213 219;       /* gray-300 */
+    --color-border-hover: 156 163 175;        /* gray-400 */
+    --color-border-focus: 80 51 255;          /* brand-primary */
+    --color-border-error: 239 68 68;          /* red-500 */
+    --color-border-success: 16 185 129;       /* green-500 */
+    
+    /* State Colors with color- prefix */
+    --color-state-success: 16 185 129;        /* green-500 */
+    --color-state-success-strong: 5 150 105;  /* green-600 */
+    --color-state-success-subtle: 209 250 229; /* green-100 */
+    --color-state-success-bg: 240 253 244;    /* green-50 */
+    --color-state-success-border: 134 239 172; /* green-300 */
+    --color-state-success-text: 6 95 70;      /* green-800 */
+    
+    --color-state-error: 239 68 68;           /* red-500 */
+    --color-state-error-strong: 220 38 38;    /* red-600 */
+    --color-state-error-subtle: 254 226 226;  /* red-100 */
+    --color-state-error-bg: 254 242 242;      /* red-50 */
+    --color-state-error-border: 252 165 165;  /* red-300 */
+    --color-state-error-text: 153 27 27;      /* red-800 */
+    
+    --color-state-warning: 245 158 11;        /* yellow-500 */
+    --color-state-warning-strong: 217 119 6;  /* yellow-600 */
+    --color-state-warning-subtle: 254 215 170; /* yellow-100 */
+    --color-state-warning-bg: 255 251 235;    /* yellow-50 */
+    --color-state-warning-border: 252 211 77; /* yellow-300 */
+    --color-state-warning-text: 146 64 14;    /* yellow-800 */
+    
+    --color-state-info: 59 130 246;           /* blue-500 */
+    --color-state-info-strong: 37 99 235;     /* blue-600 */
+    --color-state-info-subtle: 219 234 254;   /* blue-100 */
+    --color-state-info-bg: 239 246 255;       /* blue-50 */
+    --color-state-info-border: 147 197 253;   /* blue-300 */
+    --color-state-info-text: 30 64 175;       /* blue-800 */
+    
+    /* Interactive Elements with color- prefix */
+    --color-interactive-link: 79 70 229;      /* brand-secondary */
+    --color-interactive-link-hover: 80 51 255; /* brand-primary */
+    --color-interactive-link-visited: 147 51 234; /* brand-tertiary */
+    --color-interactive-focus: 80 51 255;     /* brand-primary */
+    --color-interactive-focus-ring: 80 51 255; /* brand-primary with opacity */
+    
+    /* Surface Elevation with color- prefix */
+    --color-surface-level0: 255 255 255;      /* white */
+    --color-surface-level1: 255 255 255;      /* white */
+    --color-surface-level2: 249 250 251;      /* gray-50 */
+    --color-surface-level3: 243 244 246;      /* gray-100 */
+    
+    /* APTY Design System - Full CSS Variables Implementation */
+    /* Brand Colors (RGB triplets for opacity support) */
+    --apty-primary: 103 32 255;               /* #6720FF */
+    --apty-primary-hover: 85 24 230;          /* #5518E6 */
+    --apty-primary-active: 68 16 204;         /* #4410CC */
+    --apty-primary-focus: 123 63 255;         /* #7B3FFF */
+    --apty-secondary: 80 51 255;              /* #5033FF */
+    --apty-secondary-hover: 65 41 230;        /* #4129E6 */
+    --apty-tertiary: 161 118 255;             /* #A176FF */
+    --apty-tertiary-hover: 181 145 255;       /* #B591FF */
+    --apty-accent: 255 78 140;                /* #FF4E8C */
+    --apty-accent-hover: 255 111 163;         /* #FF6FA3 */
+    --apty-accent-active: 230 62 122;         /* #E63E7A */
+    
+    /* Text Colors */
+    --apty-text-primary: 17 17 17;            /* #111111 - Primary text color */
+    --apty-text-primary-hover: 103 32 255;    /* #6720FF - Purple on hover */
+    --apty-text-secondary: 81 81 81;          /* #515151 */
+    --apty-text-secondary-hover: 102 102 102; /* #666666 */
+    --apty-text-tertiary: 102 102 102;        /* #666666 */
+    --apty-text-muted: 204 204 204;           /* #CCCCCC */
+    --apty-text-disabled: 229 229 229;        /* #E5E5E5 */
+    --apty-text-placeholder: 184 184 184;     /* #B8B8B8 */
+    --apty-text-inverse: 255 255 255;         /* #FFFFFF */
+    --apty-text-on-brand: 255 255 255;        /* #FFFFFF */
+    --apty-text-link: 103 32 255;             /* #6720FF */
+    --apty-text-link-hover: 85 24 230;        /* #5518E6 */
+    --apty-text-link-visited: 161 118 255;    /* #A176FF */
+    
+    /* Background Colors */
+    --apty-bg-base: 255 255 255;              /* #FFFFFF */
+    --apty-bg-subtle: 248 244 242;            /* #F8F4F2 */
+    --apty-bg-subtle-hover: 242 237 233;      /* #F2EDE9 */
+    --apty-bg-muted: 250 249 252;             /* #FAF9FC */
+    --apty-bg-elevated: 255 255 255;          /* #FFFFFF */
+    --apty-bg-inverse: 61 22 143;              /* #1F2937 PREVIOUSLY 35 35 35*/ 
+    --apty-bg-inverse-subtle: 42 42 42;       /* #2A2A2A */
+    --apty-bg-inverse-hover: 51 51 51;        /* #333333 */
+    --apty-bg-overlay: 0 0 0;                 /* rgba(0,0,0,0.4) base */
+    --apty-bg-hover: 250 250 250;             /* #FAFAFA */
+    --apty-bg-active: 245 245 245;            /* #F5F5F5 */
+    --apty-bg-selected: 240 232 255;          /* #F0E8FF */
+    --apty-bg-highlight: 255 249 230;         /* #FFF9E6 */
+    
+    /* Border Colors */
+    --apty-border-default: 221 222 224;       /* #DDDEE0 */
+    --apty-border-hover: 161 118 255;         /* #A176FF */
+    --apty-border-focus: 103 32 255;          /* #6720FF */
+    --apty-border-active: 85 24 230;          /* #5518E6 */
+    --apty-border-subtle: 240 240 240;        /* #F0F0F0 */
+    --apty-border-strong: 204 204 204;        /* #CCCCCC */
+    --apty-border-disabled: 229 229 229;      /* #E5E5E5 */
+    --apty-border-error: 255 68 68;           /* #FF4444 */
+    --apty-border-success: 0 200 81;          /* #00C851 */
+    
+    /* State Colors */
+    --apty-success: 0 200 81;                 /* #00C851 */
+    --apty-success-hover: 0 166 66;           /* #00A642 */
+    --apty-success-bg: 232 248 240;           /* #E8F8F0 */
+    --apty-success-border: 0 200 81;          /* #00C851 */
+    --apty-success-text: 0 126 51;            /* #007E33 */
+    
+    --apty-error: 255 68 68;                  /* #FF4444 */
+    --apty-error-hover: 230 57 57;            /* #E63939 */
+    --apty-error-bg: 255 235 235;             /* #FFEBEB */
+    --apty-error-border: 255 68 68;           /* #FF4444 */
+    --apty-error-text: 204 0 0;               /* #CC0000 */
+    
+    --apty-warning: 255 187 51;               /* #FFBB33 */
+    --apty-warning-hover: 230 165 46;         /* #E6A52E */
+    --apty-warning-bg: 255 249 230;           /* #FFF9E6 */
+    --apty-warning-border: 255 187 51;        /* #FFBB33 */
+    --apty-warning-text: 153 101 0;           /* #996500 */
+    
+    --apty-info: 51 181 229;                  /* #33B5E5 */
+    --apty-info-hover: 46 157 206;            /* #2E9DCE */
+    --apty-info-bg: 230 247 255;              /* #E6F7FF */
+    --apty-info-border: 51 181 229;           /* #33B5E5 */
+    --apty-info-text: 0 115 170;              /* #0073AA */
+    
+    /* Gradients (complete strings for simplicity) */
+    --apty-gradient-primary: linear-gradient(135deg, rgb(103 32 255) 0%, rgb(161 118 255) 100%);
+    --apty-gradient-secondary: linear-gradient(135deg, rgb(80 51 255) 0%, rgb(255 78 140) 100%);
+    --apty-gradient-vibrant: linear-gradient(135deg, rgb(103 32 255) 0%, rgb(255 78 140) 100%);
+    --apty-gradient-soft: linear-gradient(135deg, rgb(161 118 255) 0%, rgb(250 249 252) 100%);
+    --apty-gradient-dark: linear-gradient(180deg, rgb(25 25 25) 0%, rgb(42 42 42) 100%);
+    --apty-gradient-subtle: linear-gradient(180deg, rgb(248 244 242) 0%, rgb(255 255 255) 100%);
+    --apty-gradient-hover: linear-gradient(135deg, rgb(85 24 230) 0%, rgb(181 145 255) 100%);
+    
+    /* Shadows (complete strings for direct usage) */
+    --apty-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --apty-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --apty-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --apty-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --apty-shadow-brand: 0 4px 14px rgba(103, 32, 255, 0.25);
+    --apty-shadow-brand-lg: 0 10px 30px rgba(103, 32, 255, 0.3);
+    --apty-shadow-hover: 0 12px 20px rgba(0, 0, 0, 0.12);
+    --apty-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --apty-shadow-focus: 0 0 0 3px rgba(103, 32, 255, 0.4);
+    
+    /* Border Radius */
+    --apty-radius-sm: 4px;
+    --apty-radius-md: 8px;
+    --apty-radius-lg: 12px;
+    --apty-radius-xl: 16px;
+    --apty-radius-2xl: 20px;
+    --apty-radius-full: 9999px;
+    
+    /* Transition Durations */
+    --apty-duration-instant: 0ms;
+    --apty-duration-fast: 150ms;
+    --apty-duration-normal: 250ms;
+    --apty-duration-slow: 350ms;
+    
+    /* Transition Timing Functions */
+    --apty-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --apty-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --apty-ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    
+    /* Focus Ring */
+    --apty-focus-ring: rgba(103, 32, 255, 0.4);
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 221 83% 53%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    
+    /* Semantic Text Tokens - Dark Mode */
+    --color-text-primary: 249 250 251;        /* gray-50 */
+    --color-text-secondary: 229 231 235;      /* gray-200 */
+    --color-text-tertiary: 209 213 219;       /* gray-300 */
+    --color-text-muted: 156 163 175;          /* gray-400 */
+    --color-text-disabled: 107 114 128;       /* gray-500 */
+    --color-text-placeholder: 107 114 128;    /* gray-500 */
+    --color-text-inverse: 17 24 39;           /* gray-900 */
+    --color-text-on-brand: 255 255 255;       /* white */
+    
+    /* Semantic Background Tokens - Dark Mode */
+    --color-bg-base: 17 24 39;                /* gray-900 */
+    --color-bg-subtle: 31 41 55;              /* gray-800 */
+    --color-bg-muted: 55 65 81;               /* gray-700 */
+    --color-bg-elevated: 31 41 55;            /* gray-800 */
+    --color-bg-overlay: 0 0 0;                /* black with opacity */
+    --color-bg-hover: 55 65 81;               /* gray-700 */
+    --color-bg-active: 75 85 99;              /* gray-600 */
+    --color-bg-inverse: 249 250 251;          /* gray-50 */
+    --color-bg-inverse-subtle: 243 244 246;   /* gray-100 */
+    
+    /* Semantic Border Tokens - Dark Mode */
+    --color-border-default: 75 85 99;         /* gray-600 */
+    --color-border-subtle: 55 65 81;          /* gray-700 */
+    --color-border-muted: 75 85 99;           /* gray-600 */
+    --color-border-strong: 107 114 128;       /* gray-500 */
+    --color-border-hover: 156 163 175;        /* gray-400 */
+    --color-border-focus: 96 165 250;         /* blue-400 */
+    --color-border-error: 248 113 113;        /* red-400 */
+    --color-border-success: 52 211 153;       /* green-400 */
+    
+    /* State Colors - Dark Mode */
+    --color-state-success: 52 211 153;        /* green-400 */
+    --color-state-success-strong: 16 185 129;  /* green-500 */
+    --color-state-success-subtle: 6 78 59;    /* green-900 */
+    --color-state-success-bg: 6 78 59;        /* green-900 */
+    --color-state-success-border: 52 211 153; /* green-400 */
+    --color-state-success-text: 167 243 208;  /* green-200 */
+    
+    --color-state-error: 248 113 113;         /* red-400 */
+    --color-state-error-strong: 239 68 68;    /* red-500 */
+    --color-state-error-subtle: 127 29 29;    /* red-900 */
+    --color-state-error-bg: 127 29 29;        /* red-900 */
+    --color-state-error-border: 248 113 113;  /* red-400 */
+    --color-state-error-text: 254 202 202;    /* red-200 */
+    
+    --color-state-warning: 251 191 36;        /* yellow-400 */
+    --color-state-warning-strong: 245 158 11; /* yellow-500 */
+    --color-state-warning-subtle: 113 63 18;  /* yellow-900 */
+    --color-state-warning-bg: 113 63 18;      /* yellow-900 */
+    --color-state-warning-border: 251 191 36; /* yellow-400 */
+    --color-state-warning-text: 254 240 138;  /* yellow-200 */
+    
+    --color-state-info: 96 165 250;           /* blue-400 */
+    --color-state-info-strong: 59 130 246;    /* blue-500 */
+    --color-state-info-subtle: 30 58 138;     /* blue-900 */
+    --color-state-info-bg: 30 58 138;         /* blue-900 */
+    --color-state-info-border: 96 165 250;    /* blue-400 */
+    --color-state-info-text: 191 219 254;     /* blue-200 */
+    
+    /* Interactive Elements - Dark Mode */
+    --color-interactive-link: 147 197 253;    /* blue-300 */
+    --color-interactive-link-hover: 96 165 250; /* blue-400 */
+    --color-interactive-link-visited: 196 181 253; /* purple-300 */
+    --color-interactive-focus: 96 165 250;    /* blue-400 */
+    --color-interactive-focus-ring: 96 165 250; /* blue-400 with opacity */
+    
+    /* Surface Elevation - Dark Mode */
+    --color-surface-level0: 17 24 39;         /* gray-900 */
+    --color-surface-level1: 31 41 55;         /* gray-800 */
+    --color-surface-level2: 55 65 81;         /* gray-700 */
+    --color-surface-level3: 75 85 99;         /* gray-600 */
+    
+    /* APTY Design System - Dark Mode Overrides */
+    /* Brand Colors (adjusted for dark mode) */
+    --apty-primary: 157 107 255;              /* #9D6BFF - Purple for dark mode */
+    --apty-primary-hover: 140 85 255;         /* #8C55FF - Slightly darker on hover */
+    --apty-primary-active: 100 40 230;        /* #6428E6 */
+    --apty-primary-focus: 140 80 255;         /* #8C50FF */
+    --apty-secondary: 100 70 255;             /* Adjusted secondary */
+    --apty-secondary-hover: 120 90 255;       /* Hover state */
+    --apty-tertiary: 180 140 255;             /* Lighter tertiary */
+    --apty-tertiary-hover: 200 160 255;       /* Hover state */
+    --apty-accent: 255 100 150;               /* Softer pink */
+    --apty-accent-hover: 255 130 170;         /* Hover state */
+    --apty-accent-active: 230 80 130;         /* Active state */
+    
+    /* Text Colors - Dark Mode */
+    --apty-text-primary: 240 240 240;         /* #F0F0F0 - Light text for dark mode */
+    --apty-text-primary-hover: 140 70 255;    /* Purple on hover */
+    --apty-text-secondary: 208 208 208;       /* #D0D0D0 - brighter for proportional contrast */
+    --apty-text-secondary-hover: 220 220 220; /* Hover state */
+    --apty-text-tertiary: 150 150 150;        /* Tertiary text */
+    --apty-text-muted: 100 100 100;           /* Muted text */
+    --apty-text-disabled: 80 80 80;           /* Disabled text */
+    --apty-text-placeholder: 120 120 120;     /* Placeholder */
+    --apty-text-inverse: 20 20 20;            /* Dark text on light */
+    --apty-text-on-brand: 255 255 255;        /* White on brand */
+    --apty-text-link: 140 70 255;             /* Link color */
+    --apty-text-link-hover: 160 90 255;       /* Link hover */
+    --apty-text-link-visited: 180 140 255;    /* Visited link */
+    
+    /* Background Colors - Dark Mode */
+    --apty-bg-base: 35 35 35;                 /* #232323 - Dark base */
+    --apty-bg-subtle: 30 30 30;               /* Subtle dark */
+    --apty-bg-subtle-hover: 35 35 35;         /* Hover state */
+    --apty-bg-muted: 25 25 25;                /* #191919 */
+    --apty-bg-elevated: 35 35 35;             /* Elevated surface */
+    --apty-bg-inverse: 222 222 222;           /* Light surfaces */
+    --apty-bg-inverse-subtle: 220 220 220;    /* Subtle light */
+    --apty-bg-inverse-hover: 200 200 200;     /* Hover light */
+    --apty-bg-overlay: 0 0 0;                 /* Overlay base */
+    --apty-bg-hover: 40 40 40;                /* Hover background */
+    --apty-bg-active: 45 45 45;               /* Active background */
+    --apty-bg-selected: 50 40 80;             /* Selected with purple tint */
+    --apty-bg-highlight: 60 50 40;            /* Highlighted with warm tint */
+    
+    /* Border Colors - Dark Mode */
+    --apty-border-default: 60 60 60;          /* #3C3C3C */
+    --apty-border-hover: 140 70 255;          /* Purple on hover */
+    --apty-border-focus: 120 50 255;          /* Primary on focus */
+    --apty-border-active: 100 40 230;         /* Darker on active */
+    --apty-border-subtle: 40 40 40;           /* #282828 */
+    --apty-border-strong: 80 80 80;           /* Strong border */
+    --apty-border-disabled: 50 50 50;         /* Disabled border */
+    --apty-border-error: 255 100 100;         /* Error state */
+    --apty-border-success: 50 220 100;        /* Success state */
+    
+    /* Gradients - Dark Mode */
+    --apty-gradient-primary: linear-gradient(135deg, rgb(120 50 255) 0%, rgb(180 140 255) 100%);
+    --apty-gradient-secondary: linear-gradient(135deg, rgb(100 70 255) 0%, rgb(255 100 150) 100%);
+    --apty-gradient-vibrant: linear-gradient(135deg, rgb(120 50 255) 0%, rgb(255 100 150) 100%);
+    --apty-gradient-soft: linear-gradient(135deg, rgb(50 40 80) 0%, rgb(30 30 30) 100%);
+    --apty-gradient-dark: linear-gradient(180deg, rgb(15 15 15) 0%, rgb(30 30 30) 100%);
+    --apty-gradient-subtle: linear-gradient(180deg, rgb(35 35 35) 0%, rgb(25 25 25) 100%);
+    --apty-gradient-hover: linear-gradient(135deg, rgb(140 70 255) 0%, rgb(200 160 255) 100%);
+    
+    /* Shadows - Dark Mode (stronger for visibility) */
+    --apty-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --apty-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --apty-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    --apty-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+    --apty-shadow-brand: 0 4px 14px rgba(120, 50, 255, 0.4);
+    --apty-shadow-brand-lg: 0 10px 30px rgba(120, 50, 255, 0.5);
+    --apty-shadow-hover: 0 12px 20px rgba(0, 0, 0, 0.35);
+    --apty-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.25);
+    --apty-shadow-focus: 0 0 0 3px rgba(120, 50, 255, 0.5);
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4;
+  }
+  
+  .btn-secondary {
+    @apply btn border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4;
+  }
+  
+  .btn-lg {
+    @apply h-12 px-8 text-base;
+  }
+  
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+  
+  .heading-xl {
+    @apply text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl;
+  }
+  
+  .heading-lg {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
+  }
+  
+  .heading-md {
+    @apply text-2xl font-bold tracking-tight sm:text-3xl;
+  }
+  
+  .text-lead {
+    @apply text-lg text-muted-foreground sm:text-xl;
+  }
+  
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  /**
+   * Accessibility Utilities
+   * 
+   * These utilities ensure WCAG 2.1 compliance and improve user experience
+   * for users with disabilities or accessibility needs.
+   */
+  
+  /* Screen reader only content 
+   * Hides content visually while keeping it accessible to screen readers
+   * Use for descriptive text, skip links, or status announcements
+   * @see https://www.w3.org/WAI/WCAG21/Techniques/css/C7
+   */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Respect reduced motion preference 
+   * Disables animations for users who have indicated they prefer reduced motion
+   * Helps users with vestibular disorders or motion sensitivity
+   * @see https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+} 
