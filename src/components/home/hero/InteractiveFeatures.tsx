@@ -5,9 +5,9 @@ import { Monitor, Smartphone, Zap } from 'lucide-react';
 
 export default function InteractiveFeatures() {
   const features = [
-    { icon: Monitor, label: 'Responsive Design' },
+    { icon: Monitor, label: 'Design Responsive' },
     { icon: Smartphone, label: 'Mobile First' },
-    { icon: Zap, label: 'Lightning Fast' },
+    { icon: Zap, label: 'Velocità Fulminea' },
   ];
 
   return (

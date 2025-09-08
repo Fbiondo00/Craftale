@@ -18,9 +18,9 @@ interface ProcessStage {
 const web44Stages: ProcessStage[] = [
   {
     id: '1',
-    title: 'Spark the Vision',
-    subtitle: 'Discovery & Strategy',
-    description: 'We dive deep into your goals and uncover opportunities that position you ahead of the competition.',
+  title: 'Accendiamo la Visione',
+  subtitle: 'Discovery & Strategia',
+  description: 'Analizziamo a fondo i tuoi obiettivi e individuiamo opportunità per posizionarti davanti alla concorrenza.',
     status: 'completed',
     duration: '2-3 weeks',
     deliverables: ['Market Research', 'User Personas', 'Competitive Analysis', 'Strategy Blueprint'],
@@ -29,9 +29,9 @@ const web44Stages: ProcessStage[] = [
   },
   {
     id: '2',
-    title: 'Blueprint Success',
-    subtitle: 'Planning & Architecture',
-    description: 'Strategic workshops that transform insights into an actionable roadmap engineered for results.',
+  title: 'Progettiamo il Successo',
+  subtitle: 'Pianificazione & Architettura',
+  description: 'Workshop strategici che trasformano gli insight in una roadmap concreta orientata ai risultati.',
     status: 'completed',
     duration: '2-3 weeks',
     deliverables: ['Wireframes', 'Site Architecture', 'User Journey Maps', 'Technical Specs'],
@@ -40,9 +40,9 @@ const web44Stages: ProcessStage[] = [
   },
   {
     id: '3',
-    title: 'Craft Experience',
-    subtitle: 'Design & Prototyping',
-    description: 'Award-winning design that elevates your brand and creates experiences that convert browsers into customers.',
+  title: 'Creiamo l’Esperienza',
+  subtitle: 'Design & Prototipazione',
+  description: 'Design di livello che eleva il tuo brand e crea esperienze che trasformano i visitatori in clienti.',
     status: 'in-progress',
     duration: '3-4 weeks',
     deliverables: ['Visual Design', 'Interactive Prototype', 'Design System', 'Brand Guidelines'],
@@ -51,9 +51,9 @@ const web44Stages: ProcessStage[] = [
   },
   {
     id: '4',
-    title: 'Engineer Performance',
-    subtitle: 'Development & Integration',
-    description: 'Future-proof development that delivers lightning-fast, scalable platforms built for growth.',
+  title: 'Ingegnerizziamo le Performance',
+  subtitle: 'Sviluppo & Integrazione',
+  description: 'Sviluppo solido e scalabile che garantisce piattaforme velocissime pronte a crescere.',
     status: 'upcoming',
     duration: '6-8 weeks',
     deliverables: ['Frontend Code', 'Backend API', 'CMS Integration', 'Performance Optimization'],
@@ -62,9 +62,9 @@ const web44Stages: ProcessStage[] = [
   },
   {
     id: '5',
-    title: 'Optimize & Test',
-    subtitle: 'Quality Assurance',
-    description: 'Rigorous testing and optimization ensuring every element performs at peak efficiency.',
+  title: 'Ottimizziamo & Testiamo',
+  subtitle: 'Quality Assurance',
+  description: 'Test rigorosi e ottimizzazioni continue per assicurare prestazioni al massimo livello.',
     status: 'upcoming',
     duration: '2-3 weeks',
     deliverables: ['Cross-browser Testing', 'Performance Audit', 'Security Testing', 'Bug Fixes'],
@@ -73,9 +73,9 @@ const web44Stages: ProcessStage[] = [
   },
   {
     id: '6',
-    title: 'Launch into Greatness',
-    subtitle: 'Go Live & Support',
-    description: 'Flawless deployment with zero surprises—your brand makes a powerful first impression from day one.',
+  title: 'Lanciamo alla Grande',
+  subtitle: 'Go Live & Supporto',
+  description: 'Deploy impeccabile senza sorprese: il tuo brand fa un’ottima prima impressione dal primo giorno.',
     status: 'upcoming',
     duration: 'Ongoing',
     deliverables: ['Production Deploy', 'Performance Monitor', 'User Training', 'Ongoing Support'],
@@ -97,15 +97,15 @@ export default function ProcessSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-[40px] leading-[48px] font-semibold font-apty-heading text-apty-text-primary mb-2">
-            <span className="text-apty-primary">OUR PROVEN</span> PROCESS.
+            <span className="text-apty-primary">IL NOSTRO</span> PROCESSO COLLAUDATO.
           </h2>
           <h3 className="text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-6">
-            ENGINEERED FOR <span className="text-apty-primary">SUCCESS</span>.
+            PROGETTATO PER IL <span className="text-apty-primary">SUCCESSO</span>.
           </h3>
           <p className="text-lg text-apty-text-secondary max-w-4xl mx-auto leading-relaxed">
-            We don't just build websites—we engineer digital experiences that drive results. 
-            Our battle-tested process turns your vision into a high-converting reality, 
-            with zero surprises and maximum impact.
+            Non costruiamo solo siti web: progettiamo esperienze digitali che generano risultati. 
+            Il nostro processo collaudato trasforma la tua visione in una realtà ad alto tasso di conversione, 
+            senza sorprese e con il massimo impatto.
           </p>
         </motion.div>
 
@@ -303,7 +303,7 @@ export default function ProcessSection() {
                       <div>
                         <h4 className="text-xs font-semibold text-apty-primary uppercase tracking-wider mb-2 flex items-center gap-2">
                           <ArrowRight className="w-3 h-3" />
-                          Key Deliverables
+                          Output Principali
                         </h4>
                         <div className="flex flex-wrap gap-1.5">
                           {stage.deliverables.map((deliverable, idx) => (
@@ -333,7 +333,7 @@ export default function ProcessSection() {
                           isEven ? '' : 'md:justify-end md:flex-row-reverse'
                         }`}>
                           <ArrowRight className="w-3 h-3" />
-                          Key Deliverables
+                          Output Principali
                         </h4>
                         <div className={`flex flex-wrap gap-2 ${
                           isEven ? '' : 'md:justify-end'
@@ -372,7 +372,7 @@ export default function ProcessSection() {
           <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-apty-primary/10 to-apty-tertiary/10 border border-apty-primary/30 rounded-full px-8 py-4">
             <Clock className="w-5 h-5 text-apty-primary" />
             <span className="text-lg font-semibold text-apty-text-primary">
-              12-16 weeks to <span className="text-apty-primary">launch</span>
+              12-16 settimane al <span className="text-apty-primary">lancio</span>
             </span>
             <motion.div 
               className="w-2 h-2 bg-apty-primary rounded-full"
@@ -381,7 +381,7 @@ export default function ProcessSection() {
             />
           </div>
           <p className="text-sm text-apty-text-secondary mt-3">
-            From first meeting to powerful results
+            Dal primo incontro ai risultati concreti
           </p>
         </motion.div>
       </div>

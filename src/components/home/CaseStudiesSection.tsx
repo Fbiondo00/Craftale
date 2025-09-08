@@ -26,7 +26,7 @@ export default function CaseStudiesSection() {
       category: 'E-commerce Platform',
       metric: '+250% conversion rate',
       metricColor: 'text-apty-primary',
-      description: 'Full-stack e-commerce solution with AI-powered recommendations',
+  description: 'Piattaforma e-commerce full‑stack con raccomandazioni basate su AI',
       link: 'https://modernshop-demo.vercel.app',
       logoAlt: 'ModernShop logo',
       isExternal: true
@@ -38,7 +38,7 @@ export default function CaseStudiesSection() {
       category: 'SaaS Analytics',
       metric: '10ms response time',
       metricColor: 'text-apty-primary',
-      description: 'Real-time analytics dashboard with advanced data visualization',
+  description: 'Dashboard di analytics in tempo reale con visualizzazioni avanzate',
       link: 'https://dataflow-analytics.vercel.app',
       logoAlt: 'DataFlow Pro logo',
       isExternal: true
@@ -50,7 +50,7 @@ export default function CaseStudiesSection() {
       category: 'Health & Fitness',
       metric: '50K+ active users',
       metricColor: 'text-apty-primary',
-      description: 'Cross-platform mobile app with React Native and cloud sync',
+  description: 'App mobile cross‑platform con React Native e sincronizzazione cloud',
       link: 'https://fittracker-landing.vercel.app',
       logoAlt: 'FitTracker logo',
       isExternal: true
@@ -69,7 +69,7 @@ export default function CaseStudiesSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-[40px] leading-[48px] font-semibold font-apty-heading text-apty-text-inverse">
-            Real projects we've built for our clients
+            Progetti reali che abbiamo realizzato per i nostri clienti
           </h2>
         </motion.div>
 
@@ -149,7 +149,7 @@ export default function CaseStudiesSection() {
                       size="md"
                       className="w-full justify-center"
                     >
-                      Read more
+                      Scopri di più
                     </AptySecondaryButton>
                   </Link>
                 </div>

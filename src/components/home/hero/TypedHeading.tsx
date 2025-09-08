@@ -17,7 +17,7 @@ export default function TypedHeading({ showWebsites, typedText, showCursor }: Ty
       transition={{ delay: 0.3 }}
     >
       <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight'>
-        <span className='block'>We Create</span>
+        <span className='block'>Creiamo</span>
         <motion.span
           className='relative block min-h-[1.2em]'
           initial={{ opacity: 0, scale: 0, rotate: -180 }}
@@ -71,7 +71,6 @@ export default function TypedHeading({ showWebsites, typedText, showCursor }: Ty
             ))}
           </motion.div>
         </motion.span>
-        <span className='block'>That Convert</span>
       </h1>
       <motion.p
         className='text-base md:text-xl lg:text-2xl text-apty-text-secondary max-w-3xl mx-auto lg:mx-0 lg:max-w-none leading-relaxed'
@@ -79,7 +78,7 @@ export default function TypedHeading({ showWebsites, typedText, showCursor }: Ty
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        Stop losing customers to poor design. Get websites that impress visitors and drive real conversions.
+  Basta perdere clienti a causa di un design poco efficace. Realizziamo siti che impressionano i visitatori e generano vere interazioni.
       </motion.p>
     </motion.div>
   );

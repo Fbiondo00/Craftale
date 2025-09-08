@@ -13,23 +13,23 @@ export default function ServicesSection({ activeService, onServiceClick }: Servi
   const services: Service[] = [
     {
       icon: Monitor,
-      title: 'Website Design',
-      description: 'Beautiful, conversion-focused designs that make your brand stand out',
-      features: ['Custom Design', 'Mobile First', 'Brand Integration', 'User Research'],
+  title: 'Design del Sito',
+  description: 'Design belli e orientati alla conversione che fanno emergere il tuo brand',
+  features: ['Design Personalizzato', 'Mobile First', 'Integrazione Brand', 'User Research'],
       color: 'from-brand-secondary/90 to-blue-500',
     },
     {
       icon: Code2,
-      title: 'Web Development',
-      description: 'Fast, secure, and scalable websites built with modern technology',
-      features: ['React/Next.js', 'Performance Optimized', 'SEO Ready', 'CMS Integration'],
+  title: 'Sviluppo Web',
+  description: 'Siti veloci, sicuri e scalabili costruiti con tecnologia moderna',
+  features: ['React/Next.js', 'Performance Ottimizzate', 'SEO Ready', 'Integrazione CMS'],
       color: 'from-brand-tertiary/90 to-brand-secondary/90',
     },
     {
       icon: Smartphone,
-      title: 'E-commerce',
-      description: 'Online stores that convert visitors into customers and drive sales',
-      features: ['Shopify/WooCommerce', 'Payment Integration', 'Inventory Management', 'Analytics'],
+  title: 'E-commerce',
+  description: 'Store online che trasformano i visitatori in clienti e aumentano le vendite',
+  features: ['Shopify/WooCommerce', 'Integrazione Pagamenti', 'Gestione Magazzino', 'Analytics'],
       color: 'from-brand-accent/90 to-rose-500',
     },
   ];
@@ -44,11 +44,11 @@ export default function ServicesSection({ activeService, onServiceClick }: Servi
           viewport={{ once: true }}
         >
           <h2 className='text-4xl md:text-5xl font-bold mb-4'>
-            What We Build <span className='text-brand-secondary'>For You</span>
+            Cosa Costruiamo <span className='text-brand-secondary'>Per Te</span>
           </h2>
           <p className='text-xl text-muted-foreground max-w-3xl mx-auto'>
-            We&apos;re not just web designers – we&apos;re your digital growth partners. Here&apos;s how we help
-            your business succeed online.
+            Non siamo solo web designer – siamo i tuoi partner per la crescita digitale. Ecco come aiutiamo
+            il tuo business a crescere online.
           </p>
         </motion.div>
 

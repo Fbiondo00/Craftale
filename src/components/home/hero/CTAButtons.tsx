@@ -21,7 +21,7 @@ export default function CTAButtons({ onScrollToProcess, onMouseEnter }: CTAButto
         withChevron
         onClick={onScrollToProcess}
       >
-        Start for free
+        Inizia gratis
       </AptyPrimaryButton>
 
       <button

@@ -15,11 +15,11 @@ export default function TestimonialsSection({
 }: TestimonialsSectionProps) {
   const testimonials: Testimonial[] = [
     {
-      name: 'Sarah Johnson',
+  name: 'Sarah Johnson',
       company: 'TechStart Inc.',
       role: 'CEO',
       content:
-        'Craftale transformed our online presence completely. The new website not only looks amazing but has increased our leads by 300%. Their team really understands what businesses need.',
+        'Craftale ha trasformato completamente la nostra presenza online. Il nuovo sito non solo è bellissimo ma ha aumentato i lead del 300%. Il team capisce davvero di cosa hanno bisogno le aziende.',
       avatar: '/api/placeholder/60/60',
       rating: 5,
     },
@@ -28,7 +28,7 @@ export default function TestimonialsSection({
       company: 'Local Eats',
       role: 'Owner',
       content:
-        'Working with Craftale was a game-changer. They built us a website that actually brings in customers. Online orders went through the roof after launch!',
+        'Lavorare con Craftale ha fatto la differenza. Hanno realizzato un sito che porta davvero clienti. Gli ordini online sono esplosi dopo il lancio!',
       avatar: '/api/placeholder/60/60',
       rating: 5,
     },
@@ -37,7 +37,7 @@ export default function TestimonialsSection({
       company: 'Creative Agency',
       role: 'Marketing Director',
       content:
-        'Professional, creative, and results-driven. Craftale delivered exactly what we needed - a website that converts and represents our brand perfectly.',
+        'Professionali, creativi e orientati ai risultati. Craftale ha consegnato esattamente ciò di cui avevamo bisogno: un sito che converte e rappresenta il nostro brand alla perfezione.',
       avatar: '/api/placeholder/60/60',
       rating: 5,
     },
@@ -53,10 +53,10 @@ export default function TestimonialsSection({
           viewport={{ once: true }}
         >
           <h2 className='text-4xl md:text-5xl font-bold mb-4'>
-            What Our <span className='text-brand-secondary'>Clients Say</span>
+            Cosa Dicono i <span className='text-brand-secondary'>Clienti</span>
           </h2>
           <p className='text-xl text-muted-foreground max-w-3xl mx-auto'>
-            Real results from real businesses. Here&apos;s what happens when you partner with us.
+            Risultati reali da aziende reali. Ecco cosa succede quando collabori con noi.
           </p>
         </motion.div>
 
