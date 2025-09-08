@@ -136,7 +136,7 @@ export default function CaseStudiesSection() {
                   {project.description}
                 </p>
 
-                {/* Read More Button - Using AptySecondaryButton with chevron */}
+                {/* Pulsante Scopri di più - usa AptySecondaryButton con chevron */}
                 <div className="mt-auto pt-2">
                   <Link 
                     href={project.link}

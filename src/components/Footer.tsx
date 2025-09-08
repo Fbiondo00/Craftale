@@ -23,21 +23,21 @@ export default function Footer({
   const currentYear = new Date().getFullYear();
 
   const serviceLinks = [
-    { name: "Web Design", href: "/services/design" },
-    { name: "Web Development", href: "/services/development" },
+    { name: "Design del Sito", href: "/services/design" },
+    { name: "Sviluppo Web", href: "/services/development" },
     { name: "E-commerce", href: "/services/ecommerce" },
-    { name: "Web Maintenance", href: "/services/maintenance" },
-    { name: "SEO Optimization", href: "/services/seo" },
+    { name: "Manutenzione Web", href: "/services/maintenance" },
+    { name: "Ottimizzazione SEO", href: "/services/seo" },
     // { name: "Performance", href: "/services/performance" },
   ];
 
   const companyLinks = [
-    { name: "About Us", href: "/about" },
+    { name: "Chi Siamo", href: "/about" },
     // { name: "Our Team", href: "/team" },
     // { name: "Careers", href: "/careers" },
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
+  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Termini di Servizio", href: "/terms" },
+  { name: "Cookie Policy", href: "/cookies" },
   ];
 
   const resourceLinks = [
@@ -73,8 +73,8 @@ export default function Footer({
             </div>
             
             <p className="text-apty-text-inverse opacity-90 text-sm leading-relaxed max-w-md">
-              We create modern, conversion-focused websites that drive results for local businesses, 
-              startups, and growing companies. Get more leads, build trust, and grow your business online.
+              Creiamo siti moderni orientati alla conversione che generano risultati per attività locali, 
+              startup e aziende in crescita. Ottieni più contatti, costruisci fiducia e fai crescere il tuo business online.
             </p>
 
             {/* Contact Info */}
@@ -100,14 +100,14 @@ export default function Footer({
 
             {/* CTA Button */}
             <Button className="bg-gradient-to-r from-apty-primary to-apty-primary/90 hover:from-apty-primary/90 hover:to-apty-primary/80 text-apty-text-on-brand font-semibold px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-              Get Your Free Proposal
+              Richiedi una Proposta Gratuita
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
 
           {/* Services */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-apty-text-inverse">Services</h3>
+            <h3 className="text-lg font-semibold text-apty-text-inverse">Servizi</h3>
             <ul className="space-y-2">
               {serviceLinks.map((link) => (
                 <li key={link.name}>
@@ -124,7 +124,7 @@ export default function Footer({
 
           {/* Company */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-apty-text-inverse">Company</h3>
+            <h3 className="text-lg font-semibold text-apty-text-inverse">Azienda</h3>
             <ul className="space-y-2">
               {companyLinks.map((link) => (
                 <li key={link.name}>
@@ -141,7 +141,7 @@ export default function Footer({
 
           {/* Resources */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-apty-text-inverse">Resources</h3>
+            <h3 className="text-lg font-semibold text-apty-text-inverse">Risorse</h3>
             <ul className="space-y-2">
               {resourceLinks.map((link) => (
                 <li key={link.name}>
@@ -151,7 +151,7 @@ export default function Footer({
                     >
                       <span>{link.name}</span>
                       <span className="ml-2 px-2 py-0.5 text-[10px] font-semibold bg-apty-text-inverse/20 text-apty-text-inverse rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-apty-text-inverse/30 group-active:scale-95">
-                        Soon
+                        Presto
                       </span>
                     </div>
                   ) : (
@@ -194,14 +194,14 @@ export default function Footer({
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm text-apty-text-inverse opacity-90">
-              <span>© {currentYear} {companyName}. All rights reserved.</span>
+              <span>© {currentYear} {companyName}. Tutti i diritti riservati.</span>
               <div className="flex items-center space-x-4">
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 bg-apty-success rounded-full"></span>
-                  <span>SSL Secured</span>
+                  <span>SSL Protetto</span>
                 </span>
                 <span>Google Partner</span>
-                <span>98% Client Satisfaction</span>
+                <span>98% Soddisfazione Clienti</span>
               </div>
             </div>
 

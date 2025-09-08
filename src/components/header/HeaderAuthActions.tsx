@@ -94,7 +94,7 @@ export function HeaderAuthActions({
               onClick={onMobileMenuClose}
             >
               <User className='mr-2 h-4 w-4' />
-              Profile
+              Profilo
             </Button>
             <Button
               variant='ghost'
@@ -105,7 +105,7 @@ export function HeaderAuthActions({
               }}
             >
               <LogOut className='mr-2 h-4 w-4' />
-              Log out
+              Esci
             </Button>
           </div>
         ) : (
@@ -119,7 +119,7 @@ export function HeaderAuthActions({
               }}
               size='md'
             >
-              Sign up
+              Accedi
             </AptySecondaryButton>
             <AptyPrimaryButton
               className='flex-[3.5]'
@@ -175,7 +175,7 @@ export function HeaderAuthActions({
             </DropdownMenuItem>
             <DropdownMenuItem className='cursor-pointer'>
               <User className='mr-2 h-4 w-4' />
-              <span>Profile</span>
+              <span>Profilo</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -183,7 +183,7 @@ export function HeaderAuthActions({
               onClick={onSignOut}
             >
               <LogOut className='mr-2 h-4 w-4' />
-              <span>Log out</span>
+              <span>Esci</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -194,14 +194,14 @@ export function HeaderAuthActions({
             onClick={() => onOpenAuthModal?.('signin')}
             size='md'
           >
-            Sign in
+            Accedi
           </AptySecondaryButton>
           <AptyPrimaryButton
             onClick={() => onOpenAuthModal?.('signup')}
             size='md'
             withChevron
           >
-            Get Started
+            Inizia Ora
           </AptyPrimaryButton>
         </div>
       )}

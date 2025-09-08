@@ -63,7 +63,7 @@ export default function Header({ className, sessionUser, onOpenAuthModal, onSign
                 <span className='text-xl font-bold apty-gradient-text'>
                   Craftale
                 </span>
-                <span className='text-xs text-apty-text-secondary font-medium'>Website Builders</span>
+                <span className='text-xs text-apty-text-secondary font-medium'>Creazione Siti Web</span>
               </div>
             </a>
 
@@ -72,15 +72,15 @@ export default function Header({ className, sessionUser, onOpenAuthModal, onSign
               {navigationItems.map((item) => {
                 // Map nav item titles to appropriate icons
                 const Icon =
-                  item.title === 'Our Work'
+                  item.title === 'Our Work' || item.title === 'I Nostri Lavori'
                     ? Monitor
-                    : item.title === 'Services'
+                    : item.title === 'Services' || item.title === 'Servizi'
                       ? Code2
-                      : item.title === 'Resources'
+                      : item.title === 'Resources' || item.title === 'Risorse'
                         ? Search
-                        : item.title === 'About'
+                        : item.title === 'About' || item.title === 'Chi Siamo'
                           ? Users
-                          : item.title === 'Pricing'
+                          : item.title === 'Pricing' || item.title === 'Prezzi'
                             ? Sparkles
                             : item.title === 'Blog'
                               ? Search
@@ -92,12 +92,12 @@ export default function Header({ className, sessionUser, onOpenAuthModal, onSign
                     <div
                       key={item.title}
                       className='nav-trigger group flex items-center space-x-2 px-4 py-2 text-sm font-medium text-apty-text-secondary hover:text-apty-primary apty-transition rounded-apty-md relative overflow-hidden cursor-pointer'
-                      title='Coming Soon'
+                      title='In Arrivo'
                     >
                       <Icon className='w-4 h-4' />
                       <span>{item.title}</span>
                       <span className='ml-1 px-2 py-0.5 text-[10px] font-semibold bg-apty-primary/20 text-apty-primary rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-apty-primary/30 group-active:scale-95'>
-                        Soon
+                        Presto
                       </span>
                       {/* Animated hover background effect with APTY colors */}
                       <div className='absolute inset-0 bg-gradient-to-r from-apty-primary/5 to-apty-tertiary/5 rounded-apty-md opacity-0 group-hover:opacity-100 apty-transition -z-10' />

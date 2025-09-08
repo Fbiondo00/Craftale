@@ -31,43 +31,43 @@ export const navigationItems = [
   //   ],
   // },
   {
-    title: 'Services',
-    description: 'Everything you need to succeed online',
+    title: 'Servizi',
+    description: 'Tutto ciò di cui hai bisogno per avere successo online',
     items: [
       {
-        title: 'Website Design',
+        title: 'Design del Sito',
         href: '/services/design', // /test-tokens
-        description: 'Beautiful, conversion-focused designs',
+        description: 'Design belli e orientati alla conversione',
         iconName: 'Palette',
       },
       {
-        title: 'Web Development',
+        title: 'Sviluppo Web',
         href: '/services/development', // /new-test-tokens
-        description: 'Fast, secure, scalable websites',
+        description: 'Siti veloci, sicuri e scalabili',
         iconName: 'Code2',
       },
       {
-        title: 'E-commerce Solutions',
+        title: 'Soluzioni E-commerce',
         href: '/services/ecommerce',
-        description: 'Online stores that drive sales',
+        description: 'Store online che generano vendite',
         iconName: 'ShoppingCart',
       },
       {
-        title: 'Website Maintenance',
+        title: 'Manutenzione Sito',
         href: '/services/maintenance',
-        description: 'Keep your site running smoothly',
+        description: 'Mantieni il sito sempre efficiente',
         iconName: 'Settings',
       },
       {
-        title: 'SEO Optimization',
+        title: 'Ottimizzazione SEO',
         href: '/services/seo',
-        description: 'Get found on Google',
+        description: 'Fatti trovare su Google',
         iconName: 'Search',
       },
       // {
-      //   title: 'Performance Optimization',
+      //   title: 'Ottimizzazione Performance',
       //   href: '/services/performance',
-      //   description: 'Lightning-fast load times',
+      //   description: 'Tempi di caricamento fulminei',
       //   iconName: 'Zap',
       // },
     ],
@@ -108,11 +108,11 @@ export const navigationItems = [
     comingSoon: true,
   },
   {
-    title: 'About',
+    title: 'Chi Siamo',
     href: '/about',
   },
   {
-    title: 'Pricing',
+    title: 'Prezzi',
     href: '/pricing',
   },
 ];
