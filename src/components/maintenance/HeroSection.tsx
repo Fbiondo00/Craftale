@@ -24,23 +24,23 @@ export default function HeroSection() {
             className='inline-flex items-center gap-2 px-6 py-3 bg-apty-state-error/20 backdrop-blur-md rounded-full mb-6 md:mb-8 border border-apty-state-error/40'
           >
             <AlertTriangle className='w-4 h-4 text-apty-text-inverse' />
-            <span className='text-sm font-medium text-apty-text-inverse'>19-23% of Italian SMB sites get hacked annually</span>
+            <span className='text-sm font-medium text-apty-text-inverse'>Il 19-23% dei siti PMI italiani viene hackerato annualmente</span>
           </motion.div>
 
           {/* Main Headline */}
           <h1 className='text-[48px] md:text-[72px] leading-[1.1] font-bold font-apty-heading text-apty-text-inverse mb-6'>
-            Your site loses
+            Il tuo sito perde
             <br />
-            <span className='text-apty-state-error'>€9,000-15,000</span> per hour
+            <span className='text-apty-state-error'>€9.000-15.000</span> l'ora
             <br />
-            when it's down
+            quando è offline
           </h1>
 
           {/* Subheadline */}
           <p className='text-xl md:text-2xl text-apty-text-inverse/80 mb-8 max-w-3xl mx-auto leading-relaxed'>
-            <span className='font-semibold text-apty-text-inverse'>42-45% of users never return</span> after site errors.
-            Italian SMBs face €24,000-38,000 recovery costs from breaches.
-            Proactive maintenance costs <span className='font-semibold text-apty-text-inverse'>10x less</span> than emergency fixes.
+            <span className='font-semibold text-apty-text-inverse'>Il 42-45% degli utenti non ritorna</span> dopo errori critici.
+            Le PMI italiane affrontano €24.000-38.000 di costi di recupero per breach.
+            La manutenzione proattiva costa <span className='font-semibold text-apty-text-inverse'>10x meno</span> degli interventi d'emergenza.
           </p>
 
           {/* Key Stats Bar */}
@@ -54,25 +54,25 @@ export default function HeroSection() {
               <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                 <Counter to={67} suffix='%' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Breaches from outdated software</div>
+              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Breach da software obsoleto</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                 <Counter to={53} suffix='%' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Bounce after errors</div>
+              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Abbandono dopo errori</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                 €<Counter to={38} suffix='K' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Avg recovery cost</div>
+              <div className='text-xs md:text-sm text-apty-text-inverse/60'>Costo medio recupero</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                 <Counter to={220} suffix='%' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-inverse/60'>ROI of prevention</div>
+              <div className='text-xs md:text-sm text-apty-text-inverse/60'>ROI prevenzione</div>
             </div>
           </motion.div>
 
@@ -85,7 +85,7 @@ export default function HeroSection() {
           >
             <Link href='/pricing'>
               <AptyPrimaryButton size='xl' className='min-w-[200px]'>
-                Protect Your Business
+                Proteggi il Tuo Business
                 <ArrowRight className='w-5 h-5 ml-2' />
               </AptyPrimaryButton>
             </Link>

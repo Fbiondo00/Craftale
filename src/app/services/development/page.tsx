@@ -130,18 +130,18 @@ export default function WebDevelopmentPage() {
 
             {/* Main Headline - Direct SMB Pain Point */}
             <h1 className='text-[44px] md:text-[64px] leading-[1.1] font-bold font-apty-heading text-apty-text-primary mb-6 text-center'>
-              Your competitors have a website.
+              I tuoi competitor hanno già un sito.
               <br />
               <span className='bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent'>
-                80% of customers
-              </span> won't wait for yours.
+                L'80% dei clienti
+              </span> non aspetterà il tuo.
             </h1>
 
             {/* Subheadline with Real SMB Stats */}
             <p className='text-lg md:text-xl text-apty-text-secondary mb-10 max-w-3xl mx-auto text-center leading-relaxed'>
-              <span className='font-semibold text-apty-text-primary'>57% abandon</span> after 3 seconds. 
-              <span className='font-semibold text-apty-text-primary'> 75% never complete</span> mobile purchases. 
-              We build fast, secure sites that actually convert local customers.
+              <span className='font-semibold text-apty-text-primary'>Il 57% abbandona</span> dopo 3 secondi. 
+              <span className='font-semibold text-apty-text-primary'> Il 75% non completa</span> gli acquisti da mobile. 
+              Realizziamo siti veloci e sicuri che convertono davvero clienti locali.
             </p>
 
             {/* Interactive Cost Calculator */}
@@ -152,37 +152,37 @@ export default function WebDevelopmentPage() {
               className='bg-apty-bg-base rounded-2xl p-8 shadow-xl mb-10 border border-apty-border-subtle'
             >
               <h3 className='text-xl font-semibold text-apty-text-primary mb-6 text-center'>
-                What's your website really costing you?
+                Quanto ti sta realmente costando il tuo sito?
               </h3>
               
               <div className='grid md:grid-cols-4 gap-6'>
                 <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Lost Revenue/Year</div>
+                  <div className='text-sm text-apty-text-secondary mb-2'>Fatturato perso/anno</div>
                   <div className='text-3xl font-bold text-apty-state-error'>
                     $<Counter to={75} isCurrency={true} suffix='' />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>from slow loading</div>
+                  <div className='text-xs text-apty-text-secondary mt-1'>per lentezza caricamento</div>
                 </div>
                 <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Cart Abandonment</div>
+                  <div className='text-sm text-apty-text-secondary mb-2'>Abbandono carrello</div>
                   <div className='text-3xl font-bold text-apty-accent'>
                     <Counter to={72} suffix='%' />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>average for SMBs</div>
+                  <div className='text-xs text-apty-text-secondary mt-1'>media per PMI</div>
                 </div>
                 <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Security Risk</div>
+                  <div className='text-sm text-apty-text-secondary mb-2'>Rischio Sicurezza</div>
                   <div className='text-3xl font-bold text-apty-state-error'>
                     <Counter to={43} suffix='%' />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>of attacks target SMBs</div>
+                  <div className='text-xs text-apty-text-secondary mt-1'>degli attacchi colpisce PMI</div>
                 </div>
                 <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Mobile Loss</div>
+                  <div className='text-sm text-apty-text-secondary mb-2'>Perdite Mobile</div>
                   <div className='text-3xl font-bold text-apty-primary'>
                     <Counter to={75.5} decimals={1} suffix='%' />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>abandon on mobile</div>
+                  <div className='text-xs text-apty-text-secondary mt-1'>abbandono su mobile</div>
                 </div>
               </div>
             </motion.div>
@@ -196,7 +196,7 @@ export default function WebDevelopmentPage() {
             >
               <Link href='/pricing'>
                 <AptyPrimaryButton size='xl' className='min-w-[200px]'>
-                  Get Your Free Audit
+                  Richiedi un Audit Gratuito
                   <ArrowRight className='w-5 h-5 ml-2' />
                 </AptyPrimaryButton>
               </Link>
@@ -230,10 +230,10 @@ export default function WebDevelopmentPage() {
             className='text-center mb-12'
           >
             <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Why <span className='text-apty-primary'>72% of SMBs</span> Lose Sales Online
+              Perché il <span className='text-apty-primary'>72% delle PMI</span> Perde Vendite Online
             </h2>
             <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
-              These aren't enterprise problems. These are real issues killing local business revenue.
+              Non sono problemi enterprise: sono cause reali che bloccano il fatturato locale.
             </p>
           </motion.div>
 
@@ -241,50 +241,50 @@ export default function WebDevelopmentPage() {
           <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
             {[
               {
-                problem: 'Hidden Costs at Checkout',
+                problem: 'Costi Nascosti al Checkout',
                 stat: '48%',
-                impact: 'abandon purchase',
-                solution: 'Clear pricing upfront',
+                impact: 'abbandono acquisto',
+                solution: 'Prezzi chiari subito',
                 icon: ShoppingCart,
                 color: 'text-apty-state-error'
               },
               {
-                problem: 'Broken Contact Forms',
+                problem: 'Form di Contatto Rotti',
                 stat: '67%',
-                impact: 'lost leads',
-                solution: 'Weekly form testing',
+                impact: 'lead persi',
+                solution: 'Test settimanale form',
                 icon: XCircle,
                 color: 'text-apty-state-error'
               },
               {
-                problem: 'No Click-to-Call',
+                problem: 'Assenza Click-to-Call',
                 stat: '76%',
-                impact: 'want immediate contact',
-                solution: 'Mobile call buttons',
+                impact: 'vogliono contatto immediato',
+                solution: 'Bottoni chiamata mobile',
                 icon: Phone,
                 color: 'text-apty-primary'
               },
               {
-                problem: 'Wrong Business Hours',
+                problem: 'Orari Errati',
                 stat: '55%',
-                impact: 'leave forever',
-                solution: 'Auto-updated info',
+                impact: 'abbandonano per sempre',
+                solution: 'Info auto-aggiornate',
                 icon: Clock,
                 color: 'text-apty-accent'
               },
               {
-                problem: 'Desktop-Only Design',
+                problem: 'Design Solo Desktop',
                 stat: '75.5%',
-                impact: 'mobile abandonment',
-                solution: 'Mobile-first approach',
+                impact: 'abbandono mobile',
+                solution: 'Approccio mobile-first',
                 icon: Smartphone,
                 color: 'text-apty-state-error'
               },
               {
-                problem: 'No Local SEO',
+                problem: 'Assenza SEO Locale',
                 stat: '46%',
-                impact: 'invisible locally',
-                solution: 'Map integration',
+                impact: 'invisibile localmente',
+                solution: 'Integrazione mappa',
                 icon: MapPin,
                 color: 'text-apty-tertiary'
               }
@@ -336,10 +336,10 @@ export default function WebDevelopmentPage() {
             className='text-center mb-12'
           >
             <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Your <span className='text-apty-primary'>Investment vs Return</span>
+              Il Tuo <span className='text-apty-primary'>Investimento vs Ritorno</span>
             </h2>
             <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
-              Real numbers for real businesses. See exactly what you get for your budget.
+              Numeri reali per aziende reali. Vedi esattamente cosa ottieni per il tuo budget.
             </p>
           </motion.div>
 
@@ -407,7 +407,7 @@ export default function WebDevelopmentPage() {
                           <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-0.5' />
                           <div>
                             <div className='font-medium text-apty-text-primary'>Mobile-optimized</div>
-                            <div className='text-sm text-apty-text-secondary'>75% of your traffic is mobile</div>
+                            <div className='text-sm text-apty-text-secondary'>Il 75% del traffico è mobile</div>
                           </div>
                         </div>
                         <div className='flex items-start gap-3'>
@@ -599,7 +599,7 @@ export default function WebDevelopmentPage() {
                           <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-0.5' />
                           <div>
                             <div className='font-medium text-apty-text-primary'>Dedicated support team</div>
-                            <div className='text-sm text-apty-text-secondary'>Your success is our success</div>
+                            <div className='text-sm text-apty-text-secondary'>Il tuo successo è il nostro successo</div>
                           </div>
                         </div>
                       </div>
@@ -688,7 +688,7 @@ export default function WebDevelopmentPage() {
                 
                 <div className='text-center p-6 bg-apty-state-success/5 rounded-xl'>
                   <CheckCircle2 className='w-12 h-12 text-apty-state-success mx-auto mb-3' />
-                  <div className='text-sm text-apty-text-secondary mb-2'>Your ROI</div>
+                  <div className='text-sm text-apty-text-secondary mb-2'>Il Tuo ROI</div>
                   <div className='text-3xl font-bold text-apty-state-success mb-2'>16x</div>
                   <p className='text-sm text-apty-text-secondary'>Return on security investment</p>
                 </div>
@@ -761,7 +761,7 @@ export default function WebDevelopmentPage() {
               The <span className='text-apty-primary'>Mobile Truth</span> for SMBs
             </h2>
             <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
-              75% of your traffic is mobile. But they're not buying. Here's why.
+              Il 75% del traffico è mobile. Ma non compra. Ecco perché.
             </p>
           </motion.div>
 
@@ -775,11 +775,11 @@ export default function WebDevelopmentPage() {
                 className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
               >
                 <Smartphone className='w-12 h-12 text-apty-state-error mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Why Mobile Fails</h3>
+                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Perché il Mobile Fallisce</h3>
                 
                 <div className='space-y-4'>
                   <div className='flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Cart abandonment</span>
+                    <span className='text-sm font-medium text-apty-text-primary'>Abbandono carrello</span>
                     <span className='text-2xl font-bold text-apty-state-error'>75.5%</span>
                   </div>
                   <div className='flex justify-between items-center p-3 bg-apty-accent/5 rounded-lg'>
@@ -815,7 +815,7 @@ export default function WebDevelopmentPage() {
                     { feature: 'Map integration', impact: '76% visit within 24hrs' },
                     { feature: 'Current hours visible', impact: 'Prevents wasted trips' },
                     { feature: 'One-touch booking', impact: 'Instant reservations' },
-                    { feature: 'Mobile wallet pay', impact: 'Quick checkout' },
+                    { feature: 'Pagamento wallet mobile', impact: 'Checkout rapido' },
                     { feature: 'Load under 2 seconds', impact: 'Keeps them engaged' }
                   ].map((item, i) => (
                     <div key={i} className='flex items-start gap-3'>
@@ -877,7 +877,7 @@ export default function WebDevelopmentPage() {
                     week: 'Week 1',
                     title: 'Discovery & Planning',
                     payment: '30% deposit',
-                    tasks: ['Understand your business', 'Competitor analysis', 'Technical planning', 'Content strategy'],
+                    tasks: ['Comprendere il tuo business', 'Analisi competitor', 'Pianificazione tecnica', 'Strategia contenuti'],
                     icon: HeartHandshake,
                     color: 'text-apty-primary'
                   },

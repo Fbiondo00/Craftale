@@ -4,10 +4,9 @@ export default function ServicesPage() {
       <section className="section">
         <div className="container">
           <div className="text-center">
-            <h1 className="heading-xl mb-6">Our Services</h1>
+            <h1 className="heading-xl mb-6">I Nostri Servizi</h1>
             <p className="text-lead max-w-3xl mx-auto">
-              From web development to digital marketing, we offer comprehensive 
-              solutions to help your business grow and succeed online.
+              Dallo sviluppo web alla crescita digitale: soluzioni complete per far crescere il tuo business online.
             </p>
           </div>
         </div>

@@ -111,21 +111,21 @@ export default function WebsiteDesignPage() {
               className='inline-flex items-center gap-2 px-6 py-3 bg-apty-bg-base/10 backdrop-blur-md rounded-full mb-6 md:mb-8 border border-white/20'
             >
               <Timer className='w-4 h-4 text-apty-text-inverse' />
-              <span className='text-sm font-medium text-apty-text-inverse'>50ms to Make an Impression</span>
+              <span className='text-sm font-medium text-apty-text-inverse'>50ms per creare un'impressione</span>
             </motion.div>
 
             {/* Main Headline */}
             <h1 className='text-[48px] md:text-[72px] leading-[1.1] font-bold font-apty-heading text-apty-text-inverse mb-6'>
-              <span className='text-apty-primary'>94%</span> of first impressions
+              <span className='text-apty-primary'>94%</span> delle prime impressioni
               <br />
-              are <span className='bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent'>design-related</span>
+              sono <span className='bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent'>legate al design</span>
             </h1>
 
             {/* Subheadline */}
             <p className='text-xl md:text-2xl text-apty-text-inverse/80 mb-8 max-w-3xl mx-auto leading-relaxed'>
-              Users form judgments in 50 milliseconds. Bad design costs you 
-              <span className='font-semibold text-apty-text-inverse'> 88% of visitors forever</span>. 
-              We create experiences that convert browsers into buyers.
+              Gli utenti decidono in 50 millisecondi. Un design mediocre ti fa perdere 
+              <span className='font-semibold text-apty-text-inverse'> l'88% dei visitatori per sempre</span>. 
+              Creiamo esperienze che trasformano i visitatori in clienti.
             </p>
 
             {/* Key Stats Bar */}
@@ -139,25 +139,25 @@ export default function WebsiteDesignPage() {
                 <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                   <Counter to={50} suffix='ms' />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>To form impression</div>
+                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Per formare un'impressione</div>
               </div>
               <div className='text-center'>
                 <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                   <Counter to={94} suffix='%' />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Visual-based judgment</div>
+                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Giudizio basato sul visual</div>
               </div>
               <div className='text-center'>
                 <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
                   <Counter to={88} suffix='%' />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Never return after bad UX</div>
+                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Non tornano dopo cattiva UX</div>
               </div>
               <div className='text-center'>
                 <div className='text-3xl md:text-4xl font-bold text-apty-primary'>
                   <Counter to={48} suffix='%' />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>More conversions with trust signals</div>
+                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Conversioni in più con segnali di fiducia</div>
               </div>
             </motion.div>
 
@@ -170,7 +170,7 @@ export default function WebsiteDesignPage() {
             >
               <Link href='/pricing'>
                 <AptyPrimaryButton size='xl' className='min-w-[200px]'>
-                  Get Your Design Audit
+                  Richiedi il Tuo Design Audit
                   <ArrowRight className='w-5 h-5 ml-2' />
                 </AptyPrimaryButton>
               </Link>
@@ -200,10 +200,10 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              The <span className='text-apty-primary'>Psychology</span> of First Impressions
+              La <span className='text-apty-primary'>Psicologia</span> delle Prime Impressioni
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              Understanding how users make split-second decisions about your brand
+              Capire come gli utenti prendono decisioni in millisecondi sul tuo brand
             </p>
           </motion.div>
 
@@ -216,10 +216,10 @@ export default function WebsiteDesignPage() {
               {/* Timeline points */}
               <div className='relative flex justify-between'>
                 {[
-                  { time: '0-50ms', event: 'Visual Processing', desc: 'Brain processes visual hierarchy', impact: '94% of impression' },
-                  { time: '50-500ms', event: 'Emotional Response', desc: 'Trust & credibility formed', impact: '75% judge credibility' },
-                  { time: '1-3s', event: 'Decision Point', desc: 'Stay or leave decision', impact: '88% never return' },
-                  { time: '3-5s', event: 'Engagement', desc: 'Content evaluation begins', impact: 'Only if design passes' }
+                  { time: '0-50ms', event: 'Elaborazione Visiva', desc: 'Il cervello elabora la gerarchia visiva', impact: '94% dell\'impressione' },
+                  { time: '50-500ms', event: 'Risposta Emotiva', desc: 'Si forma fiducia & credibilità', impact: '75% giudica la credibilità' },
+                  { time: '1-3s', event: 'Punto di Decisione', desc: 'Decisione resta o abbandona', impact: '88% non torna' },
+                  { time: '3-5s', event: 'Engagement', desc: 'Inizia valutazione contenuti', impact: 'Solo se il design convince' }
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -310,10 +310,10 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Industry <span className='text-apty-primary'>Conversion Benchmarks</span> 2025
+              Benchmark di <span className='text-apty-primary'>Conversione per Settore</span> 2025
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              Data-driven insights from thousands of websites across industries
+              Insight basati sui dati da migliaia di siti in diversi settori
             </p>
           </motion.div>
 
@@ -329,7 +329,7 @@ export default function WebsiteDesignPage() {
                       : 'text-apty-text-secondary hover:text-apty-text-primary'
                   }`}
                 >
-                  User Behavior
+                  Comportamento Utenti
                 </button>
                 <button
                   onClick={() => setActiveTab('metrics')}
@@ -339,7 +339,7 @@ export default function WebsiteDesignPage() {
                       : 'text-apty-text-secondary hover:text-apty-text-primary'
                   }`}
                 >
-                  Industry Metrics
+                  Metriche di Settore
                 </button>
                 <button
                   onClick={() => setActiveTab('technical')}
@@ -349,7 +349,7 @@ export default function WebsiteDesignPage() {
                       : 'text-apty-text-secondary hover:text-apty-text-primary'
                   }`}
                 >
-                  Technical Impact
+                  Impatto Tecnico
                 </button>
               </div>
             </div>
@@ -362,15 +362,15 @@ export default function WebsiteDesignPage() {
             >
               {activeTab === 'psychology' && (
                 <div className='grid md:grid-cols-2 gap-6'>
-                  {/* Bounce Rate by Design Complexity */}
+                  {/* Tasso di Rimbalzo per Complessità del Design */}
                   <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Design Complexity Impact</h3>
+                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Impatto della Complessità del Design</h3>
                     <div className='space-y-4'>
                       <div className='flex justify-between items-center'>
                         <span className='text-apty-text-primary font-medium'>Cluttered Design</span>
                         <div className='flex items-center gap-2'>
                           <div className='text-2xl font-bold text-apty-state-error'>55-70%</div>
-                          <span className='text-sm text-apty-text-secondary'>bounce rate</span>
+                          <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
                         </div>
                       </div>
                       <div className='w-full bg-apty-bg-base rounded-full h-3'>
@@ -381,7 +381,7 @@ export default function WebsiteDesignPage() {
                         <span className='text-apty-text-primary font-medium'>Minimalist Design</span>
                         <div className='flex items-center gap-2'>
                           <div className='text-2xl font-bold text-apty-state-success'>35-50%</div>
-                          <span className='text-sm text-apty-text-secondary'>bounce rate</span>
+                          <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
                         </div>
                       </div>
                       <div className='w-full bg-apty-bg-base rounded-full h-3'>
@@ -489,18 +489,18 @@ export default function WebsiteDesignPage() {
                         
                         <div className='space-y-3'>
                           <div>
-                            <div className='text-sm text-apty-text-secondary mb-1'>Industry Average</div>
+                            <div className='text-sm text-apty-text-secondary mb-1'>Media di Settore</div>
                             <div className='text-2xl font-bold text-apty-text-primary'>{item.average}</div>
                           </div>
                           <div className='h-px bg-apty-border-subtle' />
                           <div>
-                            <div className='text-sm text-apty-text-secondary mb-1'>Top Performers</div>
+                            <div className='text-sm text-apty-text-secondary mb-1'>Top Performer</div>
                             <div className={`text-2xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                               {item.top}
                             </div>
                           </div>
                           <div className='pt-3 border-t border-apty-border-subtle'>
-                            <div className='text-sm text-apty-text-secondary'>With Pro Design</div>
+                            <div className='text-sm text-apty-text-secondary'>Con Design Professionale</div>
                             <div className='text-lg font-bold text-apty-state-success'>{item.improvement}</div>
                           </div>
                         </div>
@@ -569,15 +569,15 @@ export default function WebsiteDesignPage() {
                         <h4 className='font-semibold text-apty-text-primary mb-4'>Meeting Core Web Vitals</h4>
                         <div className='space-y-3'>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Conversion Rate</span>
+                            <span className='text-sm text-apty-text-secondary'>Tasso di Conversione</span>
                             <span className='font-bold text-apty-state-success'>+10-30%</span>
                           </div>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Organic Traffic</span>
+                            <span className='text-sm text-apty-text-secondary'>Traffico Organico</span>
                             <span className='font-bold text-apty-state-success'>+15-25%</span>
                           </div>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Mobile Conversions</span>
+                            <span className='text-sm text-apty-text-secondary'>Conversioni Mobile</span>
                             <span className='font-bold text-apty-state-success'>+27%</span>
                           </div>
                         </div>
@@ -586,15 +586,15 @@ export default function WebsiteDesignPage() {
                         <h4 className='font-semibold text-apty-text-primary mb-4'>Failing Core Web Vitals</h4>
                         <div className='space-y-3'>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Rankings Drop</span>
+                            <span className='text-sm text-apty-text-secondary'>Calo Posizionamenti</span>
                             <span className='font-bold text-apty-state-error'>-10-20%</span>
                           </div>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>User Engagement</span>
+                            <span className='text-sm text-apty-text-secondary'>Coinvolgimento Utenti</span>
                             <span className='font-bold text-apty-state-error'>-15-40%</span>
                           </div>
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Revenue Impact</span>
+                            <span className='text-sm text-apty-text-secondary'>Impatto sui Ricavi</span>
                             <span className='font-bold text-apty-state-error'>-20%+</span>
                           </div>
                         </div>
@@ -628,7 +628,7 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Form Design & <span className='text-apty-primary'>Conversion Science</span>
+              Design dei Form & <span className='text-apty-primary'>Scienza della Conversione</span>
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
               Every field matters. Data-driven insights on form optimization.
@@ -638,7 +638,7 @@ export default function WebsiteDesignPage() {
           <div className='max-w-5xl mx-auto'>
             {/* Form Field Impact Chart */}
             <div className='bg-apty-bg-elevated rounded-2xl p-8 mb-8'>
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Form Abandonment by Field Count</h3>
+              <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Abbandono del Form in base ai Campi</h3>
               
               <div className='space-y-6'>
                 {[
@@ -782,10 +782,10 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Accessibility & <span className='text-apty-primary'>Legal Compliance</span>
+              Accessibilità & <span className='text-apty-primary'>Conformità Legale</span>
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              WCAG 2.2 standards are now legally required. Expand your market by 20%.
+              Gli standard WCAG 2.2 sono ora obbligatori. Espandi il tuo mercato del 20%.
             </p>
           </motion.div>
 

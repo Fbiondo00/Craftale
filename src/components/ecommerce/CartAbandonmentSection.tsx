@@ -14,10 +14,10 @@ export default function CartAbandonmentSection() {
           className='text-center mb-16'
         >
           <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-            Why <span className='text-apty-state-error'>76.1%</span> Abandon Their Cart
+            Perché il <span className='text-apty-state-error'>76,1%</span> Abbandona il Carrello
           </h2>
           <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-            Top friction points killing Italian e-commerce sales
+            Principali punti di frizione che bloccano le vendite e-commerce italiane
           </p>
         </motion.div>
 
@@ -30,41 +30,41 @@ export default function CartAbandonmentSection() {
               viewport={{ once: true }}
               className='bg-apty-bg-elevated rounded-2xl p-8'
             >
-              <h3 className='text-2xl font-bold text-apty-state-error mb-6'>Current Problems</h3>
+              <h3 className='text-2xl font-bold text-apty-state-error mb-6'>Problemi Attuali</h3>
               <div className='space-y-4'>
                 <div className='flex items-start gap-3'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Hidden Shipping Costs</div>
-                    <div className='text-sm text-apty-text-secondary'>Causes 48% of abandonment</div>
+                    <div className='font-medium text-apty-text-primary'>Costi di Spedizione Nascosti</div>
+                    <div className='text-sm text-apty-text-secondary'>Causa il 48% degli abbandoni</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Forced Account Creation</div>
-                    <div className='text-sm text-apty-text-secondary'>31% higher abandonment</div>
+                    <div className='font-medium text-apty-text-primary'>Registrazione Obbligatoria</div>
+                    <div className='text-sm text-apty-text-secondary'>+31% tasso di abbandono</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>No PayPal/Postepay</div>
-                    <div className='text-sm text-apty-text-secondary'>30% of Italians prefer these</div>
+                    <div className='font-medium text-apty-text-primary'>Assenza PayPal/Postepay</div>
+                    <div className='text-sm text-apty-text-secondary'>Il 30% degli italiani li preferisce</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Slow Mobile Experience</div>
-                    <div className='text-sm text-apty-text-secondary'>60% abandon after 3 seconds</div>
+                    <div className='font-medium text-apty-text-primary'>Esperienza Mobile Lenta</div>
+                    <div className='text-sm text-apty-text-secondary'>60% abbandona dopo 3 secondi</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>No Trust Badges</div>
-                    <div className='text-sm text-apty-text-secondary'>Missing SSL, reviews = no sale</div>
+                    <div className='font-medium text-apty-text-primary'>Mancanza di Badge Fiducia</div>
+                    <div className='text-sm text-apty-text-secondary'>Senza SSL e recensioni niente vendite</div>
                   </div>
                 </div>
               </div>
@@ -77,41 +77,41 @@ export default function CartAbandonmentSection() {
               viewport={{ once: true }}
               className='bg-gradient-to-br from-apty-primary/5 to-apty-secondary/5 rounded-2xl p-8 border-2 border-apty-primary'
             >
-              <h3 className='text-2xl font-bold text-apty-primary mb-6'>Our Solutions</h3>
+              <h3 className='text-2xl font-bold text-apty-primary mb-6'>Le Nostre Soluzioni</h3>
               <div className='space-y-4'>
                 <div className='flex items-start gap-3'>
                   <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Clear Shipping Calculator</div>
-                    <div className='text-sm text-apty-text-secondary'>+22% conversion rate</div>
+                    <div className='font-medium text-apty-text-primary'>Calcolatore Spedizione Trasparente</div>
+                    <div className='text-sm text-apty-text-secondary'>+22% tasso di conversione</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Guest Checkout Option</div>
-                    <div className='text-sm text-apty-text-secondary'>+18-22% conversions</div>
+                    <div className='font-medium text-apty-text-primary'>Checkout Ospite</div>
+                    <div className='text-sm text-apty-text-secondary'>+18-22% conversioni</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>All Italian Payment Methods</div>
+                    <div className='font-medium text-apty-text-primary'>Tutti i Metodi di Pagamento Italiani</div>
                     <div className='text-sm text-apty-text-secondary'>PayPal, Postepay, Satispay, BNPL</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Mobile-First Speed</div>
-                    <div className='text-sm text-apty-text-secondary'>{'<2.5s load time'}</div>
+                    <div className='font-medium text-apty-text-primary'>Velocità Mobile-First</div>
+                    <div className='text-sm text-apty-text-secondary'>{'<2.5s caricamento'}</div>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
                   <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                   <div>
-                    <div className='font-medium text-apty-text-primary'>Trust Signals Everywhere</div>
-                    <div className='text-sm text-apty-text-secondary'>Trustpilot, SSL, guarantees</div>
+                    <div className='font-medium text-apty-text-primary'>Segnali di Fiducia Ovunque</div>
+                    <div className='text-sm text-apty-text-secondary'>Trustpilot, SSL, garanzie</div>
                   </div>
                 </div>
               </div>

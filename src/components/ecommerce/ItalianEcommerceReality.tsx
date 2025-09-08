@@ -17,10 +17,10 @@ export default function ItalianEcommerceReality() {
           className='text-center mb-16'
         >
           <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-            The <span className='text-apty-primary'>Italian E-commerce</span> Reality
+            La Realtà dell'<span className='text-apty-primary'>E-commerce Italiano</span>
           </h2>
           <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-            Real data from Italian SMBs. Real problems. Real solutions.
+            Dati reali delle PMI italiane. Problemi reali. Soluzioni concrete.
           </p>
         </motion.div>
 
@@ -134,7 +134,7 @@ export default function ItalianEcommerceReality() {
                       <Users className='w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-blue-400' />
                     </div>
                   </div>
-                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-tighter sm:tracking-wider'>Visitors</p>
+                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-tighter sm:tracking-wider'>Visitatori</p>
                 </motion.div>
                 
                 <motion.div 
@@ -148,7 +148,7 @@ export default function ItalianEcommerceReality() {
                       <ShoppingCart className='w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-purple-400' />
                     </div>
                   </div>
-                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-tighter sm:tracking-wider'>Add to Cart</p>
+                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-tighter sm:tracking-wider'>Aggiunge al Carrello</p>
                 </motion.div>
                 
                 <motion.div 
@@ -176,7 +176,7 @@ export default function ItalianEcommerceReality() {
                       <CheckCircle2 className='w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400' />
                     </div>
                   </div>
-                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-tighter sm:tracking-wider'>Purchase</p>
+                  <p className='text-[9px] sm:text-xs md:text-sm font-medium text-white/70 uppercase tracking-titter sm:tracking-wider'>Acquisto</p>
                 </motion.div>
               </div>
               
@@ -228,7 +228,7 @@ export default function ItalianEcommerceReality() {
                   className='text-center'
                 >
                   <p className='text-[15px] sm:text-lg md:text-xl lg:text-2xl font-semibold'>1,000</p>
-                  <p className='text-[8px] sm:text-xs text-white/50'>visitors</p>
+                  <p className='text-[8px] sm:text-xs text-white/50'>visitatori</p>
                 </motion.div>
                 
                 <motion.div 
@@ -282,10 +282,10 @@ export default function ItalianEcommerceReality() {
                 <div className='w-10 h-10 bg-apty-primary/10 rounded-full flex items-center justify-center'>
                   <TrendingUp className='w-5 h-5 text-apty-primary' />
                 </div>
-                <h4 className='font-semibold text-apty-text-primary'>Conversion Rate</h4>
+                <h4 className='font-semibold text-apty-text-primary'>Tasso di Conversione</h4>
               </div>
               <p className='text-3xl font-bold text-apty-primary mb-2'>2.6%</p>
-              <p className='text-sm text-apty-text-secondary'>Italian e-commerce average</p>
+              <p className='text-sm text-apty-text-secondary'>Media e-commerce italiano</p>
             </div>
             
             <div className='bg-apty-bg-elevated rounded-2xl p-6 border border-apty-border-subtle'>
@@ -293,10 +293,10 @@ export default function ItalianEcommerceReality() {
                 <div className='w-10 h-10 bg-apty-state-error/10 rounded-full flex items-center justify-center'>
                   <AlertCircle className='w-5 h-5 text-apty-state-error' />
                 </div>
-                <h4 className='font-semibold text-apty-text-primary'>Cart Abandonment</h4>
+                <h4 className='font-semibold text-apty-text-primary'>Abbandono Carrello</h4>
               </div>
               <p className='text-3xl font-bold text-apty-state-error mb-2'>76.1%</p>
-              <p className='text-sm text-apty-text-secondary'>€84 average cart value lost</p>
+              <p className='text-sm text-apty-text-secondary'>€84 valore medio carrello perso</p>
             </div>
             
             <div className='bg-gradient-to-br from-apty-primary/10 to-apty-secondary/10 rounded-2xl p-6 border border-apty-primary/30'>
@@ -304,10 +304,10 @@ export default function ItalianEcommerceReality() {
                 <div className='w-10 h-10 bg-apty-state-success/10 rounded-full flex items-center justify-center'>
                   <Euro className='w-5 h-5 text-apty-state-success' />
                 </div>
-                <h4 className='font-semibold text-apty-text-primary'>Revenue Potential</h4>
+                <h4 className='font-semibold text-apty-text-primary'>Potenziale di Fatturato</h4>
               </div>
               <p className='text-3xl font-bold text-apty-state-success mb-2'>+€440K/year</p>
-              <p className='text-sm text-apty-text-secondary'>By reaching 3.6% conversion</p>
+              <p className='text-sm text-apty-text-secondary'>Raggiungendo il 3,6% di conversione</p>
             </div>
           </motion.div>
         </div>

@@ -14,23 +14,23 @@ export default function PaymentMethodsSection() {
           className='text-center mb-16'
         >
           <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-            Payment Methods <span className='text-apty-primary'>Italians Trust</span>
+            Metodi di Pagamento che gli <span className='text-apty-primary'>Italiani Si FIDANO</span>
           </h2>
           <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-            Missing the right payment option = lost sale
+            Mancare l'opzione di pagamento giusta = vendita persa
           </p>
         </motion.div>
 
         {/* Payment Methods Stats */}
         <div className='max-w-5xl mx-auto mb-12'>
           <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-            <h3 className='text-2xl font-bold text-apty-text-primary mb-8'>Italian Payment Preferences 2024</h3>
+            <h3 className='text-2xl font-bold text-apty-text-primary mb-8'>Preferenze di Pagamento Italiane 2024</h3>
             
             <div className='grid md:grid-cols-2 gap-8'>
               <div className='space-y-6'>
                 {[
-                  { method: 'Credit/Debit Cards', usage: 48, icon: CreditCard, color: 'bg-apty-primary' },
-                  { method: 'PayPal & E-wallets', usage: 32, icon: Shield, color: 'bg-apty-secondary' },
+                  { method: 'Carte di Credito/Debito', usage: 48, icon: CreditCard, color: 'bg-apty-primary' },
+                  { method: 'PayPal & Wallet Digitali', usage: 32, icon: Shield, color: 'bg-apty-secondary' },
                   { method: 'Postepay', usage: 25, icon: CreditCard, color: 'bg-apty-accent' },
                   { method: 'BNPL (Klarna, Scalapay)', usage: 10, icon: RefreshCw, color: 'bg-apty-tertiary' }
                 ].map((item, i) => (
@@ -59,23 +59,23 @@ export default function PaymentMethodsSection() {
               </div>
 
               <div className='bg-apty-primary/10 rounded-xl p-6'>
-                <h4 className='font-semibold text-apty-text-primary mb-4'>Key Insights</h4>
+                <h4 className='font-semibold text-apty-text-primary mb-4'>Insight Chiave</h4>
                 <ul className='space-y-3 text-sm'>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>67% of 25-34 year-olds prefer digital wallets</span>
+                    <span className='text-apty-text-secondary'>Il 67% dei 25-34enni preferisce i wallet digitali</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Postepay essential for B2C markets</span>
+                    <span className='text-apty-text-secondary'>Postepay essenziale per il mercato B2C</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>50% of merchants offer BNPL options</span>
+                    <span className='text-apty-text-secondary'>Il 50% dei merchant offre opzioni BNPL</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Satispay growing 12% yearly</span>
+                    <span className='text-apty-text-secondary'>Satispay cresce del 12% annuo</span>
                   </li>
                 </ul>
               </div>
@@ -86,23 +86,23 @@ export default function PaymentMethodsSection() {
         {/* Trust Formation */}
         <div className='max-w-5xl mx-auto'>
           <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-            <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Building Trust with Italian Shoppers</h3>
+            <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Costruire Fiducia con gli Acquirenti Italiani</h3>
             
             <div className='grid md:grid-cols-3 gap-6'>
               <div className='text-center p-4 bg-apty-bg-subtle rounded-lg'>
                 <div className='text-4xl font-bold text-apty-primary mb-2'>22%</div>
-                <div className='text-sm text-apty-text-secondary'>Buy within first month</div>
-                <div className='text-xs text-apty-text-primary mt-2'>Trust takes time</div>
+                <div className='text-sm text-apty-text-secondary'>Acquistano entro il primo mese</div>
+                <div className='text-xs text-apty-text-primary mt-2'>La fiducia richiede tempo</div>
               </div>
               <div className='text-center p-4 bg-apty-primary/10 rounded-lg'>
                 <div className='text-4xl font-bold text-apty-primary mb-2'>+30%</div>
-                <div className='text-sm text-apty-text-secondary'>Conversion with trust badges</div>
+                <div className='text-sm text-apty-text-secondary'>Conversione con badge di fiducia</div>
                 <div className='text-xs text-apty-text-primary mt-2'>Trustpilot, Feedaty</div>
               </div>
               <div className='text-center p-4 bg-apty-bg-subtle rounded-lg'>
                 <div className='text-4xl font-bold text-apty-state-error mb-2'>100%</div>
-                <div className='text-sm text-apty-text-secondary'>Need SSL certificate</div>
-                <div className='text-xs text-apty-text-primary mt-2'>Non-negotiable</div>
+                <div className='text-sm text-apty-text-secondary'>Richiedono certificato SSL</div>
+                <div className='text-xs text-apty-text-primary mt-2'>Non negoziabile</div>
               </div>
             </div>
           </div>

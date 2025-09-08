@@ -24,21 +24,21 @@ export default function HeroSection() {
             className='inline-flex items-center gap-2 px-6 py-3 bg-apty-primary/10 backdrop-blur-md rounded-full mb-6 md:mb-8 border border-apty-primary/20'
           >
             <ShoppingCart className='w-4 h-4 text-apty-primary' />
-            <span className='text-sm font-medium text-apty-text-primary'>76.1% Cart Abandonment in Italy</span>
+            <span className='text-sm font-medium text-apty-text-primary'>76,1% Abbandono Carrelli in Italia</span>
           </motion.div>
 
           {/* Main Headline */}
           <h1 className='text-[48px] md:text-[72px] leading-[1.1] font-bold font-apty-heading text-apty-text-primary mb-6'>
-            Your e-commerce loses
+            Il tuo e-commerce perde
             <br />
-            <span className='text-apty-primary'>€7 every €10</span> at checkout
+            <span className='text-apty-primary'>7€ ogni 10€</span> nel checkout
           </h1>
 
           {/* Subheadline */}
           <p className='text-xl md:text-2xl text-apty-text-secondary mb-8 max-w-3xl mx-auto leading-relaxed'>
-            Italian shoppers abandon <span className='font-semibold text-apty-text-primary'>76.1% of carts</span>. 
-            Hidden costs, slow sites, missing payment methods kill sales. 
-            We build stores that actually <span className='font-semibold text-apty-primary'>convert Italian customers</span>.
+            Gli utenti italiani abbandonano il <span className='font-semibold text-apty-text-primary'>76,1% dei carrelli</span>.
+            Costi nascosti, lentezza e metodi di pagamento mancanti bloccano le vendite.
+            Creiamo store che davvero <span className='font-semibold text-apty-primary'>convertono clienti italiani</span>.
           </p>
 
           {/* Key Stats Bar */}
@@ -52,25 +52,25 @@ export default function HeroSection() {
               <div className='text-3xl md:text-4xl font-bold text-apty-text-primary'>
                 <Counter to={2.6} decimals={1} suffix='%' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-secondary'>Avg Conversion Rate</div>
+              <div className='text-xs md:text-sm text-apty-text-secondary'>Tasso di Conversione Medio</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-primary'>
                 <Counter to={55.2} decimals={1} suffix='%' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-secondary'>Mobile Sales</div>
+              <div className='text-xs md:text-sm text-apty-text-secondary'>Vendite da Mobile</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-state-error'>
                 <Counter to={3} suffix='s' />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-secondary'>Max Load Time</div>
+              <div className='text-xs md:text-sm text-apty-text-secondary'>Tempo Massimo di Caricamento</div>
             </div>
             <div className='text-center'>
               <div className='text-3xl md:text-4xl font-bold text-apty-secondary'>
                 €<Counter to={107} />
               </div>
-              <div className='text-xs md:text-sm text-apty-text-secondary'>Average Order</div>
+              <div className='text-xs md:text-sm text-apty-text-secondary'>Valore Medio Ordine</div>
             </div>
           </motion.div>
 
@@ -83,7 +83,7 @@ export default function HeroSection() {
           >
             <Link href='/pricing'>
               <AptyPrimaryButton size='xl' className='min-w-[200px]'>
-                Fix Your Conversions
+                Aumenta le Conversioni
                 <ArrowRight className='w-5 h-5 ml-2' />
               </AptyPrimaryButton>
             </Link>

@@ -14,10 +14,10 @@ export default function ProcessSection() {
           className='text-center mb-16'
         >
           <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-            Our <span className='text-apty-primary'>Proven Process</span>
+            Il Nostro <span className='text-apty-primary'>Processo Collaudato</span>
           </h2>
           <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-            From zero to selling in 45 days
+            Da zero a vendere in 45 giorni
           </p>
         </motion.div>
 
@@ -29,21 +29,21 @@ export default function ProcessSection() {
               viewport={{ once: true }}
               className='bg-apty-bg-base rounded-xl p-6 border border-apty-border-subtle'
             >
-              <div className='text-sm text-apty-primary font-semibold mb-2'>Days 1-15</div>
-              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Analysis & Strategy</div>
-              <div className='text-sm text-apty-text-secondary mb-4'>Market research, competitor analysis, conversion planning</div>
+              <div className='text-sm text-apty-primary font-semibold mb-2'>Giorni 1-15</div>
+              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Analisi & Strategia</div>
+              <div className='text-sm text-apty-text-secondary mb-4'>Ricerca di mercato, analisi competitor, pianificazione conversioni</div>
               <ul className='space-y-2 text-sm'>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Customer personas</span>
+                  <span className='text-apty-text-secondary'>Personas cliente</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Payment integrations</span>
+                  <span className='text-apty-text-secondary'>Integrazioni pagamenti</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Shipping strategy</span>
+                  <span className='text-apty-text-secondary'>Strategia spedizioni</span>
                 </li>
               </ul>
             </motion.div>
@@ -55,21 +55,21 @@ export default function ProcessSection() {
               transition={{ delay: 0.1 }}
               className='bg-gradient-to-br from-apty-primary/5 to-apty-secondary/5 rounded-xl p-6 border-2 border-apty-primary'
             >
-              <div className='text-sm text-apty-primary font-semibold mb-2'>Days 16-30</div>
-              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Build & Optimize</div>
-              <div className='text-sm text-apty-text-secondary mb-4'>Mobile-first development, speed optimization</div>
+              <div className='text-sm text-apty-primary font-semibold mb-2'>Giorni 16-30</div>
+              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Sviluppo & Ottimizzazione</div>
+              <div className='text-sm text-apty-text-secondary mb-4'>Sviluppo mobile-first, ottimizzazione velocità</div>
               <ul className='space-y-2 text-sm'>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Product catalog</span>
+                  <span className='text-apty-text-secondary'>Catalogo prodotti</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Checkout flow</span>
+                  <span className='text-apty-text-secondary'>Flusso checkout</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Trust signals</span>
+                  <span className='text-apty-text-secondary'>Segnali di fiducia</span>
                 </li>
               </ul>
             </motion.div>
@@ -81,21 +81,21 @@ export default function ProcessSection() {
               transition={{ delay: 0.2 }}
               className='bg-apty-bg-base rounded-xl p-6 border border-apty-border-subtle'
             >
-              <div className='text-sm text-apty-tertiary font-semibold mb-2'>Days 31-45</div>
-              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Test & Launch</div>
-              <div className='text-sm text-apty-text-secondary mb-4'>User testing, compliance checks, go-live</div>
+              <div className='text-sm text-apty-tertiary font-semibold mb-2'>Giorni 31-45</div>
+              <div className='text-2xl font-bold text-apty-text-primary mb-1'>Test & Lancio</div>
+              <div className='text-sm text-apty-text-secondary mb-4'>User testing, verifiche compliance, go-live</div>
               <ul className='space-y-2 text-sm'>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                  <span className='text-apty-text-secondary'>GDPR compliance</span>
+                  <span className='text-apty-text-secondary'>Compliance GDPR</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Payment testing</span>
+                  <span className='text-apty-text-secondary'>Test pagamenti</span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                  <span className='text-apty-text-secondary'>Launch support</span>
+                  <span className='text-apty-text-secondary'>Supporto al lancio</span>
                 </li>
               </ul>
             </motion.div>
