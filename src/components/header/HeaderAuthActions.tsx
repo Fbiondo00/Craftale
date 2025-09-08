@@ -194,7 +194,7 @@ export function HeaderAuthActions({
             onClick={() => onOpenAuthModal?.('signin')}
             size='md'
           >
-            Sign up
+            Sign in
           </AptySecondaryButton>
           <AptyPrimaryButton
             onClick={() => onOpenAuthModal?.('signup')}

@@ -126,7 +126,8 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
   const handleCTAClick = async (cardId: string) => {
     if (!isAuthenticated) {
       // Open auth modal with signup mode when user clicks on pricing CTA
-      openAuthModal('signup');
+  // Changed to open sign-in first as requested
+  openAuthModal('signin');
     } else {
       // If authenticated, proceed with the normal flow
       if (cardId === 'custom') {
@@ -308,7 +309,8 @@ const NewPricingCardsFallback: React.FC<NewPricingCardsProps> = ({ onPersonaMatc
 
   const handleCTAClick = (cardId: string) => {
     if (!isAuthenticated) {
-      openAuthModal('signup');
+  // Changed to open sign-in first as requested
+  openAuthModal('signin');
     } else {
       if (cardId === 'custom') {
         onPersonaMatcherOpen();
