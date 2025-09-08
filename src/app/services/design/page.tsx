@@ -799,34 +799,34 @@ export default function WebsiteDesignPage() {
                 className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
               >
                 <Lock className='w-12 h-12 text-apty-primary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>WCAG 2.2 Requirements</h3>
+                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Requisiti WCAG 2.2</h3>
                 
                 <div className='space-y-4'>
                   <div className='p-4 bg-apty-bg-subtle rounded-lg'>
-                    <h4 className='font-semibold text-apty-text-primary mb-2'>Legal Baseline: Level AA</h4>
+                    <h4 className='font-semibold text-apty-text-primary mb-2'>Base Legale: Livello AA</h4>
                     <ul className='space-y-2 text-sm text-apty-text-secondary'>
                       <li className='flex items-start gap-2'>
                         <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                        <span>Minimum 24x24px touch targets</span>
+                        <span>Target tattili minimo 24x24px</span>
                       </li>
                       <li className='flex items-start gap-2'>
                         <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                        <span>Consistent help mechanisms</span>
+                        <span>Meccanismi di aiuto coerenti</span>
                       </li>
                       <li className='flex items-start gap-2'>
                         <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                        <span>Accessible authentication</span>
+                        <span>Autenticazione accessibile</span>
                       </li>
                       <li className='flex items-start gap-2'>
                         <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                        <span>Focus visibility not obscured</span>
+                        <span>Focus sempre visibile</span>
                       </li>
                     </ul>
                   </div>
 
                   <div className='p-4 bg-apty-state-error/10 rounded-lg'>
                     <p className='text-sm text-apty-text-primary'>
-                      <strong>Legal Risk:</strong> ADA lawsuits increased 300% since 2022
+                      <strong>Rischio Legale:</strong> cause ADA aumentate del 300% dal 2022
                     </p>
                   </div>
                 </div>
@@ -840,36 +840,36 @@ export default function WebsiteDesignPage() {
                 className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
               >
                 <Globe className='w-12 h-12 text-apty-secondary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Business Impact</h3>
+                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Impatto sul Business</h3>
                 
                 <div className='space-y-6'>
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Market Reach</span>
+                      <span className='text-apty-text-primary'>Copertura di Mercato</span>
                       <span className='text-2xl font-bold text-apty-state-success'>+20%</span>
                     </div>
-                    <p className='text-sm text-apty-text-secondary'>Access to users with disabilities</p>
+                    <p className='text-sm text-apty-text-secondary'>Accesso agli utenti con disabilità</p>
                   </div>
                   
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Customer Loyalty</span>
+                      <span className='text-apty-text-primary'>Fedeltà Cliente</span>
                       <span className='text-2xl font-bold text-apty-state-success'>+35%</span>
                     </div>
-                    <p className='text-sm text-apty-text-secondary'>Improved usability for all users</p>
+                    <p className='text-sm text-apty-text-secondary'>Usabilità migliorata per tutti</p>
                   </div>
 
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Compliance Cost</span>
+                      <span className='text-apty-text-primary'>Costo Compliance</span>
                       <span className='text-xl font-bold text-apty-text-primary'>$3-15k</span>
                     </div>
-                    <p className='text-sm text-apty-text-secondary'>One-time retrofit investment</p>
+                    <p className='text-sm text-apty-text-secondary'>Investimento una tantum di adeguamento</p>
                   </div>
 
                   <div className='p-4 bg-apty-primary/10 rounded-lg'>
                     <p className='text-sm text-apty-text-primary'>
-                      <strong>ROI:</strong> Accessible sites see better SEO and wider audience reach
+                      <strong>ROI:</strong> Siti accessibili ottengono miglior SEO e pubblico più ampio
                     </p>
                   </div>
                 </div>
@@ -900,10 +900,10 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              2025 Design Trends That <span className='text-apty-primary'>Actually Convert</span>
+              Tendenze Design 2025 che <span className='text-apty-primary'>Convertono Davvero</span>
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              Not just trends - proven impacts on business metrics
+              Non solo mode: impatti provati sulle metriche di business
             </p>
           </motion.div>
 
@@ -911,44 +911,44 @@ export default function WebsiteDesignPage() {
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {[
                 {
-                  trend: 'Core Web Vitals Focus',
+                  trend: 'Focus Core Web Vitals',
                   impact: '+10-30%',
-                  metric: 'conversion rate',
+                  metric: 'tasso di conversione',
                   icon: Gauge,
                   color: 'bg-apty-primary'
                 },
                 {
-                  trend: 'Micro-interactions',
+                  trend: 'Micro-interazioni',
                   impact: '+6-15%',
-                  metric: 'CTA clicks',
+                  metric: 'clic CTA',
                   icon: MousePointer,
                   color: 'bg-apty-secondary'
                 },
                 {
-                  trend: 'Dark Mode Options',
+                  trend: 'Opzioni Dark Mode',
                   impact: '+12-22%',
-                  metric: 'engagement (tech)',
+                  metric: 'coinvolgimento (tech)',
                   icon: Monitor,
                   color: 'bg-apty-tertiary'
                 },
                 {
-                  trend: 'Accessibility-First',
+                  trend: 'Accessibilità Prima',
                   impact: '+35%',
-                  metric: 'market reach',
+                  metric: 'copertura di mercato',
                   icon: Globe,
                   color: 'bg-apty-accent'
                 },
                 {
-                  trend: 'Minimalism',
+                  trend: 'Minimalismo',
                   impact: '+42%',
-                  metric: 'signup conversion',
+                  metric: 'conversione iscrizione',
                   icon: Layers,
                   color: 'bg-apty-primary'
                 },
                 {
-                  trend: 'AI Personalization',
+                  trend: 'Personalizzazione AI',
                   impact: '+20-80%',
-                  metric: 'session duration',
+                  metric: 'durata sessione',
                   icon: Brain,
                   color: 'bg-apty-secondary'
                 }
@@ -993,10 +993,10 @@ export default function WebsiteDesignPage() {
             className='text-center mb-16'
           >
             <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Our <span className='text-apty-primary'>Data-Driven</span> Process
+              Il Nostro <span className='text-apty-primary'>Processo Guidato dai Dati</span>
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              Every decision backed by research, every pixel optimized for conversion
+              Ogni decisione supportata da ricerca, ogni pixel ottimizzato per la conversione
             </p>
           </motion.div>
 
@@ -1009,21 +1009,21 @@ export default function WebsiteDesignPage() {
                 viewport={{ once: true }}
                 className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
               >
-                <div className='text-sm text-apty-primary font-semibold mb-2'>Week 1-2</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Research & Discovery</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>User research, competitor analysis, conversion funnel mapping</div>
+                <div className='text-sm text-apty-primary font-semibold mb-2'>Settimane 1-2</div>
+                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Ricerca & Analisi Iniziale</div>
+                <div className='text-sm text-apty-text-secondary mb-4'>Ricerca utenti, analisi competitor, mappatura funnel di conversione</div>
                 <ul className='space-y-2 text-sm'>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>User Personas</span>
+                    <span className='text-apty-text-secondary'>Personas Utente</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Competitor Audit</span>
+                    <span className='text-apty-text-secondary'>Audit Competitor</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Conversion Strategy</span>
+                    <span className='text-apty-text-secondary'>Strategia di Conversione</span>
                   </li>
                 </ul>
               </motion.div>
@@ -1035,21 +1035,21 @@ export default function WebsiteDesignPage() {
                 transition={{ delay: 0.1 }}
                 className='bg-gradient-to-br from-apty-primary/5 to-apty-secondary/5 rounded-xl p-6 border-2 border-apty-primary'
               >
-                <div className='text-sm text-apty-primary font-semibold mb-2'>Week 3-5</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Design & Testing</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>Data-driven design with A/B testing and user feedback</div>
+                <div className='text-sm text-apty-primary font-semibold mb-2'>Settimane 3-5</div>
+                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Design & Test</div>
+                <div className='text-sm text-apty-text-secondary mb-4'>Design guidato dai dati con A/B test e feedback utenti</div>
                 <ul className='space-y-2 text-sm'>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Wireframes</span>
+                    <span className='text-apty-text-secondary'>Wireframe</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Visual Design</span>
+                    <span className='text-apty-text-secondary'>Design Visivo</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Usability Testing</span>
+                    <span className='text-apty-text-secondary'>Test di Usabilità</span>
                   </li>
                 </ul>
               </motion.div>
@@ -1061,21 +1061,21 @@ export default function WebsiteDesignPage() {
                 transition={{ delay: 0.2 }}
                 className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
               >
-                <div className='text-sm text-apty-tertiary font-semibold mb-2'>Week 6-8</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Optimize & Launch</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>Performance optimization, Core Web Vitals, accessibility compliance</div>
+                <div className='text-sm text-apty-tertiary font-semibold mb-2'>Settimane 6-8</div>
+                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Ottimizzazione & Lancio</div>
+                <div className='text-sm text-apty-text-secondary mb-4'>Ottimizzazione prestazioni, Core Web Vitals, conformità accessibilità</div>
                 <ul className='space-y-2 text-sm'>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Speed Optimization</span>
+                    <span className='text-apty-text-secondary'>Ottimizzazione Velocità</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>WCAG Compliance</span>
+                    <span className='text-apty-text-secondary'>Conformità WCAG</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Launch Support</span>
+                    <span className='text-apty-text-secondary'>Supporto Lancio</span>
                   </li>
                 </ul>
               </motion.div>
