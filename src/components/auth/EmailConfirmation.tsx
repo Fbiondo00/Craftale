@@ -44,9 +44,9 @@ export const EmailConfirmation: React.FC<EmailConfirmationProps> = ({
         <div className='mx-auto w-16 h-16 bg-apty-bg-elevated rounded-full flex items-center justify-center mb-4 border border-apty-border-subtle'>
           <Mail className='w-8 h-8 text-apty-primary' />
         </div>
-        <CardTitle className='text-2xl font-semibold font-apty-heading text-apty-text-primary'>Check Your Email</CardTitle>
+        <CardTitle className='text-2xl font-semibold font-apty-heading text-apty-text-primary'>Controlla la tua email</CardTitle>
         <CardDescription className='text-apty-text-secondary'>
-          We've sent a confirmation link to:
+          Ti abbiamo inviato un link di conferma a:
         </CardDescription>
         <p className='font-medium text-apty-text-primary mt-2'>{email}</p>
       </CardHeader>
@@ -55,23 +55,23 @@ export const EmailConfirmation: React.FC<EmailConfirmationProps> = ({
         <div className='bg-apty-bg-subtle border border-apty-border-subtle rounded-lg p-4'>
           <h3 className='font-medium text-apty-text-primary mb-2 flex items-center gap-2'>
             <CheckCircle className='w-5 h-5 text-apty-accent' />
-            Almost there!
+            Ci sei quasi!
           </h3>
           <p className='text-sm text-apty-text-secondary'>
-            Please check your email and click the confirmation link to activate your account. The
-            link will expire in 24 hours.
+            Controlla la tua email e clicca sul link di conferma per attivare il tuo account. Il
+            link scade tra 24 ore.
           </p>
         </div>
 
         <div className='space-y-4'>
           {resendSuccess ? (
             <div className='text-center text-apty-accent font-medium'>
-              Confirmation email resent successfully!
+              Email di conferma inviata di nuovo con successo!
             </div>
           ) : (
             <>
               <p className='text-sm text-apty-text-secondary text-center'>
-                Didn't receive the email? Check your spam folder or
+                Non hai ricevuto l'email? Controlla la cartella spam oppure
               </p>
               {onResendEmail && (
                 <AptyPrimaryButton
@@ -83,10 +83,10 @@ export const EmailConfirmation: React.FC<EmailConfirmationProps> = ({
                   {isResending ? (
                     <div className='flex items-center space-x-2'>
                       <div className='w-4 h-4 border-2 border-apty-text-on-brand/30 border-t-apty-text-on-brand rounded-full animate-spin' />
-                      <span>Resending...</span>
+                      <span>Invio in corso...</span>
                     </div>
                   ) : (
-                    'Resend Confirmation Email'
+                    'Invia di nuovo l\'email di conferma'
                   )}
                 </AptyPrimaryButton>
               )}
@@ -100,7 +100,7 @@ export const EmailConfirmation: React.FC<EmailConfirmationProps> = ({
                 onClick={onBackToSignIn}
                 className='text-sm text-apty-primary hover:text-apty-primary-hover font-medium apty-transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apty-primary focus-visible:ring-offset-2'
               >
-                Back to Sign In
+        Torna all'accesso
               </button>
             </div>
           )}
@@ -108,7 +108,7 @@ export const EmailConfirmation: React.FC<EmailConfirmationProps> = ({
 
         <div className='border-t border-apty-border-subtle pt-4'>
           <p className='text-xs text-center text-apty-text-tertiary'>
-            If you continue to have problems, please contact our support team.
+      Se continui ad avere problemi, contatta il nostro team di supporto.
           </p>
         </div>
       </CardContent>

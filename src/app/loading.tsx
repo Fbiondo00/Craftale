@@ -13,13 +13,13 @@ export default function Loading() {
           <LumaSpin size={60} />
         </div>
         
-        {/* Loading Text */}
+    {/* Testo di caricamento */}
         <div className="space-y-2">
           <p className="text-lg font-medium text-color-primary">
-            Loading...
+      Caricamento...
           </p>
           <p className="text-sm text-color-muted">
-            Please wait while we prepare your content
+      Attendi mentre prepariamo i tuoi contenuti
           </p>
         </div>
       </div>

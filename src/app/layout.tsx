@@ -74,7 +74,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const sessionUser = await getSessionUser();
 
   return (
-    <html lang='en' className='scroll-smooth'>
+    <html lang='en' className='scroll-smooth' suppressHydrationWarning>
       <head>
         <meta name='theme-color' content='#6720FF' />
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=5' />
@@ -82,7 +82,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <link rel='icon' href='/logo.png' />
         <link rel='apple-touch-icon' href='/logo.png' />
       </head>
-      <body className={`${inter.className} antialiased`}>
+  <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider initialUser={sessionUser}>
             <HeaderWrapper sessionUser={sessionUser} />

@@ -1,15 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { 
-  Zap, 
-  Mail, 
-  Phone, 
-  Facebook, 
-  Twitter, 
-  Linkedin, 
-  Instagram,
-  ArrowRight
-} from "lucide-react";
+import { Mail, ArrowRight } from "lucide-react";
+import * as SocialIcons from "lucide-react";
 
 interface FooterProps {
   logo?: string;
@@ -19,7 +11,7 @@ interface FooterProps {
 export default function Footer({ 
   logo = "Craftale", 
   companyName = "Craftale Agency" 
-}: FooterProps) {
+}: Readonly<FooterProps>) {
   const currentYear = new Date().getFullYear();
 
   const serviceLinks = [
@@ -50,10 +42,10 @@ export default function Footer({
   ];
 
   const socialLinks = [
-    { name: "Facebook", href: "#", icon: Facebook },
-    { name: "Twitter", href: "#", icon: Twitter },
-    { name: "LinkedIn", href: "#", icon: Linkedin },
-    { name: "Instagram", href: "#", icon: Instagram },
+  { name: "Facebook", href: "#", icon: (SocialIcons as any).Facebook },
+  { name: "Twitter", href: "#", icon: (SocialIcons as any).Twitter },
+  { name: "LinkedIn", href: "#", icon: (SocialIcons as any).Linkedin },
+  { name: "Instagram", href: "#", icon: (SocialIcons as any).Instagram },
   ];
 
   return (
@@ -194,7 +186,9 @@ export default function Footer({
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm text-apty-text-inverse opacity-90">
-              <span>© {currentYear} {companyName}. Tutti i diritti riservati.</span>
+              <span>
+                © <span suppressHydrationWarning>{currentYear}</span> {companyName}. Tutti i diritti riservati.
+              </span>
               <div className="flex items-center space-x-4">
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 bg-apty-success rounded-full"></span>
