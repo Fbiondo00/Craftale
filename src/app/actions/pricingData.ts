@@ -37,7 +37,7 @@ export async function getPricingTiers() {
     }
     
     // Transform data to match expected format
-    const tiersWithLevels: TierWithLevels[] = (tiers || []).map(tier => ({
+  const tiersWithLevels: TierWithLevels[] = (tiers || []).map((tier: any) => ({
       id: tier.id,
       slug: tier.slug,
       name: tier.name,
