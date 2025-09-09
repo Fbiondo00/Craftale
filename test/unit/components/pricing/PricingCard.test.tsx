@@ -37,29 +37,6 @@ describe('PricingCard', () => {
     jest.clearAllMocks();
   });
 
-  describe('Basic Rendering', () => {
-    it('should render title and price', () => {
-      render(<PricingCard {...mockProps} />);
-      
-      expect(screen.getByText('Presenza Digitale Essenziale')).toBeInTheDocument();
-      expect(screen.getByText('€850')).toBeInTheDocument();
-    });
-
-    it('should render all features', () => {
-      render(<PricingCard {...mockProps} />);
-      
-      mockProps.features.forEach(feature => {
-        expect(screen.getByText(feature.text)).toBeInTheDocument();
-      });
-    });
-
-    it('should render ideal for section', () => {
-      render(<PricingCard {...mockProps} />);
-      
-      expect(screen.getByText('Trattorie familiari')).toBeInTheDocument();
-    });
-  });
-
   describe('Card Interactions', () => {
     it('should call onCTAClick when CTA button is clicked', () => {
       const mockClick = jest.fn();

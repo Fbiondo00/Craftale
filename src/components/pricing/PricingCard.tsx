@@ -109,24 +109,6 @@ const CardHeader: React.FC<{
   </div>
 );
 
-const CardPricing: React.FC<{ isCustomCard: boolean; price?: number }> = ({
-  isCustomCard,
-  price,
-}) => (
-  <div className='h-[45px] flex items-center mb-4'>
-    {!isCustomCard && price ? (
-      <div className='flex items-baseline gap-2'>
-        <span className='text-sm text-apty-text-tertiary'>A partire da</span>
-        <span className='text-3xl font-bold text-apty-text-primary'>€{price}</span>
-      </div>
-    ) : isCustomCard ? (
-      <div className='flex items-baseline gap-2'>
-        <span className='text-3xl font-bold text-apty-text-inverse'>Valutazione Gratuita</span>
-      </div>
-    ) : null}
-  </div>
-);
-
 const CardIdealFor: React.FC<{ idealFor?: string; isCustomCard?: boolean }> = ({ idealFor, isCustomCard }) => (
   <div className='h-[60px] flex items-center mb-4'>
     {idealFor && (
@@ -264,7 +246,6 @@ const PricingCardContent: React.FC<{
   <>
     <CardBadge badge={badge} />
     <CardHeader icon={icon} title={title} isCustomCard={isCustomCard} />
-    <CardPricing isCustomCard={isCustomCard} price={price} />
     <CardIdealFor idealFor={idealFor} isCustomCard={isCustomCard} />
     <CardButton isCustomCard={isCustomCard} onCTAClick={onCTAClick} tierSlug={tierSlug} />
     <CardFeatures features={features} inheritedFeatures={inheritedFeatures} isCustomCard={isCustomCard} />

@@ -106,12 +106,12 @@ export const SignInForm = React.forwardRef<HTMLFormElement, SignInFormProps>(
             />
 
             <div className='flex items-center justify-between'>
-              <Checkbox
+              {/* <Checkbox
                 id='signin-remember'
                 label='Remember me'
                 checked={signInFormData.rememberMe}
                 onChange={(e) => handleFieldChange('rememberMe')(e.target.checked)}
-              />
+              /> */}
               <button
                 type='button'
                 onClick={onForgotPassword}
@@ -135,11 +135,11 @@ export const SignInForm = React.forwardRef<HTMLFormElement, SignInFormProps>(
             </AptyPrimaryButton>
           </form>
 
-          <SocialAuthButtons
+          {/* <SocialAuthButtons
             onGoogleAuth={handleGoogleAuth}
             onFacebookAuth={handleFacebookAuth}
             isLoading={isLoading}
-          />
+          /> */}
 
           <div className='text-center'>
             <span className='text-sm text-apty-text-secondary'>Don&apos;t have an account?</span>
