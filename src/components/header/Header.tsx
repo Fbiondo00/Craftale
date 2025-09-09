@@ -54,7 +54,7 @@ export default function Header({ className, sessionUser, onOpenAuthModal, onSign
             >
               <div className='relative'>
                 <img 
-                  src='/icon.png' 
+                  src='/logo.png' 
                   alt='Craftale Logo' 
                   className='w-10 h-10 md:w-12 md:h-12'
                 />
