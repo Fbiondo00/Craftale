@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Craftale logo">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6720FF"/>
+      <stop offset="50%" stop-color="#A176FF"/>
+      <stop offset="100%" stop-color="#FF4E8C"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3AB1E5"/>
+      <stop offset="100%" stop-color="#A176FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer purple shape -->
+  <path d="M256 24c78 0 142 64 142 142 0 49-25 92-64 118-39 26-60 63-60 103 0 75-61 136-136 136S22 462 22 387c0-104 84-188 188-188 22 0 44 3 64 9 22 7 48 8 71-5 36-21 60-60 60-102 0-70-57-127-127-127-31 0-60 11-83 30C207 76 230 24 256 24z" fill="url(#g1)"/>
+
+  <!-- Inner cyan/purple overlay -->
+  <ellipse cx="360" cy="92" rx="88" ry="60" fill="url(#g2)" opacity="0.95"/>
+
+  <!-- Bottom pink orb -->
+  <circle cx="360" cy="420" r="60" fill="#FF8FA8"/>
+
+</svg>

@@ -1458,7 +1458,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
     {/* Tier Comparison Table Section - Only visible in Step 1 (Browse) */}
     {configuration.currentStep === 'browse' && (
-      <section className='py-16 bg-apty-bg-base'>
+      <section className='py-16 bg-white'>
         <TierComparisonTable onTierSelect={handleTierSelect} />
       </section>
     )}
