@@ -28,12 +28,9 @@ export const metadata: Metadata = {
   creator: 'craftale',
   publisher: 'craftale',
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', type: 'image/png' }
-    ],
-    apple: '/apple-icon.png',
-    shortcut: '/favicon.ico'
+    icon: [{ url: '/logo.png', sizes: 'any' }],
+    apple: '/logo.png',
+    shortcut: '/logo.png',
   },
   robots: {
     index: true,
@@ -75,13 +72,15 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   // Get session on the server
   const sessionUser = await getSessionUser();
-  
+
   return (
     <html lang='en' className='scroll-smooth'>
       <head>
-        <meta name='theme-color' content='#2563eb' />
+        <meta name='theme-color' content='#6720FF' />
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=5' />
         <meta name='google' content='notranslate' />
+        <link rel='icon' href='/logo.png' />
+        <link rel='apple-touch-icon' href='/logo.png' />
       </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>

@@ -154,12 +154,12 @@ export const SignUpForm = React.forwardRef<HTMLFormElement, SignUpFormProps>(
               )}
             </AptyPrimaryButton>
           </form>
-
+{/* 
           <SocialAuthButtons
             onGoogleAuth={handleGoogleAuth}
             onFacebookAuth={handleFacebookAuth}
             isLoading={isLoading}
-          />
+          /> */}
 
           <div className='text-center'>
             <span className='text-sm text-apty-text-secondary'>Already have an account?</span>

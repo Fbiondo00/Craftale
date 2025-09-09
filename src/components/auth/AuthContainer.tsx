@@ -168,7 +168,7 @@ export const AuthContainer = React.forwardRef<HTMLDivElement, AuthContainerProps
                 className='flex items-center space-x-3 group hover:scale-[1.02] apty-transition w-fit'
               >
                 <img 
-                  src='/icon.png' 
+                  src='/logo.png' 
                   alt='Craftale Logo' 
                   className='w-12 h-12'
                 />
@@ -248,7 +248,7 @@ export const AuthContainer = React.forwardRef<HTMLDivElement, AuthContainerProps
               className='lg:hidden flex items-center justify-center space-x-3 mb-8 group hover:scale-[1.02] apty-transition'
             >
               <img 
-                src='/icon.png' 
+                src='/logo.png' 
                 alt='Craftale Logo' 
                 className='w-10 h-10'
               />

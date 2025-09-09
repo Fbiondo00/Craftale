@@ -65,7 +65,7 @@ export default function Footer({
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2">
               <img 
-                src='/icon.png' 
+                src='/logo.png' 
                 alt='Craftale Logo' 
                 className='w-8 h-8'
               />
