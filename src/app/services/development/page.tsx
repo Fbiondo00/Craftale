@@ -758,7 +758,7 @@ export default function WebDevelopmentPage() {
             className='text-center mb-12'
           >
             <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              The <span className='text-apty-primary'>Mobile Truth</span> for SMBs
+              La <span className='text-apty-primary'>Verità del Mobile</span> per le PMI
             </h2>
             <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
               Il 75% del traffico è mobile. Ma non compra. Ecco perché.
@@ -783,18 +783,18 @@ export default function WebDevelopmentPage() {
                     <span className='text-2xl font-bold text-apty-state-error'>75.5%</span>
                   </div>
                   <div className='flex justify-between items-center p-3 bg-apty-accent/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Leave after 3 seconds</span>
+                    <span className='text-sm font-medium text-apty-text-primary'>Abbandonano dopo 3 secondi</span>
                     <span className='text-2xl font-bold text-apty-accent'>57%</span>
                   </div>
                   <div className='flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Never return</span>
+                    <span className='text-sm font-medium text-apty-text-primary'>Non tornano mai</span>
                     <span className='text-2xl font-bold text-apty-state-error'>80%</span>
                   </div>
                 </div>
 
                 <div className='mt-6 p-4 bg-apty-state-error/10 rounded-lg'>
                   <p className='text-sm text-apty-text-primary'>
-                    Mobile users want <strong>immediate action</strong>, not browsing
+                    Gli utenti mobile vogliono <strong>azioni immediate</strong>, non navigare
                   </p>
                 </div>
               </motion.div>
@@ -807,16 +807,16 @@ export default function WebDevelopmentPage() {
                 className='bg-gradient-to-br from-apty-primary/5 to-apty-state-success/5 rounded-2xl p-8 shadow-lg border-2 border-apty-primary'
               >
                 <Phone className='w-12 h-12 text-apty-primary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>What Mobile Needs</h3>
+                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Cosa Serve al Mobile</h3>
                 
                 <div className='space-y-3'>
                   {[
-                    { feature: 'Click-to-call button', impact: '#1 conversion driver' },
-                    { feature: 'Map integration', impact: '76% visit within 24hrs' },
-                    { feature: 'Current hours visible', impact: 'Prevents wasted trips' },
-                    { feature: 'One-touch booking', impact: 'Instant reservations' },
+                    { feature: 'Pulsante click-to-call', impact: 'Primo driver di conversione' },
+                    { feature: 'Integrazione mappa', impact: 'Il 76% visita entro 24 ore' },
+                    { feature: 'Orari aggiornati visibili', impact: 'Evita visite a vuoto' },
+                    { feature: 'Prenotazione con un tocco', impact: 'Prenotazioni istantanee' },
                     { feature: 'Pagamento wallet mobile', impact: 'Checkout rapido' },
-                    { feature: 'Load under 2 seconds', impact: 'Keeps them engaged' }
+                    { feature: 'Caricamento sotto i 2 secondi', impact: 'Mantiene il coinvolgimento' }
                   ].map((item, i) => (
                     <div key={i} className='flex items-start gap-3'>
                       <CheckCircle2 className='w-5 h-5 text-apty-primary mt-0.5' />
@@ -830,7 +830,7 @@ export default function WebDevelopmentPage() {
 
                 <div className='mt-6 p-4 bg-apty-primary/10 rounded-lg'>
                   <p className='text-sm text-apty-text-primary'>
-                    Result: <strong>40-60% higher mobile conversions</strong>
+                    Risultato: <strong>+40-60% conversioni mobile</strong>
                   </p>
                 </div>
               </motion.div>
@@ -858,10 +858,10 @@ export default function WebDevelopmentPage() {
             className='text-center mb-12'
           >
             <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Our <span className='text-apty-primary'>SMB-Friendly</span> Process
+              Il Nostro Processo <span className='text-apty-primary'>Amico delle PMI</span>
             </h2>
             <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
-              Flexible payments, clear milestones, no surprises
+              Pagamenti flessibili, milestone chiare, zero sorprese
             </p>
           </motion.div>
 
@@ -874,34 +874,34 @@ export default function WebDevelopmentPage() {
               <div className='space-y-8'>
                 {[
                   {
-                    week: 'Week 1',
-                    title: 'Discovery & Planning',
-                    payment: '30% deposit',
+                    week: 'Settimana 1',
+                    title: 'Analisi & Pianificazione',
+                    payment: 'Acconto 30%',
                     tasks: ['Comprendere il tuo business', 'Analisi competitor', 'Pianificazione tecnica', 'Strategia contenuti'],
                     icon: HeartHandshake,
                     color: 'text-apty-primary'
                   },
                   {
-                    week: 'Week 2-4',
-                    title: 'Design & Development',
-                    payment: '40% on design approval',
-                    tasks: ['Mobile-first design', 'Speed optimization', 'Security implementation', 'Content integration'],
+                    week: 'Settimane 2-4',
+                    title: 'Design & Sviluppo',
+                    payment: '40% alla approvazione design',
+                    tasks: ['Design mobile-first', 'Ottimizzazione velocità', 'Implementazione sicurezza', 'Integrazione contenuti'],
                     icon: Code2,
                     color: 'text-apty-secondary'
                   },
                   {
-                    week: 'Week 5-6',
-                    title: 'Testing & Launch',
-                    payment: '30% on launch',
-                    tasks: ['Form testing', 'Mobile testing', 'SEO setup', 'Training provided'],
+                    week: 'Settimane 5-6',
+                    title: 'Test & Lancio',
+                    payment: '30% al lancio',
+                    tasks: ['Test form', 'Test mobile', 'Setup SEO', 'Formazione inclusa'],
                     icon: Zap,
                     color: 'text-apty-tertiary'
                   },
                   {
-                    week: 'Ongoing',
-                    title: 'Growth & Support',
-                    payment: 'Monthly maintenance',
-                    tasks: ['Security updates', 'Performance monitoring', 'Content updates', 'Conversion optimization'],
+                    week: 'Continuo',
+                    title: 'Crescita & Supporto',
+                    payment: 'Manutenzione mensile',
+                    tasks: ['Aggiornamenti sicurezza', 'Monitoraggio performance', 'Aggiornamenti contenuti', 'Ottimizzazione conversioni'],
                     icon: TrendingUp,
                     color: 'text-apty-state-success'
                   }
@@ -925,7 +925,7 @@ export default function WebDevelopmentPage() {
                           <h3 className='text-xl font-bold text-apty-text-primary'>{item.title}</h3>
                         </div>
                         <div className='text-right'>
-                          <div className='text-sm text-apty-text-secondary'>Payment</div>
+                          <div className='text-sm text-apty-text-secondary'>Pagamento</div>
                           <div className='font-semibold text-apty-primary'>{item.payment}</div>
                         </div>
                       </div>
@@ -952,12 +952,12 @@ export default function WebDevelopmentPage() {
               className='mt-12 bg-apty-primary/10 rounded-xl p-6 text-center'
             >
               <CreditCard className='w-12 h-12 text-apty-primary mx-auto mb-3' />
-              <h3 className='text-lg font-semibold text-apty-text-primary mb-2'>Flexible Payment Options</h3>
+              <h3 className='text-lg font-semibold text-apty-text-primary mb-2'>Opzioni di Pagamento Flessibili</h3>
               <p className='text-sm text-apty-text-secondary mb-3'>
-                3-12 month payment plans available • No hidden costs • Cancel anytime
+                Piani di pagamento 3-12 mesi disponibili • Nessun costo nascosto • Disdici quando vuoi
               </p>
               <p className='text-xs text-apty-text-secondary'>
-                We understand SMB cash flow. Let's find a payment structure that works for you.
+                Conosciamo i flussi di cassa delle PMI. Troviamo insieme una struttura di pagamento adatta a te.
               </p>
             </motion.div>
           </div>

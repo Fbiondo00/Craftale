@@ -251,10 +251,10 @@ export default function WebsiteDesignPage() {
               className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
             >
               <Brain className='w-12 h-12 text-apty-primary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Visual Processing</h3>
+              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Elaborazione Visiva</h3>
               <div className='text-4xl font-bold text-apty-primary mb-2'>50ms</div>
               <p className='text-apty-text-secondary'>
-                The human brain processes visual information in just 50 milliseconds - faster than the blink of an eye.
+                Il cervello umano elabora le informazioni visive in soli 50 millisecondi – più veloce di un battito di ciglia.
               </p>
             </motion.div>
 
@@ -266,10 +266,10 @@ export default function WebsiteDesignPage() {
               className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
             >
               <Eye className='w-12 h-12 text-apty-secondary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Visual Weight</h3>
+              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Peso Visivo</h3>
               <div className='text-4xl font-bold text-apty-secondary mb-2'>94%</div>
               <p className='text-apty-text-secondary'>
-                Visual appearance accounts for 94% of first impressions, far outweighing content at first glance.
+                L'aspetto visivo determina il 94% delle prime impressioni, superando di gran lunga il contenuto al primo sguardo.
               </p>
             </motion.div>
 
@@ -281,10 +281,10 @@ export default function WebsiteDesignPage() {
               className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
             >
               <Shield className='w-12 h-12 text-apty-tertiary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Trust Decision</h3>
+              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Decisione di Fiducia</h3>
               <div className='text-4xl font-bold text-apty-tertiary mb-2'>3 sec</div>
               <p className='text-apty-text-secondary'>
-                Users decide whether to trust your site within 3 seconds. Trust signals must be immediately visible.
+                Gli utenti decidono se fidarsi del tuo sito entro 3 secondi. I segnali di fiducia devono essere immediatamente visibili.
               </p>
             </motion.div>
           </div>
@@ -367,7 +367,7 @@ export default function WebsiteDesignPage() {
                     <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Impatto della Complessità del Design</h3>
                     <div className='space-y-4'>
                       <div className='flex justify-between items-center'>
-                        <span className='text-apty-text-primary font-medium'>Cluttered Design</span>
+                        <span className='text-apty-text-primary font-medium'>Design Affollato</span>
                         <div className='flex items-center gap-2'>
                           <div className='text-2xl font-bold text-apty-state-error'>55-70%</div>
                           <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
@@ -378,7 +378,7 @@ export default function WebsiteDesignPage() {
                       </div>
                       
                       <div className='flex justify-between items-center mt-6'>
-                        <span className='text-apty-text-primary font-medium'>Minimalist Design</span>
+                        <span className='text-apty-text-primary font-medium'>Design Minimalista</span>
                         <div className='flex items-center gap-2'>
                           <div className='text-2xl font-bold text-apty-state-success'>35-50%</div>
                           <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
@@ -390,7 +390,7 @@ export default function WebsiteDesignPage() {
 
                       <div className='mt-6 p-4 bg-apty-bg-subtle rounded-lg'>
                         <p className='text-sm text-apty-text-secondary'>
-                          <strong className='text-apty-primary'>22% conversion decrease</strong> with cluttered layouts due to cognitive overload
+                          <strong className='text-apty-primary'>-22% conversione</strong> con layout affollati per sovraccarico cognitivo
                         </p>
                       </div>
                     </div>
@@ -398,11 +398,11 @@ export default function WebsiteDesignPage() {
 
                   {/* Scroll Depth Analysis */}
                   <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>User Scroll Behavior</h3>
+                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Comportamento di Scroll Utente</h3>
                     <div className='space-y-6'>
                       <div>
                         <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>Above the fold</span>
+                          <span className='text-apty-text-primary'>Prima schermata</span>
                           <span className='font-bold text-apty-primary'>100%</span>
                         </div>
                         <div className='w-full bg-apty-bg-base rounded-full h-3'>
@@ -411,7 +411,7 @@ export default function WebsiteDesignPage() {
                       </div>
                       <div>
                         <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>50% scroll depth</span>
+                          <span className='text-apty-text-primary'>Profondità scroll 50%</span>
                           <span className='font-bold text-apty-secondary'>70%</span>
                         </div>
                         <div className='w-full bg-apty-bg-base rounded-full h-3'>
@@ -420,7 +420,7 @@ export default function WebsiteDesignPage() {
                       </div>
                       <div>
                         <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>Bottom of page</span>
+                          <span className='text-apty-text-primary'>Fondo pagina</span>
                           <span className='font-bold text-apty-tertiary'>20%</span>
                         </div>
                         <div className='w-full bg-apty-bg-base rounded-full h-3'>
@@ -430,7 +430,7 @@ export default function WebsiteDesignPage() {
                       
                       <div className='p-4 bg-apty-primary/10 rounded-lg'>
                         <p className='text-sm text-apty-text-primary'>
-                          <strong>High-performing pages:</strong> 70%+ users reach 50% scroll depth
+                          <strong>Pagine ad alte performance:</strong> oltre il 70% degli utenti raggiunge il 50% di scroll
                         </p>
                       </div>
                     </div>
@@ -494,7 +494,7 @@ export default function WebsiteDesignPage() {
                           </div>
                           <div className='h-px bg-apty-border-subtle' />
                           <div>
-                            <div className='text-sm text-apty-text-secondary mb-1'>Top Performer</div>
+                            <div className='text-sm text-apty-text-secondary mb-1'>Migliori Risultati</div>
                             <div className={`text-2xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                               {item.top}
                             </div>
@@ -514,25 +514,25 @@ export default function WebsiteDesignPage() {
                 <div className='space-y-8'>
                   {/* Loading Time Impact */}
                   <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Performance Thresholds & Abandonment</h3>
+                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Soglie di Performance & Abbandono</h3>
                     <div className='grid md:grid-cols-3 gap-6'>
                       <div className='text-center p-4 bg-apty-state-success/10 rounded-lg'>
                         <Gauge className='w-8 h-8 text-apty-state-success mx-auto mb-2' />
                         <div className='text-3xl font-bold text-apty-state-success'>{'<2.5s'}</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>LCP Target</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>10% abandonment</div>
+                        <div className='text-sm text-apty-text-secondary mt-1'>Obiettivo LCP</div>
+                        <div className='text-xs text-apty-text-primary mt-2'>10% abbandono</div>
                       </div>
                       <div className='text-center p-4 bg-apty-accent/10 rounded-lg'>
                         <Clock className='w-8 h-8 text-apty-accent mx-auto mb-2' />
                         <div className='text-3xl font-bold text-apty-accent'>3-4s</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>Warning Zone</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>25% abandonment</div>
+                        <div className='text-sm text-apty-text-secondary mt-1'>Zona Attenzione</div>
+                        <div className='text-xs text-apty-text-primary mt-2'>25% abbandono</div>
                       </div>
                       <div className='text-center p-4 bg-apty-state-error/10 rounded-lg'>
                         <AlertCircle className='w-8 h-8 text-apty-state-error mx-auto mb-2' />
                         <div className='text-3xl font-bold text-apty-state-error'>{'>4s'}</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>Critical</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>50%+ abandonment</div>
+                        <div className='text-sm text-apty-text-secondary mt-1'>Critico</div>
+                        <div className='text-xs text-apty-text-primary mt-2'>50%+ abbandono</div>
                       </div>
                     </div>
                     
@@ -540,22 +540,22 @@ export default function WebsiteDesignPage() {
                       <div className='flex items-start gap-3'>
                         <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Image Optimization</div>
-                          <div className='text-sm text-apty-text-secondary'>WebP/AVIF formats, lazy loading reduce LCP by 30-50%</div>
+                          <div className='font-medium text-apty-text-primary'>Ottimizzazione Immagini</div>
+                          <div className='text-sm text-apty-text-secondary'>Formati WebP/AVIF e lazy loading riducono l'LCP del 30-50%</div>
                         </div>
                       </div>
                       <div className='flex items-start gap-3'>
                         <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Font Strategy</div>
-                          <div className='text-sm text-apty-text-secondary'>Preloading critical fonts improves FCP by 20%</div>
+                          <div className='font-medium text-apty-text-primary'>Strategia Font</div>
+                          <div className='text-sm text-apty-text-secondary'>Precaricare i font critici migliora l'FCP del 20%</div>
                         </div>
                       </div>
                       <div className='flex items-start gap-3'>
                         <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Animation Performance</div>
-                          <div className='text-sm text-apty-text-secondary'>INP {'<200ms'} for smooth interactions</div>
+                          <div className='font-medium text-apty-text-primary'>Performance Animazioni</div>
+                          <div className='text-sm text-apty-text-secondary'>INP {'<200ms'} per interazioni fluide</div>
                         </div>
                       </div>
                     </div>
@@ -563,10 +563,10 @@ export default function WebsiteDesignPage() {
 
                   {/* Core Web Vitals Impact */}
                   <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Core Web Vitals & SEO Impact</h3>
+                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Core Web Vitals & Impatto SEO</h3>
                     <div className='grid md:grid-cols-2 gap-6'>
                       <div>
-                        <h4 className='font-semibold text-apty-text-primary mb-4'>Meeting Core Web Vitals</h4>
+                        <h4 className='font-semibold text-apty-text-primary mb-4'>Soddisfare i Core Web Vitals</h4>
                         <div className='space-y-3'>
                           <div className='flex items-center justify-between'>
                             <span className='text-sm text-apty-text-secondary'>Tasso di Conversione</span>
@@ -583,7 +583,7 @@ export default function WebsiteDesignPage() {
                         </div>
                       </div>
                       <div>
-                        <h4 className='font-semibold text-apty-text-primary mb-4'>Failing Core Web Vitals</h4>
+                        <h4 className='font-semibold text-apty-text-primary mb-4'>Non Soddisfare i Core Web Vitals</h4>
                         <div className='space-y-3'>
                           <div className='flex items-center justify-between'>
                             <span className='text-sm text-apty-text-secondary'>Calo Posizionamenti</span>
@@ -631,7 +631,7 @@ export default function WebsiteDesignPage() {
               Design dei Form & <span className='text-apty-primary'>Scienza della Conversione</span>
             </h2>
             <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
-              Every field matters. Data-driven insights on form optimization.
+              Ogni campo conta. Insight guidati dai dati sull'ottimizzazione dei form.
             </p>
           </motion.div>
 
@@ -642,10 +642,10 @@ export default function WebsiteDesignPage() {
               
               <div className='space-y-6'>
                 {[
-                  { fields: '3 fields', rate: 12, color: 'bg-apty-primary' },
-                  { fields: '5 fields', rate: 25, color: 'bg-apty-accent' },
-                  { fields: '6 fields', rate: 33, color: 'bg-apty-secondary' },
-                  { fields: '8+ fields', rate: 60, color: 'bg-apty-tertiary' }
+                  { fields: '3 campi', rate: 12, color: 'bg-apty-primary' },
+                  { fields: '5 campi', rate: 25, color: 'bg-apty-accent' },
+                  { fields: '6 campi', rate: 33, color: 'bg-apty-secondary' },
+                  { fields: '8+ campi', rate: 60, color: 'bg-apty-tertiary' }
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -670,7 +670,7 @@ export default function WebsiteDesignPage() {
 
               <div className='mt-8 p-4 bg-apty-primary/10 rounded-lg'>
                 <p className='text-sm text-apty-text-primary'>
-                  <strong>Key Finding:</strong> Each additional field increases abandonment by 8-10%
+                  <strong>Evidenza Chiave:</strong> Ogni campo aggiuntivo aumenta l'abbandono dell'8-10%
                 </p>
               </div>
             </div>
@@ -683,34 +683,34 @@ export default function WebsiteDesignPage() {
                 viewport={{ once: true }}
                 className='bg-apty-bg-elevated rounded-xl p-6'
               >
-                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Proven Optimization Techniques</h3>
+                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Tecniche di Ottimizzazione Provate</h3>
                 <div className='space-y-3'>
                   <div className='flex items-start gap-3'>
                     <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Progress Indicators</div>
-                      <div className='text-sm text-apty-text-secondary'>+14-23% completion rate</div>
+                      <div className='font-medium text-apty-text-primary'>Indicatori di Progresso</div>
+                      <div className='text-sm text-apty-text-secondary'>+14-23% tasso completamento</div>
                     </div>
                   </div>
                   <div className='flex items-start gap-3'>
                     <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Live Validation</div>
-                      <div className='text-sm text-apty-text-secondary'>-22% abandonment</div>
+                      <div className='font-medium text-apty-text-primary'>Validazione in Tempo Reale</div>
+                      <div className='text-sm text-apty-text-secondary'>-22% abbandono</div>
                     </div>
                   </div>
                   <div className='flex items-start gap-3'>
                     <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Single Column Layout</div>
-                      <div className='text-sm text-apty-text-secondary'>+15-24% mobile completion</div>
+                      <div className='font-medium text-apty-text-primary'>Layout a Colonna Singola</div>
+                      <div className='text-sm text-apty-text-secondary'>+15-24% completamento mobile</div>
                     </div>
                   </div>
                   <div className='flex items-start gap-3'>
                     <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Autofill Support</div>
-                      <div className='text-sm text-apty-text-secondary'>-30% time to complete</div>
+                      <div className='font-medium text-apty-text-primary'>Supporto Autofill</div>
+                      <div className='text-sm text-apty-text-secondary'>-30% tempo di compilazione</div>
                     </div>
                   </div>
                 </div>
@@ -722,11 +722,11 @@ export default function WebsiteDesignPage() {
                 viewport={{ once: true }}
                 className='bg-apty-bg-elevated rounded-xl p-6'
               >
-                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Trust Elements Impact</h3>
+                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Impatto Elementi di Fiducia</h3>
                 <div className='space-y-4'>
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>SSL Badge</span>
+                      <span className='text-apty-text-primary'>Badge SSL</span>
                       <span className='font-bold text-apty-primary'>+20%</span>
                     </div>
                     <div className='w-full bg-apty-bg-base rounded-full h-2'>
@@ -735,7 +735,7 @@ export default function WebsiteDesignPage() {
                   </div>
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Testimonials</span>
+                      <span className='text-apty-text-primary'>Testimonianze</span>
                       <span className='font-bold text-apty-secondary'>+34%</span>
                     </div>
                     <div className='w-full bg-apty-bg-base rounded-full h-2'>
@@ -744,7 +744,7 @@ export default function WebsiteDesignPage() {
                   </div>
                   <div>
                     <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Trust Badges</span>
+                      <span className='text-apty-text-primary'>Badge Fiducia</span>
                       <span className='font-bold text-apty-tertiary'>+48%</span>
                     </div>
                     <div className='w-full bg-apty-bg-base rounded-full h-2'>
@@ -753,7 +753,7 @@ export default function WebsiteDesignPage() {
                   </div>
                   <div className='mt-4 p-3 bg-apty-accent/10 rounded-lg'>
                     <p className='text-xs text-apty-text-primary'>
-                      All trust signals must be visible within first 3 seconds
+                      Tutti i segnali di fiducia devono essere visibili entro i primi 3 secondi
                     </p>
                   </div>
                 </div>
