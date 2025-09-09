@@ -197,7 +197,7 @@ export function HeaderAuthActions({
             Accedi
           </AptySecondaryButton>
           <AptyPrimaryButton
-            onClick={() => onOpenAuthModal?.('signup')}
+            onClick={() => onOpenAuthModal?.('signin')}
             size='md'
             withChevron
           >
