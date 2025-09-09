@@ -44,7 +44,7 @@ export async function getOptionalServices(
     }
     
     // Filter and enhance services based on tier/level
-    const enhancedServices: OptionalServiceWithAvailability[] = (services || []).map(service => {
+  const enhancedServices: OptionalServiceWithAvailability[] = (services || []).map((service: any) => {
       // Check if service is already included in selected level
       const included = levelId && Array.isArray(service.excluded_from_levels) && 
         service.excluded_from_levels.includes(levelId.toString())
