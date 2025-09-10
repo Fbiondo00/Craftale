@@ -92,9 +92,12 @@ export function HeaderAuthActions({
               variant='ghost'
               className='w-full justify-start'
               onClick={onMobileMenuClose}
+              asChild
             >
-              <User className='mr-2 h-4 w-4' />
-              Profilo
+              <a href='/profile'>
+                <User className='mr-2 h-4 w-4' />
+                Profilo
+              </a>
             </Button>
             <Button
               variant='ghost'
@@ -173,9 +176,11 @@ export function HeaderAuthActions({
               <LayoutDashboard className='mr-2 h-4 w-4' />
               <span>Dashboard</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className='cursor-pointer'>
-              <User className='mr-2 h-4 w-4' />
-              <span>Profilo</span>
+            <DropdownMenuItem className='cursor-pointer' asChild>
+              <a href='/profile'>
+                <User className='mr-2 h-4 w-4' />
+                <span>Profilo</span>
+              </a>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

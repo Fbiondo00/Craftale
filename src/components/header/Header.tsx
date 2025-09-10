@@ -63,7 +63,7 @@ export default function Header({ className, sessionUser, onOpenAuthModal, onSign
                 <span className='text-xl font-bold apty-gradient-text'>
                   Craftale
                 </span>
-                <span className='text-xs text-apty-text-secondary font-medium'>Creazione Siti Web</span>
+                <span className='text-xs text-apty-text-secondary font-medium'>Agenzia Web</span>
               </div>
             </a>
 

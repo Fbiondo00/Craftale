@@ -5,6 +5,7 @@ export interface SessionUser {
   email: string;
   name: string;
   avatar?: string;
+  phone?: string;
 }
 
 export async function getSession() {
@@ -59,5 +60,6 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     name: user.user_metadata?.name || user.email?.split('@')[0] || 'User',
     avatar: user.user_metadata?.avatar || 
       `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`,
+    phone: (user.user_metadata as any)?.phone || undefined,
   };
 }

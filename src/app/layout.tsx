@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import HeaderWrapper from '@/components/header/HeaderWrapper';
 import Footer from '@/components/Footer';
+import HideOnProfile from '@/components/HideOnProfile';
 import { ReactNode } from 'react';
 import { getSessionUser } from '@/lib/supabase/get-session';
 import { AuthProvider } from '@/contexts/AuthContext';
@@ -69,12 +70,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { readonly children: ReactNode }) {
   // Get session on the server
   const sessionUser = await getSessionUser();
 
   return (
-    <html lang='en' className='scroll-smooth' suppressHydrationWarning>
+  <html lang='it' className='scroll-smooth' suppressHydrationWarning>
       <head>
         <meta name='theme-color' content='#6720FF' />
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=5' />
@@ -85,11 +86,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider initialUser={sessionUser}>
-            <HeaderWrapper sessionUser={sessionUser} />
+            <HideOnProfile>
+              <HeaderWrapper sessionUser={sessionUser} />
+            </HideOnProfile>
             <main className='min-h-screen'>{children}</main>
             <AuthModal />
           </AuthProvider>
-          <Footer />
+          <HideOnProfile>
+            <Footer />
+          </HideOnProfile>
           {/* Mobile Theme Toggle - Always visible on mobile, fixed position */}
           <div className='lg:hidden fixed bottom-4 right-4 z-[200]'>
             <ClientThemeToggle />

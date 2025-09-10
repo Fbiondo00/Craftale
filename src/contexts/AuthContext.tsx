@@ -16,6 +16,7 @@ interface User {
   email: string;
   name: string;
   avatar?: string;
+  phone?: string;
 }
 
 interface AuthContextType {
@@ -75,6 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUse
       avatar:
         supabaseUser.user_metadata?.avatar ||
         `https://api.dicebear.com/7.x/avataaars/svg?seed=${supabaseUser.email}`,
+      phone: (supabaseUser.user_metadata as any)?.phone || undefined,
     };
   };
 
@@ -203,6 +205,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUse
             name: result.user.user_metadata?.name || result.user.email?.split('@')[0] || 'User',
             avatar: result.user.user_metadata?.avatar || 
               `https://api.dicebear.com/7.x/avataaars/svg?seed=${result.user.email}`,
+            phone: (result.user.user_metadata as any)?.phone || undefined,
           });
           closeAuthModal();
           // No need for router.refresh() - Server Action handles revalidation
@@ -270,6 +273,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUse
             name: result.user.user_metadata?.name || result.user.email?.split('@')[0] || 'User',
             avatar: result.user.user_metadata?.avatar || 
               `https://api.dicebear.com/7.x/avataaars/svg?seed=${result.user.email}`,
+            phone: (result.user.user_metadata as any)?.phone || undefined,
           });
           closeAuthModal();
           // No need for router.refresh() - Server Action handles revalidation
