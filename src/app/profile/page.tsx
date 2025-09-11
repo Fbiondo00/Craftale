@@ -53,6 +53,7 @@ function ProfileContent() {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const memberSinceRef = useRef<string | null>(null);
   const [profileData, setProfileData] = useState<ProfileData>({
     firstName: '',
     lastName: '',
@@ -60,12 +61,6 @@ function ProfileContent() {
     phone: '',
     avatar: ''
   });
-
-  // Avoid hydration mismatch for dynamic date
-  const memberSinceRef = useRef<string>('');
-  useEffect(() => {
-    memberSinceRef.current = new Date().toLocaleDateString('it-IT');
-  }, []);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -89,6 +84,11 @@ function ProfileContent() {
         phone: user.phone || '', // Load from user metadata
         avatar: user.avatar
       });
+
+      // Stabilizza la data "Membro da" per evitare mismatch di idratazione
+      if (!memberSinceRef.current) {
+        memberSinceRef.current = new Date().toLocaleDateString('it-IT');
+      }
     }
   }, [user]);
 
@@ -100,25 +100,19 @@ function ProfileContent() {
     }));
   };
 
-  // Mock API helpers (can be replaced with a real backend later)
-  const saveProfile = async (data: ProfileData): Promise<void> =>
-    new Promise((resolve) => setTimeout(resolve, 800));
-
-  const uploadAvatar = async (file: File): Promise<string> =>
-    new Promise((resolve) => {
-      const url = URL.createObjectURL(file);
-      resolve(url);
-    });
-
   // Handle save profile
   const handleSaveProfile = async () => {
     setIsSaving(true);
     try {
-      await saveProfile(profileData);
+      // Simulazione salvataggio
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       setIsEditing(false);
-      console.log('Profilo salvato con successo');
+      
+      // Show success message
+      console.log('Profile saved successfully');
     } catch (error) {
-      console.error('Errore durante il salvataggio del profilo:', error);
+      console.error('Error saving profile:', error);
     } finally {
       setIsSaving(false);
     }
@@ -129,15 +123,17 @@ function ProfileContent() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Simple local preview; replace with storage upload when available
-    const previewUrl = await uploadAvatar(file);
-    setProfileData((prev) => ({ ...prev, avatar: previewUrl }));
+  // Anteprima locale immagine (upload reale da implementare)
+    const previewUrl = URL.createObjectURL(file);
+    setProfileData(prev => ({
+      ...prev,
+      avatar: previewUrl
+    }));
   };
 
   // Handle logout
   const handleLogout = async () => {
     if (window.confirm('Sei sicuro di voler uscire?')) {
-      // signOut is synchronous in our context; remove unnecessary await
       signOut();
       router.push('/');
     }
@@ -161,34 +157,34 @@ function ProfileContent() {
   }
 
   return (
-  <div className="min-h-screen bg-apty-bg-base">
+    <div className="min-h-screen bg-apty-bg-base">
       {/* Header with gradient background */}
       <div className="bg-gradient-to-br from-apty-primary/10 via-apty-tertiary/10 to-apty-accent/10 border-b border-apty-border-subtle">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center space-x-4 min-w-0">
+        <div className="container mx-auto px-4 py-6 sm:py-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-wrap">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push('/')}
-                className="hover:bg-apty-primary/10 apty-transition shrink-0"
+                className="hover:bg-apty-primary/10 apty-transition"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Torna al Sito
               </Button>
-              <div className="min-w-0">
-                <h1 className="text-3xl font-bold apty-gradient-text">Il Mio Profilo</h1>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold apty-gradient-text">Il Mio Profilo</h1>
                 <p className="text-apty-text-secondary mt-1">
                   Gestisci le tue informazioni personali
                 </p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-3 shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap w-full sm:w-auto">
               {!isEditing && (
                 <Button
                   onClick={() => setIsEditing(true)}
-                  className="bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand apty-transition"
+                  className="w-full sm:w-auto bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand apty-transition"
                 >
                   <Edit2 className="w-4 h-4 mr-2" />
                   Modifica Profilo
@@ -199,7 +195,7 @@ function ProfileContent() {
               <Button
                 variant="outline"
                 onClick={handleLogout}
-                className="border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
+                className="w-full sm:w-auto border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
               >
                 <LogOut className="w-4 h-4 mr-2" />
                 Esci
@@ -210,7 +206,7 @@ function ProfileContent() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+  <div className="container mx-auto px-4 py-8 pb-24 sm:pb-8">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
@@ -225,7 +221,7 @@ function ProfileContent() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <div className="relative inline-block">
-                    <Avatar className="w-32 h-32 mx-auto border-4 border-apty-primary/20">
+                    <Avatar className="w-24 h-24 md:w-32 md:h-32 mx-auto border-4 border-apty-primary/20">
                       <AvatarImage src={profileData.avatar} alt="Foto profilo" />
                       <AvatarFallback className="bg-apty-gradient-primary text-apty-text-on-brand text-2xl font-bold">
                         {profileData.firstName.charAt(0).toUpperCase()}{profileData.lastName.charAt(0).toUpperCase()}
@@ -233,7 +229,7 @@ function ProfileContent() {
                     </Avatar>
                     
                     {isEditing && (
-                      <label className="absolute bottom-0 right-0 bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand w-10 h-10 rounded-full flex items-center justify-center cursor-pointer apty-transition shadow-apty-soft">
+                      <label className="absolute bottom-0 right-0 bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center cursor-pointer apty-transition shadow-apty-soft">
                         <Camera className="w-5 h-5" />
                         <input
                           type="file"
@@ -265,10 +261,10 @@ function ProfileContent() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center text-sm">
+          <div className="flex items-center text-sm" suppressHydrationWarning>
                     <Clock className="w-4 h-4 mr-2 text-apty-text-muted" />
-                    <span className="text-apty-text-secondary" suppressHydrationWarning>
-                      Membro da: {memberSinceRef.current || ''}
+                    <span className="text-apty-text-secondary">
+            Membro da: {memberSinceRef.current}
                     </span>
                   </div>
                   <div className="flex items-center text-sm">
@@ -295,13 +291,13 @@ function ProfileContent() {
                   {/* Name Fields */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-sm font-medium text-apty-text-primary">
+            <label htmlFor="firstName" className="text-sm font-medium text-apty-text-primary">
                         Nome *
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-apty-text-muted" />
                         <Input
-                          id="firstName"
+              id="firstName"
                           value={profileData.firstName}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('firstName', e.target.value)}
                           disabled={!isEditing}
@@ -315,13 +311,13 @@ function ProfileContent() {
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-sm font-medium text-apty-text-primary">
+            <label htmlFor="lastName" className="text-sm font-medium text-apty-text-primary">
                         Cognome *
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-apty-text-muted" />
                         <Input
-                          id="lastName"
+              id="lastName"
                           value={profileData.lastName}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastName', e.target.value)}
                           disabled={!isEditing}
@@ -337,14 +333,14 @@ function ProfileContent() {
 
                   {/* Email Field */}
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-apty-text-primary">
+          <label htmlFor="email" className="text-sm font-medium text-apty-text-primary">
                       Email *
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-apty-text-muted" />
                       <Input
-                        id="email"
                         type="email"
+            id="email"
                         value={profileData.email}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('email', e.target.value)}
                         disabled={!isEditing}
@@ -364,14 +360,14 @@ function ProfileContent() {
 
                   {/* Phone Field */}
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium text-apty-text-primary">
+          <label htmlFor="phone" className="text-sm font-medium text-apty-text-primary">
                       Numero di Telefono
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-apty-text-muted" />
                       <Input
-                        id="phone"
                         type="tel"
+            id="phone"
                         value={profileData.phone}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('phone', e.target.value)}
                         disabled={!isEditing}
@@ -389,19 +385,19 @@ function ProfileContent() {
 
                   {/* Action Buttons */}
                   {isEditing && (
-                    <div className="flex items-center justify-end space-x-3 pt-6 border-t border-apty-border-subtle">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-6 border-t border-apty-border-subtle">
                       <Button
                         variant="outline"
                         onClick={() => setIsEditing(false)}
                         disabled={isSaving}
-                        className="border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
+                        className="w-full sm:w-auto border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
                       >
                         Annulla
                       </Button>
                       <Button
                         onClick={handleSaveProfile}
                         disabled={isSaving}
-                        className="bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand apty-transition"
+                        className="w-full sm:w-auto bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand apty-transition"
                       >
                         {isSaving ? (
                           <>
@@ -426,7 +422,7 @@ function ProfileContent() {
       </div>
 
       {/* Theme Toggle - Fixed position */}
-  <div className="fixed right-4 z-[200] bottom-20 sm:bottom-4">
+      <div className="fixed bottom-4 right-4 z-[200]">
         <ClientThemeToggle />
       </div>
     </div>

@@ -86,7 +86,9 @@ export default async function RootLayout({ children }: { readonly children: Reac
   <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider initialUser={sessionUser}>
-            <HeaderWrapper sessionUser={sessionUser} />
+            <HideOnProfile>
+              <HeaderWrapper sessionUser={sessionUser} />
+            </HideOnProfile>
             <main className='min-h-screen'>{children}</main>
             <AuthModal />
           </AuthProvider>
