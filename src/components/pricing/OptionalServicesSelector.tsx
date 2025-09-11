@@ -33,7 +33,27 @@ interface CategoryState {
   selectedServices: ApiOptionalService[];
 }
 
-// Map categories to icons and gradients
+// Category ID normalization (backend inconsistencies -> UI canonical IDs)
+const normalizeCategoryId = (raw?: string | null): string => {
+  if (!raw) return 'other';
+  const id = raw.toLowerCase().trim();
+  switch (id) {
+    case 'integration':
+    case 'technical':
+      return 'integrations';
+    case 'copywriting':
+      return 'content';
+    case 'marketing_visibility':
+    case 'visibility':
+    case 'seo':
+    case 'marketing-seo':
+      return 'marketing';
+    default:
+      return id;
+  }
+};
+
+// Map categories to icons and gradients (canonical IDs)
 const categoryConfig = {
   photography: {
     name: 'Fotografia Professionale',
@@ -78,42 +98,45 @@ const ServiceToggleCards = ({
 
   // Group services by category
   const categorizedServices = useMemo(() => {
-    const grouped = services.reduce(
-      (acc, service) => {
-        const category = service.category || 'other';
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-        acc[category].push(service);
-        return acc;
-      },
-      {} as Record<string, ApiOptionalService[]>
-    );
+    const grouped = services.reduce<Record<string, ApiOptionalService[]>>((acc, service) => {
+      const normalized = normalizeCategoryId(service.category as string);
+      if (!acc[normalized]) acc[normalized] = [];
+      acc[normalized].push(service);
+      return acc;
+    }, {});
 
-    // Create category states
     return Object.entries(grouped)
-      .filter(([categoryId]) => categoryConfig[categoryId as keyof typeof categoryConfig])
+      .filter(([categoryId, list]) => list.length > 0 && categoryConfig[categoryId as keyof typeof categoryConfig])
       .map(([categoryId, categoryServices]) => {
         const config = categoryConfig[categoryId as keyof typeof categoryConfig];
         const selectedServicesForCategory = categoryServices.filter((service) =>
           initialSelectedServices.some((s) => s.id === service.id)
         );
-
         return {
-          category: {
-            id: categoryId,
-            ...config,
-          },
-          services: categoryServices,
-          isOpen: config.defaultExpanded,
-          selectedServices: selectedServicesForCategory,
-        };
+          category: { id: categoryId, ...config },
+            services: categoryServices,
+            isOpen: config.defaultExpanded,
+            selectedServices: selectedServicesForCategory,
+        } as CategoryState;
       })
       .sort((a, b) => a.category.order - b.category.order);
   }, [services, initialSelectedServices]);
 
+  // Initialize or merge categories without losing open/closed state after user interaction
   useEffect(() => {
-    setCategories(categorizedServices);
+    setCategories((prev) => {
+      if (prev.length === 0) return categorizedServices; // first mount
+      // Merge to retain isOpen & current selections
+      return categorizedServices.map((nextCat) => {
+        const existing = prev.find((p) => p.category.id === nextCat.category.id);
+        if (!existing) return nextCat;
+        return {
+          ...nextCat,
+            isOpen: existing.isOpen, // preserve toggle state
+            selectedServices: existing.selectedServices, // preserve current selections
+        };
+      });
+    });
   }, [categorizedServices]);
   
   // Call onServicesChange when selected services change (but not on initial mount)
@@ -169,10 +192,6 @@ const ServiceToggleCards = ({
     });
   };
 
-  const totalPrice = categories
-    .flatMap((cat) => cat.selectedServices)
-    .reduce((sum, service) => sum + Number(service.price || 0), 0);
-
   const selectedCount = categories.reduce((sum, cat) => sum + cat.selectedServices.length, 0);
 
   if (!services || services.length === 0) {
@@ -186,17 +205,6 @@ const ServiceToggleCards = ({
 
   return (
     <div>
-      {/* Back Button */}
-      <motion.button
-        className='mb-8 inline-flex items-center gap-2 px-4 py-2 bg-white border border-color-default rounded-lg text-color-secondary hover:bg-color-subtle hover:border-color-strong transition-all duration-200 shadow-sm hover:shadow-md'
-        whileHover={{ scale: 1.02, y: -1 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={onBack}
-      >
-        <ChevronDown className='w-5 h-5 transform rotate-90' />
-        <span>Torna ai Livelli</span>
-      </motion.button>
-
       {/* Header Section */}
       <div className='text-center mb-10'>
         <h2 className='text-4xl font-bold text-color-primary mb-4'>
@@ -253,7 +261,8 @@ const ServiceToggleCards = ({
         <div className='lg:col-span-1'>
           <div className='sticky top-24 space-y-6 transform-none'>
             <CartSummary
-              totalPrice={totalPrice}
+              /* totalPrice removed */
+              totalPrice={0}
               selectedCount={selectedCount}
               onProceed={onProceed}
               selectedServices={categories.flatMap((cat) => cat.selectedServices)}

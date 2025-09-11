@@ -7,7 +7,7 @@ import type { OptionalServiceWithAvailability as ApiOptionalService } from '@/ty
 import { GlowingEffect } from '@/components/ui/GlowingEffect';
 
 interface CartSummaryProps {
-  totalPrice: number;
+  totalPrice?: number; // deprecated
   selectedCount: number;
   onProceed?: () => void;
   selectedServices?: ApiOptionalService[];
@@ -15,7 +15,7 @@ interface CartSummaryProps {
 }
 
 const CartSummary = ({
-  totalPrice,
+  totalPrice = 0,
   selectedCount,
   onProceed,
   selectedServices = [],
@@ -137,29 +137,14 @@ const CartSummary = ({
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 0.3 }}
                 >
-                  €{service.price}
+                  {/* price removed */}
                 </motion.span>
               </motion.div>
             ))
           )}
         </div>
 
-        <div className='border-t border-color-default pt-4'>
-          <div className='flex items-center justify-between'>
-            <span className='text-base font-medium text-color-primary'>Total</span>
-            <motion.span
-              className='text-xl font-bold bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent bg-clip-text text-transparent'
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 0.5 }}
-              key={totalPrice}
-            >
-              €{totalPrice}
-            </motion.span>
-          </div>
-          <p className='text-xs text-color-muted mt-1'>
-            {selectedServices.length === 0 ? 'Nessun servizio' : 'Servizi selezionati'}
-          </p>
-        </div>
+  {/* Total removed per request */}
 
         <motion.button
           className='w-full mt-4 px-4 py-3 bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent text-white rounded-lg font-medium hover:from-brand-secondary hover:via-brand-tertiary hover:to-brand-accent transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'

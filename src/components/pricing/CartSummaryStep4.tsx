@@ -53,8 +53,7 @@ const categoryConfig = {
 };
 
 const CartSummaryStep4 = ({ selectedServices, onModifyConfiguration }: CartSummaryStep4Props) => {
-  // Calculate total price
-  const totalPrice = selectedServices.reduce((sum, s) => sum + Number(s.price), 0);
+  // Pricing removed
 
   // Get category data for each service
   const servicesWithCategory = selectedServices.map((service) => {
@@ -144,34 +143,12 @@ const CartSummaryStep4 = ({ selectedServices, onModifyConfiguration }: CartSumma
                     <p className='text-xs text-color-muted truncate'>{service.description}</p>
                   </div>
 
-                  <motion.span
-                    className='text-sm font-semibold text-brand-secondary'
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    €{service.price}
-                  </motion.span>
+      {/* price removed */}
                 </motion.div>
               ))
             )}
           </div>
-
-          <div className='border-t border-color-default pt-4'>
-            <div className='flex items-center justify-between'>
-              <span className='text-base font-medium text-color-primary'>Total</span>
-              <motion.span
-                className='text-xl font-bold bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent bg-clip-text text-transparent'
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 0.5 }}
-                key={totalPrice}
-              >
-                €{totalPrice}
-              </motion.span>
-            </div>
-            <p className='text-xs text-color-muted mt-1'>
-              {selectedServices.length === 0 ? 'Nessun servizio' : 'Servizi selezionati'}
-            </p>
-          </div>
+    {/* total removed */}
 
           <motion.button
             className='w-full mt-4 px-4 py-2 bg-white border-2 border-brand-secondary text-brand-secondary rounded-lg font-medium text-sm hover:bg-brand-secondary/10 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'

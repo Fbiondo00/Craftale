@@ -52,9 +52,10 @@ const ServiceCategoryHeader = ({
         <motion.div
           className={cn(
             'relative rounded-xl p-4 transition-all duration-300',
-            'bg-white/80 backdrop-blur-sm border border-color-default',
-            'shadow-lg hover:shadow-xl transition-shadow duration-300',
-            selectedCount > 0 && 'border-brand-secondary/30 shadow-xl'
+            'bg-color-base/90 dark:bg-color-bg-inverse-subtle/90 backdrop-blur-sm',
+            'border border-color-default dark:border-color-border-strong',
+            'shadow-md hover:shadow-lg transition-shadow duration-300',
+            selectedCount > 0 && 'border-brand-secondary/40 shadow-lg'
           )}
           style={{
             background:
@@ -66,7 +67,7 @@ const ServiceCategoryHeader = ({
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
               <motion.div
-                className='p-2 rounded-lg bg-gradient-to-br from-brand-secondary/10 to-brand-tertiary/10 text-brand-secondary'
+                className='p-2 rounded-lg text-brand-secondary bg-gradient-to-br from-brand-secondary/10 to-brand-tertiary/10 dark:from-brand-secondary/20 dark:to-brand-tertiary/20'
                 style={{
                   background: `linear-gradient(135deg, ${category.gradient.from}15, ${category.gradient.to}08)`,
                 }}
@@ -76,9 +77,11 @@ const ServiceCategoryHeader = ({
                 {IconComponent && <IconComponent className='w-5 h-5' />}
               </motion.div>
               <div>
-                <h3 className='font-bold text-color-primary'>{category.name}</h3>
+                <h3 className='font-bold text-color-primary dark:text-color-text-inverse'>
+                  {category.name}
+                </h3>
                 {selectedCount > 0 && (
-                  <p className='text-xs text-color-muted'>
+                  <p className='text-xs text-color-muted dark:text-color-text-inverse/60'>
                     {selectedCount} di {totalCount} serviz{selectedCount !== 1 ? 'i' : 'o'}{' '}
                     selezionat{selectedCount !== 1 ? 'i' : 'o'}
                   </p>
@@ -98,7 +101,7 @@ const ServiceCategoryHeader = ({
                 </motion.div>
               )}
               <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                <ChevronDown className='w-5 h-5 text-color-muted' />
+                <ChevronDown className='w-5 h-5 text-color-muted dark:text-color-text-inverse/70' />
               </motion.div>
             </div>
           </div>

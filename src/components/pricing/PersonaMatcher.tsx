@@ -134,7 +134,9 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
                   <div className='flex items-center'>
                     <div
                       className={`w-5 h-5 rounded border-2 flex items-center justify-center mr-3 ${
-                        isSelected ? 'border-color-state-info bg-color-state-info' : 'border-color-strong'
+                        isSelected
+                          ? 'border-color-state-info bg-color-state-info'
+                          : 'border-color-strong'
                       }`}
                     >
                       {isSelected && <CheckCircle2 className='w-3 h-3 text-white' />}
@@ -222,19 +224,21 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4'
+          /* Overlay: use inverse background token with opacity instead of raw black */
+          className='fixed inset-0 bg-color-bg-inverse/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm'
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className='bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden'
+            /* Modal surface: semantic base background for light; token system swaps in dark mode */
+            className='bg-color-base rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-color-border-default'
           >
             {/* Header */}
-            <div className='relative bg-gradient-to-r from-blue-500 to-brand-secondary text-white p-6'>
+            <div className='relative bg-gradient-to-r from-apty-primary to-apty-secondary dark:from-apty-primary dark:to-apty-secondary text-white p-6'>
               <button
                 onClick={onClose}
-                className='absolute top-4 right-4 text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors'
+                className='absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors'
               >
                 <X className='h-6 w-6' />
               </button>
@@ -242,22 +246,22 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
               <div className='flex items-center space-x-3 mb-4'>
                 <div className='text-2xl'>{getStepIcon()}</div>
                 <div>
-                  <h2 className='text-2xl font-bold'>{config.title}</h2>
-                  <p className='text-blue-100'>{config.description}</p>
+                  <h2 className='text-2xl font-bold text-white'>{config.title}</h2>
+                  <p className='text-white/80'>{config.description}</p>
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div className='relative'>
-                <div className='w-full bg-blue-400 bg-opacity-30 rounded-full h-2'>
+                <div className='w-full h-2 rounded-full bg-color-state-info-border/30'>
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getProgressPercentage()}%` }}
                     transition={{ duration: 0.3 }}
-                    className='bg-white h-2 rounded-full'
+                    className='h-2 rounded-full bg-color-state-info'
                   />
                 </div>
-                <div className='flex justify-between text-sm text-blue-100 mt-2'>
+                <div className='flex justify-between text-xs font-medium tracking-wide text-white/80 mt-2'>
                   <span>
                     Domanda {currentQuestionIndex + 1} di {config.questions.length}
                   </span>
@@ -274,7 +278,7 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
                   animate={{ opacity: 1 }}
                   className='text-center py-12'
                 >
-                  <div className='inline-flex items-center justify-center w-16 h-16 bg-color-state-info-subtle rounded-full mb-4'>
+                  <div className='inline-flex items-center justify-center w-16 h-16 bg-color-state-info-subtle rounded-full mb-4 border border-color-state-info-border'>
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
@@ -284,7 +288,9 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
                   <h3 className='text-xl font-bold text-color-primary mb-2'>
                     Analizzando le tue risposte...
                   </h3>
-                  <p className='text-color-tertiary'>Stiamo elaborando la soluzione perfetta per te</p>
+                  <p className='text-color-tertiary'>
+                    Stiamo elaborando la soluzione perfetta per te
+                  </p>
                 </motion.div>
               ) : (
                 <motion.div
@@ -306,7 +312,7 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
                         <h3 className='text-lg font-bold text-color-primary mb-2'>
                           {currentQuestion?.question}
                         </h3>
-                        <div className='text-sm text-color-muted'>
+                        <div className='text-sm text-color-primary dark:text-white'>
                           Categoria: {currentQuestion?.category}
                           {currentQuestion?.required && (
                             <span className='text-color-state-error ml-2'>*</span>
@@ -324,31 +330,27 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
 
             {/* Footer */}
             {!isSubmitting && (
-              <div className='flex items-center justify-between p-6 bg-color-subtle border-t'>
+              <div className='flex items-center justify-between p-6 bg-color-subtle border-t border-color-border-default'>
                 <button
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
                   className={`flex items-center px-4 py-2 rounded-xl font-semibold transition-colors ${
                     currentQuestionIndex === 0
                       ? 'text-color-disabled cursor-not-allowed'
-                      : 'text-color-tertiary hover:text-color-primary hover:bg-color-muted'
+                      : 'text-color-tertiary hover:text-color-primary hover:bg-color-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-color-state-info'
                   }`}
                 >
                   <ArrowLeft className='h-4 w-4 mr-2' />
                   Precedente
                 </button>
 
-                <div className='text-sm text-color-muted'>
-                  {Math.round(getProgressPercentage())}% completato
-                </div>
-
                 <button
                   onClick={handleNext}
                   disabled={!canProceed}
                   className={`flex items-center px-6 py-2 rounded-xl font-semibold transition-colors ${
                     canProceed
-                      ? 'bg-color-state-info-strong text-white hover:bg-blue-700 shadow-lg'
-                      : 'bg-gray-300 text-color-tertiary cursor-not-allowed'
+                      ? 'bg-color-state-info text-color-text-inverse shadow-lg hover:bg-color-state-info-strong focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-color-state-info'
+                      : 'bg-color-border-strong text-color-tertiary cursor-not-allowed'
                   }`}
                 >
                   {isLastQuestion ? 'Ottieni Raccomandazione' : 'Avanti'}
