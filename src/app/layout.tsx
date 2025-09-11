@@ -14,9 +14,9 @@ import { ClientThemeToggle } from '@/components/ClientThemeToggle';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Craftale - Website Design & Development Agency',
+  title: 'Craftale - Agenzia Web - Website Design & Development Agency',
   description:
-    'We build websites that actually work. Professional web design and development services that convert visitors into customers and grow your business.',
+   ' Siamo un agenzia web che realizziamo siti web che funzionano davvero. Servizi professionali di progettazione e sviluppo web che convertono i visitatori in clienti e fanno crescere la tua attività.',
   keywords: [
     'web design',
     'web development',
@@ -46,19 +46,19 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'it_IT',
     url: 'https://craftale.it',
-    title: 'Craftale - Website Design & Development Agency',
+    title: 'Craftale - Agenzia Web - Website Design & Development Agency',
     description:
-      'We build websites that actually work. Professional web design and development services that convert visitors into customers and grow your business.',
+      'Siamo un agenzia web che realizziamo siti web che funzionano davvero. Servizi professionali di progettazione e sviluppo web che convertono i visitatori in clienti e fanno crescere la tua attività.',
     siteName: 'Craftale',
     images: [],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Craftale - Website Design & Development Agency',
+    title: 'Craftale - Agenzia Web - Website Design & Development Agency',
     description:
-      'We build websites that actually work. Professional web design and development services that convert visitors into customers and grow your business.',
+      'Siamo un agenzia web che realizziamo siti web che funzionano davvero. Servizi professionali di progettazione e sviluppo web che convertono i visitatori in clienti e fanno crescere la tua attività.',
     creator: '@craftaleagency',
     images: [],
   },

@@ -257,7 +257,11 @@ export default function TierCards() {
         </p>
 
         <div className='grid md:grid-cols-3 gap-8'>
-          {pricingTiers.slice(0, 3).map((tier, index) => (
+          {pricingTiers.slice(0, 3).map((tier, index) => {
+            const btnVariant = tier.popular
+              ? 'bg-gradient-to-r from-brand-secondary to-brand-tertiary text-white hover:from-brand-secondary hover:to-brand-tertiary'
+              : 'bg-color-muted text-color-primary hover:bg-color-muted';
+            return (
             <motion.div
               key={tier.id}
               className={cn(
@@ -284,7 +288,7 @@ export default function TierCards() {
                 </div>
                 <h4 className='text-xl font-bold text-color-primary mb-2'>{tier.name}</h4>
                 <div className='text-3xl font-bold text-brand-secondary mb-2'>
-                  €{tier.price.toLocaleString()}
+                  €{tier.price.toLocaleString('it-IT')}
                 </div>
                 <p className='text-color-tertiary'>{tier.timeline}</p>
               </div>
@@ -294,8 +298,8 @@ export default function TierCards() {
                   <Check className='w-4 h-4 text-color-state-success mr-2' />
                   <span>{tier.pages} pagine incluse</span>
                 </div>
-                {tier.features.slice(0, 3).map((feature, idx) => (
-                  <div key={idx} className='flex items-center text-sm'>
+                {tier.features.slice(0, 3).map((feature) => (
+                  <div key={feature} className='flex items-center text-sm'>
                     <Check className='w-4 h-4 text-color-state-success mr-2' />
                     <span>{feature}</span>
                   </div>
@@ -312,17 +316,12 @@ export default function TierCards() {
                   e.stopPropagation();
                   handleTierSelect(tier.id);
                 }}
-                className={cn(
-                  'w-full py-3 px-6 rounded-lg font-medium transition-all duration-200',
-                  tier.popular
-                    ? 'bg-gradient-to-r from-brand-secondary to-brand-tertiary text-white hover:from-brand-secondary hover:to-brand-tertiary'
-                    : 'bg-color-muted text-color-primary hover:bg-color-muted'
-                )}
+                className={cn('w-full py-3 px-6 rounded-lg font-medium transition-all duration-200', btnVariant)}
               >
                 Vedi Dettagli Completi
               </button>
             </motion.div>
-          ))}
+          );})}
         </div>
       </div>
 
@@ -336,7 +335,11 @@ export default function TierCards() {
         </p>
 
         <div className='grid md:grid-cols-3 gap-8'>
-          {pricingTiers.slice(3, 6).map((tier, index) => (
+          {pricingTiers.slice(3, 6).map((tier, index) => {
+            const btnVariant = tier.popular
+              ? 'bg-gradient-to-r from-brand-tertiary to-brand-accent text-white hover:from-brand-tertiary hover:to-brand-accent'
+              : 'bg-color-muted text-color-primary hover:bg-color-muted';
+            return (
             <motion.div
               key={tier.id}
               className={cn(
@@ -363,7 +366,7 @@ export default function TierCards() {
                 </div>
                 <h4 className='text-xl font-bold text-color-primary mb-2'>{tier.name}</h4>
                 <div className='text-3xl font-bold text-brand-tertiary mb-2'>
-                  €{tier.price.toLocaleString()}
+                  €{tier.price.toLocaleString('it-IT')}
                 </div>
                 <p className='text-color-tertiary'>{tier.timeline}</p>
               </div>
@@ -373,8 +376,8 @@ export default function TierCards() {
                   <Check className='w-4 h-4 text-color-state-success mr-2' />
                   <span>{tier.pages} pagine incluse</span>
                 </div>
-                {tier.features.slice(0, 3).map((feature, idx) => (
-                  <div key={idx} className='flex items-center text-sm'>
+                {tier.features.slice(0, 3).map((feature) => (
+                  <div key={feature} className='flex items-center text-sm'>
                     <Check className='w-4 h-4 text-color-state-success mr-2' />
                     <span>{feature}</span>
                   </div>
@@ -391,17 +394,12 @@ export default function TierCards() {
                   e.stopPropagation();
                   handleTierSelect(tier.id);
                 }}
-                className={cn(
-                  'w-full py-3 px-6 rounded-lg font-medium transition-all duration-200',
-                  tier.popular
-                    ? 'bg-gradient-to-r from-brand-tertiary to-brand-accent text-white hover:from-brand-tertiary hover:to-brand-accent'
-                    : 'bg-color-muted text-color-primary hover:bg-color-muted'
-                )}
+                className={cn('w-full py-3 px-6 rounded-lg font-medium transition-all duration-200', btnVariant)}
               >
                 Vedi Dettagli Completi
               </button>
             </motion.div>
-          ))}
+          );})}
         </div>
       </div>
 
@@ -413,16 +411,23 @@ export default function TierCards() {
         </p>
 
         <div className='grid md:grid-cols-3 gap-8'>
-          {pricingTiers.slice(6, 9).map((tier, index) => (
+          {pricingTiers.slice(6, 9).map((tier, index) => {
+            const cardBorder = tier.enterprise
+              ? 'border-color-state-warning scale-105'
+              : tier.popular
+                ? 'border-color-state-success scale-105'
+                : 'border-color-default';
+            const ctaVariant = tier.enterprise
+              ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600'
+              : tier.popular
+                ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700'
+                : 'bg-color-muted text-color-primary hover:bg-color-muted';
+            return (
             <motion.div
               key={tier.id}
               className={cn(
                 'relative bg-white rounded-2xl shadow-lg border-2 p-8 hover:shadow-2xl transition-all duration-300',
-                tier.enterprise
-                  ? 'border-color-state-warning scale-105'
-                  : tier.popular
-                    ? 'border-color-state-success scale-105'
-                    : 'border-color-default',
+                cardBorder,
                 'cursor-pointer'
               )}
               initial={{ opacity: 0, y: 20 }}
@@ -461,7 +466,7 @@ export default function TierCards() {
                     tier.enterprise ? 'text-color-state-warning-strong' : 'text-color-state-success-strong'
                   )}
                 >
-                  €{tier.price.toLocaleString()}
+                  €{tier.price.toLocaleString('it-IT')}
                 </div>
                 <p className='text-color-tertiary'>{tier.timeline}</p>
               </div>
@@ -471,8 +476,8 @@ export default function TierCards() {
                   <Check className='w-4 h-4 text-color-state-success mr-2' />
                   <span>{tier.pages} pagine incluse</span>
                 </div>
-                {tier.features.slice(0, 3).map((feature, idx) => (
-                  <div key={idx} className='flex items-center text-sm'>
+                {tier.features.slice(0, 3).map((feature) => (
+                  <div key={feature} className='flex items-center text-sm'>
                     <Check className='w-4 h-4 text-color-state-success mr-2' />
                     <span>{feature}</span>
                   </div>
@@ -494,19 +499,12 @@ export default function TierCards() {
                   e.stopPropagation();
                   handleTierSelect(tier.id);
                 }}
-                className={cn(
-                  'w-full py-3 px-6 rounded-lg font-medium transition-all duration-200',
-                  tier.enterprise
-                    ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600'
-                    : tier.popular
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700'
-                      : 'bg-color-muted text-color-primary hover:bg-color-muted'
-                )}
+                className={cn('w-full py-3 px-6 rounded-lg font-medium transition-all duration-200', ctaVariant)}
               >
                 Vedi Dettagli Completi
               </button>
             </motion.div>
-          ))}
+          );})}
         </div>
       </div>
 
@@ -529,7 +527,7 @@ export default function TierCards() {
               <div className='text-white'>
                 <h3 className='text-3xl font-bold mb-2'>{selectedTierData.name}</h3>
                 <div className='text-4xl font-bold mb-2'>
-                  €{selectedTierData.price.toLocaleString()}
+                  €{selectedTierData.price.toLocaleString('it-IT')}
                 </div>
                 <p className='text-white/90'>
                   {selectedTierData.timeline} • {selectedTierData.pages} pagine
@@ -542,8 +540,8 @@ export default function TierCards() {
                 <div>
                   <h4 className='text-xl font-bold mb-4'>Funzionalità Incluse</h4>
                   <div className='space-y-3'>
-                    {selectedTierData.features.map((feature, idx) => (
-                      <div key={idx} className='flex items-start gap-3'>
+                    {selectedTierData.features.map((feature) => (
+                      <div key={feature} className='flex items-start gap-3'>
                         <Check className='w-5 h-5 text-color-state-success mt-0.5' />
                         <span className='text-color-secondary'>{feature}</span>
                       </div>
@@ -554,8 +552,8 @@ export default function TierCards() {
                 <div>
                   <h4 className='text-xl font-bold mb-4'>Setup & Supporto</h4>
                   <div className='space-y-3 mb-6'>
-                    {selectedTierData.setupIncluded.map((item, idx) => (
-                      <div key={idx} className='flex items-start gap-3'>
+                    {selectedTierData.setupIncluded.map((item) => (
+                      <div key={item} className='flex items-start gap-3'>
                         <Check className='w-5 h-5 text-color-state-info mt-0.5' />
                         <span className='text-color-secondary'>{item}</span>
                       </div>
@@ -565,9 +563,9 @@ export default function TierCards() {
                   <div className='bg-color-subtle rounded-lg p-4'>
                     <h5 className='font-semibold mb-2'>Target Persona</h5>
                     <div className='flex flex-wrap gap-2'>
-                      {selectedTierData.targetPersona.map((persona, idx) => (
+            {selectedTierData.targetPersona.map((persona) => (
                         <span
-                          key={idx}
+              key={persona}
                           className='bg-brand-secondary/20 text-brand-secondary px-3 py-1 rounded-full text-sm'
                         >
                           {persona}

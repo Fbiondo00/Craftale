@@ -13,11 +13,9 @@ export default function TierCard({
   onSelect, 
   onExpand,
   //showPersonaMatch = false 
-}: TierCardProps) {
+}: Readonly<TierCardProps>) {
   const [hoveredPackage, setHoveredPackage] = useState<string | null>(null);
   
-  // const popularPackage = tier.packages.find(p => p.popular);
-  // const recommendedPackage = tier.packages.find(p => p.recommended);
   const priceRange = `€${Math.min(...tier.packages.map(p => p.price))} - €${Math.max(...tier.packages.map(p => p.price))}`;
 
   return (
@@ -159,8 +157,8 @@ export default function TierCard({
                         
                         {/* Core Features Preview */}
                         <div className="space-y-1">
-                          {pkg.coreFeatures.slice(0, 3).map((feature, index) => (
-                            <div key={index} className="flex items-center gap-2 text-sm text-color-secondary">
+                          {pkg.coreFeatures.slice(0, 3).map((feature) => (
+                            <div key={feature} className="flex items-center gap-2 text-sm text-color-secondary">
                               <Check className="w-3 h-3 text-color-state-success flex-shrink-0" />
                               <span>{feature}</span>
                             </div>
@@ -176,7 +174,7 @@ export default function TierCard({
                       {/* Price and CTA */}
                       <div className="text-right ml-4">
                         <div className="text-2xl font-bold text-color-primary mb-2">
-                          €{pkg.price.toLocaleString()}
+                          €{pkg.price.toLocaleString('it-IT')}
                         </div>
                         <button
                           onClick={() => onSelect(tier.id)}
