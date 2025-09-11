@@ -114,7 +114,7 @@ const GlowingEffect = memo(
 
           const currentAngle =
             parseFloat(element.style.getPropertyValue("--start")) || 0;
-          let targetAngle =
+          const targetAngle =
             (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
               Math.PI +
             90;
@@ -840,17 +840,6 @@ const Step4EnhancedServices = ({ onContinue, onBack }: Step4EnhancedServicesProp
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-12 space-y-8">
-      {/* Back Button */}
-      <motion.button
-        className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-color-default rounded-lg text-color-secondary hover:bg-color-subtle hover:border-color-strong transition-all duration-200 shadow-sm hover:shadow-md"
-        whileHover={{ scale: 1.02, y: -1 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={onBack}
-      >
-        <ChevronDown className="w-4 h-4 rotate-90" />
-        <span className="text-sm font-medium">Torna Indietro</span>
-      </motion.button>
-
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent bg-clip-text text-transparent mb-4">
           Servizi Aggiuntivi

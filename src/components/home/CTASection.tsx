@@ -17,18 +17,6 @@ export default function CTASection() {
           Siamo pronti a scriverla insieme. Trasformiamo la tua visione in un racconto digitale
           che converte, coinvolge e fa crescere il tuo business. Consulenza gratuita inclusa.
         </p>
-
-        {/* Single CTA Button */}
-        <div className='mb-12'>
-          <AptyPrimaryButton 
-            size='xl' 
-            withChevron
-            className='shadow-apty-brand hover:shadow-apty-brand-lg'
-          >
-            Richiedi un preventivo
-          </AptyPrimaryButton>
-        </div>
-
         {/* Trust Indicators */}
         <div className='flex items-center justify-center gap-x-8'>
           <div className='flex items-center gap-2'>

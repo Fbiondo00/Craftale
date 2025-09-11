@@ -6,6 +6,8 @@ import {
   loadDraftAction,
   checkActiveQuoteAction
 } from '@/app/actions/quotes';
+import { updateQuoteProgressAction, deleteQuoteAction } from '@/app/actions/quotes';
+import { listUserDraftsAction } from '@/app/actions/quotes';
 import { getTimeSlotsAction, bookSlotAction } from '@/app/actions/timeSlots';
 import { getOptionalServicesAction } from '@/app/actions/optionalServices';
 import { getPricingTiersAction } from '@/app/actions/pricingData';
@@ -38,6 +40,9 @@ export default async function PricingPage() {
         // Analytics actions
         trackPricingJourneyAction={trackPricingJourneyAction}
         trackPersonaMatcherAction={trackPersonaMatcherAction}
+  updateQuoteProgressAction={updateQuoteProgressAction}
+  deleteQuoteAction={deleteQuoteAction}
+  listUserDraftsAction={listUserDraftsAction}
         // Pre-fetched data
         initialPricingData={pricingData}
       />

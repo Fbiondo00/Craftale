@@ -268,17 +268,6 @@ const TierLevelSelector: React.FC<TierLevelSelectorProps> = ({
   return (
     <section className='py-12 bg-apty-bg-subtle'>
       <div className='container mx-auto px-4'>
-        {/* Back Button */}
-        <motion.button
-          className='inline-flex items-center gap-2 px-4 py-2 bg-apty-bg-base border border-apty-border-default rounded-apty-lg text-apty-text-primary hover:bg-apty-bg-hover hover:border-apty-border-strong apty-transition shadow-apty-sm hover:shadow-apty-md mb-8'
-          whileHover={{ scale: 1.02, y: -1 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={onBack || (() => console.log('onBack not provided'))}
-        >
-          <ChevronDown className='w-4 h-4 rotate-90' />
-          <span className='text-sm font-medium'>Torna Indietro</span>
-        </motion.button>
-
         {/* Header section without white background */}
         <div className='text-center mb-12'>
           <h2 className='text-3xl md:text-4xl font-bold font-apty-heading text-apty-text-primary mb-4'>

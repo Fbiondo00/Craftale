@@ -55,8 +55,8 @@ export default function HeroSection({ onScrollToProcess }: HeroSectionProps) {
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
-    let touchStartY = 0;
-    let lastTouchY = 0;
+    const touchStartY = 0;
+    const lastTouchY = 0;
     
     // Desktop scroll handler - original behavior
     const handleWheel = (e: WheelEvent) => {

@@ -11,6 +11,7 @@ import PersonaMatcher from './PersonaMatcher';
 import Step4QuoteRequest from './Step4QuoteRequest';
 import Step4QuoteSuccess from './Step4QuoteSuccess';
 import StepNavigator from './StepNavigator';
+import BackConfirmDialog from './BackConfirmDialog';
 //import CartSummaryStep4 from './CartSummaryStep4';
 import { PersonaMatcherForm } from '@/types/pricing';
 import { getPersonaMatcherConfig, type PersonaMatcherStep } from './PersonaMatcherConfig';
@@ -61,6 +62,14 @@ interface CompactPricingSectionProps {
     prevState: ActionState | null,
     formData: FormData
   ) => Promise<ActionState>;
+  updateQuoteProgressAction?: (
+    prevState: ActionState | null,
+    formData: FormData
+  ) => Promise<ActionState>;
+  // Delete action for discarding quotes
+  deleteQuoteAction?: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
+  // Debug: list drafts
+  listUserDraftsAction?: () => Promise<ActionState>;
   // Pre-fetched data
   initialPricingData: {
     success: boolean;
@@ -82,6 +91,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   trackPricingJourneyAction,
   trackPersonaMatcherAction,
   initialPricingData,
+  updateQuoteProgressAction,
+  deleteQuoteAction,
+  listUserDraftsAction,
 }) => {
   const { user } = useAuth();
   const tiers = initialPricingData.tiers || [];
@@ -111,6 +123,13 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
     currentStep: 'browse',
   });
 
+  // Back confirm dialog state
+  const [showBackDialog, setShowBackDialog] = useState(false);
+  const [backDialogSaving, setBackDialogSaving] = useState(false);
+  const pendingBackRef = useRef<null | { targetStep: PricingStep }>(null);
+  // Short-lived guard to suppress reloads immediately after deleting a draft
+  const skipLoadUntilRef = useRef<number | null>(null);
+
   const [existingQuote, setExistingQuote] = useState<any>(null);
   const [quoteType, setQuoteType] = useState<'none' | 'draft' | 'submitted'>('none');
   const [loadingExistingQuote, setLoadingExistingQuote] = useState(true);
@@ -135,34 +154,20 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       console.log('🚀 CLIENT: Prefetching all optional services (non-blocking)...');
 
       try {
-        // Fetch with dummy tier/level just to get all services
-        // We'll filter them client-side based on actual selection
         const result = await getOptionalServicesAction(1, 1);
 
-        if (result.success && result.services) {
+        if (result && result.success && result.services) {
           console.log('✅ CLIENT: Prefetched', result.services.length, 'optional services');
           setAllServices(result.services);
           setServicesPreloaded(true);
           hasPrefetchedRef.current = true;
-
-          // If we're loading a quote with services already selected, restore them immediately
-          if (
-            configuration.tier?.id &&
-            configuration.level?.id &&
-            configuration.optionalServices.length > 0
-          ) {
-            console.log('📦 CLIENT: Found pre-selected services in loaded quote, using them');
-            setServices(result.services);
-            hasRestoredServicesRef.current = true; // Don't restore again
-          }
         }
       } catch (error) {
         console.error('Failed to prefetch services:', error);
-        // Don't set error state as this is non-blocking
+        // Non-blocking - don't surface to user
       }
     };
 
-    // Start prefetching immediately on mount
     prefetchServices();
   }, [getOptionalServicesAction]);
 
@@ -274,6 +279,11 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         setLoadingDraft(false);
         return;
       }
+      // If we recently deleted a draft, skip reload for a small window to avoid UI race
+      if (skipLoadUntilRef.current && Date.now() < skipLoadUntilRef.current) {
+        setLoadingDraft(false);
+        return;
+      }
       try {
         console.log('📋 CLIENT: Loading draft for user:', user.id);
         const result = await loadDraftAction();
@@ -295,6 +305,12 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   useEffect(() => {
     const checkExistingQuote = async () => {
       if (!user?.id) {
+        setLoadingExistingQuote(false);
+        return;
+      }
+
+      // If we recently deleted a draft, skip checking for a small window to avoid UI race
+      if (skipLoadUntilRef.current && Date.now() < skipLoadUntilRef.current) {
         setLoadingExistingQuote(false);
         return;
       }
@@ -680,6 +696,12 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         fd.set('event_data', JSON.stringify({ step: stepNumber }));
         fd.set('step_number', stepNumber.toString());
         trackPricingJourneyAction(null, fd);
+        if (updateQuoteProgressAction && quoteId) {
+          const pfd = new FormData();
+          pfd.set('quote_id', quoteId.toString());
+          pfd.set('current_step', nextStep);
+          updateQuoteProgressAction(null, pfd);
+        }
       }, 0);
       return { ...prev, completedSteps: newCompleted, currentStep: nextStep };
     });
@@ -799,8 +821,10 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       const currentIndex = orderedSteps.indexOf(prev.currentStep);
       if (currentIndex === 0) return prev;
       const prevStep = orderedSteps[currentIndex - 1];
-      // keep completed steps; do not delete progress
-      return { ...prev, currentStep: prevStep };
+      // show confirmation dialog first
+      pendingBackRef.current = { targetStep: prevStep };
+      setShowBackDialog(true);
+      return prev; // no immediate navigation
     });
   };
 
@@ -1105,8 +1129,8 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             className='mb-12'
           >
             {/* Desktop version */}
-            <div className='hidden md:flex justify-center'>
-              <div className='inline-flex items-center gap-4 bg-apty-bg-base/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-apty-lg border border-apty-border-default'>
+            <div className='hidden md:flex'>
+              <div className='w-full flex items-center gap-4 bg-apty-bg-base/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-apty-lg border border-apty-border-default'>
                 {/* Step 1: Browse */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
@@ -1123,7 +1147,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 </div>
                 <span className='font-medium text-apty-text-primary'>Esplora i Pacchetti</span>
 
-                <div className='w-16 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20' />
+                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
 
                 {/* Step 2: Customize */}
                 <div
@@ -1144,7 +1168,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                   Personalizza il Tuo Pacchetto
                 </span>
 
-                <div className='w-16 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20' />
+                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
 
                 {/* Step 3: Optional Services */}
                 <div
@@ -1163,7 +1187,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 </div>
                 <span className='font-medium text-apty-text-primary'>Servizi Opzionali</span>
 
-                <div className='w-16 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20' />
+                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
 
                 {/* Step 4: Quote */}
                 <div
@@ -1182,14 +1206,156 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 <span className='font-medium text-apty-text-primary'>Richiedi Preventivo</span>
               </div>
             </div>
-      <StepNavigator
-        canGoBack={configuration.currentStep !== 'browse'}
-        canGoForward={configuration.currentStep !== 'success'}
-        onBack={handlePreviousStep}
-        onNext={handleNextStep}
-        backLabel='Indietro'
-        nextLabel={configuration.currentStep === 'quote' ? 'Invia' : 'Avanti'}
-      />
+            {configuration.currentStep !== 'browse' && (
+              <StepNavigator
+                canGoBack={configuration.currentStep !== 'browse'}
+                // Hide both buttons on the first step (browse) by preventing forward navigation as well
+                canGoForward={
+                  configuration.currentStep !== 'success' && configuration.currentStep !== 'browse'
+                }
+                onBack={handlePreviousStep}
+                onNext={handleNextStep}
+                backLabel='Indietro'
+                nextLabel={configuration.currentStep === 'quote' ? 'Invia' : 'Avanti'}
+              />
+            )}
+            <BackConfirmDialog
+              open={showBackDialog}
+              saving={backDialogSaving}
+              onOpenChange={(o) => {
+                if (!o) {
+                  setShowBackDialog(false);
+                  pendingBackRef.current = null;
+                }
+              }}
+              currentStepLabel={
+                configuration.currentStep === 'quote'
+                  ? 'richiesta preventivo'
+                  : configuration.currentStep
+              }
+              targetStepLabel={pendingBackRef.current?.targetStep || 'precedente'}
+              onSave={async () => {
+                const pending = pendingBackRef.current;
+                if (!pending) return;
+                const target = pending.targetStep;
+                setBackDialogSaving(true);
+                try {
+                  // Reuse saveDraftAction to persist main selections
+                  const fd = new FormData();
+                  if (configuration.tier?.id) fd.append('tier_id', configuration.tier.id.toString());
+                  if (configuration.level?.id) fd.append('level_id', configuration.level.id.toString());
+                  configuration.optionalServices.forEach((s) => fd.append('selected_services', s.id.toString()));
+
+                  const result = await saveDraftAction(null, fd);
+                  if (result.success) {
+                    // Determine the quote id we'll use for progress update
+                    const newQuoteId = quoteId || result.data?.quote_id;
+                    if (!quoteId && result.data?.quote_id) setQuoteId(result.data.quote_id);
+                    setConfiguration((prev) => ({ ...prev, currentStep: target }));
+                    if (updateQuoteProgressAction && newQuoteId) {
+                      const pfd = new FormData();
+                      pfd.set('quote_id', newQuoteId.toString());
+                      pfd.set('current_step', target);
+                      updateQuoteProgressAction(null, pfd);
+                    }
+                  }
+                } finally {
+                  setBackDialogSaving(false);
+                  setShowBackDialog(false);
+                  pendingBackRef.current = null;
+                }
+              }}
+              onDiscard={async () => {
+                const pending = pendingBackRef.current;
+                if (pending) {
+                  const target = pending.targetStep;
+
+          // Attempt to delete a draft server-side (if quoteId present, pass it; otherwise server will delete latest draft)
+          if (deleteQuoteAction) {
+                    setBackDialogSaving(true);
+                    try {
+                      const dfd = new FormData();
+                      if (quoteId) dfd.set('quote_id', quoteId.toString());
+                      console.log('Client: calling listUserDraftsAction (before delete)');
+                      try {
+                        // @ts-ignore - debug helper
+                        const before = await listUserDraftsAction();
+                        console.log('Client: drafts before delete:', before);
+                      } catch (e) {}
+
+                      console.log('Client: calling deleteQuoteAction with quoteId:', quoteId);
+                      const delRes = await deleteQuoteAction(null, dfd);
+                      console.log('Client: deleteQuoteAction response:', delRes);
+                      if (delRes && delRes.success) {
+                        console.log('Quote deleted server-side:', delRes.data?.deletedCount, delRes.data?.deleted);
+                      } else {
+                        console.warn('deleteQuoteAction failed or returned empty:', delRes);
+                      }
+                    } catch (e) {
+                      console.warn('Error deleting quote:', e);
+                    } finally {
+                      // Clear local references immediately to avoid loadDraft/checkout races
+                      setQuoteId(null);
+                      setDraft(null);
+                      setExistingQuote(null);
+                      // Cancel any pending auto-save timers that might recreate the draft
+                      if (saveTimerRef.current) {
+                        clearTimeout(saveTimerRef.current);
+                        saveTimerRef.current = null;
+                      }
+                      // Mark steps as saved to temporarily suppress auto-save recreation
+                      setSavedSteps(new Set(['browse', 'customize', 'optional']));
+                      // Confirm deletion: attempt to load draft and retry delete if still present
+                      try {
+                        const reload = await loadDraftAction();
+                        if (reload && reload.success && reload.data?.draft) {
+                          const foundId = reload.data.draft.id;
+                          console.warn('Draft still present after delete; retrying for id:', foundId);
+                          if (deleteQuoteAction) {
+                            const retryFd = new FormData();
+                            retryFd.set('quote_id', String(foundId));
+                            await deleteQuoteAction(null, retryFd);
+                          }
+                        }
+                      } catch (e) {
+                        console.warn('Error confirming/deleting lingering draft:', e);
+                      }
+                      try {
+                        // @ts-ignore - debug helper
+                        const after = await listUserDraftsAction();
+                        console.log('Client: drafts after delete:', after);
+                      } catch (e) {}
+                      // Suppress draft loading/checking for a short window to avoid races
+                      skipLoadUntilRef.current = Date.now() + 10000; // 10s
+                      setBackDialogSaving(false);
+                    }
+                  } else if (updateQuoteProgressAction && quoteId) {
+                    const pfd = new FormData();
+                    pfd.set('quote_id', quoteId.toString());
+                    pfd.set('current_step', target);
+                    // best-effort
+                    updateQuoteProgressAction(null, pfd).catch(() => {});
+                  }
+
+                  // Finally navigate locally
+                  setConfiguration((prev) => ({ ...prev, currentStep: target }));
+                }
+
+                setShowBackDialog(false);
+                pendingBackRef.current = null;
+                // Force a full reload so server state is authoritative and drafts won't be rehydrated
+                try {
+                  window.location.reload();
+                } catch (e) {
+                  // fallback: navigate to pricing
+                  window.location.href = '/pricing';
+                }
+              }}
+              onCancel={() => {
+                setShowBackDialog(false);
+                pendingBackRef.current = null;
+              }}
+            />
             {/* Mobile version - vertical layout */}
             <div className='md:hidden bg-apty-bg-base rounded-apty-xl shadow-apty-lg border border-apty-border-default p-6 mx-4'>
               <div className='space-y-4'>
@@ -1265,12 +1431,16 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 <div className='flex items-center gap-3'>
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                      configuration.currentStep === 'quote' 
-                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2' 
+                      configuration.currentStep === 'quote'
+                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
                         : 'bg-apty-gradient-primary text-apty-text-on-brand'
                     }`}
                   >
-                    {getStepConfig('quote').completed && configuration.currentStep !== 'quote' ? <Check size={18} /> : '4'}
+                    {getStepConfig('quote').completed && configuration.currentStep !== 'quote' ? (
+                      <Check size={18} />
+                    ) : (
+                      '4'
+                    )}
                   </div>
                   <div className='flex-1'>
                     <div className='font-medium text-base text-apty-text-primary'>

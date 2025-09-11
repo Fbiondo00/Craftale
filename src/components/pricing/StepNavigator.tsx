@@ -25,29 +25,31 @@ export const StepNavigator: React.FC<StepNavigatorProps> = ({
 }) => {
   return (
     <div className={`mt-8 flex items-center justify-between gap-4 ${className}`}>
-      <motion.button
-        type='button'
-        disabled={!canGoBack}
-        onClick={onBack}
-        whileHover={canGoBack ? { scale: 1.02, y: -2 } : {}}
-        whileTap={canGoBack ? { scale: 0.97 } : {}}
-        className='inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-color-default bg-white text-color-secondary text-sm font-medium shadow-sm disabled:opacity-40 disabled:cursor-not-allowed hover:border-color-strong hover:bg-color-subtle transition-colors'
-      >
-        <ChevronLeft className='w-4 h-4' />
-        {backLabel}
-      </motion.button>
+      {canGoBack && (
+        <motion.button
+          type='button'
+          onClick={onBack}
+          whileHover={{ scale: 1.02, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          className='inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-color-default bg-white text-color-secondary text-sm font-medium shadow-sm hover:border-color-strong hover:bg-color-subtle transition-colors'
+        >
+          <ChevronLeft className='w-4 h-4' />
+          {backLabel}
+        </motion.button>
+      )}
 
-      <motion.button
-        type='button'
-        disabled={!canGoForward}
-        onClick={onNext}
-        whileHover={canGoForward ? { scale: 1.02, y: -2 } : {}}
-        whileTap={canGoForward ? { scale: 0.97 } : {}}
-        className='inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent text-white text-sm font-semibold shadow-md disabled:opacity-40 disabled:cursor-not-allowed transition-all'
-      >
-        {nextLabel}
-        <ChevronRight className='w-4 h-4' />
-      </motion.button>
+      {canGoForward && (
+        <motion.button
+          type='button'
+          onClick={onNext}
+          whileHover={{ scale: 1.02, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          className='inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent text-white text-sm font-semibold shadow-md transition-all'
+        >
+          {nextLabel}
+          <ChevronRight className='w-4 h-4' />
+        </motion.button>
+      )}
     </div>
   );
 };

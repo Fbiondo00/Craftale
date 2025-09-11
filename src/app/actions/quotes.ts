@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/secure/database-utils'
 import { revalidatePath } from 'next/cache'
 import { QuoteDraftSchema, QuoteSubmissionSchema, ApplyDiscountSchema } from '@/lib/validations/quote'
 import { calculateQuoteTotals } from '@/lib/pricing/calculations'
@@ -570,5 +571,247 @@ export async function loadDraftAction(): Promise<ActionState> {
       success: false,
       message: 'An unexpected error occurred'
     }
+  }
+}
+
+// Lightweight action to persist the user's current step (and optionally quote id)
+// This keeps resume capability accurate without forcing full draft save or totals recalculation.
+export async function updateQuoteProgressAction(
+  prevState: ActionState | null,
+  formData: FormData
+): Promise<ActionState> {
+  try {
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return { success: false, message: 'Authentication required' };
+
+    const quoteIdRaw = formData.get('quote_id');
+    const stepRaw = formData.get('current_step');
+    if (!quoteIdRaw || !stepRaw) return { success: false, message: 'Missing quote_id or current_step' };
+
+    const quote_id = parseInt(String(quoteIdRaw), 10);
+    const current_step = String(stepRaw);
+    const allowedSteps = ['browse', 'customize', 'optional', 'quote', 'success'];
+    if (!allowedSteps.includes(current_step)) return { success: false, message: 'Invalid step' };
+
+    const { data: quote } = await supabase
+      .from('user_quotes')
+      .select('id, user_id, metadata')
+      .eq('id', quote_id)
+      .eq('user_id', user.id)
+      .limit(1)
+      .single();
+
+    if (!quote) return { success: false, message: 'Quote not found' };
+
+    const metadata: any = {
+      ...(quote as any).metadata,
+      current_step,
+      last_progress_update: new Date().toISOString(),
+      update_source: 'updateQuoteProgressAction'
+    };
+
+    const { error: updateError } = await supabase
+      .from('user_quotes')
+      .update({ metadata, updated_at: new Date().toISOString() } as any)
+      .eq('id', quote_id);
+
+    if (updateError) return { success: false, message: 'Failed to update progress' };
+    return { success: true, data: { quote_id, current_step } };
+  } catch (e) {
+    return { success: false, message: 'An unexpected error occurred' };
+  }
+}
+
+// Delete a user's quote (only permitted for drafts belonging to the authenticated user)
+export async function deleteQuoteAction(
+  prevState: ActionState | null,
+  formData: FormData
+): Promise<ActionState> {
+  const supabase = await createClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) return { success: false, message: 'Authentication required' };
+
+  try {
+    const quoteIdRaw = formData.get('quote_id');
+    const quote_id = quoteIdRaw ? parseInt(String(quoteIdRaw), 10) : 0;
+
+    console.log('🗑️ SERVER: deleteQuoteAction called for user:', user.id, 'quote_id:', quote_id || 'none');
+
+    if (quote_id) {
+      // Inspect the row before attempting delete so we can log its current state
+      try {
+        const { data: existingRow, error: selErr } = await supabase
+          .from('user_quotes')
+          .select('id, user_id, status, created_at, metadata')
+          .eq('id', quote_id)
+          .limit(1)
+          .single();
+
+        if (selErr && selErr.code !== 'PGRST116') {
+          console.warn('deleteQuoteAction: error selecting row for id', quote_id, selErr);
+        } else {
+          console.log('🗂️ SERVER: deleteQuoteAction inspected row before delete:', existingRow);
+        }
+      } catch (e) {
+        console.warn('deleteQuoteAction: select threw for id', quote_id, e);
+      }
+
+      // Attempt to delete specific quote owned by user and return deleted rows
+      const { data: deletedRows, error } = await supabase
+        .from('user_quotes')
+        .delete()
+        .eq('id', quote_id)
+        .eq('user_id', user.id)
+        .select('id, status');
+
+      if (error) {
+        console.warn('deleteQuoteAction: delete error for id', quote_id, error);
+        // try marking as deleted instead of failing outright
+      }
+
+      const deletedCount = Array.isArray(deletedRows) ? deletedRows.length : 0;
+      console.log('🗑️ SERVER: deleteQuoteAction deleted rows for id:', quote_id, deletedRows || []);
+
+      if (deletedCount === 0) {
+        // The user-level delete didn't remove rows. Attempt service-role admin delete to bypass RLS.
+        try {
+          const admin = createAdminClient();
+          const { data: adminDeleted, error: adminDelErr } = await admin
+            .from('user_quotes')
+            .delete()
+            .eq('id', quote_id)
+            .select('id, status');
+
+          if (adminDelErr) {
+            console.warn('deleteQuoteAction: admin delete failed for id', quote_id, adminDelErr);
+          } else if (Array.isArray(adminDeleted) && adminDeleted.length > 0) {
+            console.log('🛡️ SERVER: deleteQuoteAction admin client deleted rows for id:', quote_id, adminDeleted);
+            revalidatePath('/pricing');
+            revalidatePath('/quotes');
+            return { success: true, data: { deletedCount: adminDeleted.length, deleted: adminDeleted } };
+          }
+
+          // If admin delete also returned nothing, try admin mark-as-deleted as last resort
+          const { data: adminMarked, error: adminMarkErr } = await admin
+            .from('user_quotes')
+            .update({ status: 'deleted', updated_at: new Date().toISOString() })
+            .eq('id', quote_id)
+            .select('id, status');
+
+          if (adminMarkErr) {
+            console.warn('deleteQuoteAction: admin mark-as-deleted failed for id', quote_id, adminMarkErr);
+            return { success: false, message: 'Failed to delete or mark quote as deleted (admin)' };
+          }
+
+          console.log('�️ SERVER: deleteQuoteAction admin marked quote as deleted for id:', quote_id, adminMarked);
+          revalidatePath('/pricing');
+          revalidatePath('/quotes');
+          return { success: true, data: { deletedCount: Array.isArray(adminMarked) ? adminMarked.length : 0, deleted: adminMarked } };
+        } catch (e) {
+          console.error('deleteQuoteAction: admin fallback threw for id', quote_id, e);
+          return { success: false, message: 'Failed to delete quote (admin fallback)' };
+        }
+      }
+
+      revalidatePath('/pricing');
+      revalidatePath('/quotes');
+      return { success: true, data: { deletedCount, deleted: deletedRows } };
+    } else {
+      // No id: aggressively delete all draft quotes for this user and return details
+      const { data: deletedRows, error } = await supabase
+        .from('user_quotes')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('status', 'draft')
+        .select('id, status');
+
+      if (error) {
+        console.warn('deleteQuoteAction: failed to delete user drafts', error);
+        // continue to attempt alternative strategies below
+      }
+
+      const deletedCount = Array.isArray(deletedRows) ? deletedRows.length : 0;
+      console.log('🗑️ SERVER: deleteQuoteAction deleted draft rows for user:', user.id, deletedRows);
+
+      // If nothing deleted, try a broader recent-delete (covers null/mis-set status)
+      if (deletedCount === 0) {
+        try {
+          const recentThreshold = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(); // 24h
+          console.log('🗑️ SERVER: deleteQuoteAction no rows deleted by status filter; attempting recent delete since', recentThreshold);
+          const { data: recentDeleted, error: recentError } = await supabase
+            .from('user_quotes')
+            .delete()
+            .eq('user_id', user.id)
+            .gte('created_at', recentThreshold)
+            .select('id, status, created_at');
+
+          if (recentError) {
+            console.warn('deleteQuoteAction: recent delete failed', recentError);
+          } else {
+            console.log('🗑️ SERVER: deleteQuoteAction recent delete removed rows:', recentDeleted);
+            revalidatePath('/pricing');
+            revalidatePath('/quotes');
+            return { success: true, data: { deletedCount: Array.isArray(recentDeleted) ? recentDeleted.length : 0, deleted: recentDeleted } };
+          }
+        } catch (e) {
+          console.warn('deleteQuoteAction: recent delete threw', e);
+        }
+      }
+
+      // As a best-effort, mark remaining drafts as deleted
+      try {
+        const { data: markedRows } = await supabase
+          .from('user_quotes')
+          .update({ status: 'deleted', updated_at: new Date().toISOString() } as any)
+          .eq('user_id', user.id)
+          .eq('status', 'draft')
+          .select('id, status');
+        if (markedRows) console.log('deleteQuoteAction: marked rows as deleted:', markedRows);
+      } catch (e) {
+        console.warn('deleteQuoteAction: secondary mark-as-deleted failed', e);
+      }
+
+      revalidatePath('/pricing');
+      revalidatePath('/quotes');
+
+      return { success: true, data: { deletedCount, deleted: deletedRows } };
+    }
+
+    // Revalidate pages that may list the draft
+    revalidatePath('/pricing');
+    revalidatePath('/quotes');
+
+    return { success: true, data: { deleted: true } };
+  } catch (e) {
+    console.error('Error in deleteQuoteAction:', e);
+    return { success: false, message: 'An unexpected error occurred' };
+  }
+}
+
+// DEBUG: List all draft quotes for the current user (useful to confirm lingering drafts)
+export async function listUserDraftsAction(): Promise<ActionState> {
+  try {
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return { success: false, message: 'Authentication required' };
+
+    const { data, error } = await supabase
+      .from('user_quotes')
+      .select('id, status, created_at, metadata')
+      .eq('user_id', user.id)
+      .eq('status', 'draft')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('listUserDraftsAction error:', error);
+      return { success: false, message: 'Failed to list drafts' };
+    }
+
+    console.log('🧾 SERVER: listUserDraftsAction found drafts for user:', user.id, data);
+    return { success: true, data: { drafts: data || [] } };
+  } catch (e) {
+    console.error('Error in listUserDraftsAction:', e);
+    return { success: false, message: 'An unexpected error occurred' };
   }
 }

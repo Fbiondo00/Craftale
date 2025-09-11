@@ -7,10 +7,20 @@ import 'server-only'
 
 // Environment variable access
 export function getSupabaseServiceKey(): string {
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  // Support multiple env var names for developer convenience:
+  // - NEXT_SERVICE_ROLE_KEY (used in this repo)
+  // - SUPABASE_SERVICE_ROLE_KEY (common convention)
+  // - NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY (less likely)
+  const key =
+    process.env.NEXT_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ||
+    '';
+
   if (!key) {
-    throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured')
+    throw new Error('Supabase service role key is not configured (expected NEXT_SERVICE_ROLE_KEY or SUPABASE_SERVICE_ROLE_KEY)')
   }
+
   return key
 }
 
