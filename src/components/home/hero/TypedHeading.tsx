@@ -17,7 +17,7 @@ export default function TypedHeading({ showWebsites, typedText, showCursor }: Ty
       transition={{ delay: 0.3 }}
     >
       <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight'>
-        <span className='block'>Creiamo</span>
+        <span className='block'>Realizziamo</span>
         <motion.span
           className='relative block min-h-[1.2em]'
           initial={{ opacity: 0, scale: 0, rotate: -180 }}
