@@ -1,14 +1,15 @@
 "use client";
 
-import { Button } from "@repo/shadcn-ui/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { CropIcon, RotateCcwIcon } from "lucide-react";
-import { Slot } from "radix-ui";
+import { Slot } from "@radix-ui/react-slot";
 import {
   type ComponentProps,
   type CSSProperties,
   createContext,
   type MouseEvent,
   type ReactNode,
+  useMemo,
   type RefObject,
   type SyntheticEvent,
   useCallback,
@@ -152,9 +153,10 @@ export const ImageCrop = ({
 
   useEffect(() => {
     const reader = new FileReader();
-    reader.addEventListener("load", () =>
-      setImgSrc(reader.result?.toString() || "")
-    );
+    reader.addEventListener("load", () => {
+      const result = reader.result;
+      setImgSrc(typeof result === "string" ? result : "");
+    });
     reader.readAsDataURL(file);
   }, [file]);
 
@@ -204,21 +206,38 @@ export const ImageCrop = ({
     }
   };
 
-  const contextValue: ImageCropContextType = {
-    file,
-    maxImageSize,
-    imgSrc,
-    crop,
-    completedCrop,
-    imgRef,
-    onCrop,
-    reactCropProps,
-    handleChange,
-    handleComplete,
-    onImageLoad,
-    applyCrop,
-    resetCrop,
-  };
+  const contextValue: ImageCropContextType = useMemo(
+    () => ({
+      file,
+      maxImageSize,
+      imgSrc,
+      crop,
+      completedCrop,
+      imgRef,
+      onCrop,
+      reactCropProps,
+      handleChange,
+      handleComplete,
+      onImageLoad,
+      applyCrop,
+      resetCrop,
+    }),
+    [
+      file,
+      maxImageSize,
+      imgSrc,
+      crop,
+      completedCrop,
+      imgRef,
+      onCrop,
+      reactCropProps,
+      handleChange,
+      handleComplete,
+      onImageLoad,
+      applyCrop,
+      resetCrop,
+    ]
+  );
 
   return (
     <ImageCropContext.Provider value={contextValue}>
@@ -292,9 +311,9 @@ export const ImageCropApply = ({
 
   if (asChild) {
     return (
-      <Slot.Root onClick={handleClick} {...props}>
+      <Slot onClick={handleClick} {...props}>
         {children}
-      </Slot.Root>
+      </Slot>
     );
   }
 
@@ -324,9 +343,9 @@ export const ImageCropReset = ({
 
   if (asChild) {
     return (
-      <Slot.Root onClick={handleClick} {...props}>
+      <Slot onClick={handleClick} {...props}>
         {children}
-      </Slot.Root>
+      </Slot>
     );
   }
 

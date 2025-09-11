@@ -26,6 +26,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ClientThemeToggle } from '@/components/ClientThemeToggle';
 import { AuthModal } from '@/components/AuthModal';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ImageCrop, ImageCropContent, ImageCropApply, ImageCropReset } from '@/components/ui/kibo-ui/image-crop';
 import { 
   User, 
   Mail, 
@@ -57,6 +59,8 @@ function ProfileContent() {
   const [isSaving, setIsSaving] = useState(false);
   const memberSinceRef = useRef<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [isCropOpen, setIsCropOpen] = useState(false);
+  const [cropFile, setCropFile] = useState<File | null>(null);
   const [profileData, setProfileData] = useState<ProfileData>({
     firstName: '',
     lastName: '',
@@ -131,12 +135,14 @@ function ProfileContent() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-  // Anteprima locale immagine (upload reale da implementare)
-    const previewUrl = URL.createObjectURL(file);
-    setProfileData(prev => ({
-      ...prev,
-      avatar: previewUrl
-    }));
+    // Apri il cropper con il file selezionato
+    setCropFile(file);
+    setIsCropOpen(true);
+  };
+
+  const closeCropper = () => {
+    setCropFile(null);
+    setIsCropOpen(false);
   };
 
   // Handle logout
@@ -483,6 +489,38 @@ function ProfileContent() {
         </div>,
         document.body
       )}
+
+      {/* Dialog Cropper immagine profilo */}
+      <Dialog open={isCropOpen} onOpenChange={(open) => { if (!open) closeCropper(); }}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Ritaglia immagine profilo</DialogTitle>
+          </DialogHeader>
+          {cropFile && (
+            <ImageCrop file={cropFile} aspect={1} onCrop={(img) => {
+              setProfileData(prev => ({ ...prev, avatar: img }));
+              closeCropper();
+            }}>
+              <div className="space-y-4">
+                <ImageCropContent className="max-h-[60vh]" />
+                <DialogFooter className="sm:justify-between">
+                  <div className="flex gap-2">
+                    <ImageCropReset asChild>
+                      <Button variant="outline" className="border-apty-border-strong">Reimposta</Button>
+                    </ImageCropReset>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" onClick={closeCropper} className="border-apty-border-strong">Annulla</Button>
+                    <ImageCropApply asChild>
+                      <Button className="bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand">Applica</Button>
+                    </ImageCropApply>
+                  </div>
+                </DialogFooter>
+              </div>
+            </ImageCrop>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
