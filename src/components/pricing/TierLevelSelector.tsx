@@ -282,7 +282,7 @@ const TierLevelSelector: React.FC<TierLevelSelectorProps> = ({
         {/* Header section without white background */}
         <div className='text-center mb-12'>
           <h2 className='text-3xl md:text-4xl font-bold font-apty-heading text-apty-text-primary mb-4'>
-            <span className='text-apty-primary'>Scegli</span> il piano perfetto per il tuo ristorante
+            <span className='text-apty-primary'>Scegli</span> il piano perfetto per la tua attività
           </h2>
           <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto mb-6'>{selectedTier.description}</p>
           <div className='inline-flex items-center px-4 py-2 bg-apty-primary/10 rounded-full text-apty-primary mb-8'>
@@ -313,7 +313,6 @@ const TierLevelSelector: React.FC<TierLevelSelectorProps> = ({
                           level.level_code === 'B' ? 'text-apty-tertiary' : 'text-apty-text-primary'
                         }`}
                       >
-                        €{Number(level.price).toLocaleString()}
                       </div>
                       <button
                         onClick={() => onLevelSelect(selectedTier.slug, level.level_code)}
