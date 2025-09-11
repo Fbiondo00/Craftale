@@ -35,7 +35,7 @@ export default function InteractiveBadge({
         <Zap className='w-4 h-4' />
       </motion.div>
       <span className='font-semibold'>
-Costruiamo siti Web super Performanti</span>
+Costruiamo siti Web Performanti</span>
       <motion.div
         animate={{ 
           rotate: isHovered ? 360 : 0,

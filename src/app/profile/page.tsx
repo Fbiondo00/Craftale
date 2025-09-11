@@ -260,7 +260,7 @@ function ProfileContent() {
                 <CardContent className="text-center">
                   <div className="relative inline-block">
                     <Avatar className="w-24 h-24 md:w-32 md:h-32 mx-auto border-4 border-apty-primary/20">
-                      <AvatarImage src={profileData.avatar} alt="Foto profilo" />
+                      <AvatarImage src={profileData.avatar || undefined} alt="Foto profilo" />
                       <AvatarFallback className="bg-apty-gradient-primary text-apty-text-on-brand text-2xl font-bold">
                         {profileData.firstName.charAt(0).toUpperCase()}{profileData.lastName.charAt(0).toUpperCase()}
                       </AvatarFallback>
