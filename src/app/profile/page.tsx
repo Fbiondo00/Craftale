@@ -168,7 +168,20 @@ function ProfileContent() {
     <div className="min-h-screen bg-apty-bg-base">
       {/* Header with gradient background */}
       <div className="bg-gradient-to-br from-apty-primary/10 via-apty-tertiary/10 to-apty-accent/10 border-b border-apty-border-subtle">
-        <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="container mx-auto px-4 py-6 sm:py-8 relative">
+          {/* Mobile-only Dashboard button in top-right */}
+          <div className="sm:hidden absolute top-4 right-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push('/dashboard')}
+              className="border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
+              aria-label="Vai alla Dashboard"
+            >
+              <LayoutDashboard className="w-4 h-4 mr-2" />
+              Dashboard
+            </Button>
+          </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-wrap">
               <Button
