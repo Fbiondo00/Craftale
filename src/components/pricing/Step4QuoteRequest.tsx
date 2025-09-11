@@ -570,6 +570,11 @@ const ProjectDetailsStep: React.FC<StepComponentProps> = ({
 }) => {
   const [formData, setFormData] = useState<Partial<ProjectDetails>>(data.projectDetails || {});
   const [localErrors, setLocalErrors] = useState<FormValidationError[]>([]);
+  // Hydration-safe today's date string for min attributes
+  const [todayStr, setTodayStr] = useState<string>('');
+  useEffect(() => {
+    setTodayStr(new Date().toISOString().split('T')[0]);
+  }, []);
 
   // Enhanced services state - removed (no longer needed)
 
@@ -718,7 +723,7 @@ const ProjectDetailsStep: React.FC<StepComponentProps> = ({
                   'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
                   getFieldError('specificDeadline') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
                 )}
-                min={new Date().toISOString().split('T')[0]}
+                min={todayStr || undefined}
               />
               {getFieldError('specificDeadline') && (
                 <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
@@ -819,6 +824,11 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
   );
   const [localErrors, setLocalErrors] = useState<FormValidationError[]>([]);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  // Hydration-safe min date string
+  const [minDateStr, setMinDateStr] = useState<string>('');
+  useEffect(() => {
+    setMinDateStr(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const handleInputChange = (field: keyof MeetingRequest, value: any) => {
     const updatedData = { ...formData, [field]: value };
@@ -1021,7 +1031,7 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
                           ? 'border-color-state-error-border'
                           : 'border-color-strong'
                       )}
-                      min={new Date().toISOString().split('T')[0]}
+                      min={minDateStr || undefined}
                     />
                     {getFieldError(`preferredSlots.${index}.date`) && (
                       <p className='mt-1 text-xs text-color-state-error-strong'>

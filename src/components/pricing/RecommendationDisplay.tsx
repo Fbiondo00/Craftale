@@ -12,14 +12,13 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { RecommendationDisplayProps } from '@/types/pricing';
-//import { cn } from '@/lib/utils';
 
 export default function RecommendationDisplay({
   recommendation,
   onAccept,
   onModify,
   onStartOver
-}: RecommendationDisplayProps) {
+}: Readonly<RecommendationDisplayProps>) {
   const { 
     matchedPersona, 
     recommendedTier, 
@@ -31,8 +30,7 @@ export default function RecommendationDisplay({
     alternatives
   } = recommendation;
 
-  // const monthlyServices = optionalServices.filter(service => service.unit === 'monthly');
-  // const oneTimeServices = optionalServices.filter(service => service.unit !== 'monthly');
+  //
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -115,7 +113,7 @@ export default function RecommendationDisplay({
             
             <div className="text-right">
               <div className="text-3xl font-bold">
-                €{recommendedPackage.price.toLocaleString()}
+                €{recommendedPackage.price.toLocaleString('it-IT')}
               </div>
               <div className="text-white/80">
                 una tantum
@@ -133,8 +131,8 @@ export default function RecommendationDisplay({
                 Cosa Include:
               </h4>
               <div className="space-y-3">
-                {recommendedPackage.coreFeatures.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
+                {recommendedPackage.coreFeatures.map((feature) => (
+                  <div key={feature} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-color-state-success mt-0.5 flex-shrink-0" />
                     <span className="text-color-secondary">{feature}</span>
                   </div>
@@ -185,8 +183,8 @@ export default function RecommendationDisplay({
                   Perché è perfetto per te:
                 </h4>
                 <ul className="space-y-1">
-                  {reasoning.map((reason, index) => (
-                    <li key={index} className="text-color-secondary text-sm">
+                  {reasoning.map((reason) => (
+                    <li key={reason} className="text-color-secondary text-sm">
                       • {reason}
                     </li>
                   ))}
@@ -262,7 +260,7 @@ export default function RecommendationDisplay({
           <div>
             <div className="text-sm text-color-disabled mb-1">Pacchetto Base</div>
             <div className="text-2xl font-bold">
-              €{totalEstimate.base.toLocaleString()}
+              €{totalEstimate.base.toLocaleString('it-IT')}
             </div>
             <div className="text-sm text-color-disabled">una tantum</div>
           </div>
@@ -271,7 +269,7 @@ export default function RecommendationDisplay({
             <div>
               <div className="text-sm text-color-disabled mb-1">Con Opzionali</div>
               <div className="text-2xl font-bold text-green-400">
-                €{totalEstimate.withRecommendedOptions.toLocaleString()}
+                €{totalEstimate.withRecommendedOptions.toLocaleString('it-IT')}
               </div>
               <div className="text-sm text-color-disabled">una tantum</div>
             </div>
@@ -281,7 +279,7 @@ export default function RecommendationDisplay({
             <div>
               <div className="text-sm text-color-disabled mb-1">Servizi Mensili</div>
               <div className="text-2xl font-bold text-blue-400">
-                €{totalEstimate.monthly.toLocaleString()}
+                €{totalEstimate.monthly.toLocaleString('it-IT')}
               </div>
               <div className="text-sm text-color-disabled">al mese</div>
             </div>
@@ -302,8 +300,8 @@ export default function RecommendationDisplay({
           </h3>
           
           <div className="grid gap-4">
-            {alternatives.map((alt, index) => (
-              <div key={index} className="border border-color-default rounded-xl p-4">
+            {alternatives.map((alt) => (
+              <div key={`${alt.tier.name}-${alt.package.name}`} className="border border-color-default rounded-xl p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium text-color-primary mb-1">
@@ -319,7 +317,7 @@ export default function RecommendationDisplay({
                   
                   <div className="text-right">
                     <div className="text-xl font-bold text-color-primary">
-                      €{alt.package.price.toLocaleString()}
+                      €{alt.package.price.toLocaleString('it-IT')}
                     </div>
                     <div className="text-sm text-color-muted">una tantum</div>
                   </div>
