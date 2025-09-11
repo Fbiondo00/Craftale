@@ -16,6 +16,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
@@ -35,7 +36,8 @@ import {
   Shield,
   Clock,
   Edit2,
-  LogOut
+  LogOut,
+  LayoutDashboard
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -54,6 +56,7 @@ function ProfileContent() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const memberSinceRef = useRef<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
     firstName: '',
     lastName: '',
@@ -91,6 +94,11 @@ function ProfileContent() {
       }
     }
   }, [user]);
+
+  // Ensure portals render only on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Handle input changes
   const handleInputChange = (field: keyof ProfileData, value: string) => {
@@ -180,7 +188,7 @@ function ProfileContent() {
               </div>
             </div>
             
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap w-full sm:w-auto">
+            <div className="hidden sm:flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap w-full sm:w-auto">
               {!isEditing && (
                 <Button
                   onClick={() => setIsEditing(true)}
@@ -200,13 +208,24 @@ function ProfileContent() {
                 <LogOut className="w-4 h-4 mr-2" />
                 Esci
               </Button>
+
+              {/* Dashboard Button (desktop only) */}
+              <Button
+                variant="outline"
+                onClick={() => router.push('/dashboard')}
+                className="w-full sm:w-auto border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
+                aria-label="Vai alla Dashboard"
+              >
+                <LayoutDashboard className="w-4 h-4 mr-2" />
+                Dashboard
+              </Button>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-  <div className="container mx-auto px-4 py-8 pb-24 sm:pb-8">
+  <div className="container mx-auto px-4 py-8 pb-28 sm:pb-8">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
@@ -425,6 +444,32 @@ function ProfileContent() {
       <div className="fixed bottom-4 right-4 z-[200]">
         <ClientThemeToggle />
       </div>
+
+      {/* Mobile Action Bar - Fixed at viewport bottom via portal */}
+      {isMounted && createPortal(
+        <div className="sm:hidden fixed bottom-0 left-0 right-0 z-[195] border-t border-apty-border-subtle bg-apty-bg-base/95 backdrop-blur supports-[backdrop-filter]:bg-apty-bg-base/80">
+          <div className="mx-auto max-w-4xl px-4 pr-16 py-4 flex flex-col gap-3">
+            {!isEditing && (
+              <Button
+                onClick={() => setIsEditing(true)}
+                className="w-full bg-apty-primary hover:bg-apty-primary-hover text-apty-text-on-brand apty-transition"
+              >
+                <Edit2 className="w-4 h-4 mr-2" />
+                Modifica Profilo
+              </Button>
+            )}
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="w-full border-apty-border-strong hover:bg-apty-bg-hover apty-transition"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Esci
+            </Button>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
