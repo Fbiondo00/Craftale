@@ -12,6 +12,9 @@ const compat = new FlatCompat({
 
 export default defineConfig([
   {
+    ignores: ["node_modules/**"],
+  },
+  {
     files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: "latest",
@@ -20,7 +23,7 @@ export default defineConfig([
     plugins: {
       prettier: prettierPlugin,
     },
-    extends: compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+    extends: compat.extends("next/core-web-vitals", "next/typescript"),
 
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

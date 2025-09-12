@@ -1,34 +1,128 @@
 // Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
 
-'use client';
+"use client";
 
-import { Suspense, useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
-import { Sparkles, Zap, ArrowRight, Filter, Code2, Monitor, Smartphone, Star, Heart, Rocket, Trophy, Search, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import SearchBar from '@/components/blog/SearchBar';
-import FilterPanel from '@/components/blog/FilterPanel';
+import { Suspense, useEffect, useRef, useState } from "react";
+import BlogGrid from "@/components/blog/BlogGrid";
+import FilterPanel from "@/components/blog/FilterPanel";
+import SearchBar from "@/components/blog/SearchBar";
 //import ContentTypeToggle from '@/components/blog/ContentTypeToggle';
-import SortingControls from '@/components/blog/SortingControls';
-import BlogGrid from '@/components/blog/BlogGrid';
-import useBlogSystem from '@/hooks/useBlogSystem';
-import { contentTypeConfigs, filterCategories } from '@/data/mockBlogData';
+import SortingControls from "@/components/blog/SortingControls";
+import { Button } from "@/components/ui/button";
+import { contentTypeConfigs, filterCategories } from "@/data/mockBlogData";
+import useBlogSystem from "@/hooks/useBlogSystem";
+import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  ArrowRight,
+  Code2,
+  Filter,
+  Heart,
+  Monitor,
+  Rocket,
+  Search,
+  Smartphone,
+  Sparkles,
+  Star,
+  Trophy,
+  X,
+  Zap,
+} from "lucide-react";
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
+
+// Blog Page - Streamlined Web Agency Integration with Sticky Scroll Behavior
 
 // Compact Search Component for sticky behavior
-function CompactSearchBar({ 
-  value, 
-  onChange, 
-  loading = false 
-}: { 
-  value: string; 
-  onChange: (value: string) => void; 
-  loading?: boolean; 
+function CompactSearchBar({
+  value,
+  onChange,
+  loading = false,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  loading?: boolean;
 }) {
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClear = () => {
-    onChange('');
+    onChange("");
     inputRef.current?.focus();
   };
 
@@ -39,17 +133,12 @@ function CompactSearchBar({
       transition={{ duration: 0.3 }}
       className={`
         relative bg-background rounded-lg border transition-all duration-200 h-10
-        ${focused 
-          ? 'border-brand-secondary/40 ring-1 ring-brand-secondary/20' 
-          : 'border-border hover:border-border/80'
-        }
+        ${focused ? "border-brand-secondary/40 ring-1 ring-brand-secondary/20" : "border-border hover:border-border/80"}
       `}
     >
       {/* Search Icon */}
       <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-        <Search className={`w-4 h-4 transition-colors ${
-          focused ? 'text-brand-secondary' : 'text-muted-foreground'
-        }`} />
+        <Search className={`w-4 h-4 transition-colors ${focused ? "text-brand-secondary" : "text-muted-foreground"}`} />
       </div>
 
       {/* Input Field */}
@@ -57,7 +146,7 @@ function CompactSearchBar({
         ref={inputRef}
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search..."
@@ -69,10 +158,7 @@ function CompactSearchBar({
         {loading ? (
           <div className="w-3 h-3 border-2 border-muted border-t-indigo-600 rounded-full animate-spin" />
         ) : value ? (
-          <button
-            onClick={handleClear}
-            className="p-0.5 hover:bg-muted/50 rounded-full transition-colors"
-          >
+          <button onClick={handleClear} className="p-0.5 hover:bg-muted/50 rounded-full transition-colors">
             <X className="w-3 h-3 text-muted-foreground hover:text-foreground" />
           </button>
         ) : null}
@@ -109,13 +195,15 @@ function BlogContent() {
   // Interactive effects state - copied from main page
   type Particle = { id: number; x: number; y: number; color: string };
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [floatingElements, setFloatingElements] = useState<Array<{
-    id: number;
-    x: number;
-    y: number;
-    delay: number;
-    icon: any;
-  }>>([]);
+  const [floatingElements, setFloatingElements] = useState<
+    Array<{
+      id: number;
+      x: number;
+      y: number;
+      delay: number;
+      icon: any;
+    }>
+  >([]);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -141,8 +229,8 @@ function BlogContent() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Interactive effects setup - copied from main page
@@ -153,37 +241,49 @@ function BlogContent() {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-
     window.addEventListener("mousemove", handleMouseMove);
-    
+
     // Generate colorful particles
     const particleInterval = setInterval(() => {
-      if (typeof window !== 'undefined') {
-        const colors = ['bg-brand-secondary/60', 'bg-brand-tertiary/60', 'bg-brand-accent/60', 'bg-blue-400', 'bg-color-state-success', 'bg-color-state-warning'];
-        setParticles(prev => [...prev, {
-          id: Date.now() + Math.random(),
-          x: Math.random() * window.innerWidth,
-          y: window.innerHeight + 20,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        }]);
+      if (typeof window !== "undefined") {
+        const colors = [
+          "bg-brand-secondary/60",
+          "bg-brand-tertiary/60",
+          "bg-brand-accent/60",
+          "bg-blue-400",
+          "bg-color-state-success",
+          "bg-color-state-warning",
+        ];
+        setParticles(prev => [
+          ...prev,
+          {
+            id: Date.now() + Math.random(),
+            x: Math.random() * window.innerWidth,
+            y: window.innerHeight + 20,
+            color: colors[Math.floor(Math.random() * colors.length)],
+          },
+        ]);
       }
     }, 200);
 
     // Generate floating icons
     const iconInterval = setInterval(() => {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const icons = [Code2, Monitor, Smartphone, Zap, Star, Heart, Rocket, Trophy];
         const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        setFloatingElements(prev => [...prev, {
-          id: Date.now() + Math.random(),
-          x: Math.random() * window.innerWidth,
-          y: window.innerHeight + 50,
-          icon: randomIcon,
-          delay: Math.random() * 2
-        }]);
+        setFloatingElements(prev => [
+          ...prev,
+          {
+            id: Date.now() + Math.random(),
+            x: Math.random() * window.innerWidth,
+            y: window.innerHeight + 50,
+            icon: randomIcon,
+            delay: Math.random() * 2,
+          },
+        ]);
       }
     }, 2000);
-    
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       clearInterval(particleInterval);
@@ -198,14 +298,14 @@ function BlogContent() {
       y: 0,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   return (
@@ -218,19 +318,18 @@ function BlogContent() {
         transition={{ type: "spring", stiffness: 500, damping: 28 }}
       />
 
-
       {/* Floating particles */}
       {particles.map(particle => (
         <motion.div
           key={particle.id}
           className={`absolute w-2 h-2 ${particle.color} rounded-full pointer-events-none z-10`}
           initial={{ x: particle.x, y: particle.y, opacity: 0, scale: 0 }}
-          animate={{ 
-            y: typeof window !== 'undefined' ? -window.innerHeight - 100 : -1000,
+          animate={{
+            y: typeof window !== "undefined" ? -window.innerHeight - 100 : -1000,
             opacity: [0, 1, 1, 0],
             x: particle.x + (Math.random() - 0.5) * 300,
             scale: [0, 1, 1, 0],
-            rotate: [0, 360]
+            rotate: [0, 360],
           }}
           transition={{ duration: 8, ease: "linear" }}
         />
@@ -244,11 +343,11 @@ function BlogContent() {
             key={element.id}
             className="absolute pointer-events-none z-10"
             initial={{ x: element.x, y: element.y, opacity: 0, scale: 0 }}
-            animate={{ 
+            animate={{
               y: -100,
               opacity: [0, 0.3, 0.3, 0],
               scale: [0, 1, 1, 0],
-              rotate: [0, 180, 360]
+              rotate: [0, 180, 360],
             }}
             transition={{ duration: 12, ease: "linear", delay: element.delay }}
           >
@@ -265,17 +364,20 @@ function BlogContent() {
           style={{
             background: useTransform(
               [mouseX, mouseY],
-              ([x, y]) => `radial-gradient(800px at ${x}px ${y}px, rgba(99, 102, 241, 0.15), transparent 50%)`
-            )
+              ([x, y]) => `radial-gradient(800px at ${x}px ${y}px, rgba(99, 102, 241, 0.15), transparent 50%)`,
+            ),
           }}
         />
-        
+
         {/* Animated Background Grid */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.3) 1px, transparent 0)`,
-            backgroundSize: '50px 50px'
-          }} />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.3) 1px, transparent 0)`,
+              backgroundSize: "50px 50px",
+            }}
+          />
         </div>
       </div>
 
@@ -296,19 +398,19 @@ function BlogContent() {
               </div>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               variants={itemVariants}
               className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight"
             >
               Resources & <span className="text-brand-secondary">Success Stories</span>
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             >
-              Discover how we&apos;ve helped businesses achieve remarkable results. 
-              Explore proven strategies, expert insights, and real client successes.
+              Discover how we&apos;ve helped businesses achieve remarkable results. Explore proven strategies, expert
+              insights, and real client successes.
             </motion.p>
           </motion.div>
         </div>
@@ -318,15 +420,14 @@ function BlogContent() {
       <section className="relative z-20">
         <div className="container py-12">
           <div className="max-w-7xl mx-auto">
-            
             {/* Original Search Bar (hidden when scrolled past) */}
             <motion.div
               ref={searchRef}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ 
-                opacity: isScrolledPastSearch ? 0 : 1, 
+              animate={{
+                opacity: isScrolledPastSearch ? 0 : 1,
                 y: isScrolledPastSearch ? -20 : 0,
-                pointerEvents: isScrolledPastSearch ? 'none' : 'auto'
+                pointerEvents: isScrolledPastSearch ? "none" : "auto",
               }}
               transition={{ delay: 0.2, duration: 0.3 }}
               className="mb-8"
@@ -340,7 +441,7 @@ function BlogContent() {
             </motion.div>
 
             {/* Enhanced Content Type Toggle with Sticky Compact Search */}
-            <div className={`${isScrolledPastHero ? 'sticky top-16 z-50 bg-background' : ''}`}>
+            <div className={`${isScrolledPastHero ? "sticky top-16 z-50 bg-background" : ""}`}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -363,9 +464,11 @@ function BlogContent() {
                     whileTap={{ scale: 0.98 }}
                     className={`
                       px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border h-10 whitespace-nowrap
-                      ${(selectedContentTypes.length === availableContentTypes.length || selectedContentTypes.length === 0)
-                        ? 'bg-brand-secondary text-white border-brand-secondary shadow-md' 
-                        : 'bg-background text-muted-foreground border-border hover:border-brand-secondary/40 hover:bg-muted/50'
+                      ${
+                        selectedContentTypes.length === availableContentTypes.length ||
+                        selectedContentTypes.length === 0
+                          ? "bg-brand-secondary text-white border-brand-secondary shadow-md"
+                          : "bg-background text-muted-foreground border-border hover:border-brand-secondary/40 hover:bg-muted/50"
                       }
                     `}
                   >
@@ -379,27 +482,28 @@ function BlogContent() {
                   <div className="w-px h-6 bg-border flex-shrink-0" />
 
                   {/* Individual Content Type Toggles */}
-                  {availableContentTypes.map((type) => {
+                  {availableContentTypes.map(type => {
                     const config = contentTypeConfigs.find(c => c.type === type);
                     const isSelected = selectedContentTypes.includes(type);
-                    
+
                     if (!config) return null;
 
                     return (
                       <motion.button
                         key={type}
-                        onClick={() => handleContentTypeToggle(
-                          isSelected 
-                            ? selectedContentTypes.filter(t => t !== type)
-                            : [...selectedContentTypes, type]
-                        )}
+                        onClick={() =>
+                          handleContentTypeToggle(
+                            isSelected ? selectedContentTypes.filter(t => t !== type) : [...selectedContentTypes, type],
+                          )
+                        }
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className={`
                           relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border overflow-hidden h-10 whitespace-nowrap
-                          ${isSelected
-                            ? 'bg-brand-secondary text-white border-brand-secondary shadow-md' 
-                            : 'bg-background text-muted-foreground border-border hover:border-brand-secondary/40 hover:bg-muted/50'
+                          ${
+                            isSelected
+                              ? "bg-brand-secondary text-white border-brand-secondary shadow-md"
+                              : "bg-background text-muted-foreground border-border hover:border-brand-secondary/40 hover:bg-muted/50"
                           }
                         `}
                       >
@@ -422,11 +526,7 @@ function BlogContent() {
                         transition={{ duration: 0.3 }}
                         className="flex-shrink-0"
                       >
-                        <CompactSearchBar
-                          value={searchQuery}
-                          onChange={handleSearchChange}
-                          loading={loading}
-                        />
+                        <CompactSearchBar value={searchQuery} onChange={handleSearchChange} loading={loading} />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -438,18 +538,18 @@ function BlogContent() {
             {activeFilterCount > 0 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 className="mb-6 p-4 bg-muted/30 border border-border/50 rounded-lg"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Filter className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm font-medium text-foreground">
-                      {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} applied
+                      {activeFilterCount} filter{activeFilterCount !== 1 ? "s" : ""} applied
                     </span>
                     <span className="text-muted-foreground">•</span>
                     <span className="text-sm text-muted-foreground">
-                      {totalResults} result{totalResults !== 1 ? 's' : ''}
+                      {totalResults} result{totalResults !== 1 ? "s" : ""}
                     </span>
                   </div>
                   <Button
@@ -466,7 +566,6 @@ function BlogContent() {
 
             {/* Main Content Grid */}
             <div className="grid lg:grid-cols-4 gap-8">
-              
               {/* Sticky Filter Sidebar */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -474,7 +573,7 @@ function BlogContent() {
                 transition={{ delay: 0.4 }}
                 className="lg:col-span-1"
               >
-                <div className={`${isScrolledPastHero ? 'sticky top-32 z-40' : ''}`}>
+                <div className={`${isScrolledPastHero ? "sticky top-32 z-40" : ""}`}>
                   <FilterPanel
                     filters={filters}
                     onFiltersChange={handleFiltersChange}
@@ -493,18 +592,11 @@ function BlogContent() {
               >
                 {/* Sorting Controls */}
                 <div className="mb-8">
-                  <SortingControls
-                    sortBy={sortBy}
-                    onSortChange={handleSortChange}
-                    resultsCount={totalResults}
-                  />
+                  <SortingControls sortBy={sortBy} onSortChange={handleSortChange} resultsCount={totalResults} />
                 </div>
 
                 {/* Blog Grid */}
-                <BlogGrid
-                  posts={posts}
-                  loading={loading}
-                />
+                <BlogGrid posts={posts} loading={loading} />
               </motion.div>
             </div>
           </div>
@@ -522,30 +614,21 @@ function BlogContent() {
           >
             <div className="mb-6">
               <Zap className="w-12 h-12 mx-auto mb-4 text-brand-secondary" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-                Ready to Get Similar Results?
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Ready to Get Similar Results?</h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
-                See how our proven strategies can transform your business. 
-                Get a free consultation and discover your growth potential.
+                See how our proven strategies can transform your business. Get a free consultation and discover your
+                growth potential.
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="group relative overflow-hidden"
-              >
+              <Button size="lg" className="group relative overflow-hidden">
                 <span className="flex items-center space-x-2">
                   <span>Start Your Project</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="group"
-              >
+              <Button variant="outline" size="lg" className="group">
                 <span className="flex items-center space-x-2">
                   <span>View Our Process</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -577,4 +660,4 @@ export default function BlogPage() {
       <BlogContent />
     </Suspense>
   );
-} 
+}

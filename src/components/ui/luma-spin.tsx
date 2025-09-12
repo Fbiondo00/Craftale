@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
 interface LumaSpinProps {
   size?: number;
   className?: string;
 }
 
-export const LumaSpin = ({ size = 65, className = '' }: LumaSpinProps) => {
+export const LumaSpin = ({ size = 65, className = "" }: LumaSpinProps) => {
   return (
     <div className={`relative aspect-square ${className}`} style={{ width: `${size}px` }}>
-      <span className='absolute rounded-[50px] animate-loaderAnim shadow-[inset_0_0_0_3px] shadow-gray-800 dark:shadow-gray-100' />
-      <span className='absolute rounded-[50px] animate-loaderAnim animation-delay shadow-[inset_0_0_0_3px] shadow-gray-800 dark:shadow-gray-100' />
+      <span className="absolute rounded-[50px] animate-loaderAnim shadow-[inset_0_0_0_3px] shadow-gray-800 dark:shadow-gray-100" />
+      <span className="absolute rounded-[50px] animate-loaderAnim animation-delay shadow-[inset_0_0_0_3px] shadow-gray-800 dark:shadow-gray-100" />
       <style jsx>{`
         @keyframes loaderAnim {
           0% {

@@ -1,30 +1,110 @@
 // SearchBar Component - Clean Web Agency Design
 
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, TrendingUp } from 'lucide-react';
-import { type SearchBarProps } from '@/types/blog';
+import { useEffect, useRef, useState } from "react";
+import { type SearchBarProps } from "@/types/blog";
+import { AnimatePresence, motion } from "framer-motion";
+import { Search, TrendingUp, X } from "lucide-react";
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
+
+// SearchBar Component - Clean Web Agency Design
 
 interface SearchSuggestion {
-  type: 'popular' | 'recent';
+  type: "popular" | "recent";
   label: string;
   count?: number;
 }
 
 const popularSearches: SearchSuggestion[] = [
-  { type: 'popular', label: 'e-commerce conversion', count: 12 },
-  { type: 'popular', label: 'nextjs development', count: 8 },
-  { type: 'popular', label: 'website performance', count: 10 },
-  { type: 'popular', label: 'case studies', count: 25 },
+  { type: "popular", label: "e-commerce conversion", count: 12 },
+  { type: "popular", label: "nextjs development", count: 8 },
+  { type: "popular", label: "website performance", count: 10 },
+  { type: "popular", label: "case studies", count: 25 },
 ];
 
-export default function SearchBar({ 
-  value, 
-  onChange, 
-  placeholder = "Search case studies, resources, and insights...", 
-  loading = false 
+export default function SearchBar({
+  value,
+  onChange,
+  placeholder = "Search case studies, resources, and insights...",
+  loading = false,
 }: SearchBarProps) {
   const [focused, setFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -37,8 +117,8 @@ export default function SearchBar({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleFocus = () => {
@@ -53,7 +133,7 @@ export default function SearchBar({
   };
 
   const handleClear = () => {
-    onChange('');
+    onChange("");
     inputRef.current?.focus();
   };
 
@@ -69,17 +149,18 @@ export default function SearchBar({
         whileHover={{ scale: 1.01 }}
         className={`
           relative bg-background rounded-xl border transition-all duration-200
-          ${focused 
-            ? 'border-brand-secondary/40 ring-2 ring-brand-secondary/20' 
-            : 'border-border hover:border-border/80'
+          ${
+            focused
+              ? "border-brand-secondary/40 ring-2 ring-brand-secondary/20"
+              : "border-border hover:border-border/80"
           }
         `}
       >
         {/* Search Icon */}
         <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-          <Search className={`w-5 h-5 transition-colors ${
-            focused ? 'text-brand-secondary' : 'text-muted-foreground'
-          }`} />
+          <Search
+            className={`w-5 h-5 transition-colors ${focused ? "text-brand-secondary" : "text-muted-foreground"}`}
+          />
         </div>
 
         {/* Input Field */}
@@ -87,7 +168,7 @@ export default function SearchBar({
           ref={inputRef}
           type="text"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={e => onChange(e.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
@@ -99,10 +180,7 @@ export default function SearchBar({
           {loading ? (
             <div className="w-5 h-5 border-2 border-muted border-t-indigo-600 rounded-full animate-spin" />
           ) : value ? (
-            <button
-              onClick={handleClear}
-              className="p-1 hover:bg-muted/50 rounded-full transition-colors"
-            >
+            <button onClick={handleClear} className="p-1 hover:bg-muted/50 rounded-full transition-colors">
               <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
             </button>
           ) : null}
@@ -127,7 +205,7 @@ export default function SearchBar({
                   <span className="text-sm font-medium text-foreground">Popular Searches</span>
                 </div>
                 <div className="space-y-1">
-                  {popularSearches.map((search) => (
+                  {popularSearches.map(search => (
                     <motion.button
                       key={search.label}
                       initial={{ opacity: 0, x: -10 }}
@@ -153,9 +231,7 @@ export default function SearchBar({
                 <div className="text-sm text-muted-foreground mb-2">
                   Search results for "<span className="font-medium text-foreground">{value}</span>"
                 </div>
-                <div className="text-sm text-brand-secondary">
-                  Press Enter to see all results
-                </div>
+                <div className="text-sm text-brand-secondary">Press Enter to see all results</div>
               </div>
             )}
           </motion.div>
@@ -177,4 +253,4 @@ export default function SearchBar({
       )}
     </div>
   );
-} 
+}

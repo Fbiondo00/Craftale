@@ -1,21 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Star, Users, Clock, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
-import { TierCardProps } from '@/types/pricing'; // removed ServiceTier
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+// removed ServiceTier
+import { cn } from "@/lib/utils";
+import { TierCardProps } from "@/types/pricing";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Check, ChevronDown, ChevronUp, Clock, Star, Users } from "lucide-react";
 
-export default function TierCard({ 
-  tier, 
-  isSelected = false, 
-  isExpanded = false, 
-  onSelect, 
+export default function TierCard({
+  tier,
+  isSelected = false,
+  isExpanded = false,
+  onSelect,
   onExpand,
-  //showPersonaMatch = false 
+  //showPersonaMatch = false
 }: Readonly<TierCardProps>) {
   const [hoveredPackage, setHoveredPackage] = useState<string | null>(null);
-  
+
   const priceRange = `€${Math.min(...tier.packages.map(p => p.price))} - €${Math.max(...tier.packages.map(p => p.price))}`;
 
   return (
@@ -25,36 +26,30 @@ export default function TierCard({
       transition={{ duration: 0.5 }}
       className={cn(
         "relative group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden",
-        isSelected 
-          ? "border-brand-secondary/90 shadow-2xl scale-105" 
-          : "border-color-default hover:border-brand-secondary/40 hover:shadow-xl hover:scale-102"
+        isSelected
+          ? "border-brand-secondary/90 shadow-2xl scale-105"
+          : "border-color-default hover:border-brand-secondary/40 hover:shadow-xl hover:scale-102",
       )}
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-secondary/10 via-brand-tertiary/10 to-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
+
       {/* Tier Header */}
       <div className="relative p-6 border-b border-color-subtle">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-2xl font-bold text-color-primary mb-2">
-              {tier.name}
-            </h3>
+            <h3 className="text-2xl font-bold text-color-primary mb-2">{tier.name}</h3>
             <p className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary via-brand-tertiary to-brand-accent mb-3">
               {tier.tagline}
             </p>
-            <p className="text-color-tertiary mb-4">
-              {tier.description}
-            </p>
-            
+            <p className="text-color-tertiary mb-4">{tier.description}</p>
+
             {/* Price Range */}
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-3xl font-bold text-color-primary">
-                {priceRange}
-              </span>
+              <span className="text-3xl font-bold text-color-primary">{priceRange}</span>
               <span className="text-color-muted">una tantum</span>
             </div>
-            
+
             {/* Quick Stats */}
             <div className="flex items-center gap-4 text-sm text-color-tertiary">
               <div className="flex items-center gap-1">
@@ -67,7 +62,7 @@ export default function TierCard({
               </div>
             </div>
           </div>
-          
+
           {/* Expand/Collapse Button */}
           <button
             onClick={() => onExpand(tier.id)}
@@ -80,12 +75,10 @@ export default function TierCard({
             )}
           </button>
         </div>
-        
+
         {/* Ideal For */}
         <div className="mt-4 p-3 bg-gradient-to-r from-brand-secondary/10 to-brand-tertiary/10 rounded-lg">
-          <p className="text-sm font-medium text-brand-secondary">
-            💡 Ideale per: {tier.idealFor}
-          </p>
+          <p className="text-sm font-medium text-brand-secondary">💡 Ideale per: {tier.idealFor}</p>
         </div>
       </div>
 
@@ -101,12 +94,10 @@ export default function TierCard({
           >
             {/* Package Options */}
             <div className="p-6 border-b border-color-subtle">
-              <h4 className="text-lg font-semibold text-color-primary mb-4">
-                Scegli il tuo pacchetto:
-              </h4>
-              
+              <h4 className="text-lg font-semibold text-color-primary mb-4">Scegli il tuo pacchetto:</h4>
+
               <div className="grid gap-4">
-                {tier.packages.map((pkg) => (
+                {tier.packages.map(pkg => (
                   <motion.div
                     key={pkg.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -116,9 +107,9 @@ export default function TierCard({
                     onMouseLeave={() => setHoveredPackage(null)}
                     className={cn(
                       "relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200",
-                      hoveredPackage === pkg.id 
-                        ? "border-brand-secondary/40 bg-brand-secondary/10" 
-                        : "border-color-default bg-white hover:border-color-strong"
+                      hoveredPackage === pkg.id
+                        ? "border-brand-secondary/40 bg-brand-secondary/10"
+                        : "border-color-default bg-white hover:border-color-strong",
                     )}
                   >
                     {/* Package Badges */}
@@ -136,17 +127,13 @@ export default function TierCard({
                         </span>
                       )}
                     </div>
-                    
+
                     {/* Package Details */}
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h5 className="text-lg font-semibold text-color-primary mb-1">
-                          {pkg.name}
-                        </h5>
-                        <p className="text-color-tertiary text-sm mb-3">
-                          {pkg.description}
-                        </p>
-                        
+                        <h5 className="text-lg font-semibold text-color-primary mb-1">{pkg.name}</h5>
+                        <p className="text-color-tertiary text-sm mb-3">{pkg.description}</p>
+
                         {/* Package Stats */}
                         <div className="grid grid-cols-2 gap-2 text-sm text-color-tertiary mb-3">
                           <div>📄 {pkg.pages} pagine</div>
@@ -154,10 +141,10 @@ export default function TierCard({
                           <div>⏰ {pkg.timeline}</div>
                           <div>🆘 {pkg.support}</div>
                         </div>
-                        
+
                         {/* Core Features Preview */}
                         <div className="space-y-1">
-                          {pkg.coreFeatures.slice(0, 3).map((feature) => (
+                          {pkg.coreFeatures.slice(0, 3).map(feature => (
                             <div key={feature} className="flex items-center gap-2 text-sm text-color-secondary">
                               <Check className="w-3 h-3 text-color-state-success flex-shrink-0" />
                               <span>{feature}</span>
@@ -170,11 +157,11 @@ export default function TierCard({
                           )}
                         </div>
                       </div>
-                      
+
                       {/* Price and CTA */}
                       <div className="text-right ml-4">
                         <div className="text-2xl font-bold text-color-primary mb-2">
-                          €{pkg.price.toLocaleString('it-IT')}
+                          €{pkg.price.toLocaleString("it-IT")}
                         </div>
                         <button
                           onClick={() => onSelect(tier.id)}
@@ -182,7 +169,7 @@ export default function TierCard({
                             "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200",
                             hoveredPackage === pkg.id
                               ? "bg-brand-secondary text-white shadow-lg"
-                              : "bg-color-muted text-color-secondary hover:bg-brand-secondary/20"
+                              : "bg-color-muted text-color-secondary hover:bg-brand-secondary/20",
                           )}
                         >
                           Scegli
@@ -194,43 +181,34 @@ export default function TierCard({
                 ))}
               </div>
             </div>
-            
+
             {/* Features Comparison */}
             <div className="p-6">
-              <h4 className="text-lg font-semibold text-color-primary mb-4">
-                Cosa include questo tier:
-              </h4>
-              
+              <h4 className="text-lg font-semibold text-color-primary mb-4">Cosa include questo tier:</h4>
+
               <div className="grid gap-3">
-                {tier.features.map((feature) => (
-                  <div 
+                {tier.features.map(feature => (
+                  <div
                     key={feature.id}
                     className={cn(
                       "flex items-center gap-3 p-3 rounded-lg transition-colors duration-200",
-                      feature.included 
-                        ? "bg-color-state-success-bg border border-color-state-success-border" 
+                      feature.included
+                        ? "bg-color-state-success-bg border border-color-state-success-border"
                         : "bg-color-subtle border border-color-default",
-                      feature.highlight && feature.included ? "ring-2 ring-green-300" : ""
+                      feature.highlight && feature.included ? "ring-2 ring-green-300" : "",
                     )}
                   >
-                    <div className={cn(
-                      "flex items-center justify-center w-6 h-6 rounded-full",
-                      feature.included 
-                        ? "bg-color-state-success text-white" 
-                        : "bg-gray-300 text-color-tertiary"
-                    )}>
-                      {feature.included ? (
-                        <Check className="w-4 h-4" />
-                      ) : (
-                        <span className="text-xs">×</span>
+                    <div
+                      className={cn(
+                        "flex items-center justify-center w-6 h-6 rounded-full",
+                        feature.included ? "bg-color-state-success text-white" : "bg-gray-300 text-color-tertiary",
                       )}
+                    >
+                      {feature.included ? <Check className="w-4 h-4" /> : <span className="text-xs">×</span>}
                     </div>
-                    
+
                     <div className="flex-1">
-                      <div className={cn(
-                        "font-medium",
-                        feature.included ? "text-color-primary" : "text-color-muted"
-                      )}>
+                      <div className={cn("font-medium", feature.included ? "text-color-primary" : "text-color-muted")}>
                         {feature.name}
                         {feature.highlight && feature.included && (
                           <span className="ml-2 text-xs bg-color-state-warning-subtle text-color-state-warning-text px-2 py-1 rounded-full">
@@ -238,10 +216,7 @@ export default function TierCard({
                           </span>
                         )}
                       </div>
-                      <div className={cn(
-                        "text-sm",
-                        feature.included ? "text-color-tertiary" : "text-color-disabled"
-                      )}>
+                      <div className={cn("text-sm", feature.included ? "text-color-tertiary" : "text-color-disabled")}>
                         {feature.description}
                       </div>
                     </div>
@@ -252,14 +227,12 @@ export default function TierCard({
           </motion.div>
         )}
       </AnimatePresence>
-      
+
       {/* Quick Action (when collapsed) */}
       {!isExpanded && (
         <div className="p-6">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-color-tertiary">
-              {tier.packages.length} pacchetti disponibili
-            </div>
+            <div className="text-sm text-color-tertiary">{tier.packages.length} pacchetti disponibili</div>
             <div className="flex gap-2">
               <button
                 onClick={() => onExpand(tier.id)}
@@ -279,4 +252,4 @@ export default function TierCard({
       )}
     </motion.div>
   );
-} 
+}

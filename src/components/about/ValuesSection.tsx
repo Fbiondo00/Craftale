@@ -1,38 +1,42 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Lightbulb, Users, Zap, Shield } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Lightbulb, Shield, Users, Zap } from "lucide-react";
 
 export default function ValuesSection() {
   const values = [
     {
       icon: Lightbulb,
-      title: 'Cura per il Cliente',
-      description: 'Ogni cliente dialoga direttamente con il team. Mettiamo al centro le tue esigenze, offrendo assistenza continua e soluzioni personalizzate.',
-      color: 'text-apty-primary',
-      bgColor: 'bg-apty-primary/10'
+      title: "Cura per il Cliente",
+      description:
+        "Ogni cliente dialoga direttamente con il team. Mettiamo al centro le tue esigenze, offrendo assistenza continua e soluzioni personalizzate.",
+      color: "text-apty-primary",
+      bgColor: "bg-apty-primary/10",
     },
     {
       icon: Users,
-      title: 'Tecnologia Moderna',
-      description: 'Utilizziamo solo strumenti e framework di ultima generazione. Il tuo sito sarà veloce, sicuro e pronto per il futuro del web.',
-      color: 'text-apty-secondary',
-      bgColor: 'bg-apty-secondary/10'
+      title: "Tecnologia Moderna",
+      description:
+        "Utilizziamo solo strumenti e framework di ultima generazione. Il tuo sito sarà veloce, sicuro e pronto per il futuro del web.",
+      color: "text-apty-secondary",
+      bgColor: "bg-apty-secondary/10",
     },
     {
       icon: Zap,
-      title: 'Risultati Misurabili',
-      description: 'Non ci limitiamo a costruire siti belli. Ogni progetto include analytics integrati per monitorare performance e ROI in tempo reale.',
-      color: 'text-apty-tertiary',
-      bgColor: 'bg-apty-tertiary/10'
+      title: "Risultati Misurabili",
+      description:
+        "Non ci limitiamo a costruire siti belli. Ogni progetto include analytics integrati per monitorare performance e ROI in tempo reale.",
+      color: "text-apty-tertiary",
+      bgColor: "bg-apty-tertiary/10",
     },
     {
       icon: Shield,
-      title: 'Trasparenza Totale',
-      description: 'Dal preventivo alla consegna, sai sempre cosa aspettarti. Prezzi chiari, tempistiche definite e aggiornamenti costanti sul progresso.',
-      color: 'text-apty-accent',
-      bgColor: 'bg-apty-accent/10'
-    }
+      title: "Trasparenza Totale",
+      description:
+        "Dal preventivo alla consegna, sai sempre cosa aspettarti. Prezzi chiari, tempistiche definite e aggiornamenti costanti sul progresso.",
+      color: "text-apty-accent",
+      bgColor: "bg-apty-accent/10",
+    },
   ];
 
   return (
@@ -50,8 +54,8 @@ export default function ValuesSection() {
             I <span className="text-apty-primary">Valori</span> Che Guidano Ogni Nostro Progetto
           </h2>
           <p className="text-base sm:text-lg text-apty-text-secondary max-w-3xl mx-auto px-2 sm:px-4 md:px-0">
-            Principi chiari che si traducono in benefici concreti per il tuo business. 
-            Non solo promesse, ma impegni che rispettiamo in ogni fase del lavoro.
+            Principi chiari che si traducono in benefici concreti per il tuo business. Non solo promesse, ma impegni che
+            rispettiamo in ogni fase del lavoro.
           </p>
         </motion.div>
 
@@ -68,7 +72,8 @@ export default function ValuesSection() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="group"
               >
-                <div className="
+                <div
+                  className="
                   h-full flex flex-col
                   bg-apty-bg-base
                   rounded-xl 
@@ -77,9 +82,11 @@ export default function ValuesSection() {
                   hover:border-apty-border-default
                   hover:shadow-apty-md
                   transition-all duration-200
-                ">
+                "
+                >
                   {/* Icon */}
-                  <div className={`
+                  <div
+                    className={`
                     w-12 h-12 sm:w-14 sm:h-14 
                     ${value.bgColor}
                     rounded-xl 
@@ -87,23 +94,19 @@ export default function ValuesSection() {
                     mb-3 sm:mb-4
                     group-hover:scale-110
                     transition-transform duration-200
-                  `}>
+                  `}
+                  >
                     <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${value.color}`} />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-base sm:text-lg font-semibold text-apty-text-primary mb-2">
-                    {value.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-apty-text-secondary leading-relaxed">
-                    {value.description}
-                  </p>
+                  <h3 className="text-base sm:text-lg font-semibold text-apty-text-primary mb-2">{value.title}</h3>
+                  <p className="text-xs sm:text-sm text-apty-text-secondary leading-relaxed">{value.description}</p>
                 </div>
               </motion.div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

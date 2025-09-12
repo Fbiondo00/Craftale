@@ -1,61 +1,58 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useCallback, useRef, memo } from 'react';
-import { motion, AnimatePresence, animate } from 'framer-motion';
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import CartSummaryStep4 from "./CartSummaryStep4";
 import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  User,
-  Building,
-  Calendar,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  FileText,
-  MessageSquare,
-  AlertCircle,
-  Sparkles,
-  X,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import CartSummaryStep4 from './CartSummaryStep4';
-import type { OptionalServiceWithAvailability as OptionalService } from '@/types/database-extended';
-
-// Import types and validation
-import type {
-  QuoteRequest,
-  //QuoteFormProps,
-  StepComponentProps,
-  CompletionType,
-  UserData,
-  ProjectDetails,
-  MeetingRequest,
-  PreferredSlot,
-  FormValidationError,
-  TimelineUrgency,
-  MeetingType,
-  QuoteFormState,
-  //PricingConfiguration,
-} from '@/types/step4-quote-request';
-
-import {
-  RESTAURANT_TYPE_LABELS,
-  //ITALIAN_PROVINCES,
-  BUDGET_RANGES,
-  AVAILABLE_TIME_SLOTS,
-} from '@/types/step4-quote-request';
-
-import {
-  validateUserData,
-  validateProjectDetails,
   validateMeetingRequest,
   // validateStep,
   // formatPrice,
   // formatDate,
   // formatPhoneNumber,
-} from '@/lib/step4-validation';
+  validateProjectDetails,
+  validateUserData,
+} from "@/lib/step4-validation";
+import { cn } from "@/lib/utils";
+import type { OptionalServiceWithAvailability as OptionalService } from "@/types/database-extended";
+// Import types and validation
+import type {
+  CompletionType,
+  FormValidationError,
+  MeetingRequest,
+  MeetingType,
+  PreferredSlot,
+  ProjectDetails,
+  QuoteFormState,
+  //PricingConfiguration,
+  QuoteRequest,
+  //QuoteFormProps,
+  StepComponentProps,
+  TimelineUrgency,
+  UserData,
+} from "@/types/step4-quote-request";
+import {
+  AVAILABLE_TIME_SLOTS,
+  //ITALIAN_PROVINCES,
+  BUDGET_RANGES,
+  RESTAURANT_TYPE_LABELS,
+} from "@/types/step4-quote-request";
+import { AnimatePresence, animate, motion } from "framer-motion";
+import {
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
+  Building,
+  Calendar,
+  Check,
+  Clock,
+  FileText,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Sparkles,
+  User,
+  X,
+} from "lucide-react";
 
 // =====================================
 // GLOWING EFFECT COMPONENT
@@ -66,7 +63,7 @@ interface GlowingEffectProps {
   inactiveZone?: number;
   proximity?: number;
   spread?: number;
-  variant?: 'default' | 'white';
+  variant?: "default" | "white";
   glow?: boolean;
   className?: string;
   disabled?: boolean;
@@ -80,7 +77,7 @@ const GlowingEffect = memo(
     inactiveZone = 0.7,
     proximity = 0,
     spread = 20,
-    variant = 'default',
+    variant = "default",
     glow = false,
     className,
     movementDuration = 2,
@@ -116,7 +113,7 @@ const GlowingEffect = memo(
           const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
 
           if (distanceFromCenter < inactiveRadius) {
-            element.style.setProperty('--active', '0');
+            element.style.setProperty("--active", "0");
             return;
           }
 
@@ -126,13 +123,12 @@ const GlowingEffect = memo(
             mouseY > top - proximity &&
             mouseY < top + height + proximity;
 
-          element.style.setProperty('--active', isActive ? '1' : '0');
+          element.style.setProperty("--active", isActive ? "1" : "0");
 
           if (!isActive) return;
 
-          const currentAngle = parseFloat(element.style.getPropertyValue('--start')) || 0;
-          const targetAngle =
-            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
+          const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
+          const targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
 
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
@@ -140,13 +136,13 @@ const GlowingEffect = memo(
           animate(currentAngle, newAngle, {
             duration: movementDuration,
             ease: [0.16, 1, 0.3, 1],
-            onUpdate: (value) => {
-              element.style.setProperty('--start', String(value));
+            onUpdate: value => {
+              element.style.setProperty("--start", String(value));
             },
           });
         });
       },
-      [inactiveZone, proximity, movementDuration]
+      [inactiveZone, proximity, movementDuration],
     );
 
     useEffect(() => {
@@ -155,8 +151,8 @@ const GlowingEffect = memo(
       const handleScroll = () => handleMove();
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
 
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      document.body.addEventListener('pointermove', handlePointerMove, {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      document.body.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
 
@@ -164,8 +160,8 @@ const GlowingEffect = memo(
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
-        window.removeEventListener('scroll', handleScroll);
-        document.body.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
       };
     }, [handleMove, disabled]);
 
@@ -173,24 +169,24 @@ const GlowingEffect = memo(
       <>
         <div
           className={cn(
-            'pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity',
-            glow && 'opacity-100',
-            variant === 'white' && 'border-white',
-            disabled && '!block'
+            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
+            glow && "opacity-100",
+            variant === "white" && "border-white",
+            disabled && "!block",
           )}
         />
         <div
           ref={containerRef}
           style={
             {
-              '--blur': `${blur}px`,
-              '--spread': spread,
-              '--start': '0',
-              '--active': '0',
-              '--glowingeffect-border-width': `${borderWidth}px`,
-              '--repeating-conic-gradient-times': '5',
-              '--gradient':
-                variant === 'white'
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient":
+                variant === "white"
                   ? `repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   var(--black),
@@ -211,33 +207,33 @@ const GlowingEffect = memo(
             } as React.CSSProperties
           }
           className={cn(
-            'pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity',
-            glow && 'opacity-100',
-            blur > 0 && 'blur-[var(--blur)] ',
+            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)] ",
             className,
-            disabled && '!hidden'
+            disabled && "!hidden",
           )}
         >
           <div
             className={cn(
-              'glow',
-              'rounded-[inherit]',
+              "glow",
+              "rounded-[inherit]",
               'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
-              'after:[border:var(--glowingeffect-border-width)_solid_transparent]',
-              'after:[background:var(--gradient)] after:[background-attachment:fixed]',
-              'after:opacity-[var(--active)] after:transition-opacity after:duration-300',
-              'after:[mask-clip:padding-box,border-box]',
-              'after:[mask-composite:intersect]',
-              'after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]'
+              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:[mask-clip:padding-box,border-box]",
+              "after:[mask-composite:intersect]",
+              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]",
             )}
           />
         </div>
       </>
     );
-  }
+  },
 );
 
-GlowingEffect.displayName = 'GlowingEffect';
+GlowingEffect.displayName = "GlowingEffect";
 
 // =====================================
 // SERVICE INTERFACES
@@ -317,7 +313,7 @@ const UserDataStep: React.FC<UserDataStepProps> = ({
     onUpdate({ userData: updatedData as UserData });
 
     // Clear field-specific errors when user starts typing
-    setLocalErrors((prev) => prev.filter((error) => error.field !== field));
+    setLocalErrors(prev => prev.filter(error => error.field !== field));
   };
 
   const handleNext = () => {
@@ -330,226 +326,220 @@ const UserDataStep: React.FC<UserDataStepProps> = ({
   };
 
   const allErrors = [...errors, ...localErrors];
-  const getFieldError = (field: string) =>
-    allErrors.find((error) => error.field === field)?.message;
+  const getFieldError = (field: string) => allErrors.find(error => error.field === field)?.message;
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial='hidden'
-      animate='visible'
-      exit='exit'
-      className='space-y-8'
-    >
-      <div className='text-center'>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-8">
+      <div className="text-center">
         <motion.div
           variants={iconVariants}
-          initial='idle'
-          whileHover='hover'
-          whileTap='tap'
-          className='mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4'
+          initial="idle"
+          whileHover="hover"
+          whileTap="tap"
+          className="mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4"
         >
-          <User className='w-8 h-8 text-brand-secondary' />
+          <User className="w-8 h-8 text-brand-secondary" />
         </motion.div>
-        <h2 className='text-3xl font-bold text-color-primary mb-2'>I Tuoi Dati</h2>
-        <p className='text-color-tertiary max-w-2xl mx-auto'>
-          Iniziamo con le tue informazioni di contatto per poterti fornire un preventivo
-          personalizzato.
+        <h2 className="text-3xl font-bold text-color-primary mb-2">I Tuoi Dati</h2>
+        <p className="text-color-tertiary max-w-2xl mx-auto">
+          Iniziamo con le tue informazioni di contatto per poterti fornire un preventivo personalizzato.
         </p>
       </div>
 
-      <div className='bg-white rounded-2xl shadow-lg border border-color-subtle p-8'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <div className="bg-white rounded-2xl shadow-lg border border-color-subtle p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* First Name */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>Nome *</label>
+            <label className="block text-sm font-medium text-color-secondary mb-2">Nome *</label>
             <input
-              type='text'
-              value={formData.firstName || ''}
-              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              type="text"
+              value={formData.firstName || ""}
+              onChange={e => handleInputChange("firstName", e.target.value)}
               disabled={isUserAuthenticated && !!formData.firstName}
               className={cn(
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                getFieldError('firstName') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong',
-                isUserAuthenticated &&
-                  formData.firstName &&
-                  'bg-color-subtle cursor-not-allowed text-color-muted'
+                "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                getFieldError("firstName")
+                  ? "border-color-state-error-border bg-color-state-error-bg"
+                  : "border-color-strong",
+                isUserAuthenticated && formData.firstName && "bg-color-subtle cursor-not-allowed text-color-muted",
               )}
-              placeholder='Il tuo nome'
+              placeholder="Il tuo nome"
             />
-            {getFieldError('firstName') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('firstName')}
+            {getFieldError("firstName") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("firstName")}
               </p>
             )}
           </div>
 
           {/* Last Name */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>Cognome *</label>
+            <label className="block text-sm font-medium text-color-secondary mb-2">Cognome *</label>
             <input
-              type='text'
-              value={formData.lastName || ''}
-              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              type="text"
+              value={formData.lastName || ""}
+              onChange={e => handleInputChange("lastName", e.target.value)}
               disabled={isUserAuthenticated && !!formData.lastName}
               className={cn(
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                getFieldError('lastName') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong',
-                isUserAuthenticated &&
-                  formData.lastName &&
-                  'bg-color-subtle cursor-not-allowed text-color-muted'
+                "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                getFieldError("lastName")
+                  ? "border-color-state-error-border bg-color-state-error-bg"
+                  : "border-color-strong",
+                isUserAuthenticated && formData.lastName && "bg-color-subtle cursor-not-allowed text-color-muted",
               )}
-              placeholder='Il tuo cognome'
+              placeholder="Il tuo cognome"
             />
-            {getFieldError('lastName') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('lastName')}
+            {getFieldError("lastName") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("lastName")}
               </p>
             )}
           </div>
 
           {/* Email */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>Email *</label>
-            <div className='relative'>
-              <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled' />
+            <label className="block text-sm font-medium text-color-secondary mb-2">Email *</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled" />
               <input
-                type='email'
-                value={formData.email || ''}
-                onChange={(e) => handleInputChange('email', e.target.value)}
+                type="email"
+                value={formData.email || ""}
+                onChange={e => handleInputChange("email", e.target.value)}
                 disabled={isUserAuthenticated && !!formData.email}
                 className={cn(
-                  'w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                  getFieldError('email') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong',
-                  isUserAuthenticated &&
-                    formData.email &&
-                    'bg-color-subtle cursor-not-allowed text-color-muted'
+                  "w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                  getFieldError("email")
+                    ? "border-color-state-error-border bg-color-state-error-bg"
+                    : "border-color-strong",
+                  isUserAuthenticated && formData.email && "bg-color-subtle cursor-not-allowed text-color-muted",
                 )}
-                placeholder='la.tua@email.it'
+                placeholder="la.tua@email.it"
               />
             </div>
-            {getFieldError('email') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('email')}
+            {getFieldError("email") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("email")}
               </p>
             )}
           </div>
 
           {/* Phone */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>Telefono *</label>
-            <div className='relative'>
-              <Phone className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled' />
+            <label className="block text-sm font-medium text-color-secondary mb-2">Telefono *</label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled" />
               <input
-                type='tel'
-                value={formData.phone || ''}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
+                type="tel"
+                value={formData.phone || ""}
+                onChange={e => handleInputChange("phone", e.target.value)}
                 className={cn(
-                  'w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                  getFieldError('phone') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+                  "w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                  getFieldError("phone")
+                    ? "border-color-state-error-border bg-color-state-error-bg"
+                    : "border-color-strong",
                 )}
-                placeholder='+39 123 456 7890'
+                placeholder="+39 123 456 7890"
               />
             </div>
-            {getFieldError('phone') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('phone')}
+            {getFieldError("phone") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("phone")}
               </p>
             )}
           </div>
 
           {/* Company Name */}
-          <div className='md:col-span-2'>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>
-              Nome Ristorante/Azienda *
-            </label>
-            <div className='relative'>
-              <Building className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled' />
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-color-secondary mb-2">Nome Ristorante/Azienda *</label>
+            <div className="relative">
+              <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-color-disabled" />
               <input
-                type='text'
-                value={formData.companyName || ''}
-                onChange={(e) => handleInputChange('companyName', e.target.value)}
+                type="text"
+                value={formData.companyName || ""}
+                onChange={e => handleInputChange("companyName", e.target.value)}
                 className={cn(
-                  'w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                  getFieldError('companyName') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+                  "w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                  getFieldError("companyName")
+                    ? "border-color-state-error-border bg-color-state-error-bg"
+                    : "border-color-strong",
                 )}
-                placeholder='Il nome del tuo ristorante'
+                placeholder="Il nome del tuo ristorante"
               />
             </div>
-            {getFieldError('companyName') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('companyName')}
+            {getFieldError("companyName") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("companyName")}
               </p>
             )}
           </div>
 
           {/* Optional P.IVA */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>
-              P.IVA (opzionale)
-            </label>
+            <label className="block text-sm font-medium text-color-secondary mb-2">P.IVA (opzionale)</label>
             <input
-              type='text'
-              value={formData.companyVat || ''}
-              onChange={(e) => handleInputChange('companyVat', e.target.value)}
+              type="text"
+              value={formData.companyVat || ""}
+              onChange={e => handleInputChange("companyVat", e.target.value)}
               className={cn(
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                getFieldError('companyVat') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+                "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                getFieldError("companyVat")
+                  ? "border-color-state-error-border bg-color-state-error-bg"
+                  : "border-color-strong",
               )}
-              placeholder='IT12345678901'
+              placeholder="IT12345678901"
             />
-            {getFieldError('companyVat') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('companyVat')}
+            {getFieldError("companyVat") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("companyVat")}
               </p>
             )}
           </div>
 
           {/* Optional Website */}
           <div>
-            <label className='block text-sm font-medium text-color-secondary mb-2'>
-              Sito Web Attuale (opzionale)
-            </label>
+            <label className="block text-sm font-medium text-color-secondary mb-2">Sito Web Attuale (opzionale)</label>
             <input
-              type='url'
-              value={formData.websiteUrl || ''}
-              onChange={(e) => handleInputChange('websiteUrl', e.target.value)}
+              type="url"
+              value={formData.websiteUrl || ""}
+              onChange={e => handleInputChange("websiteUrl", e.target.value)}
               className={cn(
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                getFieldError('websiteUrl') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+                "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                getFieldError("websiteUrl")
+                  ? "border-color-state-error-border bg-color-state-error-bg"
+                  : "border-color-strong",
               )}
-              placeholder='https://www.tuosito.it'
+              placeholder="https://www.tuosito.it"
             />
-            {getFieldError('websiteUrl') && (
-              <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('websiteUrl')}
+            {getFieldError("websiteUrl") && (
+              <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("websiteUrl")}
               </p>
             )}
           </div>
         </div>
 
-        <div className='flex justify-between mt-8 pt-6 border-t border-color-subtle'>
+        <div className="flex justify-between mt-8 pt-6 border-t border-color-subtle">
           <button
             onClick={onPrevious}
-            className='flex items-center px-6 py-3 text-color-tertiary bg-color-muted rounded-lg hover:bg-color-muted transition-colors'
+            className="btn btn-lg flex items-center gap-3 px-6 py-3 bg-apty-gradient-primary text-apty-text-on-brand"
           >
-            <ArrowLeft className='w-4 h-4 mr-2' />
+            <ArrowLeft className="w-5 h-5" />
             Indietro
           </button>
 
           <button
             onClick={handleNext}
-            className='flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors'
+            className="flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors"
           >
             Continua
-            <ArrowRight className='w-4 h-4 ml-2' />
+            <ArrowRight className="w-4 h-4 ml-2" />
           </button>
         </div>
       </div>
@@ -561,19 +551,13 @@ const UserDataStep: React.FC<UserDataStepProps> = ({
 // STEP 2: PROJECT DETAILS COMPONENT (Enhanced with Services)
 // =====================================
 
-const ProjectDetailsStep: React.FC<StepComponentProps> = ({
-  data,
-  onUpdate,
-  onNext,
-  onPrevious,
-  errors = [],
-}) => {
+const ProjectDetailsStep: React.FC<StepComponentProps> = ({ data, onUpdate, onNext, onPrevious, errors = [] }) => {
   const [formData, setFormData] = useState<Partial<ProjectDetails>>(data.projectDetails || {});
   const [localErrors, setLocalErrors] = useState<FormValidationError[]>([]);
   // Hydration-safe today's date string for min attributes
-  const [todayStr, setTodayStr] = useState<string>('');
+  const [todayStr, setTodayStr] = useState<string>("");
   useEffect(() => {
-    setTodayStr(new Date().toISOString().split('T')[0]);
+    setTodayStr(new Date().toISOString().split("T")[0]);
   }, []);
 
   // Enhanced services state - removed (no longer needed)
@@ -583,7 +567,7 @@ const ProjectDetailsStep: React.FC<StepComponentProps> = ({
     setFormData(updatedData);
     onUpdate({ projectDetails: updatedData as ProjectDetails });
 
-    setLocalErrors((prev) => prev.filter((error) => error.field !== field));
+    setLocalErrors(prev => prev.filter(error => error.field !== field));
   };
 
   // Service toggle handlers removed - no longer needed
@@ -598,206 +582,189 @@ const ProjectDetailsStep: React.FC<StepComponentProps> = ({
   };
 
   const allErrors = [...errors, ...localErrors];
-  const getFieldError = (field: string) =>
-    allErrors.find((error) => error.field === field)?.message;
+  const getFieldError = (field: string) => allErrors.find(error => error.field === field)?.message;
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial='hidden'
-      animate='visible'
-      exit='exit'
-      className='space-y-8'
-    >
-      <div className='text-center'>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-8">
+      <div className="text-center">
         <motion.div
           variants={iconVariants}
-          initial='idle'
-          whileHover='hover'
-          whileTap='tap'
-          className='mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4'
+          initial="idle"
+          whileHover="hover"
+          whileTap="tap"
+          className="mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4"
         >
-          <FileText className='w-8 h-8 text-brand-secondary' />
+          <FileText className="w-8 h-8 text-brand-secondary" />
         </motion.div>
-        <h2 className='text-3xl font-bold text-color-primary mb-2'>Dettagli del Progetto</h2>
-        <p className='text-color-tertiary max-w-2xl mx-auto'>
+        <h2 className="text-3xl font-bold text-color-primary mb-2">Dettagli del Progetto</h2>
+        <p className="text-color-tertiary max-w-2xl mx-auto">
           Raccontaci di più sul tuo ristorante e su cosa vorresti ottenere dal nuovo sito web.
         </p>
       </div>
 
       {/* Project Details Container */}
-      <div className='bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6'>
+      <div className="bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6">
         {/* Restaurant Type */}
         <div>
-          <label className='block text-sm font-medium text-color-secondary mb-3'>
-            Che tipo di ristorante è? *
-          </label>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+          <label className="block text-sm font-medium text-color-secondary mb-3">Che tipo di ristorante è? *</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {Object.entries(RESTAURANT_TYPE_LABELS).map(([value, label]) => (
-              <label key={value} className='relative'>
+              <label key={value} className="relative">
                 <input
-                  type='radio'
+                  type="radio"
                   value={value}
                   checked={formData.restaurantType === value}
-                  onChange={(e) => handleInputChange('restaurantType', e.target.value)}
-                  className='sr-only'
+                  onChange={e => handleInputChange("restaurantType", e.target.value)}
+                  className="sr-only"
                 />
                 <div
                   className={cn(
-                    'p-4 border-2 rounded-lg cursor-pointer transition-all',
+                    "p-4 border-2 rounded-lg cursor-pointer transition-all",
                     formData.restaurantType === value
-                      ? 'border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary'
-                      : 'border-color-default hover:border-brand-secondary/40'
+                      ? "border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary"
+                      : "border-color-default hover:border-brand-secondary/40",
                   )}
                 >
-                  <span className='font-medium'>{label}</span>
-                  {formData.restaurantType === value && (
-                    <Check className='w-5 h-5 text-brand-secondary float-right' />
-                  )}
+                  <span className="font-medium">{label}</span>
+                  {formData.restaurantType === value && <Check className="w-5 h-5 text-brand-secondary float-right" />}
                 </div>
               </label>
             ))}
           </div>
-          {getFieldError('restaurantType') && (
-            <p className='mt-2 text-sm text-color-state-error-strong flex items-center'>
-              <AlertCircle className='w-4 h-4 mr-1' />
-              {getFieldError('restaurantType')}
+          {getFieldError("restaurantType") && (
+            <p className="mt-2 text-sm text-color-state-error-strong flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {getFieldError("restaurantType")}
             </p>
           )}
         </div>
       </div>
 
       {/* Additional Project Details Container */}
-      <div className='bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6'>
+      <div className="bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6">
         {/* Timeline */}
         <div>
-          <label className='block text-sm font-medium text-color-secondary mb-3'>
+          <label className="block text-sm font-medium text-color-secondary mb-3">
             Quando vorresti avere il sito pronto? *
           </label>
-          <div className='space-y-3'>
+          <div className="space-y-3">
             {[
-              { value: 'asap', label: 'Il prima possibile', desc: 'Entro 2-3 settimane' },
-              { value: 'flexible', label: 'Sono flessibile', desc: 'Entro 4-6 settimane' },
-              { value: 'specific_date', label: 'Ho una data specifica', desc: 'Scegli la data' },
-            ].map((option) => (
-              <label key={option.value} className='relative'>
+              { value: "asap", label: "Il prima possibile", desc: "Entro 2-3 settimane" },
+              { value: "flexible", label: "Sono flessibile", desc: "Entro 4-6 settimane" },
+              { value: "specific_date", label: "Ho una data specifica", desc: "Scegli la data" },
+            ].map(option => (
+              <label key={option.value} className="relative">
                 <input
-                  type='radio'
+                  type="radio"
                   value={option.value}
                   checked={formData.timeline === option.value}
-                  onChange={(e) => handleInputChange('timeline', e.target.value as TimelineUrgency)}
-                  className='sr-only'
+                  onChange={e => handleInputChange("timeline", e.target.value as TimelineUrgency)}
+                  className="sr-only"
                 />
                 <div
                   className={cn(
-                    'p-4 border-2 rounded-lg cursor-pointer transition-all',
+                    "p-4 border-2 rounded-lg cursor-pointer transition-all",
                     formData.timeline === option.value
-                      ? 'border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary'
-                      : 'border-color-default hover:border-brand-secondary/40'
+                      ? "border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary"
+                      : "border-color-default hover:border-brand-secondary/40",
                   )}
                 >
-                  <div className='flex justify-between items-center'>
+                  <div className="flex justify-between items-center">
                     <div>
-                      <span className='font-medium'>{option.label}</span>
-                      <p className='text-sm text-color-muted mt-1'>{option.desc}</p>
+                      <span className="font-medium">{option.label}</span>
+                      <p className="text-sm text-color-muted mt-1">{option.desc}</p>
                     </div>
-                    {formData.timeline === option.value && (
-                      <Check className='w-5 h-5 text-brand-secondary' />
-                    )}
+                    {formData.timeline === option.value && <Check className="w-5 h-5 text-brand-secondary" />}
                   </div>
                 </div>
               </label>
             ))}
           </div>
 
-          {formData.timeline === 'specific_date' && (
-            <div className='mt-4'>
-              <label className='block text-sm font-medium text-color-secondary mb-2'>
-                Data desiderata
-              </label>
+          {formData.timeline === "specific_date" && (
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-color-secondary mb-2">Data desiderata</label>
               <input
-                type='date'
-                value={formData.specificDeadline || ''}
-                onChange={(e) => handleInputChange('specificDeadline', e.target.value)}
+                type="date"
+                value={formData.specificDeadline || ""}
+                onChange={e => handleInputChange("specificDeadline", e.target.value)}
                 className={cn(
-                  'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors',
-                  getFieldError('specificDeadline') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+                  "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors",
+                  getFieldError("specificDeadline")
+                    ? "border-color-state-error-border bg-color-state-error-bg"
+                    : "border-color-strong",
                 )}
                 min={todayStr || undefined}
               />
-              {getFieldError('specificDeadline') && (
-                <p className='mt-1 text-sm text-color-state-error-strong flex items-center'>
-                  <AlertCircle className='w-4 h-4 mr-1' />
-                  {getFieldError('specificDeadline')}
+              {getFieldError("specificDeadline") && (
+                <p className="mt-1 text-sm text-color-state-error-strong flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {getFieldError("specificDeadline")}
                 </p>
               )}
             </div>
           )}
 
-          {getFieldError('timeline') && (
-            <p className='mt-2 text-sm text-color-state-error-strong flex items-center'>
-              <AlertCircle className='w-4 h-4 mr-1' />
-              {getFieldError('timeline')}
+          {getFieldError("timeline") && (
+            <p className="mt-2 text-sm text-color-state-error-strong flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {getFieldError("timeline")}
             </p>
           )}
         </div>
 
         {/* Budget Flexibility */}
         <div>
-          <label className='block text-sm font-medium text-color-secondary mb-3'>
-            Flessibilità di budget *
-          </label>
-          <div className='space-y-3'>
-            {BUDGET_RANGES.map((range) => (
-              <label key={range.value} className='relative'>
+          <label className="block text-sm font-medium text-color-secondary mb-3">Flessibilità di budget *</label>
+          <div className="space-y-3">
+            {BUDGET_RANGES.map(range => (
+              <label key={range.value} className="relative">
                 <input
-                  type='radio'
+                  type="radio"
                   value={range.value}
                   checked={formData.budgetFlexibility === range.value}
-                  onChange={(e) => handleInputChange('budgetFlexibility', e.target.value)}
-                  className='sr-only'
+                  onChange={e => handleInputChange("budgetFlexibility", e.target.value)}
+                  className="sr-only"
                 />
                 <div
                   className={cn(
-                    'p-4 border-2 rounded-lg cursor-pointer transition-all',
+                    "p-4 border-2 rounded-lg cursor-pointer transition-all",
                     formData.budgetFlexibility === range.value
-                      ? 'border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary'
-                      : 'border-color-default hover:border-brand-secondary/40'
+                      ? "border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary"
+                      : "border-color-default hover:border-brand-secondary/40",
                   )}
                 >
-                  <div className='flex justify-between items-center'>
-                    <span className='font-medium'>{range.label}</span>
-                    {formData.budgetFlexibility === range.value && (
-                      <Check className='w-5 h-5 text-brand-secondary' />
-                    )}
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{range.label}</span>
+                    {formData.budgetFlexibility === range.value && <Check className="w-5 h-5 text-brand-secondary" />}
                   </div>
                 </div>
               </label>
             ))}
           </div>
-          {getFieldError('budgetFlexibility') && (
-            <p className='mt-2 text-sm text-color-state-error-strong flex items-center'>
-              <AlertCircle className='w-4 h-4 mr-1' />
-              {getFieldError('budgetFlexibility')}
+          {getFieldError("budgetFlexibility") && (
+            <p className="mt-2 text-sm text-color-state-error-strong flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {getFieldError("budgetFlexibility")}
             </p>
           )}
         </div>
 
-        <div className='flex justify-between mt-8 pt-6 border-t border-color-subtle'>
+        <div className="flex justify-between mt-8 pt-6 border-t border-color-subtle">
           <button
             onClick={onPrevious}
-            className='flex items-center px-6 py-3 text-color-tertiary bg-color-muted rounded-lg hover:bg-color-muted transition-colors'
+            className="btn btn-lg flex items-center gap-3 px-6 py-3 bg-apty-gradient-primary text-apty-text-on-brand"
           >
-            <ArrowLeft className='w-4 h-4 mr-2' />
+            <ArrowLeft className="w-5 h-5" />
             Indietro
           </button>
 
           <button
             onClick={handleNext}
-            className='flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors'
+            className="flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors"
           >
             Continua
-            <ArrowRight className='w-4 h-4 ml-2' />
+            <ArrowRight className="w-4 h-4 ml-2" />
           </button>
         </div>
       </div>
@@ -809,25 +776,19 @@ const ProjectDetailsStep: React.FC<StepComponentProps> = ({
 // STEP 3: MEETING REQUEST COMPONENT
 // =====================================
 
-const MeetingRequestStep: React.FC<StepComponentProps> = ({
-  data,
-  onUpdate,
-  onNext,
-  onPrevious,
-  errors = [],
-}) => {
+const MeetingRequestStep: React.FC<StepComponentProps> = ({ data, onUpdate, onNext, onPrevious, errors = [] }) => {
   const [formData, setFormData] = useState<Partial<MeetingRequest>>(
     data.meetingRequest || {
       preferredSlots: [],
       estimatedDuration: 60,
-    }
+    },
   );
   const [localErrors, setLocalErrors] = useState<FormValidationError[]>([]);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   // Hydration-safe min date string
-  const [minDateStr, setMinDateStr] = useState<string>('');
+  const [minDateStr, setMinDateStr] = useState<string>("");
   useEffect(() => {
-    setMinDateStr(new Date().toISOString().split('T')[0]);
+    setMinDateStr(new Date().toISOString().split("T")[0]);
   }, []);
 
   const handleInputChange = (field: keyof MeetingRequest, value: any) => {
@@ -835,7 +796,7 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
     setFormData(updatedData);
     onUpdate({ meetingRequest: updatedData as MeetingRequest });
 
-    setLocalErrors((prev) => prev.filter((error) => error.field !== field));
+    setLocalErrors(prev => prev.filter(error => error.field !== field));
   };
 
   const addTimeSlot = () => {
@@ -850,14 +811,14 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
         timeSlot,
         preferenceOrder: currentSlots.length + 1,
       };
-      handleInputChange('preferredSlots', [...currentSlots, newSlot]);
+      handleInputChange("preferredSlots", [...currentSlots, newSlot]);
     }
   };
 
   const updateTimeSlot = (index: number, field: keyof PreferredSlot, value: string | number) => {
     const currentSlots = [...(formData.preferredSlots || [])];
     currentSlots[index] = { ...currentSlots[index], [field]: value };
-    handleInputChange('preferredSlots', currentSlots);
+    handleInputChange("preferredSlots", currentSlots);
   };
 
   const removeTimeSlot = (index: number) => {
@@ -867,7 +828,7 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
     currentSlots.forEach((slot, i) => {
       slot.preferenceOrder = i + 1;
     });
-    handleInputChange('preferredSlots', currentSlots);
+    handleInputChange("preferredSlots", currentSlots);
   };
 
   const handleSubmit = () => {
@@ -884,106 +845,97 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
   };
 
   const allErrors = [...errors, ...localErrors];
-  const getFieldError = (field: string) =>
-    allErrors.find((error) => error.field === field)?.message;
+  const getFieldError = (field: string) => allErrors.find(error => error.field === field)?.message;
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial='hidden'
-      animate='visible'
-      exit='exit'
-      className='space-y-8'
-    >
-      <div className='text-center'>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-8">
+      <div className="text-center">
         <motion.div
           variants={iconVariants}
-          initial='idle'
-          whileHover='hover'
-          whileTap='tap'
-          className='mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4'
+          initial="idle"
+          whileHover="hover"
+          whileTap="tap"
+          className="mx-auto w-16 h-16 bg-brand-secondary/20 rounded-2xl flex items-center justify-center mb-4"
         >
-          <Calendar className='w-8 h-8 text-brand-secondary' />
+          <Calendar className="w-8 h-8 text-brand-secondary" />
         </motion.div>
-        <h2 className='text-3xl font-bold text-color-primary mb-2'>Pianifichiamo un Incontro</h2>
-        <p className='text-color-tertiary max-w-2xl mx-auto'>
+        <h2 className="text-3xl font-bold text-color-primary mb-2">Pianifichiamo un Incontro</h2>
+        <p className="text-color-tertiary max-w-2xl mx-auto">
           Scegli quando preferisci incontrarci per discutere del tuo progetto in dettaglio.
         </p>
       </div>
 
-      <div className='bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6'>
+      <div className="bg-white rounded-2xl shadow-lg border border-color-subtle p-8 space-y-6">
         {/* Meeting Type */}
         <div>
-          <label className='block text-sm font-medium text-color-secondary mb-3'>Tipo di incontro *</label>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <label className="block text-sm font-medium text-color-secondary mb-3">Tipo di incontro *</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               {
-                value: 'online',
-                label: 'Video call online',
-                desc: 'Google Meet o Zoom',
+                value: "online",
+                label: "Video call online",
+                desc: "Google Meet o Zoom",
                 icon: MessageSquare,
               },
               {
-                value: 'in_person',
-                label: 'Di persona',
-                desc: 'Nel nostro ufficio o presso di te',
+                value: "in_person",
+                label: "Di persona",
+                desc: "Nel nostro ufficio o presso di te",
                 icon: MapPin,
               },
-            ].map((option) => (
-              <label key={option.value} className='relative'>
+            ].map(option => (
+              <label key={option.value} className="relative">
                 <input
-                  type='radio'
+                  type="radio"
                   value={option.value}
                   checked={formData.meetingType === option.value}
-                  onChange={(e) => handleInputChange('meetingType', e.target.value as MeetingType)}
-                  className='sr-only'
+                  onChange={e => handleInputChange("meetingType", e.target.value as MeetingType)}
+                  className="sr-only"
                 />
                 <div
                   className={cn(
-                    'p-6 border-2 rounded-lg cursor-pointer transition-all',
+                    "p-6 border-2 rounded-lg cursor-pointer transition-all",
                     formData.meetingType === option.value
-                      ? 'border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary'
-                      : 'border-color-default hover:border-brand-secondary/40'
+                      ? "border-brand-secondary/90 bg-brand-secondary/10 text-brand-secondary"
+                      : "border-color-default hover:border-brand-secondary/40",
                   )}
                 >
-                  <div className='flex items-start space-x-3'>
-                    <option.icon className='w-6 h-6 mt-1 flex-shrink-0' />
-                    <div className='flex-1'>
-                      <span className='font-medium block'>{option.label}</span>
-                      <p className='text-sm text-color-muted mt-1'>{option.desc}</p>
+                  <div className="flex items-start space-x-3">
+                    <option.icon className="w-6 h-6 mt-1 flex-shrink-0" />
+                    <div className="flex-1">
+                      <span className="font-medium block">{option.label}</span>
+                      <p className="text-sm text-color-muted mt-1">{option.desc}</p>
                     </div>
                     {formData.meetingType === option.value && (
-                      <Check className='w-5 h-5 text-brand-secondary flex-shrink-0' />
+                      <Check className="w-5 h-5 text-brand-secondary flex-shrink-0" />
                     )}
                   </div>
                 </div>
               </label>
             ))}
           </div>
-          {getFieldError('meetingType') && (
-            <p className='mt-2 text-sm text-color-state-error-strong flex items-center'>
-              <AlertCircle className='w-4 h-4 mr-1' />
-              {getFieldError('meetingType')}
+          {getFieldError("meetingType") && (
+            <p className="mt-2 text-sm text-color-state-error-strong flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {getFieldError("meetingType")}
             </p>
           )}
         </div>
 
         {/* Estimated Duration */}
         <div>
-          <p className='text-sm text-color-secondary font-medium'>Durata stimata dell'incontro: 1 ora</p>
+          <p className="text-sm text-color-secondary font-medium">Durata stimata dell'incontro: 1 ora</p>
         </div>
 
         {/* Preferred Time Slots */}
         <div>
-          <div className='flex justify-between items-center mb-3'>
-            <label className='text-sm font-medium text-color-secondary'>
-              Fasce orarie preferite * (max 3)
-            </label>
+          <div className="flex justify-between items-center mb-3">
+            <label className="text-sm font-medium text-color-secondary">Fasce orarie preferite * (max 3)</label>
             {(formData.preferredSlots || []).length < 3 && (
               <button
-                type='button'
+                type="button"
                 onClick={addTimeSlot}
-                className='text-sm text-brand-secondary hover:text-brand-secondary font-medium'
+                className="text-sm text-brand-secondary hover:text-brand-secondary font-medium"
               >
                 + Aggiungi slot
               </button>
@@ -992,75 +944,75 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
 
           {(formData.preferredSlots || []).length === 0 && (
             <button
-              type='button'
+              type="button"
               onClick={addTimeSlot}
-              className='w-full p-6 border-2 border-dashed border-color-strong rounded-lg text-color-muted hover:border-brand-secondary/40 hover:text-brand-secondary transition-colors'
+              className="w-full p-6 border-2 border-dashed border-color-strong rounded-lg text-color-muted hover:border-brand-secondary/40 hover:text-brand-secondary transition-colors"
             >
-              <Clock className='w-8 h-8 mx-auto mb-2' />
-              <span className='block font-medium'>Aggiungi la tua prima esperienza</span>
-              <span className='text-sm'>Seleziona data e orario preferiti</span>
+              <Clock className="w-8 h-8 mx-auto mb-2" />
+              <span className="block font-medium">Aggiungi la tua prima esperienza</span>
+              <span className="text-sm">Seleziona data e orario preferiti</span>
             </button>
           )}
 
-          <div className='space-y-4'>
+          <div className="space-y-4">
             {(formData.preferredSlots || []).map((slot, index) => (
-              <div key={index} className='border border-color-default rounded-lg p-4'>
-                <div className='flex justify-between items-start mb-3'>
-                  <span className='text-sm font-medium text-color-secondary'>
-                    {index === 0 ? 'Prima scelta' : index === 1 ? 'Seconda scelta' : 'Terza scelta'}
+              <div key={index} className="border border-color-default rounded-lg p-4">
+                <div className="flex justify-between items-start mb-3">
+                  <span className="text-sm font-medium text-color-secondary">
+                    {index === 0 ? "Prima scelta" : index === 1 ? "Seconda scelta" : "Terza scelta"}
                   </span>
                   <button
-                    type='button'
+                    type="button"
                     onClick={() => removeTimeSlot(index)}
-                    className='text-color-state-error hover:text-color-state-error-text text-sm'
+                    className="text-color-state-error hover:text-color-state-error-text text-sm"
                   >
                     Rimuovi
                   </button>
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className='block text-sm text-color-tertiary mb-1'>Data</label>
+                    <label className="block text-sm text-color-tertiary mb-1">Data</label>
                     <input
-                      type='date'
+                      type="date"
                       value={slot.date}
-                      onChange={(e) => updateTimeSlot(index, 'date', e.target.value)}
+                      onChange={e => updateTimeSlot(index, "date", e.target.value)}
                       className={cn(
-                        'w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90',
+                        "w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90",
                         getFieldError(`preferredSlots.${index}.date`)
-                          ? 'border-color-state-error-border'
-                          : 'border-color-strong'
+                          ? "border-color-state-error-border"
+                          : "border-color-strong",
                       )}
                       min={minDateStr || undefined}
                     />
                     {getFieldError(`preferredSlots.${index}.date`) && (
-                      <p className='mt-1 text-xs text-color-state-error-strong'>
+                      <p className="mt-1 text-xs text-color-state-error-strong">
                         {getFieldError(`preferredSlots.${index}.date`)}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className='block text-sm text-color-tertiary mb-1'>Orario</label>
+                    <label className="block text-sm text-color-tertiary mb-1">Orario</label>
                     <select
                       value={slot.timeSlot}
-                      onChange={(e) => updateTimeSlot(index, 'timeSlot', e.target.value)}
+                      onChange={e => updateTimeSlot(index, "timeSlot", e.target.value)}
                       className={cn(
-                        'w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90',
+                        "w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90",
                         getFieldError(`preferredSlots.${index}.timeSlot`)
-                          ? 'border-color-state-error-border'
-                          : 'border-color-strong'
+                          ? "border-color-state-error-border"
+                          : "border-color-strong",
                       )}
                     >
-                      <option value=''>Seleziona orario</option>
-                      {AVAILABLE_TIME_SLOTS.map((timeSlot) => (
+                      <option value="">Seleziona orario</option>
+                      {AVAILABLE_TIME_SLOTS.map(timeSlot => (
                         <option key={timeSlot} value={timeSlot}>
                           {timeSlot}
                         </option>
                       ))}
                     </select>
                     {getFieldError(`preferredSlots.${index}.timeSlot`) && (
-                      <p className='mt-1 text-xs text-color-state-error-strong'>
+                      <p className="mt-1 text-xs text-color-state-error-strong">
                         {getFieldError(`preferredSlots.${index}.timeSlot`)}
                       </p>
                     )}
@@ -1070,57 +1022,55 @@ const MeetingRequestStep: React.FC<StepComponentProps> = ({
             ))}
           </div>
 
-          {getFieldError('preferredSlots') && (
-            <p className='mt-2 text-sm text-color-state-error-strong flex items-center'>
-              <AlertCircle className='w-4 h-4 mr-1' />
-              {getFieldError('preferredSlots')}
+          {getFieldError("preferredSlots") && (
+            <p className="mt-2 text-sm text-color-state-error-strong flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {getFieldError("preferredSlots")}
             </p>
           )}
         </div>
 
         {/* Special Requests */}
         <div>
-          <label className='block text-sm font-medium text-color-secondary mb-2'>
-            Richieste speciali (opzionale)
-          </label>
+          <label className="block text-sm font-medium text-color-secondary mb-2">Richieste speciali (opzionale)</label>
           <textarea
-            value={formData.specialRequests || ''}
-            onChange={(e) => handleInputChange('specialRequests', e.target.value)}
+            value={formData.specialRequests || ""}
+            onChange={e => handleInputChange("specialRequests", e.target.value)}
             rows={3}
             className={cn(
-              'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors resize-none',
-              getFieldError('specialRequests') ? 'border-color-state-error-border bg-color-state-error-bg' : 'border-color-strong'
+              "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-secondary/90 focus:border-brand-secondary/90 transition-colors resize-none",
+              getFieldError("specialRequests")
+                ? "border-color-state-error-border bg-color-state-error-bg"
+                : "border-color-strong",
             )}
             placeholder="Hai qualche richiesta particolare per l'incontro?"
             maxLength={500}
           />
-          <div className='flex justify-between mt-1'>
-            {getFieldError('specialRequests') && (
-              <p className='text-sm text-color-state-error-strong flex items-center'>
-                <AlertCircle className='w-4 h-4 mr-1' />
-                {getFieldError('specialRequests')}
+          <div className="flex justify-between mt-1">
+            {getFieldError("specialRequests") && (
+              <p className="text-sm text-color-state-error-strong flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {getFieldError("specialRequests")}
               </p>
             )}
-            <p className='text-sm text-color-muted ml-auto'>
-              {(formData.specialRequests || '').length}/500
-            </p>
+            <p className="text-sm text-color-muted ml-auto">{(formData.specialRequests || "").length}/500</p>
           </div>
         </div>
 
-        <div className='flex justify-between mt-8 pt-6 border-t border-color-subtle'>
+        <div className="flex justify-between mt-8 pt-6 border-t border-color-subtle">
           <button
             onClick={onPrevious}
-            className='flex items-center px-6 py-3 text-color-tertiary bg-color-muted rounded-lg hover:bg-color-muted transition-colors'
+            className="btn btn-lg flex items-center gap-3 px-6 py-3 bg-apty-gradient-primary text-apty-text-on-brand"
           >
-            <ArrowLeft className='w-4 h-4 mr-2' />
+            <ArrowLeft className="w-5 h-5" />
             Indietro
           </button>
 
           <button
             onClick={handleSubmit}
-            className='flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors'
+            className="flex items-center px-8 py-3 bg-brand-secondary text-white rounded-lg hover:bg-brand-secondary transition-colors"
           >
-            <Sparkles className='w-4 h-4 mr-2' />
+            <Sparkles className="w-4 h-4 mr-2" />
             Invia Richiesta
           </button>
         </div>
@@ -1148,19 +1098,14 @@ interface CalendarModalProps {
   selectedSlots: Array<{ date: string; timeSlot: string; preferenceOrder: number }>;
 }
 
-const CalendarModal: React.FC<CalendarModalProps> = ({
-  isOpen,
-  onClose,
-  onSelectSlot,
-  selectedSlots,
-}) => {
-  const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTime, setSelectedTime] = useState<string>('');
+const CalendarModal: React.FC<CalendarModalProps> = ({ isOpen, onClose, onSelectSlot, selectedSlots }) => {
+  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedTime, setSelectedTime] = useState<string>("");
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // Get today's date for minimum date validation
   const today = new Date();
-  const todayString = today.toISOString().split('T')[0];
+  const todayString = today.toISOString().split("T")[0];
 
   // Calendar navigation
   const nextMonth = () => {
@@ -1169,10 +1114,7 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
 
   const prevMonth = () => {
     const now = new Date();
-    if (
-      currentMonth.getMonth() > now.getMonth() ||
-      currentMonth.getFullYear() > now.getFullYear()
-    ) {
+    if (currentMonth.getMonth() > now.getMonth() || currentMonth.getFullYear() > now.getFullYear()) {
       setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
     }
   };
@@ -1196,10 +1138,10 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
     // Add days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
-      const dateString = date.toISOString().split('T')[0];
+      const dateString = date.toISOString().split("T")[0];
       const isPast = date < today;
       const isSelected = selectedDate === dateString;
-      const isBooked = selectedSlots.some((slot) => slot.date === dateString);
+      const isBooked = selectedSlots.some(slot => slot.date === dateString);
 
       days.push({
         day,
@@ -1216,119 +1158,115 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
 
   const handleDateSelect = (dateString: string) => {
     setSelectedDate(dateString);
-    setSelectedTime(''); // Reset time when date changes
+    setSelectedTime(""); // Reset time when date changes
   };
 
   const handleConfirm = () => {
     if (selectedDate && selectedTime) {
       onSelectSlot(selectedDate, selectedTime);
-      setSelectedDate('');
-      setSelectedTime('');
+      setSelectedDate("");
+      setSelectedTime("");
       onClose();
     }
   };
 
   const monthNames = [
-    'Gennaio',
-    'Febbraio',
-    'Marzo',
-    'Aprile',
-    'Maggio',
-    'Giugno',
-    'Luglio',
-    'Agosto',
-    'Settembre',
-    'Ottobre',
-    'Novembre',
-    'Dicembre',
+    "Gennaio",
+    "Febbraio",
+    "Marzo",
+    "Aprile",
+    "Maggio",
+    "Giugno",
+    "Luglio",
+    "Agosto",
+    "Settembre",
+    "Ottobre",
+    "Novembre",
+    "Dicembre",
   ];
 
-  const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+  const dayNames = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
 
   if (!isOpen) return null;
 
   return (
     <motion.div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
-        className='relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto'
+        className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className='flex items-center justify-between p-6 border-b border-color-default'>
+        <div className="flex items-center justify-between p-6 border-b border-color-default">
           <div>
-            <h3 className='text-xl font-bold text-color-primary'>Seleziona Data e Orario</h3>
-            <p className='text-sm text-color-tertiary mt-1'>Scegli quando preferisci incontrarci</p>
+            <h3 className="text-xl font-bold text-color-primary">Seleziona Data e Orario</h3>
+            <p className="text-sm text-color-tertiary mt-1">Scegli quando preferisci incontrarci</p>
           </div>
-          <button onClick={onClose} className='p-2 hover:bg-color-muted rounded-lg transition-colors'>
-            <X className='w-5 h-5 text-color-muted' />
+          <button onClick={onClose} className="p-2 hover:bg-color-muted rounded-lg transition-colors">
+            <X className="w-5 h-5 text-color-muted" />
           </button>
         </div>
 
-        <div className='p-6'>
+        <div className="p-6">
           {/* Calendar Header */}
-          <div className='flex items-center justify-between mb-6'>
+          <div className="flex items-center justify-between mb-6">
             <button
               onClick={prevMonth}
-              className='p-2 hover:bg-color-muted rounded-lg transition-colors'
+              className="p-2 hover:bg-color-muted rounded-lg transition-colors"
               disabled={
-                currentMonth.getMonth() === today.getMonth() &&
-                currentMonth.getFullYear() === today.getFullYear()
+                currentMonth.getMonth() === today.getMonth() && currentMonth.getFullYear() === today.getFullYear()
               }
             >
-              <ArrowLeft className='w-5 h-5 text-color-tertiary' />
+              <ArrowLeft className="w-5 h-5 text-color-tertiary" />
             </button>
-            <h4 className='text-lg font-semibold text-color-primary'>
+            <h4 className="text-lg font-semibold text-color-primary">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h4>
-            <button
-              onClick={nextMonth}
-              className='p-2 hover:bg-color-muted rounded-lg transition-colors'
-            >
-              <ArrowRight className='w-5 h-5 text-color-tertiary' />
+            <button onClick={nextMonth} className="p-2 hover:bg-color-muted rounded-lg transition-colors">
+              <ArrowRight className="w-5 h-5 text-color-tertiary" />
             </button>
           </div>
 
           {/* Calendar Grid */}
-          <div className='grid grid-cols-7 gap-2 mb-6'>
+          <div className="grid grid-cols-7 gap-2 mb-6">
             {/* Day headers */}
-            {dayNames.map((day) => (
-              <div key={day} className='text-center text-sm font-medium text-color-muted py-2'>
+            {dayNames.map(day => (
+              <div key={day} className="text-center text-sm font-medium text-color-muted py-2">
                 {day}
               </div>
             ))}
 
             {/* Calendar days */}
             {generateCalendarDays().map((dayData, index) => (
-              <div key={index} className='aspect-square'>
+              <div key={index} className="aspect-square">
                 {dayData && (
                   <button
                     onClick={() => !dayData.isPast && handleDateSelect(dayData.date)}
                     disabled={dayData.isPast}
                     className={cn(
-                      'w-full h-full rounded-lg text-sm font-medium transition-all',
+                      "w-full h-full rounded-lg text-sm font-medium transition-all",
                       dayData.isPast
-                        ? 'text-color-disabled cursor-not-allowed'
+                        ? "text-color-disabled cursor-not-allowed"
                         : dayData.isSelected
-                          ? 'bg-brand-secondary text-white shadow-md'
+                          ? "bg-brand-secondary text-white shadow-md"
                           : dayData.isToday
-                            ? 'bg-brand-secondary/20 text-brand-secondary hover:bg-brand-secondary/30'
+                            ? "bg-brand-secondary/20 text-brand-secondary hover:bg-brand-secondary/30"
                             : dayData.isBooked
-                              ? 'bg-color-state-warning-subtle text-color-state-warning-text hover:bg-yellow-200'
-                              : 'text-color-secondary hover:bg-color-muted'
+                              ? "bg-color-state-warning-subtle text-color-state-warning-text hover:bg-yellow-200"
+                              : "text-color-secondary hover:bg-color-muted",
                     )}
                   >
                     {dayData.day}
                     {dayData.isBooked && (
-                      <div className='w-1 h-1 bg-color-state-warning rounded-full mx-auto mt-1'></div>
+                      <div className="w-1 h-1 bg-color-state-warning rounded-full mx-auto mt-1"></div>
                     )}
                   </button>
                 )}
@@ -1340,35 +1278,33 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
           {selectedDate && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               transition={{ duration: 0.3 }}
             >
-              <h5 className='text-sm font-medium text-color-secondary mb-3'>
-                Orari disponibili per{' '}
-                {new Date(selectedDate).toLocaleDateString('it-IT', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
+              <h5 className="text-sm font-medium text-color-secondary mb-3">
+                Orari disponibili per{" "}
+                {new Date(selectedDate).toLocaleDateString("it-IT", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
               </h5>
-              <div className='grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6'>
-                {AVAILABLE_TIME_SLOTS.map((timeSlot) => {
-                  const isBooked = selectedSlots.some(
-                    (slot) => slot.date === selectedDate && slot.timeSlot === timeSlot
-                  );
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
+                {AVAILABLE_TIME_SLOTS.map(timeSlot => {
+                  const isBooked = selectedSlots.some(slot => slot.date === selectedDate && slot.timeSlot === timeSlot);
                   return (
                     <button
                       key={timeSlot}
                       onClick={() => !isBooked && setSelectedTime(timeSlot)}
                       disabled={isBooked}
                       className={cn(
-                        'p-2 text-sm rounded-lg border transition-all',
+                        "p-2 text-sm rounded-lg border transition-all",
                         isBooked
-                          ? 'bg-color-muted text-color-disabled border-color-default cursor-not-allowed'
+                          ? "bg-color-muted text-color-disabled border-color-default cursor-not-allowed"
                           : selectedTime === timeSlot
-                            ? 'bg-brand-secondary text-white border-brand-secondary'
-                            : 'border-color-default hover:border-brand-secondary/40 hover:bg-brand-secondary/10'
+                            ? "bg-brand-secondary text-white border-brand-secondary"
+                            : "border-color-default hover:border-brand-secondary/40 hover:bg-brand-secondary/10",
                       )}
                     >
                       {timeSlot}
@@ -1380,10 +1316,10 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
           )}
 
           {/* Footer */}
-          <div className='flex justify-between items-center pt-4 border-t border-color-default'>
+          <div className="flex justify-between items-center pt-4 border-t border-color-default">
             <button
               onClick={onClose}
-              className='px-4 py-2 text-color-tertiary hover:text-color-primary transition-colors'
+              className="px-4 py-2 text-color-tertiary hover:text-color-primary transition-colors"
             >
               Annulla
             </button>
@@ -1391,10 +1327,10 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
               onClick={handleConfirm}
               disabled={!selectedDate || !selectedTime}
               className={cn(
-                'px-6 py-2 rounded-lg font-medium transition-all',
+                "px-6 py-2 rounded-lg font-medium transition-all",
                 selectedDate && selectedTime
-                  ? 'bg-brand-secondary text-white hover:bg-brand-secondary'
-                  : 'bg-color-muted text-color-disabled cursor-not-allowed'
+                  ? "bg-brand-secondary text-white hover:bg-brand-secondary"
+                  : "bg-color-muted text-color-disabled cursor-not-allowed",
               )}
             >
               Conferma Selezione
@@ -1446,9 +1382,9 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
 
   // Parse user name into first and last name
   const parseUserName = (fullName: string) => {
-    const parts = fullName.trim().split(' ');
-    const firstName = parts[0] || '';
-    const lastName = parts.slice(1).join(' ') || '';
+    const parts = fullName.trim().split(" ");
+    const firstName = parts[0] || "";
+    const lastName = parts.slice(1).join(" ") || "";
     return { firstName, lastName };
   };
 
@@ -1465,8 +1401,8 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
           firstName: baseData.userData?.firstName || firstName,
           lastName: baseData.userData?.lastName || lastName,
           email: baseData.userData?.email || user.email,
-          phone: baseData.userData?.phone || '', // Ensure phone is always a string
-          companyName: baseData.userData?.companyName || '', // Ensure companyName is always a string
+          phone: baseData.userData?.phone || "", // Ensure phone is always a string
+          companyName: baseData.userData?.companyName || "", // Ensure companyName is always a string
         },
       };
     }
@@ -1486,14 +1422,14 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
   const totalSteps = 3;
 
   const handleUpdateData = (updates: Partial<QuoteRequest>) => {
-    setFormData((prev) => ({ ...prev, ...updates }));
+    setFormData(prev => ({ ...prev, ...updates }));
   };
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setDirection(1);
-      setCurrentStep((prev) => prev + 1);
-      setFormState((prev) => ({
+      setCurrentStep(prev => prev + 1);
+      setFormState(prev => ({
         ...prev,
         currentStep: currentStep + 1,
         completedSteps: new Set([...Array.from(prev.completedSteps), currentStep]),
@@ -1506,8 +1442,8 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
   const handlePrevious = () => {
     if (currentStep > 1) {
       setDirection(-1);
-      setCurrentStep((prev) => prev - 1);
-      setFormState((prev) => ({
+      setCurrentStep(prev => prev - 1);
+      setFormState(prev => ({
         ...prev,
         currentStep: currentStep - 1,
       }));
@@ -1515,23 +1451,23 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
   };
 
   const handleFinalSubmit = async () => {
-    setFormState((prev) => ({ ...prev, isSubmitting: true }));
+    setFormState(prev => ({ ...prev, isSubmitting: true }));
 
     try {
       const quoteRequest: QuoteRequest = {
         quoteId: `QR-${Date.now()}`,
         submissionDate: new Date().toISOString(),
         completionType,
-        status: 'submitted',
+        status: "submitted",
         userData: formData.userData!,
         projectDetails: formData.projectDetails!,
         meetingRequest: formData.meetingRequest!,
         priority: false,
         estimatedProjectValue: 0, // Calculate based on selections
-        ...(completionType === 'complete_journey' && {
+        ...(completionType === "complete_journey" && {
           pricingConfiguration: formData.pricingConfiguration,
         }),
-        ...(completionType === 'ai_assisted_skip' && {
+        ...(completionType === "ai_assisted_skip" && {
           aiChatHistory: formData.aiChatHistory,
           partialSelections: formData.partialSelections,
         }),
@@ -1539,7 +1475,7 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
 
       await onSubmit(quoteRequest);
     } finally {
-      setFormState((prev) => ({ ...prev, isSubmitting: false }));
+      setFormState(prev => ({ ...prev, isSubmitting: false }));
     }
   };
 
@@ -1565,13 +1501,13 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
   };
 
   return (
-    <div className={cn('w-full py-8', className)}>
+    <div className={cn("w-full py-8", className)}>
       {/* Header */}
-      <div className='mb-8 text-center'>
-        <div className='flex items-center justify-between mb-4'>
-          <h1 className='text-2xl font-bold text-color-primary'>Richiedi Preventivo</h1>
+      <div className="mb-8 text-center">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold text-color-primary">Richiedi Preventivo</h1>
           {onCancel && (
-            <button onClick={onCancel} className='text-color-muted hover:text-color-secondary text-sm'>
+            <button onClick={onCancel} className="text-color-muted hover:text-color-secondary text-sm">
               Annulla
             </button>
           )}
@@ -1579,42 +1515,38 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
       </div>
 
       {/* Two Column Layout */}
-      <div className='flex gap-8 max-w-7xl mx-auto'>
+      <div className="flex gap-8 max-w-7xl mx-auto">
         {/* Left Side - Progress Steps + Form Content */}
-        <div className='flex-1 max-w-4xl space-y-6'>
+        <div className="flex-1 max-w-4xl space-y-6">
           {/* Horizontal Progress Bar */}
-          <div className='mb-8'>
-            <div className='flex items-center space-x-4'>
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
+          <div className="mb-8">
+            <div className="flex items-center space-x-4">
+              {Array.from({ length: totalSteps }, (_, i) => i + 1).map(step => (
                 <React.Fragment key={step}>
-                  <div className='flex items-center'>
+                  <div className="flex items-center">
                     <div
                       className={cn(
-                        'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors',
+                        "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors",
                         step < currentStep || formState.completedSteps.has(step)
-                          ? 'bg-color-state-success-strong text-white'
+                          ? "bg-color-state-success-strong text-white"
                           : step === currentStep
-                            ? 'bg-brand-secondary text-white'
-                            : 'bg-color-muted text-color-muted'
+                            ? "bg-brand-secondary text-white"
+                            : "bg-color-muted text-color-muted",
                       )}
                     >
-                      {step < currentStep || formState.completedSteps.has(step) ? (
-                        <Check className='w-4 h-4' />
-                      ) : (
-                        step
-                      )}
+                      {step < currentStep || formState.completedSteps.has(step) ? <Check className="w-4 h-4" /> : step}
                     </div>
-                    <span className='ml-2 text-sm font-medium text-color-secondary'>
-                      {step === 1 ? 'Dati' : step === 2 ? 'Progetto' : 'Incontro'}
+                    <span className="ml-2 text-sm font-medium text-color-secondary">
+                      {step === 1 ? "Dati" : step === 2 ? "Progetto" : "Incontro"}
                     </span>
                   </div>
                   {step < totalSteps && (
                     <div
                       className={cn(
-                        'flex-1 h-1 rounded-full transition-colors',
+                        "flex-1 h-1 rounded-full transition-colors",
                         step < currentStep || formState.completedSteps.has(step)
-                          ? 'bg-color-state-success-strong'
-                          : 'bg-color-muted'
+                          ? "bg-color-state-success-strong"
+                          : "bg-color-muted",
                       )}
                     />
                   )}
@@ -1624,16 +1556,16 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
           </div>
 
           {/* Step Content */}
-          <AnimatePresence mode='wait' custom={direction}>
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentStep}
               custom={direction}
               variants={stepVariants}
-              initial='enter'
-              animate='center'
-              exit='exit'
+              initial="enter"
+              animate="center"
+              exit="exit"
               transition={{
-                x: { type: 'spring', stiffness: 300, damping: 30 },
+                x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 },
               }}
             >
@@ -1643,12 +1575,9 @@ const Step4QuoteRequest: React.FC<Step4QuoteRequestProps> = ({
         </div>
 
         {/* Right Sidebar - Configuration Summary */}
-        <div className='w-80'>
+        <div className="w-80">
           {selectedServices && onModifyConfiguration && (
-            <CartSummaryStep4
-              selectedServices={selectedServices}
-              onModifyConfiguration={onModifyConfiguration}
-            />
+            <CartSummaryStep4 selectedServices={selectedServices} onModifyConfiguration={onModifyConfiguration} />
           )}
         </div>
       </div>

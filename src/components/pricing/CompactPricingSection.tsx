@@ -1,30 +1,31 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef, useActionState } from 'react';
-import { motion } from 'framer-motion';
-import { Check, ChevronDown } from 'lucide-react';
-import NewPricingCards from './NewPricingCards';
-import TierComparisonTable from './TierComparisonTable';
-import TierLevelSelector from './TierLevelSelector';
-import ServiceToggleCards from './OptionalServicesSelector';
-import PersonaMatcher from './PersonaMatcher';
-import Step4QuoteRequest from './Step4QuoteRequest';
-import Step4QuoteSuccess from './Step4QuoteSuccess';
-import StepNavigator from './StepNavigator';
-import BackConfirmDialog from './BackConfirmDialog';
-//import CartSummaryStep4 from './CartSummaryStep4';
-import { PersonaMatcherForm } from '@/types/pricing';
-import { getPersonaMatcherConfig, type PersonaMatcherStep } from './PersonaMatcherConfig';
-import type { QuoteRequest } from '@/types/step4-quote-request'; // removed , CompletionType
-import { useAuth } from '@/contexts/AuthContext';
-import type { ActionState } from '@/app/actions/quotes';
+import React, { useActionState, useEffect, useRef, useState } from "react";
+import BackConfirmDialog from "./BackConfirmDialog";
+import NewPricingCards from "./NewPricingCards";
+import ServiceToggleCards from "./OptionalServicesSelector";
+import PersonaMatcher from "./PersonaMatcher";
+import { type PersonaMatcherStep, getPersonaMatcherConfig } from "./PersonaMatcherConfig";
+import Step4QuoteRequest from "./Step4QuoteRequest";
+import Step4QuoteSuccess from "./Step4QuoteSuccess";
+import StepNavigator from "./StepNavigator";
+import TierComparisonTable from "./TierComparisonTable";
+import TierLevelSelector from "./TierLevelSelector";
+import type { ActionState } from "@/app/actions/quotes";
+// removed , CompletionType
+import { useAuth } from "@/contexts/AuthContext";
 import type {
-  TierWithLevels,
-  PricingLevelSimplified,
   OptionalServiceWithAvailability as ApiOptionalService,
-} from '@/types/database-extended';
+  PricingLevelSimplified,
+  TierWithLevels,
+} from "@/types/database-extended";
+//import CartSummaryStep4 from './CartSummaryStep4';
+import { PersonaMatcherForm } from "@/types/pricing";
+import type { QuoteRequest } from "@/types/step4-quote-request";
+import { motion } from "framer-motion";
+import { Check, ChevronDown } from "lucide-react";
 
-type PricingStep = 'browse' | 'customize' | 'optional' | 'quote' | 'success';
+type PricingStep = "browse" | "customize" | "optional" | "quote" | "success";
 
 interface PricingConfiguration {
   tier?: TierWithLevels;
@@ -54,18 +55,9 @@ interface CompactPricingSectionProps {
   // Upgrade action
   checkUpgradeAction: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
   // Analytics actions
-  trackPricingJourneyAction: (
-    prevState: ActionState | null,
-    formData: FormData
-  ) => Promise<ActionState>;
-  trackPersonaMatcherAction: (
-    prevState: ActionState | null,
-    formData: FormData
-  ) => Promise<ActionState>;
-  updateQuoteProgressAction?: (
-    prevState: ActionState | null,
-    formData: FormData
-  ) => Promise<ActionState>;
+  trackPricingJourneyAction: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
+  trackPersonaMatcherAction: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
+  updateQuoteProgressAction?: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
   // Delete action for discarding quotes
   deleteQuoteAction?: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
   // Debug: list drafts
@@ -103,14 +95,14 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   // Use useActionState for save draft
   const [saveDraftState, saveDraftFormAction, saveDraftPending] = useActionState(saveDraftAction, {
     success: false,
-    message: '',
+    message: "",
   } as ActionState);
 
   // Use useActionState for submit quote
-  const [submitQuoteState, submitQuoteFormAction, submitQuotePending] = useActionState(
-    submitQuoteAction,
-    { success: false, message: '' } as ActionState
-  );
+  const [submitQuoteState, submitQuoteFormAction, submitQuotePending] = useActionState(submitQuoteAction, {
+    success: false,
+    message: "",
+  } as ActionState);
 
   // State for draft and quote ID
   const [draft, setDraft] = useState<any>(null);
@@ -120,18 +112,20 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   const [configuration, setConfiguration] = useState<PricingConfiguration>({
     optionalServices: [],
     completedSteps: new Set(),
-    currentStep: 'browse',
+    currentStep: "browse",
   });
 
   // Back confirm dialog state
   const [showBackDialog, setShowBackDialog] = useState(false);
   const [backDialogSaving, setBackDialogSaving] = useState(false);
   const pendingBackRef = useRef<null | { targetStep: PricingStep }>(null);
+  // Track previous step to detect "came back from a later step" behavior
+  const prevStepRef = useRef<PricingStep | null>(null);
   // Short-lived guard to suppress reloads immediately after deleting a draft
   const skipLoadUntilRef = useRef<number | null>(null);
 
   const [existingQuote, setExistingQuote] = useState<any>(null);
-  const [quoteType, setQuoteType] = useState<'none' | 'draft' | 'submitted'>('none');
+  const [quoteType, setQuoteType] = useState<"none" | "draft" | "submitted">("none");
   const [loadingExistingQuote, setLoadingExistingQuote] = useState(true);
   const [previousQuoteMessage, setPreviousQuoteMessage] = useState<string | null>(null);
 
@@ -151,19 +145,19 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
     const prefetchServices = async () => {
       if (hasPrefetchedRef.current) return;
 
-      console.log('🚀 CLIENT: Prefetching all optional services (non-blocking)...');
+      console.log("🚀 CLIENT: Prefetching all optional services (non-blocking)...");
 
       try {
         const result = await getOptionalServicesAction(1, 1);
 
         if (result && result.success && result.services) {
-          console.log('✅ CLIENT: Prefetched', result.services.length, 'optional services');
+          console.log("✅ CLIENT: Prefetched", result.services.length, "optional services");
           setAllServices(result.services);
           setServicesPreloaded(true);
           hasPrefetchedRef.current = true;
         }
       } catch (error) {
-        console.error('Failed to prefetch services:', error);
+        console.error("Failed to prefetch services:", error);
         // Non-blocking - don't surface to user
       }
     };
@@ -181,12 +175,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
     // If services are preloaded, filter them based on tier/level
     if (servicesPreloaded && allServices.length > 0) {
-      console.log(
-        '🎯 CLIENT: Filtering services for tier:',
-        configuration.tier.id,
-        'level:',
-        configuration.level.id
-      );
+      console.log("🎯 CLIENT: Filtering services for tier:", configuration.tier.id, "level:", configuration.level.id);
 
       // For now, just use all services (filtering logic to be fixed per ISSUE.md)
       setServices(allServices);
@@ -194,15 +183,15 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       // Restore selected services from draft if needed
       if (existingQuote?._selectedServiceIds?.length > 0 && !hasRestoredServicesRef.current) {
         const selectedServices = allServices.filter((service: ApiOptionalService) =>
-          existingQuote._selectedServiceIds.includes(service.id)
+          existingQuote._selectedServiceIds.includes(service.id),
         );
 
         if (selectedServices.length > 0) {
           console.log(
-            '✅ CLIENT: Restoring selected services from draft:',
-            selectedServices.map((s: ApiOptionalService) => s.id)
+            "✅ CLIENT: Restoring selected services from draft:",
+            selectedServices.map((s: ApiOptionalService) => s.id),
           );
-          setConfiguration((prev) => ({
+          setConfiguration(prev => ({
             ...prev,
             optionalServices: selectedServices,
           }));
@@ -214,13 +203,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       // This should rarely happen as prefetch starts immediately
       setServicesLoading(true);
     }
-  }, [
-    configuration.tier?.id,
-    configuration.level?.id,
-    allServices,
-    servicesPreloaded,
-    existingQuote,
-  ]);
+  }, [configuration.tier?.id, configuration.level?.id, allServices, servicesPreloaded, existingQuote]);
 
   // Clear loading state when services are preloaded
   useEffect(() => {
@@ -236,7 +219,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   }>({
     isOpen: false,
     step: 1,
-    purpose: 'tier_identification',
+    purpose: "tier_identification",
   });
 
   const [reinforcementCycleCount, setReinforcementCycleCount] = useState(0);
@@ -248,10 +231,10 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   const quoteTitleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (configuration.currentStep === 'quote' && quoteTitleRef.current) {
+    if (configuration.currentStep === "quote" && quoteTitleRef.current) {
       // Smooth scroll the heading near top (offset for fixed headers if any)
       const top = quoteTitleRef.current.getBoundingClientRect().top + window.scrollY - 120;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top, behavior: "smooth" });
     }
   }, [configuration.currentStep]);
 
@@ -262,10 +245,10 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       // Track step view (defer to avoid setState during render)
       setTimeout(() => {
         const trackFormData = new FormData();
-        trackFormData.set('event_type', 'step_viewed');
-        trackFormData.set('event_data', JSON.stringify({ step: 1 }));
-        trackFormData.set('step_number', '1');
-        console.log('📊 CLIENT: Tracking initial page view');
+        trackFormData.set("event_type", "step_viewed");
+        trackFormData.set("event_data", JSON.stringify({ step: 1 }));
+        trackFormData.set("step_number", "1");
+        console.log("📊 CLIENT: Tracking initial page view");
         trackPricingJourneyAction(null, trackFormData);
       }, 0);
       hasTrackedInitial.current = true;
@@ -285,14 +268,14 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         return;
       }
       try {
-        console.log('📋 CLIENT: Loading draft for user:', user.id);
+        console.log("📋 CLIENT: Loading draft for user:", user.id);
         const result = await loadDraftAction();
         if (result.success && result.data?.draft) {
           setDraft(result.data.draft);
           setQuoteId(result.data.draft.id);
         }
       } catch (error) {
-        console.error('Error loading draft:', error);
+        console.error("Error loading draft:", error);
       } finally {
         setLoadingDraft(false);
       }
@@ -319,9 +302,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         const result = await checkActiveQuoteAction();
         if (result.success && result.data) {
           const data = result.data;
-          console.log('CompactPricingSection - checkActiveQuoteAction response:', {
+          console.log("CompactPricingSection - checkActiveQuoteAction response:", {
             type: data.type,
-            quote: !!data.quote ? data.quote : 'No quote found',
+            quote: !!data.quote ? data.quote : "No quote found",
             message: data.message,
             hasQuote: !!data.quote,
             quoteNumber: data.quote?.quote_number,
@@ -329,10 +312,10 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             hasNotes: !!data.quote?.notes,
           });
 
-          if (data.type === 'active') {
+          if (data.type === "active") {
             // User has an active quote (submitted, under_review, or accepted)
             setExistingQuote(data.quote);
-            setQuoteType('submitted'); // We'll treat all active quotes as "submitted" for UI purposes
+            setQuoteType("submitted"); // We'll treat all active quotes as "submitted" for UI purposes
 
             // Reconstruct the QuoteRequest from the active quote
             // Contact info is stored in contact_preferences field
@@ -341,12 +324,11 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
               userData: contactInfo.userData || {},
               projectDetails: contactInfo.projectDetails || {},
               meetingRequest: contactInfo.meetingRequest || {},
-              completionType: data.quote.metadata?.completionType || 'basic_info',
+              completionType: data.quote.metadata?.completionType || "basic_info",
               // Build pricingConfiguration from actual database fields
               pricingConfiguration: {
-                selectedTier:
-                  data.quote.pricing_tiers?.slug || data.quote.pricing_tiers?.name || '',
-                selectedLevel: data.quote.pricing_levels?.level_code || '',
+                selectedTier: data.quote.pricing_tiers?.slug || data.quote.pricing_tiers?.name || "",
+                selectedLevel: data.quote.pricing_levels?.level_code || "",
                 basePriceEur: data.quote.base_price || data.quote.pricing_levels?.price || 0,
                 optionalServices: Array.isArray(data.quote.selected_services)
                   ? data.quote.selected_services.map((serviceId: any) => ({
@@ -359,7 +341,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
               },
               quoteId: data.quote.quote_number,
               submissionDate: data.quote.submitted_at || new Date().toISOString(),
-              status: data.quote.status || 'submitted',
+              status: data.quote.status || "submitted",
               priority: false,
               estimatedProjectValue: data.quote.total_price || 0,
             };
@@ -374,9 +356,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             let levelObj = undefined;
 
             if (data.quote.tier_id && tiers) {
-              tierObj = tiers.find((t) => t.id === data.quote.tier_id);
+              tierObj = tiers.find(t => t.id === data.quote.tier_id);
               if (tierObj && data.quote.level_id) {
-                levelObj = tierObj.levels.find((l) => l.id === data.quote.level_id);
+                levelObj = tierObj.levels.find(l => l.id === data.quote.level_id);
               }
             }
 
@@ -384,42 +366,37 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             setConfiguration({
               tier: tierObj || data.quote.pricing_tiers,
               level: levelObj || data.quote.pricing_levels,
-              optionalServices: Array.isArray(data.quote.selected_services)
-                ? data.quote.selected_services
-                : [],
-              completedSteps: new Set<PricingStep>(['browse', 'customize', 'optional', 'quote']),
-              currentStep: 'success',
+              optionalServices: Array.isArray(data.quote.selected_services) ? data.quote.selected_services : [],
+              completedSteps: new Set<PricingStep>(["browse", "customize", "optional", "quote"]),
+              currentStep: "success",
             });
-          } else if (data.type === 'can_create_new') {
+          } else if (data.type === "can_create_new") {
             // User has a rejected/expired quote - show a notification but allow new quote
             const message =
-              data.status === 'rejected'
-                ? 'Il tuo preventivo precedente è stato rifiutato. Puoi crearne uno nuovo.'
-                : 'Il tuo preventivo precedente è scaduto. Puoi crearne uno nuovo.';
+              data.status === "rejected"
+                ? "Il tuo preventivo precedente è stato rifiutato. Puoi crearne uno nuovo."
+                : "Il tuo preventivo precedente è scaduto. Puoi crearne uno nuovo.";
             setPreviousQuoteMessage(message);
-          } else if (data.type === 'draft') {
+          } else if (data.type === "draft") {
             // User has a draft - resume from saved step
             setExistingQuote(data.quote);
-            setQuoteType('draft');
+            setQuoteType("draft");
 
             // Reconstruct configuration from draft
             const completedSteps = new Set<PricingStep>();
-            let currentStep: PricingStep = 'browse';
+            let currentStep: PricingStep = "browse";
 
             if (data.quote.tier_id) {
-              completedSteps.add('browse');
-              currentStep = 'customize';
+              completedSteps.add("browse");
+              currentStep = "customize";
             }
             if (data.quote.level_id) {
-              completedSteps.add('customize');
-              currentStep = 'optional';
+              completedSteps.add("customize");
+              currentStep = "optional";
             }
-            if (
-              Array.isArray(data.quote.selected_services) &&
-              data.quote.selected_services.length > 0
-            ) {
-              completedSteps.add('optional');
-              currentStep = 'quote';
+            if (Array.isArray(data.quote.selected_services) && data.quote.selected_services.length > 0) {
+              completedSteps.add("optional");
+              currentStep = "quote";
             }
 
             // Override with saved step if available
@@ -432,9 +409,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             let levelObj = undefined;
 
             if (data.quote.tier_id && tiers) {
-              tierObj = tiers.find((t) => t.id === data.quote.tier_id);
+              tierObj = tiers.find(t => t.id === data.quote.tier_id);
               if (tierObj && data.quote.level_id) {
-                levelObj = tierObj.levels.find((l) => l.id === data.quote.level_id);
+                levelObj = tierObj.levels.find(l => l.id === data.quote.level_id);
               }
             }
 
@@ -455,15 +432,15 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
             // Mark steps as already saved to prevent re-saving
             const alreadySaved = new Set<string>();
-            if (data.quote.tier_id) alreadySaved.add('browse');
-            if (data.quote.level_id) alreadySaved.add('customize');
-            if (data.quote.selected_services?.length > 0) alreadySaved.add('optional');
+            if (data.quote.tier_id) alreadySaved.add("browse");
+            if (data.quote.level_id) alreadySaved.add("customize");
+            if (data.quote.selected_services?.length > 0) alreadySaved.add("optional");
             setSavedSteps(alreadySaved);
-            console.log('✅ CLIENT: Initialized savedSteps from draft:', Array.from(alreadySaved));
+            console.log("✅ CLIENT: Initialized savedSteps from draft:", Array.from(alreadySaved));
           }
         }
       } catch (error) {
-        console.error('Error checking existing quote:', error);
+        console.error("Error checking existing quote:", error);
       } finally {
         setLoadingExistingQuote(false);
       }
@@ -479,13 +456,13 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Create stable booleans for step completion
-  const hasBrowseCompleted = configuration.completedSteps.has('browse');
-  const hasCustomizeCompleted = configuration.completedSteps.has('customize');
-  const hasOptionalCompleted = configuration.completedSteps.has('optional');
+  const hasBrowseCompleted = configuration.completedSteps.has("browse");
+  const hasCustomizeCompleted = configuration.completedSteps.has("customize");
+  const hasOptionalCompleted = configuration.completedSteps.has("optional");
 
   // Auto-save draft after tier selection (Step 1)
   useEffect(() => {
-    if (configuration.tier && user && hasBrowseCompleted && !savedSteps.has('browse')) {
+    if (configuration.tier && user && hasBrowseCompleted && !savedSteps.has("browse")) {
       // Cancel any pending save timer
       if (saveTimerRef.current) {
         clearTimeout(saveTimerRef.current);
@@ -496,24 +473,24 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         try {
           // Create FormData for the action
           const formData = new FormData();
-          formData.append('tier_id', tier.id.toString());
+          formData.append("tier_id", tier.id.toString());
 
-          console.log('💾 CLIENT: Auto-saving tier selection:', {
+          console.log("💾 CLIENT: Auto-saving tier selection:", {
             tier_id: tier.id.toString(),
             formDataEntries: Array.from(formData.entries()),
           });
 
           const result = await saveDraftAction(null, formData);
           if (result.success) {
-            setSavedSteps((prev) => new Set(prev).add('browse'));
+            setSavedSteps(prev => new Set(prev).add("browse"));
             if (result.data?.quote_id) {
               setQuoteId(result.data.quote_id);
             }
           } else {
-            console.error('Failed to auto-save after tier selection:', result.message);
+            console.error("Failed to auto-save after tier selection:", result.message);
           }
         } catch (error) {
-          console.error('Failed to auto-save after tier selection:', error);
+          console.error("Failed to auto-save after tier selection:", error);
         } finally {
           saveTimerRef.current = null;
         }
@@ -530,13 +507,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   // Auto-save draft after level selection (Step 2)
   useEffect(() => {
-    if (
-      configuration.tier &&
-      configuration.level &&
-      user &&
-      hasCustomizeCompleted &&
-      !savedSteps.has('customize')
-    ) {
+    if (configuration.tier && configuration.level && user && hasCustomizeCompleted && !savedSteps.has("customize")) {
       // Cancel any pending save timer
       if (saveTimerRef.current) {
         clearTimeout(saveTimerRef.current);
@@ -547,25 +518,25 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       saveTimerRef.current = setTimeout(async () => {
         try {
           const formData = new FormData();
-          formData.append('tier_id', tier.id.toString());
-          formData.append('level_id', level.id.toString());
+          formData.append("tier_id", tier.id.toString());
+          formData.append("level_id", level.id.toString());
 
-          console.log('💾 CLIENT: Auto-saving level selection:', {
+          console.log("💾 CLIENT: Auto-saving level selection:", {
             tier_id: tier.id.toString(),
             level_id: level.id.toString(),
           });
 
           const result = await saveDraftAction(null, formData);
           if (result.success) {
-            setSavedSteps((prev) => new Set(prev).add('customize'));
+            setSavedSteps(prev => new Set(prev).add("customize"));
             if (result.data?.quote_id) {
               setQuoteId(result.data.quote_id);
             }
           } else {
-            console.error('Failed to auto-save after level selection:', result.message);
+            console.error("Failed to auto-save after level selection:", result.message);
           }
         } catch (error) {
-          console.error('Failed to auto-save after level selection:', error);
+          console.error("Failed to auto-save after level selection:", error);
         } finally {
           saveTimerRef.current = null;
         }
@@ -578,23 +549,11 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         }
       };
     }
-  }, [
-    configuration.tier?.id,
-    configuration.level?.id,
-    user?.id,
-    hasCustomizeCompleted,
-    saveDraftAction,
-  ]);
+  }, [configuration.tier?.id, configuration.level?.id, user?.id, hasCustomizeCompleted, saveDraftAction]);
 
   // Auto-save draft after optional services selection (Step 3)
   useEffect(() => {
-    if (
-      configuration.tier &&
-      configuration.level &&
-      user &&
-      hasOptionalCompleted &&
-      !savedSteps.has('optional')
-    ) {
+    if (configuration.tier && configuration.level && user && hasOptionalCompleted && !savedSteps.has("optional")) {
       // Cancel any pending save timer
       if (saveTimerRef.current) {
         clearTimeout(saveTimerRef.current);
@@ -609,36 +568,36 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
           // Ensure tier.id and level.id exist before calling toString()
           if (tier.id !== undefined && tier.id !== null) {
-            formData.append('tier_id', tier.id.toString());
+            formData.append("tier_id", tier.id.toString());
           }
           if (level.id !== undefined && level.id !== null) {
-            formData.append('level_id', level.id.toString());
+            formData.append("level_id", level.id.toString());
           }
 
           // Filter out any services with undefined/null ids before processing
-          services.forEach((s) => {
+          services.forEach(s => {
             if (s?.id !== undefined && s.id !== null) {
-              formData.append('selected_services', s.id.toString());
+              formData.append("selected_services", s.id.toString());
             }
           });
 
-          console.log('💾 CLIENT: Auto-saving optional services:', {
+          console.log("💾 CLIENT: Auto-saving optional services:", {
             tier_id: tier.id,
             level_id: level.id,
-            services: services.map((s) => s?.id).filter((id) => id !== undefined),
+            services: services.map(s => s?.id).filter(id => id !== undefined),
           });
 
           const result = await saveDraftAction(null, formData);
           if (result.success) {
-            setSavedSteps((prev) => new Set(prev).add('optional'));
+            setSavedSteps(prev => new Set(prev).add("optional"));
             if (result.data?.quote_id) {
               setQuoteId(result.data.quote_id);
             }
           } else {
-            console.error('Failed to auto-save after services selection:', result.message);
+            console.error("Failed to auto-save after services selection:", result.message);
           }
         } catch (error) {
-          console.error('Failed to auto-save after services selection:', error);
+          console.error("Failed to auto-save after services selection:", error);
         } finally {
           saveTimerRef.current = null;
         }
@@ -654,7 +613,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   }, [
     configuration.tier?.id,
     configuration.level?.id,
-    configuration.optionalServices.map((s) => s.id).join(','), // Create stable dependency
+    configuration.optionalServices.map(s => s.id).join(","), // Create stable dependency
     user,
     hasOptionalCompleted,
     saveDraftAction,
@@ -664,27 +623,30 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   const getStepConfig = (step: PricingStep) => {
     const configs = {
       browse: {
-        completed: configuration.completedSteps.has('browse'),
+        completed: configuration.completedSteps.has("browse"),
       },
       customize: {
-        completed: configuration.completedSteps.has('customize'),
+        completed: configuration.completedSteps.has("customize"),
       },
       optional: {
-        completed: configuration.completedSteps.has('optional'),
+        completed: configuration.completedSteps.has("optional"),
       },
       quote: {
-        completed: configuration.completedSteps.has('quote'),
+        completed: configuration.completedSteps.has("quote"),
       },
       success: {
-        completed: configuration.completedSteps.has('success'),
+        completed: configuration.completedSteps.has("success"),
       },
     };
     return configs[step];
   };
 
-  const orderedSteps: PricingStep[] = ['browse', 'customize', 'optional', 'quote', 'success'];
+  const orderedSteps: PricingStep[] = ["browse", "customize", "optional", "quote", "success"];
   const handleNextStep = () => {
-    setConfiguration((prev) => {
+    setConfiguration(prev => {
+      // Record previous step immediately so UI logic can consult it synchronously
+      prevStepRef.current = prev.currentStep;
+
       const newCompleted = new Set(prev.completedSteps);
       newCompleted.add(prev.currentStep);
       const currentIndex = orderedSteps.indexOf(prev.currentStep);
@@ -692,14 +654,14 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       const stepNumber = currentIndex + 2; // 1-based next step index
       setTimeout(() => {
         const fd = new FormData();
-        fd.set('event_type', 'step_viewed');
-        fd.set('event_data', JSON.stringify({ step: stepNumber }));
-        fd.set('step_number', stepNumber.toString());
+        fd.set("event_type", "step_viewed");
+        fd.set("event_data", JSON.stringify({ step: stepNumber }));
+        fd.set("step_number", stepNumber.toString());
         trackPricingJourneyAction(null, fd);
         if (updateQuoteProgressAction && quoteId) {
           const pfd = new FormData();
-          pfd.set('quote_id', quoteId.toString());
-          pfd.set('current_step', nextStep);
+          pfd.set("quote_id", quoteId.toString());
+          pfd.set("current_step", nextStep);
           updateQuoteProgressAction(null, pfd);
         }
       }, 0);
@@ -707,18 +669,34 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
     });
   };
 
+  // Compute whether the navigator should show the forward button based on
+  // whether the user came from a later step (previous step index > current).
+  // This is more robust than strict equality and prevents the button from
+  // disappearing after a sequence of back/forward moves.
+  let canGoForwardForNavigator = false;
+  const prev = prevStepRef.current;
+  const currentIndex = orderedSteps.indexOf(configuration.currentStep);
+  const prevIndex = prev ? orderedSteps.indexOf(prev) : -1;
+
+  if (configuration.currentStep === "quote") {
+    // For Step 4 (quote) never show avanti (per requirement)
+    canGoForwardForNavigator = false;
+  } else {
+    canGoForwardForNavigator = prevIndex > currentIndex;
+  }
+
   // Quote request handlers
   const handleQuoteSubmit = async (quoteRequest: QuoteRequest) => {
     setQuoteState({ isSubmitting: true });
 
     try {
-      console.log('🔍 Preparing draft data with configuration:', {
+      console.log("🔍 Preparing draft data with configuration:", {
         tier: configuration.tier,
         level: configuration.level,
         optionalServices: configuration.optionalServices,
       });
 
-      console.log('📝 Quote request data:', {
+      console.log("📝 Quote request data:", {
         userData: quoteRequest.userData,
         projectDetails: quoteRequest.projectDetails,
         meetingRequest: quoteRequest.meetingRequest,
@@ -729,7 +707,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       const draftData = {
         tier_id: configuration.tier?.id,
         level_id: configuration.level?.id,
-        selected_services: configuration.optionalServices.map((s) => s.id),
+        selected_services: configuration.optionalServices.map(s => s.id),
         contact_preferences: {
           userData: quoteRequest.userData,
           projectDetails: quoteRequest.projectDetails,
@@ -738,32 +716,32 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
         metadata: {
           completionType: quoteRequest.completionType,
         },
-        current_step: 'success',
+        current_step: "success",
       };
 
-      console.log('📦 Final draft data to save:', draftData);
+      console.log("📦 Final draft data to save:", draftData);
 
       // Save draft with contact preferences
       const formData = new FormData();
-      if (configuration.tier?.id) formData.append('tier_id', configuration.tier.id.toString());
-      if (configuration.level?.id) formData.append('level_id', configuration.level.id.toString());
-      configuration.optionalServices.forEach((s) => {
-        formData.append('selected_services', s.id.toString());
+      if (configuration.tier?.id) formData.append("tier_id", configuration.tier.id.toString());
+      if (configuration.level?.id) formData.append("level_id", configuration.level.id.toString());
+      configuration.optionalServices.forEach(s => {
+        formData.append("selected_services", s.id.toString());
       });
-      formData.append('contact_preferences', JSON.stringify(draftData.contact_preferences));
+      formData.append("contact_preferences", JSON.stringify(draftData.contact_preferences));
 
       const draftResult = await saveDraftAction(null, formData);
       if (!draftResult.success) {
-        throw new Error(draftResult.message || 'Failed to save draft');
+        throw new Error(draftResult.message || "Failed to save draft");
       }
 
       // Submit the finalized quote
       const submitFormData = new FormData();
-      submitFormData.append('quote_id', (quoteId || draftResult.data?.quote_id).toString());
+      submitFormData.append("quote_id", (quoteId || draftResult.data?.quote_id).toString());
 
       const submitResult = await submitQuoteAction(null, submitFormData);
       if (!submitResult.success) {
-        throw new Error(submitResult.message || 'Failed to submit quote');
+        throw new Error(submitResult.message || "Failed to submit quote");
       }
 
       setQuoteState({
@@ -772,17 +750,17 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       });
 
       // Move to success step
-      setConfiguration((prev) => {
+      setConfiguration(prev => {
         const newCompletedSteps = new Set(prev.completedSteps);
-        newCompletedSteps.add('quote');
+        newCompletedSteps.add("quote");
         return {
           ...prev,
           completedSteps: newCompletedSteps,
-          currentStep: 'success',
+          currentStep: "success",
         };
       });
     } catch (error) {
-      console.error('Error submitting quote request:', error);
+      console.error("Error submitting quote request:", error);
       setQuoteState({ isSubmitting: false });
       // You might want to show an error message to the user here
     }
@@ -790,52 +768,74 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   const handleQuoteCancel = () => {
     // Go back to optional services step
-    setConfiguration((prev) => ({
+    setConfiguration(prev => ({
       ...prev,
-      currentStep: 'optional',
+      currentStep: "optional",
     }));
   };
 
   const handleBackToHome = () => {
     // Redirect to homepage
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const handleNewQuote = () => {
     // Keep configuration but restart quote process
-    setConfiguration((prev) => {
+    setConfiguration(prev => {
       const newCompletedSteps = new Set(prev.completedSteps);
-      newCompletedSteps.delete('quote');
-      newCompletedSteps.delete('success');
+      newCompletedSteps.delete("quote");
+      newCompletedSteps.delete("success");
       return {
         ...prev,
         completedSteps: newCompletedSteps,
-        currentStep: 'quote',
+        currentStep: "quote",
       };
     });
     setQuoteState({ isSubmitting: false });
   };
 
   const handlePreviousStep = () => {
-    setConfiguration((prev) => {
+    setConfiguration(prev => {
       const currentIndex = orderedSteps.indexOf(prev.currentStep);
       if (currentIndex === 0) return prev;
       const prevStep = orderedSteps[currentIndex - 1];
-      // show confirmation dialog first
-      pendingBackRef.current = { targetStep: prevStep };
-      setShowBackDialog(true);
-      return prev; // no immediate navigation
+
+      // Record previous step before we mutate the configuration so the
+      // navigation UI can decide whether to show the forward button.
+      prevStepRef.current = prev.currentStep;
+
+      // Show the back-confirm warning ONLY when going from Step 2 -> Step 1
+      // (customize -> browse). Other backward navigations should move
+      // immediately without the dialog.
+      if (prev.currentStep === "customize" && prevStep === "browse") {
+        pendingBackRef.current = { targetStep: prevStep };
+        setShowBackDialog(true);
+        return prev; // don't change step yet
+      }
+
+      // For all other backward moves, navigate immediately
+      return { ...prev, currentStep: prevStep };
     });
   };
 
+  // Update prevStepRef after renders so during the next render it holds the
+  // previous value. This allows the render logic above to inspect where the
+  // user came from.
+  useEffect(() => {
+    prevStepRef.current = configuration.currentStep;
+  }, [configuration.currentStep]);
+
   const handleStepClick = (step: PricingStep) => {
     // Only allow navigation to completed steps or the next immediate step
-    const stepOrder: PricingStep[] = ['browse', 'customize', 'optional', 'quote'];
+    const stepOrder: PricingStep[] = ["browse", "customize", "optional", "quote"];
     const currentIndex = stepOrder.indexOf(configuration.currentStep);
     const targetIndex = stepOrder.indexOf(step);
 
     if (configuration.completedSteps.has(step) || targetIndex === currentIndex + 1) {
-      setConfiguration((prev) => ({
+      // Record previous step before navigating so the navigator can
+      // decide whether to show the forward button after the move.
+      prevStepRef.current = configuration.currentStep;
+      setConfiguration(prev => ({
         ...prev,
         currentStep: step,
       }));
@@ -844,27 +844,24 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   // Tier selection handlers
   const handleTierSelect = (tierSlug: string) => {
-    const selectedTier = tiers.find((t) => t.slug === tierSlug);
+    const selectedTier = tiers.find(t => t.slug === tierSlug);
     if (!selectedTier) return;
 
-    console.log('🎯 CLIENT: Tier selected:', { tierSlug, tierId: selectedTier.id });
+    console.log("🎯 CLIENT: Tier selected:", { tierSlug, tierId: selectedTier.id });
 
     // Track tier selection (defer to avoid setState during render)
     setTimeout(() => {
       const trackFormData = new FormData();
-      trackFormData.set('event_type', 'tier_selected');
-      trackFormData.set(
-        'event_data',
-        JSON.stringify({ tier_id: selectedTier.id, tier_slug: selectedTier.slug })
-      );
-      console.log('📊 CLIENT: Tracking tier selection');
+      trackFormData.set("event_type", "tier_selected");
+      trackFormData.set("event_data", JSON.stringify({ tier_id: selectedTier.id, tier_slug: selectedTier.slug }));
+      console.log("📊 CLIENT: Tracking tier selection");
       trackPricingJourneyAction(null, trackFormData);
     }, 0);
 
     // Reset the restored services flag when tier changes
     hasRestoredServicesRef.current = false;
 
-    setConfiguration((prev) => ({
+    setConfiguration(prev => ({
       ...prev,
       tier: selectedTier,
       level: undefined, // Reset level when tier changes
@@ -875,27 +872,27 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   // Level selection handlers
   const handleLevelSelect = (tierSlug: string, levelCode: string) => {
-    const selectedTier = tiers.find((t) => t.slug === tierSlug);
+    const selectedTier = tiers.find(t => t.slug === tierSlug);
     if (!selectedTier) return;
 
-    const selectedLevel = selectedTier.levels.find((l) => l.level_code === levelCode);
+    const selectedLevel = selectedTier.levels.find(l => l.level_code === levelCode);
     if (!selectedLevel) return;
 
-    console.log('🎯 CLIENT: Level selected:', { tierSlug, levelCode, levelId: selectedLevel.id });
+    console.log("🎯 CLIENT: Level selected:", { tierSlug, levelCode, levelId: selectedLevel.id });
 
     // Track level selection (defer to avoid setState during render)
     setTimeout(() => {
       const trackFormData = new FormData();
-      trackFormData.set('event_type', 'level_selected');
+      trackFormData.set("event_type", "level_selected");
       trackFormData.set(
-        'event_data',
-        JSON.stringify({ level_id: selectedLevel.id, level_code: selectedLevel.level_code })
+        "event_data",
+        JSON.stringify({ level_id: selectedLevel.id, level_code: selectedLevel.level_code }),
       );
-      console.log('📊 CLIENT: Tracking level selection');
+      console.log("📊 CLIENT: Tracking level selection");
       trackPricingJourneyAction(null, trackFormData);
     }, 0);
 
-    setConfiguration((prev) => ({
+    setConfiguration(prev => ({
       ...prev,
       tier: selectedTier,
       level: selectedLevel,
@@ -905,7 +902,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   // Optional services handlers
   const handleOptionalServicesSelect = (services: ApiOptionalService[]) => {
-    setConfiguration((prev) => ({
+    setConfiguration(prev => ({
       ...prev,
       optionalServices: services,
     }));
@@ -913,13 +910,13 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   // Reinforcement loop: upgrade recommendation accept
   const handleUpgradeRecommendationAccept = (newLevel: PricingLevelSimplified) => {
-    setConfiguration((prev) => ({
+    setConfiguration(prev => ({
       ...prev,
       level: newLevel,
-      currentStep: 'customize', // Return to Step 2 to review upgrade
+      currentStep: "customize", // Return to Step 2 to review upgrade
       optionalServices: [], // Reset optionals for new level
     }));
-    setReinforcementCycleCount((prev) => prev + 1);
+    setReinforcementCycleCount(prev => prev + 1);
   };
 
   // PersonaMatcher handlers
@@ -932,35 +929,35 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       // Determine purpose based on step
       switch (targetStep) {
         case 1:
-          purpose = 'tier_identification';
+          purpose = "tier_identification";
           break;
         case 2:
-          purpose = 'level_selection';
+          purpose = "level_selection";
           break;
         case 3:
-          purpose = 'service_optimization';
+          purpose = "service_optimization";
           break;
         default:
-          purpose = 'tier_identification';
+          purpose = "tier_identification";
       }
     } else {
       // Determine step based on current workflow step
       switch (configuration.currentStep) {
-        case 'browse':
+        case "browse":
           targetStep = 1;
-          purpose = 'tier_identification';
+          purpose = "tier_identification";
           break;
-        case 'customize':
+        case "customize":
           targetStep = 2;
-          purpose = 'level_selection';
+          purpose = "level_selection";
           break;
-        case 'optional':
+        case "optional":
           targetStep = 3;
-          purpose = 'service_optimization';
+          purpose = "service_optimization";
           break;
         default:
           targetStep = 1;
-          purpose = 'tier_identification';
+          purpose = "tier_identification";
       }
     }
 
@@ -972,7 +969,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   };
 
   const handlePersonaMatcherClose = () => {
-    setPersonaMatcherState((prev) => ({
+    setPersonaMatcherState(prev => ({
       ...prev,
       isOpen: false,
     }));
@@ -988,9 +985,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
           handleTierSelect(result.tier);
         } else {
           // Failed to identify tier - redirect to Step 4
-          setConfiguration((prev) => ({
+          setConfiguration(prev => ({
             ...prev,
-            currentStep: 'quote',
+            currentStep: "quote",
           }));
         }
         break;
@@ -1000,9 +997,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
           handleLevelSelect(configuration.tier.slug, result.level);
         } else {
           // Failed to select level - redirect to Step 4
-          setConfiguration((prev) => ({
+          setConfiguration(prev => ({
             ...prev,
-            currentStep: 'quote',
+            currentStep: "quote",
           }));
         }
         break;
@@ -1013,20 +1010,20 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
           const recommendedServices = result.services
             .map((serviceId: string | number) => {
               // Find service by ID from the compatible services
-              return services.find((s) => s.id === Number(serviceId));
+              return services.find(s => s.id === Number(serviceId));
             })
             .filter(Boolean) as ApiOptionalService[];
 
-          setConfiguration((prev) => ({
+          setConfiguration(prev => ({
             ...prev,
             optionalServices: recommendedServices,
           }));
           handleNextStep();
         } else {
           // Failed to recommend services - redirect to Step 4
-          setConfiguration((prev) => ({
+          setConfiguration(prev => ({
             ...prev,
-            currentStep: 'quote',
+            currentStep: "quote",
           }));
         }
         break;
@@ -1035,15 +1032,15 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
     handlePersonaMatcherClose();
   };
 
-  const steps: PricingStep[] = ['browse', 'customize', 'optional', 'quote'];
+  const steps: PricingStep[] = ["browse", "customize", "optional", "quote"];
 
   // Loading and error states
   if (tiersLoading || servicesLoading) {
     return (
-      <section className='pt-32 pb-16 bg-apty-bg-subtle'>
-        <div className='max-w-7xl mx-auto px-4'>
-          <div className='flex items-center justify-center min-h-[600px]'>
-            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-apty-primary'></div>
+      <section className="pt-32 pb-16 bg-apty-bg-subtle">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-center min-h-[600px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-apty-primary"></div>
           </div>
         </div>
       </section>
@@ -1052,13 +1049,13 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   if (tiersError || servicesError) {
     return (
-      <section className='pt-32 pb-16 bg-apty-bg-subtle'>
-        <div className='max-w-7xl mx-auto px-4'>
-          <div className='text-center py-12'>
-            <p className='text-apty-error mb-4'>Error loading pricing data. Please try again.</p>
+      <section className="pt-32 pb-16 bg-apty-bg-subtle">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center py-12">
+            <p className="text-apty-error mb-4">Error loading pricing data. Please try again.</p>
             <button
               onClick={() => window.location.reload()}
-              className='px-4 py-2 bg-apty-primary text-apty-text-on-brand rounded-apty-md hover:bg-apty-primary-hover apty-transition'
+              className="px-4 py-2 bg-apty-primary text-apty-text-on-brand rounded-apty-md hover:bg-apty-primary-hover apty-transition"
             >
               Reload Page
             </button>
@@ -1071,11 +1068,11 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   // Show loading state while checking for existing quotes
   if (loadingExistingQuote) {
     return (
-      <section className='pt-32 pb-16 bg-apty-bg-subtle'>
-        <div className='max-w-7xl mx-auto px-4'>
-          <div className='text-center'>
-            <div className='inline-flex items-center gap-2 text-apty-text-tertiary'>
-              <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-apty-primary'></div>
+      <section className="pt-32 pb-16 bg-apty-bg-subtle">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-apty-text-tertiary">
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-apty-primary"></div>
               <span>Caricamento configuratore prezzi...</span>
             </div>
           </div>
@@ -1086,37 +1083,36 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
 
   return (
     <>
-      <section className='pt-32 pb-16 bg-apty-bg-subtle'>
-        <div className='max-w-7xl mx-auto px-4'>
+      <section className="pt-32 pb-16 bg-apty-bg-subtle">
+        <div className="max-w-7xl mx-auto px-4">
           {/* Show previous quote message if exists */}
           {previousQuoteMessage && (
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className='mb-8 p-4 bg-apty-warning/10 border border-apty-warning/30 rounded-apty-lg max-w-3xl mx-auto'
+              className="mb-8 p-4 bg-apty-warning/10 border border-apty-warning/30 rounded-apty-lg max-w-3xl mx-auto"
             >
-              <p className='text-apty-warning text-center'>{previousQuoteMessage}</p>
+              <p className="text-apty-warning text-center">{previousQuoteMessage}</p>
             </motion.div>
           )}
 
           {/* Header with ProcessSection-style animation */}
           <motion.div
-            className='text-center mb-20'
+            className="text-center mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className='text-[44px] leading-[48px] font-semibold font-apty-heading text-apty-text-primary mb-2'>
-              <span className='text-apty-primary'>SOLUZIONI</span> PER OGNI ESIGENZA
+            <h2 className="text-[44px] leading-[48px] font-semibold font-apty-heading text-apty-text-primary mb-2">
+              <span className="text-apty-primary">SOLUZIONI</span> PER OGNI ESIGENZA
             </h2>
-            <h3 className='text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-6'>
-              TROVA LA <span className='text-apty-primary'>SOLUZIONE PERFETTA</span> PER TE
+            <h3 className="text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-6">
+              TROVA LA <span className="text-apty-primary">SOLUZIONE PERFETTA</span> PER TE
             </h3>
-            <p className='text-lg text-apty-text-secondary max-w-4xl mx-auto leading-relaxed'>
-              Dalla presenza digitale essenziale all&apos;e-commerce completo. Il nostro processo
-              guidato ti aiuta a scegliere la soluzione ideale per il tuo business, con risultati
-              garantiti e supporto continuo.
+            <p className="text-lg text-apty-text-secondary max-w-4xl mx-auto leading-relaxed">
+              Dalla presenza digitale essenziale all&apos;e-commerce completo. Il nostro processo guidato ti aiuta a
+              scegliere la soluzione ideale per il tuo business, con risultati garantiti e supporto continuo.
             </p>
           </motion.div>
 
@@ -1126,114 +1122,107 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className='mb-12'
+            className="mb-0"
           >
             {/* Desktop version */}
-            <div className='hidden md:flex'>
-              <div className='w-full flex items-center gap-4 bg-apty-bg-base/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-apty-lg border border-apty-border-default'>
+            <div className="hidden md:flex">
+              <div className="w-full flex items-center gap-4 bg-apty-bg-base/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-apty-lg border border-apty-border-default">
                 {/* Step 1: Browse */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                    configuration.currentStep === 'browse'
-                      ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                      : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                    configuration.currentStep === "browse"
+                      ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                      : "bg-apty-gradient-primary text-apty-text-on-brand"
                   }`}
                 >
-                  {getStepConfig('browse').completed && configuration.currentStep !== 'browse' ? (
+                  {getStepConfig("browse").completed && configuration.currentStep !== "browse" ? (
                     <Check size={16} />
                   ) : (
-                    '1'
+                    "1"
                   )}
                 </div>
-                <span className='font-medium text-apty-text-primary'>Esplora i Pacchetti</span>
+                <span className="font-medium text-apty-text-primary">Esplora i Pacchetti</span>
 
-                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
+                <div className="flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4" />
 
                 {/* Step 2: Customize */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                    configuration.currentStep === 'customize'
-                      ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                      : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                    configuration.currentStep === "customize"
+                      ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                      : "bg-apty-gradient-primary text-apty-text-on-brand"
                   }`}
                 >
-                  {getStepConfig('customize').completed &&
-                  configuration.currentStep !== 'customize' ? (
+                  {getStepConfig("customize").completed && configuration.currentStep !== "customize" ? (
                     <Check size={16} />
                   ) : (
-                    '2'
+                    "2"
                   )}
                 </div>
-                <span className='font-medium text-apty-text-primary'>
-                  Personalizza il Tuo Pacchetto
-                </span>
+                <span className="font-medium text-apty-text-primary">Personalizza il Tuo Pacchetto</span>
 
-                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
+                <div className="flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4" />
 
                 {/* Step 3: Optional Services */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                    configuration.currentStep === 'optional'
-                      ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                      : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                    configuration.currentStep === "optional"
+                      ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                      : "bg-apty-gradient-primary text-apty-text-on-brand"
                   }`}
                 >
-                  {getStepConfig('optional').completed &&
-                  configuration.currentStep !== 'optional' ? (
+                  {getStepConfig("optional").completed && configuration.currentStep !== "optional" ? (
                     <Check size={16} />
                   ) : (
-                    '3'
+                    "3"
                   )}
                 </div>
-                <span className='font-medium text-apty-text-primary'>Servizi Opzionali</span>
+                <span className="font-medium text-apty-text-primary">Servizi Opzionali</span>
 
-                <div className='flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4' />
+                <div className="flex-1 h-px bg-gradient-to-r from-apty-primary/20 via-apty-primary/40 to-apty-primary/20 mx-4" />
 
                 {/* Step 4: Quote */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                    configuration.currentStep === 'quote'
-                      ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                      : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                    configuration.currentStep === "quote"
+                      ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                      : "bg-apty-gradient-primary text-apty-text-on-brand"
                   }`}
                 >
-                  {getStepConfig('quote').completed && configuration.currentStep !== 'quote' ? (
+                  {getStepConfig("quote").completed && configuration.currentStep !== "quote" ? (
                     <Check size={16} />
                   ) : (
-                    '4'
+                    "4"
                   )}
                 </div>
-                <span className='font-medium text-apty-text-primary'>Richiedi Preventivo</span>
+                <span className="font-medium text-apty-text-primary">Richiedi Preventivo</span>
               </div>
             </div>
-            {configuration.currentStep !== 'browse' && (
+            {configuration.currentStep !== "browse" && (
               <StepNavigator
-                canGoBack={configuration.currentStep !== 'browse'}
-                // Hide both buttons on the first step (browse) by preventing forward navigation as well
-                canGoForward={
-                  configuration.currentStep !== 'success' && configuration.currentStep !== 'browse'
-                }
+                canGoBack={configuration.currentStep !== "browse"}
+                // Forward button visibility now depends on whether the user
+                // came back from a later step (see prevStepRef logic)
+                canGoForward={canGoForwardForNavigator}
                 onBack={handlePreviousStep}
                 onNext={handleNextStep}
-                backLabel='Indietro'
-                nextLabel={configuration.currentStep === 'quote' ? 'Invia' : 'Avanti'}
+                backLabel="Indietro"
+                nextLabel={configuration.currentStep === "quote" ? "Invia" : "Avanti"}
               />
             )}
             <BackConfirmDialog
               open={showBackDialog}
               saving={backDialogSaving}
-              onOpenChange={(o) => {
+              onOpenChange={o => {
                 if (!o) {
                   setShowBackDialog(false);
                   pendingBackRef.current = null;
                 }
               }}
               currentStepLabel={
-                configuration.currentStep === 'quote'
-                  ? 'richiesta preventivo'
-                  : configuration.currentStep
+                configuration.currentStep === "quote" ? "richiesta preventivo" : configuration.currentStep
               }
-              targetStepLabel={pendingBackRef.current?.targetStep || 'precedente'}
+              targetStepLabel={pendingBackRef.current?.targetStep || "precedente"}
               onSave={async () => {
                 const pending = pendingBackRef.current;
                 if (!pending) return;
@@ -1242,20 +1231,22 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 try {
                   // Reuse saveDraftAction to persist main selections
                   const fd = new FormData();
-                  if (configuration.tier?.id) fd.append('tier_id', configuration.tier.id.toString());
-                  if (configuration.level?.id) fd.append('level_id', configuration.level.id.toString());
-                  configuration.optionalServices.forEach((s) => fd.append('selected_services', s.id.toString()));
+                  if (configuration.tier?.id) fd.append("tier_id", configuration.tier.id.toString());
+                  if (configuration.level?.id) fd.append("level_id", configuration.level.id.toString());
+                  configuration.optionalServices.forEach(s => fd.append("selected_services", s.id.toString()));
 
                   const result = await saveDraftAction(null, fd);
                   if (result.success) {
                     // Determine the quote id we'll use for progress update
                     const newQuoteId = quoteId || result.data?.quote_id;
                     if (!quoteId && result.data?.quote_id) setQuoteId(result.data.quote_id);
-                    setConfiguration((prev) => ({ ...prev, currentStep: target }));
+                    // record prev step before transition
+                    prevStepRef.current = configuration.currentStep;
+                    setConfiguration(prev => ({ ...prev, currentStep: target }));
                     if (updateQuoteProgressAction && newQuoteId) {
                       const pfd = new FormData();
-                      pfd.set('quote_id', newQuoteId.toString());
-                      pfd.set('current_step', target);
+                      pfd.set("quote_id", newQuoteId.toString());
+                      pfd.set("current_step", target);
                       updateQuoteProgressAction(null, pfd);
                     }
                   }
@@ -1269,30 +1260,32 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 const pending = pendingBackRef.current;
                 if (pending) {
                   const target = pending.targetStep;
+                  // record prev step before we change steps
+                  prevStepRef.current = configuration.currentStep;
 
-          // Attempt to delete a draft server-side (if quoteId present, pass it; otherwise server will delete latest draft)
-          if (deleteQuoteAction) {
+                  // Attempt to delete a draft server-side (if quoteId present, pass it; otherwise server will delete latest draft)
+                  if (deleteQuoteAction) {
                     setBackDialogSaving(true);
                     try {
                       const dfd = new FormData();
-                      if (quoteId) dfd.set('quote_id', quoteId.toString());
-                      console.log('Client: calling listUserDraftsAction (before delete)');
+                      if (quoteId) dfd.set("quote_id", quoteId.toString());
+                      console.log("Client: calling listUserDraftsAction (before delete)");
                       try {
                         // @ts-ignore - debug helper
                         const before = await listUserDraftsAction();
-                        console.log('Client: drafts before delete:', before);
+                        console.log("Client: drafts before delete:", before);
                       } catch (e) {}
 
-                      console.log('Client: calling deleteQuoteAction with quoteId:', quoteId);
+                      console.log("Client: calling deleteQuoteAction with quoteId:", quoteId);
                       const delRes = await deleteQuoteAction(null, dfd);
-                      console.log('Client: deleteQuoteAction response:', delRes);
+                      console.log("Client: deleteQuoteAction response:", delRes);
                       if (delRes && delRes.success) {
-                        console.log('Quote deleted server-side:', delRes.data?.deletedCount, delRes.data?.deleted);
+                        console.log("Quote deleted server-side:", delRes.data?.deletedCount, delRes.data?.deleted);
                       } else {
-                        console.warn('deleteQuoteAction failed or returned empty:', delRes);
+                        console.warn("deleteQuoteAction failed or returned empty:", delRes);
                       }
                     } catch (e) {
-                      console.warn('Error deleting quote:', e);
+                      console.warn("Error deleting quote:", e);
                     } finally {
                       // Clear local references immediately to avoid loadDraft/checkout races
                       setQuoteId(null);
@@ -1304,26 +1297,26 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                         saveTimerRef.current = null;
                       }
                       // Mark steps as saved to temporarily suppress auto-save recreation
-                      setSavedSteps(new Set(['browse', 'customize', 'optional']));
+                      setSavedSteps(new Set(["browse", "customize", "optional"]));
                       // Confirm deletion: attempt to load draft and retry delete if still present
                       try {
                         const reload = await loadDraftAction();
                         if (reload && reload.success && reload.data?.draft) {
                           const foundId = reload.data.draft.id;
-                          console.warn('Draft still present after delete; retrying for id:', foundId);
+                          console.warn("Draft still present after delete; retrying for id:", foundId);
                           if (deleteQuoteAction) {
                             const retryFd = new FormData();
-                            retryFd.set('quote_id', String(foundId));
+                            retryFd.set("quote_id", String(foundId));
                             await deleteQuoteAction(null, retryFd);
                           }
                         }
                       } catch (e) {
-                        console.warn('Error confirming/deleting lingering draft:', e);
+                        console.warn("Error confirming/deleting lingering draft:", e);
                       }
                       try {
                         // @ts-ignore - debug helper
                         const after = await listUserDraftsAction();
-                        console.log('Client: drafts after delete:', after);
+                        console.log("Client: drafts after delete:", after);
                       } catch (e) {}
                       // Suppress draft loading/checking for a short window to avoid races
                       skipLoadUntilRef.current = Date.now() + 10000; // 10s
@@ -1331,25 +1324,18 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                     }
                   } else if (updateQuoteProgressAction && quoteId) {
                     const pfd = new FormData();
-                    pfd.set('quote_id', quoteId.toString());
-                    pfd.set('current_step', target);
+                    pfd.set("quote_id", quoteId.toString());
+                    pfd.set("current_step", target);
                     // best-effort
                     updateQuoteProgressAction(null, pfd).catch(() => {});
                   }
 
                   // Finally navigate locally
-                  setConfiguration((prev) => ({ ...prev, currentStep: target }));
+                  setConfiguration(prev => ({ ...prev, currentStep: target }));
                 }
 
                 setShowBackDialog(false);
                 pendingBackRef.current = null;
-                // Force a full reload so server state is authoritative and drafts won't be rehydrated
-                try {
-                  window.location.reload();
-                } catch (e) {
-                  // fallback: navigate to pricing
-                  window.location.href = '/pricing';
-                }
               }}
               onCancel={() => {
                 setShowBackDialog(false);
@@ -1357,95 +1343,85 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
               }}
             />
             {/* Mobile version - vertical layout */}
-            <div className='md:hidden bg-apty-bg-base rounded-apty-xl shadow-apty-lg border border-apty-border-default p-6 mx-4'>
-              <div className='space-y-4'>
+            <div className="md:hidden bg-apty-bg-base rounded-apty-xl shadow-apty-lg border border-apty-border-default p-6 mx-4">
+              <div className="space-y-4">
                 {/* Step 1: Browse */}
-                <div className='flex items-center gap-3'>
+                <div className="flex items-center gap-3">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                      configuration.currentStep === 'browse'
-                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                        : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                      configuration.currentStep === "browse"
+                        ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                        : "bg-apty-gradient-primary text-apty-text-on-brand"
                     }`}
                   >
-                    {getStepConfig('browse').completed && configuration.currentStep !== 'browse' ? (
+                    {getStepConfig("browse").completed && configuration.currentStep !== "browse" ? (
                       <Check size={18} />
                     ) : (
-                      '1'
+                      "1"
                     )}
                   </div>
-                  <div className='flex-1'>
-                    <div className='font-medium text-base text-apty-text-primary'>
-                      Esplora i Pacchetti
-                    </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-base text-apty-text-primary">Esplora i Pacchetti</div>
                   </div>
                 </div>
 
                 {/* Step 2: Customize */}
-                <div className='flex items-center gap-3'>
+                <div className="flex items-center gap-3">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                      configuration.currentStep === 'customize'
-                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                        : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                      configuration.currentStep === "customize"
+                        ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                        : "bg-apty-gradient-primary text-apty-text-on-brand"
                     }`}
                   >
-                    {getStepConfig('customize').completed &&
-                    configuration.currentStep !== 'customize' ? (
+                    {getStepConfig("customize").completed && configuration.currentStep !== "customize" ? (
                       <Check size={18} />
                     ) : (
-                      '2'
+                      "2"
                     )}
                   </div>
-                  <div className='flex-1'>
-                    <div className='font-medium text-base text-apty-text-primary'>
-                      Personalizza il Tuo Pacchetto
-                    </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-base text-apty-text-primary">Personalizza il Tuo Pacchetto</div>
                   </div>
                 </div>
 
                 {/* Step 3: Optional Services */}
-                <div className='flex items-center gap-3'>
+                <div className="flex items-center gap-3">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                      configuration.currentStep === 'optional'
-                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                        : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                      configuration.currentStep === "optional"
+                        ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                        : "bg-apty-gradient-primary text-apty-text-on-brand"
                     }`}
                   >
-                    {getStepConfig('optional').completed &&
-                    configuration.currentStep !== 'optional' ? (
+                    {getStepConfig("optional").completed && configuration.currentStep !== "optional" ? (
                       <Check size={18} />
                     ) : (
-                      '3'
+                      "3"
                     )}
                   </div>
-                  <div className='flex-1'>
-                    <div className='font-medium text-base text-apty-text-primary'>
-                      Servizi Opzionali
-                    </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-base text-apty-text-primary">Servizi Opzionali</div>
                   </div>
                 </div>
 
                 {/* Step 4: Quote */}
-                <div className='flex items-center gap-3'>
+                <div className="flex items-center gap-3">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shadow-apty-sm ${
-                      configuration.currentStep === 'quote'
-                        ? 'bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2'
-                        : 'bg-apty-gradient-primary text-apty-text-on-brand'
+                      configuration.currentStep === "quote"
+                        ? "bg-apty-gradient-primary text-apty-text-on-brand ring-2 ring-apty-primary ring-offset-2"
+                        : "bg-apty-gradient-primary text-apty-text-on-brand"
                     }`}
                   >
-                    {getStepConfig('quote').completed && configuration.currentStep !== 'quote' ? (
+                    {getStepConfig("quote").completed && configuration.currentStep !== "quote" ? (
                       <Check size={18} />
                     ) : (
-                      '4'
+                      "4"
                     )}
                   </div>
-                  <div className='flex-1'>
-                    <div className='font-medium text-base text-apty-text-primary'>
-                      Richiedi Preventivo
-                    </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-base text-apty-text-primary">Richiedi Preventivo</div>
                   </div>
                 </div>
               </div>
@@ -1453,30 +1429,30 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
           </motion.div>
 
           {/* Step Content */}
-          <div className='relative'>
+          <div className="relative">
             {/* Step 1: Browse Packages */}
-            {configuration.currentStep === 'browse' && (
+            {configuration.currentStep === "browse" && (
               <motion.div
-                key='browse'
+                key="browse"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className='space-y-8'
+                className="space-y-8"
               >
                 <motion.div
-                  className='text-center mb-12'
+                  className="text-center mb-12"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <h2 className='text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-4'>
-                    <span className='text-apty-primary'>ESPLORA</span> I NOSTRI PACCHETTI
+                  <h2 className="text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-4">
+                    <span className="text-apty-primary">ESPLORA</span> I NOSTRI PACCHETTI
                   </h2>
-                  <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto leading-relaxed'>
-                    Trova la soluzione digitale perfetta per il tuo ristorante. Ogni pacchetto è
-                    progettato per soddisfare specifiche esigenze di business.
+                  <p className="text-lg text-apty-text-secondary max-w-3xl mx-auto leading-relaxed">
+                    Trova la soluzione digitale perfetta per il tuo ristorante. Ogni pacchetto è progettato per
+                    soddisfare specifiche esigenze di business.
                   </p>
                 </motion.div>
 
@@ -1489,11 +1465,8 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                   trackTierSelection={(tierId, tierSlug) => {
                     setTimeout(() => {
                       const trackFormData = new FormData();
-                      trackFormData.set('event_type', 'tier_selected');
-                      trackFormData.set(
-                        'event_data',
-                        JSON.stringify({ tier_id: tierId, tier_slug: tierSlug })
-                      );
+                      trackFormData.set("event_type", "tier_selected");
+                      trackFormData.set("event_data", JSON.stringify({ tier_id: tierId, tier_slug: tierSlug }));
                       trackPricingJourneyAction(null, trackFormData);
                     }, 0);
                   }}
@@ -1502,14 +1475,14 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             )}
 
             {/* Step 2: Customize Package */}
-            {configuration.currentStep === 'customize' && configuration.tier && (
+            {configuration.currentStep === "customize" && configuration.tier && (
               <motion.div
-                key='customize'
+                key="customize"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className='space-y-8'
+                className="space-y-8"
               >
                 <TierLevelSelector
                   selectedTier={configuration.tier}
@@ -1521,66 +1494,61 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             )}
 
             {/* Step 3: Optional Services */}
-            {configuration.currentStep === 'optional' &&
-              configuration.tier &&
-              configuration.level && (
-                <motion.div
-                  key='optional'
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className='space-y-8'
-                >
-                  <ServiceToggleCards
-                    onPersonaMatcherOpen={() => handlePersonaMatcherOpen(3)}
-                    onBack={handlePreviousStep}
-                    onServicesChange={handleOptionalServicesSelect}
-                    initialSelectedServices={configuration.optionalServices}
-                    onProceed={handleNextStep}
-                    services={services}
-                    trackServiceToggle={(serviceId, selected) => {
-                      setTimeout(() => {
-                        const trackFormData = new FormData();
-                        trackFormData.set(
-                          'event_type',
-                          selected ? 'service_added' : 'service_removed'
-                        );
-                        trackFormData.set('event_data', JSON.stringify({ service_id: serviceId }));
-                        trackPricingJourneyAction(null, trackFormData);
-                      }, 0);
-                    }}
-                  />
-                </motion.div>
-              )}
+            {configuration.currentStep === "optional" && configuration.tier && configuration.level && (
+              <motion.div
+                key="optional"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="space-y-8"
+              >
+                <ServiceToggleCards
+                  onPersonaMatcherOpen={() => handlePersonaMatcherOpen(3)}
+                  onBack={handlePreviousStep}
+                  onServicesChange={handleOptionalServicesSelect}
+                  initialSelectedServices={configuration.optionalServices}
+                  onProceed={handleNextStep}
+                  services={services}
+                  trackServiceToggle={(serviceId, selected) => {
+                    setTimeout(() => {
+                      const trackFormData = new FormData();
+                      trackFormData.set("event_type", selected ? "service_added" : "service_removed");
+                      trackFormData.set("event_data", JSON.stringify({ service_id: serviceId }));
+                      trackPricingJourneyAction(null, trackFormData);
+                    }, 0);
+                  }}
+                />
+              </motion.div>
+            )}
 
             {/* Step 4: Quote Request */}
-            {configuration.currentStep === 'quote' && (
+            {configuration.currentStep === "quote" && (
               <motion.div
-                key='quote'
+                key="quote"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className='space-y-8'
+                className="space-y-8"
               >
                 {/* Back Button moved to StepNavigator */}
-                <div ref={quoteTitleRef} className='text-center mb-8'>
-                  <h2 className='text-3xl font-bold font-apty-heading text-apty-text-primary'>
-                    <span className='text-apty-primary'>Richiedi</span> il Tuo Preventivo
+                <div ref={quoteTitleRef} className="text-center mb-8">
+                  <h2 className="text-3xl font-bold font-apty-heading text-apty-text-primary">
+                    <span className="text-apty-primary">Richiedi</span> il Tuo Preventivo
                   </h2>
                 </div>
 
                 {configuration.tier && configuration.level ? (
-                  <div className='bg-apty-bg-elevated rounded-apty-2xl shadow-apty-xl p-8'>
+                  <div className="bg-apty-bg-elevated rounded-apty-2xl shadow-apty-xl p-8">
                     <Step4QuoteRequest
-                      completionType='complete_journey'
+                      completionType="complete_journey"
                       initialData={{
                         pricingConfiguration: {
-                          selectedTier: configuration.tier?.slug || '',
-                          selectedLevel: configuration.level?.level_code || '',
+                          selectedTier: configuration.tier?.slug || "",
+                          selectedLevel: configuration.level?.level_code || "",
                           basePriceEur: Number(configuration.level?.price) || 0,
-                          optionalServices: configuration.optionalServices.map((service) => ({
+                          optionalServices: configuration.optionalServices.map(service => ({
                             serviceId: String(service.id),
                             quantity: 1,
                             unitPriceEur: Number(service.price) || 0,
@@ -1590,35 +1558,35 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                       }}
                       onSubmit={handleQuoteSubmit}
                       onCancel={null}
-                      className='max-w-none'
+                      className="max-w-none"
                       selectedServices={configuration.optionalServices}
                       onModifyConfiguration={() => {
-                        setConfiguration((prev) => ({
+                        setConfiguration(prev => ({
                           ...prev,
-                          currentStep: 'optional',
+                          currentStep: "optional",
                         }));
                       }}
                       user={user}
                     />
                   </div>
                 ) : (
-                  <div className='bg-apty-bg-elevated rounded-apty-2xl shadow-apty-xl p-8'>
-                    <div className='text-center space-y-6'>
-                      <p className='text-apty-text-secondary'>
-                        Non sei riuscito a completare la configurazione? Nessun problema! Descrivi
-                        le tue esigenze e ti aiuteremo a trovare la soluzione perfetta.
+                  <div className="bg-apty-bg-elevated rounded-apty-2xl shadow-apty-xl p-8">
+                    <div className="text-center space-y-6">
+                      <p className="text-apty-text-secondary">
+                        Non sei riuscito a completare la configurazione? Nessun problema! Descrivi le tue esigenze e ti
+                        aiuteremo a trovare la soluzione perfetta.
                       </p>
 
                       <Step4QuoteRequest
-                        completionType='ai_assisted_skip'
+                        completionType="ai_assisted_skip"
                         onSubmit={handleQuoteSubmit}
                         onCancel={handleQuoteCancel}
-                        className='max-w-none'
+                        className="max-w-none"
                         selectedServices={configuration.optionalServices}
                         onModifyConfiguration={() => {
-                          setConfiguration((prev) => ({
+                          setConfiguration(prev => ({
                             ...prev,
-                            currentStep: 'optional',
+                            currentStep: "optional",
                           }));
                         }}
                         user={user}
@@ -1630,18 +1598,18 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             )}
 
             {/* Step 5: Success */}
-            {configuration.currentStep === 'success' && quoteState.submittedQuote && (
+            {configuration.currentStep === "success" && quoteState.submittedQuote && (
               <motion.div
-                key='success'
+                key="success"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='space-y-8'
+                className="space-y-8"
               >
                 <Step4QuoteSuccess
                   quoteRequest={quoteState.submittedQuote}
                   onBackToHome={handleBackToHome}
                   onNewQuote={handleNewQuote}
-                  className='max-w-none'
+                  className="max-w-none"
                 />
               </motion.div>
             )}
@@ -1660,8 +1628,8 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
       </section>
 
       {/* Tier Comparison Table Section - Only visible in Step 1 (Browse) */}
-      {configuration.currentStep === 'browse' && (
-        <section className='py-16 bg-white'>
+      {configuration.currentStep === "browse" && (
+        <section className="py-16 bg-white">
           <TierComparisonTable onTierSelect={handleTierSelect} />
         </section>
       )}

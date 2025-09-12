@@ -1,19 +1,19 @@
 import {
-  ShoppingCart,
+  Award,
+  BookOpen,
   Briefcase,
-  TrendingUp,
+  Code2,
+  FileText,
   Monitor,
   Palette,
-  Code2,
-  Settings,
   Search,
-  Zap,
-  BookOpen,
-  FileText,
-  Award,
+  Settings,
+  ShoppingCart,
   Sparkles,
+  TrendingUp,
   Users,
-} from 'lucide-react';
+  Zap,
+} from "lucide-react";
 
 export const iconMap = {
   ShoppingCart,

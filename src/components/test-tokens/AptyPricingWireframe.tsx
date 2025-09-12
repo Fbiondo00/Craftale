@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 interface Section {
   name: string;
@@ -15,10 +15,10 @@ interface Section {
 export default function AptyPricingWireframe() {
   const sections: Section[] = [
     {
-      name: 'Header',
-      className: 'bg-apty-bg-base border-b border-apty-border-default',
-      height: 'h-16',
-      colorCode: 'bg-base',
+      name: "Header",
+      className: "bg-apty-bg-base border-b border-apty-border-default",
+      height: "h-16",
+      colorCode: "bg-base",
       elements: (
         <div className="flex items-center justify-between h-full px-6">
           <div className="w-28 h-8 rounded bg-apty-primary/20"></div>
@@ -33,13 +33,13 @@ export default function AptyPricingWireframe() {
             <div className="w-24 h-9 rounded-lg bg-apty-primary"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Hero Section',
-      className: 'bg-apty-gradient-soft',
-      height: 'h-64',
-      colorCode: 'gradient-soft',
+      name: "Hero Section",
+      className: "bg-apty-gradient-soft",
+      height: "h-64",
+      colorCode: "gradient-soft",
       elements: (
         <div className="flex flex-col items-center justify-center h-full px-8 space-y-4">
           <div className="w-32 h-8 rounded-full bg-apty-accent/20"></div>
@@ -49,13 +49,13 @@ export default function AptyPricingWireframe() {
             <div className="w-[360px] h-4 rounded mx-auto bg-apty-text-secondary/10"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Toggle Section',
-      className: 'bg-apty-bg-base',
-      height: 'h-24',
-      colorCode: 'bg-base',
+      name: "Toggle Section",
+      className: "bg-apty-bg-base",
+      height: "h-24",
+      colorCode: "bg-base",
       elements: (
         <div className="flex items-center justify-center h-full">
           <div className="flex items-center space-x-4">
@@ -66,13 +66,13 @@ export default function AptyPricingWireframe() {
             <div className="w-20 h-5 rounded bg-apty-text-secondary/15"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Pricing Cards',
-      className: 'bg-apty-bg-base',
-      height: 'h-[600px]',
-      colorCode: 'bg-base',
+      name: "Pricing Cards",
+      className: "bg-apty-bg-base",
+      height: "h-[600px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-8 py-12">
           <div className="grid grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -85,7 +85,9 @@ export default function AptyPricingWireframe() {
                 {[1, 2, 3, 4].map(i => (
                   <div key={i} className="flex items-center">
                     <div className="w-5 h-5 rounded-full mr-3 bg-apty-secondary/20"></div>
-                    <div className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? 'w-36' : i === 3 ? 'w-44' : i === 4 ? 'w-32' : 'w-40'}`}></div>
+                    <div
+                      className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? "w-36" : i === 3 ? "w-44" : i === 4 ? "w-32" : "w-40"}`}
+                    ></div>
                   </div>
                 ))}
               </div>
@@ -106,7 +108,9 @@ export default function AptyPricingWireframe() {
                 {[1, 2, 3, 4, 5].map(i => (
                   <div key={i} className="flex items-center">
                     <div className="w-5 h-5 rounded-full mr-3 bg-apty-primary"></div>
-                    <div className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? 'w-36' : i === 3 ? 'w-44' : i === 4 ? 'w-32' : i === 5 ? 'w-38' : 'w-40'}`}></div>
+                    <div
+                      className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? "w-36" : i === 3 ? "w-44" : i === 4 ? "w-32" : i === 5 ? "w-38" : "w-40"}`}
+                    ></div>
                   </div>
                 ))}
               </div>
@@ -122,7 +126,9 @@ export default function AptyPricingWireframe() {
                 {[1, 2, 3, 4, 5, 6].map(i => (
                   <div key={i} className="flex items-center">
                     <div className="w-5 h-5 rounded-full mr-3 bg-apty-accent/20"></div>
-                    <div className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? 'w-36' : i === 3 ? 'w-44' : i === 4 ? 'w-32' : i === 5 ? 'w-38' : i === 6 ? 'w-42' : 'w-40'}`}></div>
+                    <div
+                      className={`h-3 rounded bg-apty-text-secondary/10 ${i === 2 ? "w-36" : i === 3 ? "w-44" : i === 4 ? "w-32" : i === 5 ? "w-38" : i === 6 ? "w-42" : "w-40"}`}
+                    ></div>
                   </div>
                 ))}
               </div>
@@ -130,13 +136,13 @@ export default function AptyPricingWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Comparison Table',
-      className: 'bg-apty-bg-muted',
-      height: 'h-96',
-      colorCode: 'bg-muted',
+      name: "Comparison Table",
+      className: "bg-apty-bg-muted",
+      height: "h-96",
+      colorCode: "bg-muted",
       elements: (
         <div className="px-8 py-12">
           <div className="max-w-5xl mx-auto">
@@ -158,13 +164,18 @@ export default function AptyPricingWireframe() {
                 </div>
               </div>
               {/* Table rows */}
-              {[1, 2, 3, 4, 5].map((row) => (
-                <div key={row} className={`grid grid-cols-4 gap-0 ${row < 5 ? 'border-b border-apty-border-default' : ''}`}>
+              {[1, 2, 3, 4, 5].map(row => (
+                <div
+                  key={row}
+                  className={`grid grid-cols-4 gap-0 ${row < 5 ? "border-b border-apty-border-default" : ""}`}
+                >
                   <div className="p-4">
                     <div className="w-32 h-3 rounded bg-apty-text-secondary/10"></div>
                   </div>
                   <div className="p-4 text-center">
-                    <div className={`w-6 h-6 rounded-full mx-auto ${row % 2 ? 'bg-apty-secondary/20' : 'bg-apty-border-default'}`}></div>
+                    <div
+                      className={`w-6 h-6 rounded-full mx-auto ${row % 2 ? "bg-apty-secondary/20" : "bg-apty-border-default"}`}
+                    ></div>
                   </div>
                   <div className="p-4 text-center bg-apty-primary/5">
                     <div className="w-6 h-6 rounded-full mx-auto bg-apty-primary"></div>
@@ -177,19 +188,19 @@ export default function AptyPricingWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'FAQ Section',
-      className: 'bg-apty-bg-base',
-      height: 'h-96',
-      colorCode: 'bg-base',
+      name: "FAQ Section",
+      className: "bg-apty-bg-base",
+      height: "h-96",
+      colorCode: "bg-base",
       elements: (
         <div className="px-8 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="w-48 h-8 rounded mb-8 mx-auto bg-apty-text-primary/15"></div>
             <div className="space-y-4">
-              {[1, 2, 3, 4].map((item) => (
+              {[1, 2, 3, 4].map(item => (
                 <div key={item} className="rounded-lg p-6 bg-apty-bg-base border border-apty-border-default">
                   <div className="flex justify-between items-center">
                     <div className="w-80 h-4 rounded bg-apty-text-primary/15"></div>
@@ -207,13 +218,13 @@ export default function AptyPricingWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'CTA Section',
-      className: 'bg-apty-gradient-vibrant',
-      height: 'h-64',
-      colorCode: 'gradient-vibrant',
+      name: "CTA Section",
+      className: "bg-apty-gradient-vibrant",
+      height: "h-64",
+      colorCode: "gradient-vibrant",
       elements: (
         <div className="flex flex-col items-center justify-center h-full px-8">
           <div className="w-[480px] h-12 rounded mb-4 bg-white/20"></div>
@@ -226,13 +237,13 @@ export default function AptyPricingWireframe() {
             <div className="w-40 h-12 rounded-lg bg-transparent border-2 border-white/90"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Footer',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-64',
-      colorCode: 'bg-inverse',
+      name: "Footer",
+      className: "bg-apty-bg-inverse",
+      height: "h-64",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-8 py-10">
           <div className="grid grid-cols-5 gap-8 mb-8">
@@ -243,7 +254,7 @@ export default function AptyPricingWireframe() {
                 <div className="w-28 h-3 rounded bg-apty-text-inverse/10"></div>
               </div>
             </div>
-            {[1, 2, 3, 4].map((col) => (
+            {[1, 2, 3, 4].map(col => (
               <div key={col}>
                 <div className="w-24 h-4 rounded mb-4 bg-apty-text-inverse/20"></div>
                 <div className="space-y-2">
@@ -265,8 +276,8 @@ export default function AptyPricingWireframe() {
             </div>
           </div>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -277,12 +288,10 @@ export default function AptyPricingWireframe() {
       <p className="text-base mb-8 text-apty-text-secondary">
         Pricing page layout with Apty design system - fully theme-aware
       </p>
-      
+
       {/* Responsive Wireframe View */}
       <div className="mb-8">
-        <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">
-          Desktop View
-        </h3>
+        <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">Desktop View</h3>
         <div className="relative w-full max-w-7xl mx-auto">
           {/* Main wireframe container - responsive */}
           <div className="relative rounded-xl overflow-hidden border border-apty-border-default shadow-apty-xl">
@@ -292,19 +301,15 @@ export default function AptyPricingWireframe() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className={`relative ${section.height} ${section.className || ''}`}
+                className={`relative ${section.height} ${section.className || ""}`}
                 style={section.additionalStyles}
               >
                 {section.elements}
                 {/* Mobile overlay labels - appear on small screens */}
                 <div className="absolute top-2 right-2 md:hidden bg-apty-bg-base/90 backdrop-blur-sm rounded-md px-2 py-1">
-                  <p className="text-xs font-semibold text-apty-text-primary">
-                    {section.name}
-                  </p>
+                  <p className="text-xs font-semibold text-apty-text-primary">{section.name}</p>
                   {section.colorCode && (
-                    <p className="text-[10px] font-mono text-apty-text-secondary">
-                      {section.colorCode}
-                    </p>
+                    <p className="text-[10px] font-mono text-apty-text-secondary">{section.colorCode}</p>
                   )}
                 </div>
               </motion.div>
@@ -321,13 +326,9 @@ export default function AptyPricingWireframe() {
                 className={`${section.height} flex items-center`}
               >
                 <div className="pl-4">
-                  <p className="text-sm font-semibold text-apty-text-primary">
-                    {section.name}
-                  </p>
+                  <p className="text-sm font-semibold text-apty-text-primary">{section.name}</p>
                   {section.colorCode && (
-                    <p className="text-[11px] mt-1 font-mono text-apty-text-secondary">
-                      {section.colorCode}
-                    </p>
+                    <p className="text-[11px] mt-1 font-mono text-apty-text-secondary">{section.colorCode}</p>
                   )}
                 </div>
               </motion.div>
@@ -343,9 +344,7 @@ export default function AptyPricingWireframe() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 bg-apty-bg-subtle rounded-apty-lg">
-            <h4 className="text-base font-semibold mb-3 text-apty-text-primary">
-              Color Usage
-            </h4>
+            <h4 className="text-base font-semibold mb-3 text-apty-text-primary">Color Usage</h4>
             <ul className="text-sm leading-6 text-apty-text-secondary">
               <li>• Primary purple for CTAs and emphasis</li>
               <li>• Subtle backgrounds for sections</li>
@@ -355,9 +354,7 @@ export default function AptyPricingWireframe() {
             </ul>
           </div>
           <div className="p-6 bg-apty-bg-muted rounded-apty-lg">
-            <h4 className="text-base font-semibold mb-3 text-apty-text-primary">
-              Typography & Spacing
-            </h4>
+            <h4 className="text-base font-semibold mb-3 text-apty-text-primary">Typography & Spacing</h4>
             <ul className="text-sm leading-6 text-apty-text-secondary">
               <li>• Large, bold headings (Gilroy)</li>
               <li>• Clean body text (Inter)</li>

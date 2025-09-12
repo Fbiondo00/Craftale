@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, Loader2 } from 'lucide-react';
-import type { OptionalServiceWithAvailability as ApiOptionalService } from '@/types/database-extended';
-import { ServiceCategoryHeader } from './ServiceCategoryHeader';
-import { ServiceToggleCard } from './ServiceToggleCard';
-import AIGuidanceButton from './AIGuidanceButton';
-import { CartSummary } from './CartSummary';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import AIGuidanceButton from "./AIGuidanceButton";
+import { CartSummary } from "./CartSummary";
+import { ServiceCategoryHeader } from "./ServiceCategoryHeader";
+import { ServiceToggleCard } from "./ServiceToggleCard";
+import type { OptionalServiceWithAvailability as ApiOptionalService } from "@/types/database-extended";
+import { motion } from "framer-motion";
+import { ChevronDown, Loader2 } from "lucide-react";
 
 interface ServiceToggleCardsProps {
   onPersonaMatcherOpen?: () => void;
@@ -35,19 +35,19 @@ interface CategoryState {
 
 // Category ID normalization (backend inconsistencies -> UI canonical IDs)
 const normalizeCategoryId = (raw?: string | null): string => {
-  if (!raw) return 'other';
+  if (!raw) return "other";
   const id = raw.toLowerCase().trim();
   switch (id) {
-    case 'integration':
-    case 'technical':
-      return 'integrations';
-    case 'copywriting':
-      return 'content';
-    case 'marketing_visibility':
-    case 'visibility':
-    case 'seo':
-    case 'marketing-seo':
-      return 'marketing';
+    case "integration":
+    case "technical":
+      return "integrations";
+    case "copywriting":
+      return "content";
+    case "marketing_visibility":
+    case "visibility":
+    case "seo":
+    case "marketing-seo":
+      return "marketing";
     default:
       return id;
   }
@@ -56,30 +56,30 @@ const normalizeCategoryId = (raw?: string | null): string => {
 // Map categories to icons and gradients (canonical IDs)
 const categoryConfig = {
   photography: {
-    name: 'Fotografia Professionale',
-    icon: 'Camera',
-    gradient: { from: '#a855f7', to: '#ec4899' }, // purple-500 to pink-500
+    name: "Fotografia Professionale",
+    icon: "Camera",
+    gradient: { from: "#a855f7", to: "#ec4899" }, // purple-500 to pink-500
     defaultExpanded: true,
     order: 1,
   },
   content: {
-    name: 'Contenuti & Copywriting',
-    icon: 'FileText',
-    gradient: { from: '#3b82f6', to: '#06b6d4' }, // blue-500 to cyan-500
+    name: "Contenuti & Copywriting",
+    icon: "FileText",
+    gradient: { from: "#3b82f6", to: "#06b6d4" }, // blue-500 to cyan-500
     defaultExpanded: true,
     order: 2,
   },
   integrations: {
-    name: 'Integrazioni',
-    icon: 'Plug',
-    gradient: { from: '#22c55e', to: '#10b981' }, // green-500 to emerald-500
+    name: "Integrazioni",
+    icon: "Plug",
+    gradient: { from: "#22c55e", to: "#10b981" }, // green-500 to emerald-500
     defaultExpanded: false,
     order: 3,
   },
   marketing: {
-    name: 'Marketing & SEO',
-    icon: 'Target',
-    gradient: { from: '#f97316', to: '#ef4444' }, // orange-500 to red-500
+    name: "Marketing & SEO",
+    icon: "Target",
+    gradient: { from: "#f97316", to: "#ef4444" }, // orange-500 to red-500
     defaultExpanded: false,
     order: 4,
   },
@@ -109,14 +109,14 @@ const ServiceToggleCards = ({
       .filter(([categoryId, list]) => list.length > 0 && categoryConfig[categoryId as keyof typeof categoryConfig])
       .map(([categoryId, categoryServices]) => {
         const config = categoryConfig[categoryId as keyof typeof categoryConfig];
-        const selectedServicesForCategory = categoryServices.filter((service) =>
-          initialSelectedServices.some((s) => s.id === service.id)
+        const selectedServicesForCategory = categoryServices.filter(service =>
+          initialSelectedServices.some(s => s.id === service.id),
         );
         return {
           category: { id: categoryId, ...config },
-            services: categoryServices,
-            isOpen: config.defaultExpanded,
-            selectedServices: selectedServicesForCategory,
+          services: categoryServices,
+          isOpen: config.defaultExpanded,
+          selectedServices: selectedServicesForCategory,
         } as CategoryState;
       })
       .sort((a, b) => a.category.order - b.category.order);
@@ -124,31 +124,39 @@ const ServiceToggleCards = ({
 
   // Initialize or merge categories without losing open/closed state after user interaction
   useEffect(() => {
-    setCategories((prev) => {
+    setCategories(prev => {
       if (prev.length === 0) return categorizedServices; // first mount
       // Merge to retain isOpen & current selections
-      return categorizedServices.map((nextCat) => {
-        const existing = prev.find((p) => p.category.id === nextCat.category.id);
+      return categorizedServices.map(nextCat => {
+        const existing = prev.find(p => p.category.id === nextCat.category.id);
         if (!existing) return nextCat;
         return {
           ...nextCat,
-            isOpen: existing.isOpen, // preserve toggle state
-            selectedServices: existing.selectedServices, // preserve current selections
+          isOpen: existing.isOpen, // preserve toggle state
+          selectedServices: existing.selectedServices, // preserve current selections
         };
       });
     });
   }, [categorizedServices]);
-  
+
   // Call onServicesChange when selected services change (but not on initial mount)
   const isInitialMount = useRef(true);
+  const lastReportedIdsRef = useRef<string>("");
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
-    
+
     if (onServicesChange) {
-      const allSelected = categories.flatMap((cat) => cat.selectedServices);
+      const allSelected = categories.flatMap(cat => cat.selectedServices);
+      const ids = allSelected
+        .map(s => String(s.id))
+        .sort()
+        .join(",");
+      // If the selected IDs haven't changed since last report, skip notifying
+      if (ids === lastReportedIdsRef.current) return;
+      lastReportedIdsRef.current = ids;
       // Use setTimeout to defer the call to the next tick
       setTimeout(() => {
         onServicesChange(allSelected);
@@ -157,29 +165,26 @@ const ServiceToggleCards = ({
   }, [categories]);
 
   const toggleCategory = (categoryId: string) => {
-    setCategories((prev) =>
-      prev.map((cat) => (cat.category.id === categoryId ? { ...cat, isOpen: !cat.isOpen } : cat))
-    );
+    setCategories(prev => prev.map(cat => (cat.category.id === categoryId ? { ...cat, isOpen: !cat.isOpen } : cat)));
   };
 
   const handleServiceToggle = (categoryId: string, service: ApiOptionalService) => {
     // Check if service is currently selected before updating state
-    const currentCategory = categories.find((cat) => cat.category.id === categoryId);
-    const isCurrentlySelected =
-      currentCategory?.selectedServices.some((s) => s.id === service.id) || false;
+    const currentCategory = categories.find(cat => cat.category.id === categoryId);
+    const isCurrentlySelected = currentCategory?.selectedServices.some(s => s.id === service.id) || false;
 
     // Track service toggle outside of state updater
     if (trackServiceToggle) {
       trackServiceToggle(service.id, !isCurrentlySelected);
     }
 
-    setCategories((prev) => {
-      const newCategories = prev.map((cat) => {
+    setCategories(prev => {
+      const newCategories = prev.map(cat => {
         if (cat.category.id !== categoryId) return cat;
 
-        const isSelected = cat.selectedServices.some((s) => s.id === service.id);
+        const isSelected = cat.selectedServices.some(s => s.id === service.id);
         const newSelectedServices = isSelected
-          ? cat.selectedServices.filter((s) => s.id !== service.id)
+          ? cat.selectedServices.filter(s => s.id !== service.id)
           : [...cat.selectedServices, service];
 
         return {
@@ -196,9 +201,9 @@ const ServiceToggleCards = ({
 
   if (!services || services.length === 0) {
     return (
-      <div className='flex items-center justify-center py-20'>
-        <Loader2 className='w-8 h-8 animate-spin text-brand-secondary' />
-        <span className='ml-2 text-color-tertiary'>Caricamento servizi...</span>
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-brand-secondary" />
+        <span className="ml-2 text-color-tertiary">Caricamento servizi...</span>
       </div>
     );
   }
@@ -206,24 +211,22 @@ const ServiceToggleCards = ({
   return (
     <div>
       {/* Header Section */}
-      <div className='text-center mb-10'>
-        <h2 className='text-4xl font-bold text-color-primary mb-4'>
-          Personalizza con Servizi Aggiuntivi
-        </h2>
-        <p className='text-xl text-color-tertiary max-w-3xl mx-auto'>
+      <div className="text-center mb-10">
+        <h2 className="text-4xl font-bold text-color-primary mb-4">Personalizza con Servizi Aggiuntivi</h2>
+        <p className="text-xl text-color-tertiary max-w-3xl mx-auto">
           Migliora il tuo pacchetto con servizi professionali su misura per il tuo ristorante
         </p>
       </div>
 
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Service Categories */}
-        <div className='lg:col-span-2 space-y-6'>
-          {categories.map((categoryState) => (
+        <div className="lg:col-span-2 space-y-6">
+          {categories.map(categoryState => (
             <motion.div
               key={categoryState.category.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className='bg-white rounded-2xl shadow-md overflow-hidden'
+              className="bg-apty-bg-elevated rounded-2xl shadow-md overflow-hidden"
             >
               <ServiceCategoryHeader
                 category={categoryState.category}
@@ -236,18 +239,18 @@ const ServiceToggleCards = ({
               <motion.div
                 initial={false}
                 animate={{
-                  height: categoryState.isOpen ? 'auto' : 0,
+                  height: categoryState.isOpen ? "auto" : 0,
                   opacity: categoryState.isOpen ? 1 : 0,
                 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className='overflow-hidden'
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
               >
-                <div className='p-6 space-y-4'>
-                  {categoryState.services.map((service) => (
+                <div className="p-6 space-y-4">
+                  {categoryState.services.map(service => (
                     <ServiceToggleCard
                       key={service.id}
                       service={service}
-                      isSelected={categoryState.selectedServices.some((s) => s.id === service.id)}
+                      isSelected={categoryState.selectedServices.some(s => s.id === service.id)}
                       onToggle={() => handleServiceToggle(categoryState.category.id, service)}
                     />
                   ))}
@@ -258,14 +261,14 @@ const ServiceToggleCards = ({
         </div>
 
         {/* Cart Summary */}
-        <div className='lg:col-span-1'>
-          <div className='sticky top-24 space-y-6 transform-none'>
+        <div className="lg:col-span-1">
+          <div className="sticky top-24 space-y-6 transform-none">
             <CartSummary
               /* totalPrice removed */
               totalPrice={0}
               selectedCount={selectedCount}
               onProceed={onProceed}
-              selectedServices={categories.flatMap((cat) => cat.selectedServices)}
+              selectedServices={categories.flatMap(cat => cat.selectedServices)}
               onPersonaMatcherOpen={onPersonaMatcherOpen}
             />
           </div>

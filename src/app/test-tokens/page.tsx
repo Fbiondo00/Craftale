@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import HomepageWireframe from '@/components/test-tokens/HomepageWireframe';
-import PricingWireframe from '@/components/test-tokens/PricingWireframe';
+import HomepageWireframe from "@/components/test-tokens/HomepageWireframe";
+import PricingWireframe from "@/components/test-tokens/PricingWireframe";
 
 export default function TestTokensPage() {
   return (
@@ -10,30 +10,50 @@ export default function TestTokensPage() {
       <p className="text-color-secondary mb-8">
         All tokens now use color- prefix for better scalability and organization
       </p>
-      
+
       {/* Brand Colors Test */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4">Brand Colors (New Tokens)</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <div>
             <div className="w-full h-20 bg-brand-primary rounded-lg mb-2"></div>
-            <p className="text-sm">brand-primary<br/>#5033FF</p>
+            <p className="text-sm">
+              brand-primary
+              <br />
+              #5033FF
+            </p>
           </div>
           <div>
             <div className="w-full h-20 bg-brand-primary-hover rounded-lg mb-2"></div>
-            <p className="text-sm">brand-primary-hover<br/>#4129E6</p>
+            <p className="text-sm">
+              brand-primary-hover
+              <br />
+              #4129E6
+            </p>
           </div>
           <div>
             <div className="w-full h-20 bg-brand-secondary rounded-lg mb-2"></div>
-            <p className="text-sm">brand-secondary<br/>#4f46e5</p>
+            <p className="text-sm">
+              brand-secondary
+              <br />
+              #4f46e5
+            </p>
           </div>
           <div>
             <div className="w-full h-20 bg-brand-tertiary rounded-lg mb-2"></div>
-            <p className="text-sm">brand-tertiary<br/>#9333ea</p>
+            <p className="text-sm">
+              brand-tertiary
+              <br />
+              #9333ea
+            </p>
           </div>
           <div>
             <div className="w-full h-20 bg-brand-accent rounded-lg mb-2"></div>
-            <p className="text-sm">brand-accent<br/>#ec4899</p>
+            <p className="text-sm">
+              brand-accent
+              <br />
+              #ec4899
+            </p>
           </div>
         </div>
       </section>
@@ -65,12 +85,8 @@ export default function TestTokensPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4">Text Gradients</h2>
         <div className="space-y-4">
-          <h3 className="text-4xl font-bold gradient-text">
-            Gradient Text Component
-          </h3>
-          <h3 className="text-4xl font-bold gradient-text gradient-text-hover">
-            Hover Me for Different Gradient
-          </h3>
+          <h3 className="text-4xl font-bold gradient-text">Gradient Text Component</h3>
+          <h3 className="text-4xl font-bold gradient-text gradient-text-hover">Hover Me for Different Gradient</h3>
         </div>
       </section>
 
@@ -97,9 +113,7 @@ export default function TestTokensPage() {
           <div className="bg-gray-400 h-header-xl rounded">
             <p className="p-4">h-header-xl (90px)</p>
           </div>
-          <button className="bg-brand-primary text-white px-4 py-2 rounded min-w-button">
-            min-w-button (180px)
-          </button>
+          <button className="bg-brand-primary text-white px-4 py-2 rounded min-w-button">min-w-button (180px)</button>
         </div>
       </section>
 
@@ -215,7 +229,7 @@ export default function TestTokensPage() {
       {/* NEW: State Colors */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4 text-color-primary">State Colors</h2>
-        
+
         {/* Success States */}
         <div className="mb-6">
           <h3 className="text-lg font-medium mb-3 text-color-secondary">Success States</h3>
@@ -338,7 +352,7 @@ export default function TestTokensPage() {
       {/* NEW: Additional Semantic Tokens - Comprehensive Coverage */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4 text-color-primary">Additional Semantic Token Tests</h2>
-        
+
         {/* Text Variations with All Tokens */}
         <div className="mb-8">
           <h3 className="text-lg font-medium mb-3 text-color-secondary">All Text Tokens</h3>
@@ -431,9 +445,9 @@ export default function TestTokensPage() {
             <button className="px-4 py-2 bg-color-base text-color-disabled border border-color-default cursor-not-allowed opacity-50 rounded">
               Disabled Button
             </button>
-            <input 
-              type="text" 
-              placeholder="Input with focus state" 
+            <input
+              type="text"
+              placeholder="Input with focus state"
               className="px-4 py-2 bg-color-base text-color-primary border border-color-default focus:border-color-focus focus:ring-2 focus:ring-color-focus/20 rounded transition-all w-full"
             />
           </div>
@@ -498,9 +512,7 @@ export default function TestTokensPage() {
         <div className="mb-8">
           <h3 className="text-lg font-medium mb-3 text-color-secondary">Dark Mode Support</h3>
           <div className="space-y-3 bg-color-subtle dark:bg-color-inverse-subtle p-4 rounded-lg">
-            <p className="text-color-primary dark:text-color-inverse">
-              This text adapts to dark mode
-            </p>
+            <p className="text-color-primary dark:text-color-inverse">This text adapts to dark mode</p>
             <div className="bg-color-base dark:bg-color-inverse p-3 rounded border border-color-default dark:border-color-strong">
               Container with dark mode support
             </div>

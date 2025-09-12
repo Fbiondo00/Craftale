@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,20 +8,20 @@ export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElemen
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, error, id, ...props }, ref) => {
-  // Use React.useId to ensure a stable, SSR/CSR-consistent id
-  const generatedId = React.useId();
-  const checkboxId = id ?? generatedId;
+    // Use React.useId to ensure a stable, SSR/CSR-consistent id
+    const generatedId = React.useId();
+    const checkboxId = id ?? generatedId;
 
     return (
-      <div className='flex items-center space-x-2'>
+      <div className="flex items-center space-x-2">
         <input
-          type='checkbox'
+          type="checkbox"
           id={checkboxId}
           ref={ref}
           className={cn(
-            'h-4 w-4 rounded border border-apty-border-default bg-apty-bg-base text-apty-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apty-primary focus-visible:ring-offset-2 focus-visible:ring-offset-apty-bg-elevated disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-apty-bg-muted accent-apty-primary apty-transition',
-            error && 'border-apty-error focus-visible:ring-apty-error',
-            className
+            "h-4 w-4 rounded border border-apty-border-default bg-apty-bg-base text-apty-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apty-primary focus-visible:ring-offset-2 focus-visible:ring-offset-apty-bg-elevated disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-apty-bg-muted accent-apty-primary apty-transition",
+            error && "border-apty-error focus-visible:ring-apty-error",
+            className,
           )}
           {...props}
         />
@@ -29,8 +29,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           <label
             htmlFor={checkboxId}
             className={cn(
-              'text-sm font-medium text-apty-text-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-              error && 'text-apty-error'
+              "text-sm font-medium text-apty-text-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+              error && "text-apty-error",
             )}
           >
             {label}
@@ -38,7 +38,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";

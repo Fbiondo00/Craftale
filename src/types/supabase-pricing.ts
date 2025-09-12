@@ -45,7 +45,7 @@ export interface Database {
         Row: {
           id: string;
           tier_id: string;
-          level_code: 'A' | 'B' | 'C';
+          level_code: "A" | "B" | "C";
           name: string;
           price: number;
           original_price: number | null;
@@ -59,7 +59,7 @@ export interface Database {
         Insert: {
           id?: string;
           tier_id: string;
-          level_code: 'A' | 'B' | 'C';
+          level_code: "A" | "B" | "C";
           name: string;
           price: number;
           original_price?: number | null;
@@ -73,7 +73,7 @@ export interface Database {
         Update: {
           id?: string;
           tier_id?: string;
-          level_code?: 'A' | 'B' | 'C';
+          level_code?: "A" | "B" | "C";
           name?: string;
           price?: number;
           original_price?: number | null;
@@ -145,7 +145,7 @@ export interface Database {
           discount_amount: number;
           tax_amount: number;
           total_price: number;
-          status: 'draft' | 'submitted' | 'under_review' | 'accepted' | 'rejected' | 'expired';
+          status: "draft" | "submitted" | "under_review" | "accepted" | "rejected" | "expired";
           expires_at: string | null;
           submitted_at: string | null;
           reviewed_at: string | null;
@@ -168,7 +168,7 @@ export interface Database {
           discount_amount?: number;
           tax_amount?: number;
           total_price?: number;
-          status?: 'draft' | 'submitted' | 'under_review' | 'accepted' | 'rejected' | 'expired';
+          status?: "draft" | "submitted" | "under_review" | "accepted" | "rejected" | "expired";
           expires_at?: string | null;
           submitted_at?: string | null;
           reviewed_at?: string | null;
@@ -191,7 +191,7 @@ export interface Database {
           discount_amount?: number;
           tax_amount?: number;
           total_price?: number;
-          status?: 'draft' | 'submitted' | 'under_review' | 'accepted' | 'rejected' | 'expired';
+          status?: "draft" | "submitted" | "under_review" | "accepted" | "rejected" | "expired";
           expires_at?: string | null;
           submitted_at?: string | null;
           reviewed_at?: string | null;
@@ -235,9 +235,9 @@ export interface Database {
           code: string | null;
           name: string;
           description: string | null;
-          discount_type: 'percentage' | 'fixed';
+          discount_type: "percentage" | "fixed";
           discount_value: number;
-          applies_to: 'all' | 'tier' | 'level' | 'service';
+          applies_to: "all" | "tier" | "level" | "service";
           applies_to_ids: string[];
           usage_limit: number | null;
           usage_count: number;
@@ -254,9 +254,9 @@ export interface Database {
           code?: string | null;
           name: string;
           description?: string | null;
-          discount_type: 'percentage' | 'fixed';
+          discount_type: "percentage" | "fixed";
           discount_value: number;
-          applies_to: 'all' | 'tier' | 'level' | 'service';
+          applies_to: "all" | "tier" | "level" | "service";
           applies_to_ids?: string[];
           usage_limit?: number | null;
           usage_count?: number;
@@ -273,9 +273,9 @@ export interface Database {
           code?: string | null;
           name?: string;
           description?: string | null;
-          discount_type?: 'percentage' | 'fixed';
+          discount_type?: "percentage" | "fixed";
           discount_value?: number;
-          applies_to?: 'all' | 'tier' | 'level' | 'service';
+          applies_to?: "all" | "tier" | "level" | "service";
           applies_to_ids?: string[];
           usage_limit?: number | null;
           usage_count?: number;
@@ -474,7 +474,7 @@ export interface Database {
           user_id: string | null;
           quote_id: string | null;
           session_id: string;
-          step_type: 'tier_selection' | 'level_selection';
+          step_type: "tier_selection" | "level_selection";
           questions: PersonaQuestion[];
           recommendation: string | null;
           completed: boolean;
@@ -487,7 +487,7 @@ export interface Database {
           user_id?: string | null;
           quote_id?: string | null;
           session_id: string;
-          step_type: 'tier_selection' | 'level_selection';
+          step_type: "tier_selection" | "level_selection";
           questions?: PersonaQuestion[];
           recommendation?: string | null;
           completed?: boolean;
@@ -500,7 +500,7 @@ export interface Database {
           user_id?: string | null;
           quote_id?: string | null;
           session_id?: string;
-          step_type?: 'tier_selection' | 'level_selection';
+          step_type?: "tier_selection" | "level_selection";
           questions?: PersonaQuestion[];
           recommendation?: string | null;
           completed?: boolean;
@@ -644,7 +644,7 @@ export interface Database {
 // Helper Types
 export interface ContactPreference {
   time_windows: TimeWindow[];
-  preferred_contact_method?: 'phone' | 'email' | 'whatsapp';
+  preferred_contact_method?: "phone" | "email" | "whatsapp";
   notes?: string;
 }
 
@@ -683,7 +683,7 @@ export interface TierWithLevels {
 
 export interface PricingLevel {
   id: string;
-  level_code: 'A' | 'B' | 'C';
+  level_code: "A" | "B" | "C";
   name: string;
   price: number;
   original_price: number | null;
@@ -735,18 +735,18 @@ export interface AvailableTimeSlot {
 
 // Event Types
 export type PricingEventType =
-  | 'page_view'
-  | 'step_viewed'
-  | 'tier_selected'
-  | 'level_selected'
-  | 'service_added'
-  | 'service_removed'
-  | 'discount_applied'
-  | 'quote_saved'
-  | 'quote_submitted'
-  | 'persona_matcher_started'
-  | 'persona_matcher_completed'
-  | 'persona_matcher_abandoned'
-  | 'upgrade_suggested'
-  | 'upgrade_accepted'
-  | 'time_slot_selected';
+  | "page_view"
+  | "step_viewed"
+  | "tier_selected"
+  | "level_selected"
+  | "service_added"
+  | "service_removed"
+  | "discount_applied"
+  | "quote_saved"
+  | "quote_submitted"
+  | "persona_matcher_started"
+  | "persona_matcher_completed"
+  | "persona_matcher_abandoned"
+  | "upgrade_suggested"
+  | "upgrade_accepted"
+  | "time_slot_selected";

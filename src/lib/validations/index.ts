@@ -17,7 +17,7 @@ export {
   type QuoteUpdate,
   type QuoteFilter,
   type QuoteId,
-} from './quote'
+} from "./quote";
 
 // Pricing validations
 export {
@@ -39,7 +39,7 @@ export {
   type ServiceAvailability,
   type BulkPricingUpdate,
   type PricingComparison,
-} from './pricing'
+} from "./pricing";
 
 // Contact validations
 export {
@@ -51,7 +51,7 @@ export {
   type TimeSlotBooking,
   type TimeSlotQuery,
   type NewsletterSubscription,
-} from './contact'
+} from "./contact";
 
 // Common validations and utilities
 export {
@@ -78,4 +78,4 @@ export {
   type SearchQuery,
   type Status,
   type Priority,
-} from './common'
+} from "./common";

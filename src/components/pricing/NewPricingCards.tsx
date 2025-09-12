@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Globe, Zap, ShoppingCart, Target, Loader2 } from 'lucide-react';
-import PricingCard from './PricingCard';
-import { useAuth } from '@/contexts/AuthContext';
-import type { TierWithLevels } from '@/types/database-extended';
+import React, { useEffect, useState } from "react";
+import PricingCard from "./PricingCard";
+import { useAuth } from "@/contexts/AuthContext";
+import type { TierWithLevels } from "@/types/database-extended";
+import { motion } from "framer-motion";
+import { Globe, Loader2, ShoppingCart, Target, Zap } from "lucide-react";
 
 interface NewPricingCardsProps {
   onPersonaMatcherOpen: () => void;
@@ -24,10 +24,10 @@ const tierIcons: Record<string, any> = {
 };
 
 // Map tier slugs to badges
-const tierBadges: Record<string, 'popular' | 'enterprise' | undefined> = {
+const tierBadges: Record<string, "popular" | "enterprise" | undefined> = {
   starter: undefined,
-  pro: 'popular',
-  ecommerce: 'enterprise',
+  pro: "popular",
+  ecommerce: "enterprise",
 };
 
 const containerVariants = {
@@ -68,37 +68,38 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
     const tierCards = tiers.map((tier: TierWithLevels, index: number) => {
       // Get the minimum price from levels
       const minPrice = Math.min(...tier.levels.map(level => Number(level.price)));
-      
+
       // Get features from the A level (base level)
-      const baseLevel = tier.levels.find(level => level.level_code === 'A');
-      const features = baseLevel?.features.map((feature: any) => {
-        // Handle both string and object formats
-        if (typeof feature === 'string') {
-          return {
-            text: feature,
-            included: true
-          };
-        } else if (typeof feature === 'object' && feature.text) {
-          return {
-            text: feature.text,
-            included: feature.included !== undefined ? feature.included : true
-          };
-        } else {
-          return {
-            text: String(feature),
-            included: true
-          };
-        }
-      }) || [];
+      const baseLevel = tier.levels.find(level => level.level_code === "A");
+      const features =
+        baseLevel?.features.map((feature: any) => {
+          // Handle both string and object formats
+          if (typeof feature === "string") {
+            return {
+              text: feature,
+              included: true,
+            };
+          } else if (typeof feature === "object" && feature.text) {
+            return {
+              text: feature.text,
+              included: feature.included !== undefined ? feature.included : true,
+            };
+          } else {
+            return {
+              text: String(feature),
+              included: true,
+            };
+          }
+        }) || [];
 
       return {
         id: tier.slug,
         title: tier.name,
         price: minPrice,
-        ctaText: 'Configura Pacchetto',
+        ctaText: "Configura Pacchetto",
         icon: tierIcons[tier.slug] || Globe,
         badge: tierBadges[tier.slug],
-        idealFor: tier.target_audience || '',
+        idealFor: tier.target_audience || "",
         features: features.slice(0, 5), // Show first 5 features
         inheritedFeatures: index > 0 ? { fromTier: tiers[index - 1].name } : undefined,
       };
@@ -106,17 +107,17 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
 
     // Add custom card
     const customCard = {
-      id: 'custom',
-      title: 'Soluzione Su Misura',
-      ctaText: 'Trova Soluzione Perfetta',
+      id: "custom",
+      title: "Soluzione Su Misura",
+      ctaText: "Trova Soluzione Perfetta",
       icon: Target,
       isCustomCard: true,
-      idealFor: 'Progetti complessi e specifici',
+      idealFor: "Progetti complessi e specifici",
       features: [
-        { text: 'Analisi approfondita del business', included: true },
-        { text: 'Consulenza strategica personalizzata', included: true },
-        { text: 'Sviluppo funzionalità su misura', included: true },
-        { text: 'Supporto dedicato continuo', included: true },
+        { text: "Analisi approfondita del business", included: true },
+        { text: "Consulenza strategica personalizzata", included: true },
+        { text: "Sviluppo funzionalità su misura", included: true },
+        { text: "Supporto dedicato continuo", included: true },
       ],
     };
 
@@ -126,19 +127,19 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
   const handleCTAClick = async (cardId: string) => {
     if (!isAuthenticated) {
       // Open auth modal with signup mode when user clicks on pricing CTA
-  // Changed to open sign-in first as requested
-  openAuthModal('signin');
+      // Changed to open sign-in first as requested
+      openAuthModal("signin");
     } else {
       // If authenticated, proceed with the normal flow
-      if (cardId === 'custom') {
+      if (cardId === "custom") {
         onPersonaMatcherOpen();
       } else {
         // Track tier selection
         const tier = tiers.find(t => t.slug === cardId);
         if (tier) {
           if (trackTierSelection) {
-      trackTierSelection(tier.id, tier.slug);
-    }
+            trackTierSelection(tier.id, tier.slug);
+          }
         }
         setSelectedTier(cardId);
         onTierSelect(cardId);
@@ -165,21 +166,17 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
   const cardData = getCardData();
 
   const renderFirstThreeCards = () => (
-    <div className='flex flex-col md:flex-row flex-1 md:overflow-visible'>
+    <div className="flex flex-col md:flex-row flex-1 md:overflow-visible">
       {cardData.slice(0, 3).map((card, index) => (
-        <motion.div
-          key={card.id}
-          variants={itemVariants}
-          className={`flex-1 ${index > 0 ? 'md:-ml-px' : ''}`}
-        >
+        <motion.div key={card.id} variants={itemVariants} className={`flex-1 ${index > 0 ? "md:-ml-px" : ""}`}>
           <PricingCard
             title={card.title}
-            price={'price' in card ? card.price : undefined}
+            price={"price" in card ? card.price : undefined}
             features={card.features}
-            inheritedFeatures={'inheritedFeatures' in card ? card.inheritedFeatures : undefined}
+            inheritedFeatures={"inheritedFeatures" in card ? card.inheritedFeatures : undefined}
             onCTAClick={() => handleCTAClick(card.id)}
-            badge={'badge' in card ? card.badge : undefined}
-            isCustomCard={'isCustomCard' in card ? card.isCustomCard : false}
+            badge={"badge" in card ? card.badge : undefined}
+            isCustomCard={"isCustomCard" in card ? card.isCustomCard : false}
             idealFor={card.idealFor}
             icon={card.icon}
             tierSlug={card.id}
@@ -201,7 +198,7 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
     if (!customCard) return null;
 
     return (
-      <motion.div key={customCard.id} variants={itemVariants} className='w-full lg:w-80 flex-shrink-0'>
+      <motion.div key={customCard.id} variants={itemVariants} className="w-full lg:w-80 flex-shrink-0">
         <PricingCard
           title={customCard.title}
           features={customCard.features}
@@ -218,12 +215,12 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
   };
 
   return (
-    <div className='w-full max-w-7xl mx-auto px-4 md:overflow-visible'>
+    <div className="w-full max-w-7xl mx-auto px-4 md:overflow-visible">
       <motion.div
-        className='flex flex-col lg:flex-row gap-6 md:overflow-visible'
+        className="flex flex-col lg:flex-row gap-6 md:overflow-visible"
         variants={containerVariants}
-        initial='hidden'
-        animate='visible'
+        initial="hidden"
+        animate="visible"
       >
         {renderFirstThreeCards()}
         {renderCustomCard()}
@@ -236,83 +233,83 @@ const NewPricingCards: React.FC<NewPricingCardsProps> = ({
 const NewPricingCardsFallback: React.FC<NewPricingCardsProps> = ({ onPersonaMatcherOpen, onTierSelect }) => {
   const { isAuthenticated, openAuthModal } = useAuth();
   const [isGroupHovered, setIsGroupHovered] = useState(false);
-  
+
   const cardData = [
     {
-      id: 'starter',
-      title: 'Starter',
+      id: "starter",
+      title: "Starter",
       price: 850,
-      ctaText: 'Configura Pacchetto',
+      ctaText: "Configura Pacchetto",
       icon: Globe,
-      idealFor: 'Trattorie familiari',
+      idealFor: "Trattorie familiari",
       features: [
-        { text: 'Presenza digitale professionale', included: true },
-        { text: 'Menu digitale ottimizzato', included: true },
-        { text: 'Google My Business e SEO locale', included: true },
-        { text: 'Integrazione social media', included: true },
-        { text: 'Supporto email dedicato', included: true },
+        { text: "Presenza digitale professionale", included: true },
+        { text: "Menu digitale ottimizzato", included: true },
+        { text: "Google My Business e SEO locale", included: true },
+        { text: "Integrazione social media", included: true },
+        { text: "Supporto email dedicato", included: true },
       ],
     },
     {
-      id: 'pro',
-      title: 'Pro',
+      id: "pro",
+      title: "Pro",
       price: 1800,
-      ctaText: 'Configura Pacchetto',
+      ctaText: "Configura Pacchetto",
       icon: Zap,
-      badge: 'popular' as const,
-      idealFor: 'Imprenditori moderni',
+      badge: "popular" as const,
+      idealFor: "Imprenditori moderni",
       inheritedFeatures: {
-        fromTier: 'Starter',
+        fromTier: "Starter",
       },
       features: [
-        { text: 'Sistema prenotazioni e gestione clienti', included: true },
-        { text: 'Menu interattivo avanzato', included: true },
-        { text: 'Automazione SMS e email', included: true },
-        { text: 'Analytics comportamentali', included: true },
-        { text: 'Supporto prioritario', included: true },
+        { text: "Sistema prenotazioni e gestione clienti", included: true },
+        { text: "Menu interattivo avanzato", included: true },
+        { text: "Automazione SMS e email", included: true },
+        { text: "Analytics comportamentali", included: true },
+        { text: "Supporto prioritario", included: true },
       ],
     },
     {
-      id: 'ecommerce',
-      title: 'Ecommerce',
+      id: "ecommerce",
+      title: "Ecommerce",
       price: 3500,
-      ctaText: 'Configura Pacchetto',
+      ctaText: "Configura Pacchetto",
       icon: ShoppingCart,
-      badge: 'enterprise' as const,
-      idealFor: 'Ristoranti upscale',
+      badge: "enterprise" as const,
+      idealFor: "Ristoranti upscale",
       inheritedFeatures: {
-        fromTier: 'Pro',
+        fromTier: "Pro",
       },
       features: [
-        { text: 'Piattaforma e-commerce completa', included: true },
-        { text: 'Gateway pagamenti multipli', included: true },
-        { text: 'Integrazione corrieri nazionali', included: true },
-        { text: 'Gestione ordini enterprise', included: true },
-        { text: 'Account manager dedicato', included: true },
+        { text: "Piattaforma e-commerce completa", included: true },
+        { text: "Gateway pagamenti multipli", included: true },
+        { text: "Integrazione corrieri nazionali", included: true },
+        { text: "Gestione ordini enterprise", included: true },
+        { text: "Account manager dedicato", included: true },
       ],
     },
     {
-      id: 'custom',
-      title: 'Soluzione Su Misura',
-      ctaText: 'Trova Soluzione Perfetta',
+      id: "custom",
+      title: "Soluzione Su Misura",
+      ctaText: "Trova Soluzione Perfetta",
       icon: Target,
       isCustomCard: true,
-      idealFor: 'Progetti complessi e specifici',
+      idealFor: "Progetti complessi e specifici",
       features: [
-        { text: 'Analisi approfondita del business', included: true },
-        { text: 'Consulenza strategica personalizzata', included: true },
-        { text: 'Sviluppo funzionalità su misura', included: true },
-        { text: 'Supporto dedicato continuo', included: true },
+        { text: "Analisi approfondita del business", included: true },
+        { text: "Consulenza strategica personalizzata", included: true },
+        { text: "Sviluppo funzionalità su misura", included: true },
+        { text: "Supporto dedicato continuo", included: true },
       ],
     },
   ];
 
   const handleCTAClick = (cardId: string) => {
     if (!isAuthenticated) {
-  // Changed to open sign-in first as requested
-  openAuthModal('signin');
+      // Changed to open sign-in first as requested
+      openAuthModal("signin");
     } else {
-      if (cardId === 'custom') {
+      if (cardId === "custom") {
         onPersonaMatcherOpen();
       } else {
         onTierSelect(cardId);
@@ -321,20 +318,16 @@ const NewPricingCardsFallback: React.FC<NewPricingCardsProps> = ({ onPersonaMatc
   };
 
   return (
-    <div className='w-full max-w-7xl mx-auto px-4 md:overflow-visible'>
+    <div className="w-full max-w-7xl mx-auto px-4 md:overflow-visible">
       <motion.div
-        className='flex flex-col lg:flex-row gap-6 md:overflow-visible'
+        className="flex flex-col lg:flex-row gap-6 md:overflow-visible"
         variants={containerVariants}
-        initial='hidden'
-        animate='visible'
+        initial="hidden"
+        animate="visible"
       >
-        <div className='flex flex-col md:flex-row flex-1 md:overflow-visible'>
+        <div className="flex flex-col md:flex-row flex-1 md:overflow-visible">
           {cardData.slice(0, 3).map((card, index) => (
-            <motion.div
-              key={card.id}
-              variants={itemVariants}
-              className={`flex-1 ${index > 0 ? 'md:-ml-px' : ''}`}
-            >
+            <motion.div key={card.id} variants={itemVariants} className={`flex-1 ${index > 0 ? "md:-ml-px" : ""}`}>
               <PricingCard
                 title={card.title}
                 price={card.price}
@@ -357,7 +350,7 @@ const NewPricingCardsFallback: React.FC<NewPricingCardsProps> = ({ onPersonaMatc
             </motion.div>
           ))}
         </div>
-        <motion.div key={cardData[3].id} variants={itemVariants} className='w-full lg:w-80 flex-shrink-0'>
+        <motion.div key={cardData[3].id} variants={itemVariants} className="w-full lg:w-80 flex-shrink-0">
           <PricingCard
             title={cardData[3].title}
             features={cardData[3].features}

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { Particle, FloatingElement } from '@/types/home-page';
+import { FloatingElement, Particle } from "@/types/home-page";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface BackgroundEffectsProps {
   particles: Particle[];
@@ -9,11 +9,7 @@ interface BackgroundEffectsProps {
   showConfetti: boolean;
 }
 
-export default function BackgroundEffects({
-  particles,
-  floatingElements,
-  showConfetti,
-}: BackgroundEffectsProps) {
+export default function BackgroundEffects({ particles, floatingElements, showConfetti }: BackgroundEffectsProps) {
   // All animations have been removed
   return null;
 }

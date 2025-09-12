@@ -1,10 +1,10 @@
 "use client";
 
-import React from 'react';
-import { usePathname } from 'next/navigation';
-import HeaderWrapper from '@/components/header/HeaderWrapper';
-import Footer from '@/components/Footer';
-import { type SessionUser } from '@/lib/supabase/get-session';
+import React from "react";
+import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer";
+import HeaderWrapper from "@/components/header/HeaderWrapper";
+import { type SessionUser } from "@/lib/supabase/get-session";
 
 interface SiteChromeProps {
   sessionUser: SessionUser | null;
@@ -19,7 +19,7 @@ export function SiteChrome({ sessionUser }: SiteChromeProps) {
   const pathname = usePathname();
 
   // Standalone routes that should NOT show header/footer
-  const hideChrome = pathname === '/profile';
+  const hideChrome = pathname === "/profile";
 
   if (hideChrome) return null;
 

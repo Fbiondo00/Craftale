@@ -31,38 +31,38 @@ export const navigationItems = [
   //   ],
   // },
   {
-    title: 'Servizi',
-    description: 'Tutto ciò di cui hai bisogno per avere successo online',
+    title: "Servizi",
+    description: "Tutto ciò di cui hai bisogno per avere successo online",
     items: [
       {
-        title: 'Design del Sito',
-        href: '/services/design', // /test-tokens
-        description: 'Design belli e orientati alla conversione',
-        iconName: 'Palette',
+        title: "Design del Sito",
+        href: "/services/design", // /test-tokens
+        description: "Design belli e orientati alla conversione",
+        iconName: "Palette",
       },
       {
-        title: 'Sviluppo Web',
-        href: '/services/development', // /new-test-tokens
-        description: 'Siti veloci, sicuri e scalabili',
-        iconName: 'Code2',
+        title: "Sviluppo Web",
+        href: "/services/development", // /new-test-tokens
+        description: "Siti veloci, sicuri e scalabili",
+        iconName: "Code2",
       },
       {
-        title: 'Soluzioni E-commerce',
-        href: '/services/ecommerce',
-        description: 'Store online che generano vendite',
-        iconName: 'ShoppingCart',
+        title: "Soluzioni E-commerce",
+        href: "/services/ecommerce",
+        description: "Store online che generano vendite",
+        iconName: "ShoppingCart",
       },
       {
-        title: 'Manutenzione Sito',
-        href: '/services/maintenance',
-        description: 'Mantieni il sito sempre efficiente',
-        iconName: 'Settings',
+        title: "Manutenzione Sito",
+        href: "/services/maintenance",
+        description: "Mantieni il sito sempre efficiente",
+        iconName: "Settings",
       },
       {
-        title: 'Ottimizzazione SEO',
-        href: '/services/seo',
-        description: 'Fatti trovare su Google',
-        iconName: 'Search',
+        title: "Ottimizzazione SEO",
+        href: "/services/seo",
+        description: "Fatti trovare su Google",
+        iconName: "Search",
       },
       // {
       //   title: 'Ottimizzazione Performance',
@@ -103,16 +103,16 @@ export const navigationItems = [
   //   ],
   // },
   {
-    title: 'Blog',
-    href: '#',
+    title: "Blog",
+    href: "#",
     comingSoon: true,
   },
   {
-    title: 'Chi Siamo',
-    href: '/about',
+    title: "Chi Siamo",
+    href: "/about",
   },
   {
-    title: 'Prezzi',
-    href: '/pricing',
+    title: "Prezzi",
+    href: "/pricing",
   },
 ];

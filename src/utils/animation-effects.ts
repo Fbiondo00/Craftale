@@ -1,21 +1,21 @@
-import { Particle, FloatingElement } from '@/types/home-page';
+import { FloatingElement, Particle } from "@/types/home-page";
 
 /**
  * Generate a new particle for floating animation
  */
 export const generateParticle = (): Particle => {
   const colors = [
-    'bg-brand-secondary/60',
-    'bg-brand-tertiary/60',
-    'bg-brand-accent/60',
-    'bg-blue-400',
-    'bg-color-state-success',
-    'bg-color-state-warning',
+    "bg-brand-secondary/60",
+    "bg-brand-tertiary/60",
+    "bg-brand-accent/60",
+    "bg-blue-400",
+    "bg-color-state-success",
+    "bg-color-state-warning",
   ];
   return {
     id: Date.now() + Math.random(),
-    x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-    y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 20,
+    x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
+    y: (typeof window !== "undefined" ? window.innerHeight : 800) + 20,
     color: colors[Math.floor(Math.random() * colors.length)],
   };
 };
@@ -27,8 +27,8 @@ export const generateFloatingElement = (icons: any[]): FloatingElement => {
   const randomIcon = icons[Math.floor(Math.random() * icons.length)];
   return {
     id: Date.now() + Math.random(),
-    x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-    y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 50,
+    x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
+    y: (typeof window !== "undefined" ? window.innerHeight : 800) + 50,
     icon: randomIcon,
     delay: Math.random() * 2,
   };
@@ -37,11 +37,8 @@ export const generateFloatingElement = (icons: any[]): FloatingElement => {
 /**
  * Clean up old particles and floating elements
  */
-export const cleanupOldElements = <T extends { id: number }>(
-  elements: T[],
-  maxAge: number = 8000
-): T[] => {
-  return elements.filter((element) => Date.now() - element.id < maxAge);
+export const cleanupOldElements = <T extends { id: number }>(elements: T[], maxAge: number = 8000): T[] => {
+  return elements.filter(element => Date.now() - element.id < maxAge);
 };
 
 /**
@@ -81,7 +78,7 @@ export const floatingVariants = {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: 'easeInOut',
+      ease: "easeInOut",
     },
   },
 };
@@ -90,19 +87,19 @@ export const floatingVariants = {
  * Generate confetti elements for celebration effect
  */
 export const generateConfetti = (count: number = 50) => {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === "undefined") return [];
 
   return [...Array(count)].map((_, i) => ({
     id: Date.now() + i,
     x: Math.random() * window.innerWidth,
     y: -10,
     color: [
-      'bg-red-400',
-      'bg-blue-400',
-      'bg-color-state-success',
-      'bg-color-state-warning',
-      'bg-brand-tertiary/60',
-      'bg-brand-accent/60',
+      "bg-red-400",
+      "bg-blue-400",
+      "bg-color-state-success",
+      "bg-color-state-warning",
+      "bg-brand-tertiary/60",
+      "bg-brand-accent/60",
     ][Math.floor(Math.random() * 6)],
     delay: Math.random() * 2,
     duration: 3 + Math.random() * 2,

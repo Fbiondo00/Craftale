@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { Button } from '@/components/ui/button'
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Error boundary component for handling errors in the application.
@@ -11,13 +11,13 @@ export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string; cause?: any }
-  reset: () => void
+  error: Error & { digest?: string; cause?: any };
+  reset: () => void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error('Application error:', error)
-    
+    console.error("Application error:", error);
+
     // Create detailed error log
     const errorDetails = {
       message: error.message,
@@ -26,18 +26,18 @@ export default function Error({
       name: error.name,
       cause: error.cause,
       timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'unknown',
-      url: typeof window !== 'undefined' ? window.location.href : 'unknown',
-      platform: typeof window !== 'undefined' ? window.navigator.platform : 'unknown',
+      userAgent: typeof window !== "undefined" ? window.navigator.userAgent : "unknown",
+      url: typeof window !== "undefined" ? window.location.href : "unknown",
+      platform: typeof window !== "undefined" ? window.navigator.platform : "unknown",
     };
-    
-    console.error('DETAILED ERROR LOG:', errorDetails);
-    
+
+    console.error("DETAILED ERROR LOG:", errorDetails);
+
     // You can also send this to an error tracking service like Sentry
     // if (window.Sentry) {
     //   window.Sentry.captureException(error)
     // }
-  }, [error])
+  }, [error]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-color-subtle px-4">
@@ -63,9 +63,7 @@ export default function Error({
 
           {/* Error Message */}
           <div>
-            <h1 className="text-3xl font-bold text-color-primary">
-              Qualcosa è andato storto
-            </h1>
+            <h1 className="text-3xl font-bold text-color-primary">Qualcosa è andato storto</h1>
             <p className="mt-2 text-color-tertiary">
               Ci scusiamo per l'inconveniente. Si è verificato un errore inaspettato.
             </p>
@@ -73,35 +71,23 @@ export default function Error({
 
           {/* Actions */}
           <div className="space-y-3">
-            <Button
-              onClick={reset}
-              className="w-full"
-              size="lg"
-            >
+            <Button onClick={reset} className="w-full" size="lg">
               Riprova
             </Button>
-            <Button
-              onClick={() => window.location.href = '/'}
-              variant="outline"
-              className="w-full"
-              size="lg"
-            >
+            <Button onClick={() => (window.location.href = "/")} variant="outline" className="w-full" size="lg">
               Vai alla Homepage
             </Button>
           </div>
 
           {/* Support Link */}
           <p className="text-sm text-color-muted">
-            Se il problema persiste, per favore{' '}
-            <a
-              href="/contact"
-              className="font-medium text-brand-secondary hover:text-brand-secondary/90"
-            >
+            Se il problema persiste, per favore{" "}
+            <a href="/contact" className="font-medium text-brand-secondary hover:text-brand-secondary/90">
               contatta il supporto
             </a>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

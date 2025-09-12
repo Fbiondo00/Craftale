@@ -1,14 +1,93 @@
 // BlogGrid Component - Clean Staggered Layout Design
 
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FileX } from 'lucide-react';
-import BlogCard from './BlogCard';
-import { type BlogGridProps } from '@/types/blog';
+import BlogCard from "./BlogCard";
+import { type BlogGridProps } from "@/types/blog";
+import { motion } from "framer-motion";
+import { FileX } from "lucide-react";
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
+
+// BlogGrid Component - Clean Staggered Layout Design
 
 export default function BlogGrid({ posts, loading }: BlogGridProps) {
-  
   if (loading) {
     return (
       <div className="space-y-8">
@@ -25,12 +104,12 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
                   transition={{ delay: i * 0.1 }}
                   className={`
                     bg-background border border-border rounded-xl p-6 space-y-4 h-96
-                    ${i % 3 === 1 ? 'lg:mt-32' : ''}
+                    ${i % 3 === 1 ? "lg:mt-32" : ""}
                   `}
                 >
                   {/* Image Skeleton */}
                   <div className="w-full h-48 bg-muted rounded-lg animate-pulse" />
-                  
+
                   {/* Content Skeleton */}
                   <div className="space-y-3">
                     <div className="h-4 bg-muted rounded w-24 animate-pulse" />
@@ -56,28 +135,22 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
 
   if (posts.length === 0) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center py-16"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
         <div className="mx-auto w-24 h-24 bg-muted/50 rounded-full flex items-center justify-center mb-6">
           <FileX className="w-10 h-10 text-muted-foreground" />
         </div>
-        
-        <h3 className="text-xl font-semibold text-foreground mb-2">
-          No content found
-        </h3>
-        
+
+        <h3 className="text-xl font-semibold text-foreground mb-2">No content found</h3>
+
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-          We couldn&apos;t find any content matching your current filters. 
-          Try adjusting your search criteria or browse all content.
+          We couldn&apos;t find any content matching your current filters. Try adjusting your search criteria or browse
+          all content.
         </p>
-        
+
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">Try searching for:</p>
           <div className="flex flex-wrap justify-center gap-2">
-            {['case studies', 'portfolio', 'web design', 'conversion optimization'].map((term) => (
+            {["case studies", "portfolio", "web design", "conversion optimization"].map(term => (
               <span
                 key={term}
                 className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm hover:bg-muted/80 cursor-pointer transition-colors"
@@ -94,12 +167,12 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
   // Create columns for clean staggered layout
   const createColumns = (posts: any[], columnCount: number) => {
     const columns: any[][] = Array.from({ length: columnCount }, () => []);
-    
+
     posts.forEach((post, index) => {
       const columnIndex = index % columnCount;
       columns[columnIndex].push(post);
     });
-    
+
     return columns;
   };
 
@@ -157,9 +230,9 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
           <div className="relative" style={{ paddingBottom: middleColumnOffset }}>
             <div className="grid grid-cols-3 gap-6">
               {desktopColumns.map((column, columnIndex) => (
-                <div 
-                  key={columnIndex} 
-                  className={`space-y-6 ${columnIndex === 1 ? 'relative' : ''}`}
+                <div
+                  key={columnIndex}
+                  className={`space-y-6 ${columnIndex === 1 ? "relative" : ""}`}
                   style={columnIndex === 1 ? { marginTop: middleColumnOffset } : {}}
                 >
                   {column.map((post, index) => (
@@ -189,7 +262,7 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
         >
           <div className="text-center text-sm text-muted-foreground">
             <p>
-              Showing {posts.length} of our best {posts.length === 1 ? 'piece' : 'pieces'} of content • 
+              Showing {posts.length} of our best {posts.length === 1 ? "piece" : "pieces"} of content •
               <span className="ml-1 font-medium text-foreground">
                 {posts.filter(p => p.clientResults).length} with proven results
               </span>
@@ -199,4 +272,4 @@ export default function BlogGrid({ posts, loading }: BlogGridProps) {
       )}
     </div>
   );
-} 
+}

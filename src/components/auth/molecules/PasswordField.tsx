@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { FormField, Label, Input, ErrorMessage } from '../atoms';
+import * as React from "react";
+import { ErrorMessage, FormField, Input, Label } from "../atoms";
+import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
 
 export interface PasswordFieldProps {
   id: string;
@@ -21,7 +21,7 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
     {
       id,
       label,
-      placeholder = 'Enter your password',
+      placeholder = "Enter your password",
       value,
       onChange,
       onBlur,
@@ -31,20 +31,20 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const errorId = `${id}-error`;
 
     const togglePasswordVisibility = React.useCallback(() => {
-      setShowPassword((prev) => !prev);
+      setShowPassword(prev => !prev);
     }, []);
 
     const handleInputChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
       },
-      [onChange]
+      [onChange],
     );
 
     return (
@@ -53,11 +53,11 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
           {label}
         </Label>
 
-        <div className='relative'>
+        <div className="relative">
           <Input
             ref={ref}
             id={id}
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
@@ -66,28 +66,28 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
             required={required}
             disabled={disabled}
             aria-describedby={error ? errorId : undefined}
-            className='pr-10'
+            className="pr-10"
             {...props}
           />
 
           <button
-            type='button'
+            type="button"
             onClick={togglePasswordVisibility}
             disabled={disabled}
             className={cn(
-              'absolute right-3 top-1/2 -translate-y-1/2 text-apty-text-tertiary hover:text-apty-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apty-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-              'apty-transition'
+              "absolute right-3 top-1/2 -translate-y-1/2 text-apty-text-tertiary hover:text-apty-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apty-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+              "apty-transition",
             )}
-            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? <EyeOff className='h-4 w-4' /> : <Eye className='h-4 w-4' />}
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
 
         <ErrorMessage id={errorId}>{error}</ErrorMessage>
       </FormField>
     );
-  }
+  },
 );
 
-PasswordField.displayName = 'PasswordField';
+PasswordField.displayName = "PasswordField";

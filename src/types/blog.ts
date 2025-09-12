@@ -1,8 +1,8 @@
 // Blog System Types - Based on blog-analysis.txt specifications
 
-export type ContentType = 'case-study' | 'portfolio' | 'resource' | 'process' | 'spotlight';
-export type ProjectSize = 'small' | 'mid-market' | 'enterprise' | 'startup';
-export type PostStatus = 'draft' | 'published' | 'archived';
+export type ContentType = "case-study" | "portfolio" | "resource" | "process" | "spotlight";
+export type ProjectSize = "small" | "mid-market" | "enterprise" | "startup";
+export type PostStatus = "draft" | "published" | "archived";
 
 export interface ClientResults {
   salesIncrease?: string;
@@ -27,10 +27,10 @@ export interface BlogPost {
   publishedAt: Date;
   updatedAt: Date;
   status: PostStatus;
-  
+
   // Content Classification
   contentType: ContentType;
-  
+
   // Filtering Metadata
   tags: string[];
   industry: string[];
@@ -38,15 +38,15 @@ export interface BlogPost {
   serviceTypes: string[];
   resultsCategory: string[];
   projectSize: ProjectSize;
-  
+
   // Metrics for Sorting
   viewCount: number;
   engagementScore: number;
   impactScore: number;
-  
+
   // Client Results (for case studies)
   clientResults?: ClientResults;
-  
+
   // SEO Metadata
   seo: SEOMetadata;
 }
@@ -63,13 +63,7 @@ export interface FilterState {
 }
 
 // Sorting Options
-export type SortOption = 
-  | 'recent' 
-  | 'impact' 
-  | 'popular' 
-  | 'alphabetical' 
-  | 'project-size' 
-  | 'client-success';
+export type SortOption = "recent" | "impact" | "popular" | "alphabetical" | "project-size" | "client-success";
 
 // Filter Categories for UI
 export interface FilterCategory {
@@ -136,4 +130,4 @@ export interface ContentTypeToggleProps {
   selectedTypes: ContentType[];
   onToggle: (types: ContentType[]) => void;
   configs: ContentTypeConfig[];
-} 
+}

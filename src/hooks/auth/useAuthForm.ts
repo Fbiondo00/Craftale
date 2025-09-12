@@ -1,37 +1,33 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from "react";
+import { validateForgotPasswordForm, validateSignInForm, validateSignUpForm } from "@/lib/validations/auth";
 import {
   AuthMode,
-  SignInFormData,
-  SignUpFormData,
   ForgotPasswordFormData,
-  SignInFormErrors,
-  SignUpFormErrors,
   ForgotPasswordFormErrors,
   FormSubmissionState,
-} from '@/types/auth';
-import {
-  validateSignInForm,
-  validateSignUpForm,
-  validateForgotPasswordForm,
-} from '@/lib/validations/auth';
+  SignInFormData,
+  SignInFormErrors,
+  SignUpFormData,
+  SignUpFormErrors,
+} from "@/types/auth";
 
 // Initial form data
 const initialSignInData: SignInFormData = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   rememberMe: false,
 };
 
 const initialSignUpData: SignUpFormData = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const initialForgotPasswordData: ForgotPasswordFormData = {
-  email: '',
+  email: "",
 };
 
 // Initial errors
@@ -43,64 +39,60 @@ export const useAuthForm = (mode: AuthMode) => {
   // Form data state
   const [signInData, setSignInData] = useState<SignInFormData>(initialSignInData);
   const [signUpData, setSignUpData] = useState<SignUpFormData>(initialSignUpData);
-  const [forgotPasswordData, setForgotPasswordData] =
-    useState<ForgotPasswordFormData>(initialForgotPasswordData);
+  const [forgotPasswordData, setForgotPasswordData] = useState<ForgotPasswordFormData>(initialForgotPasswordData);
 
   // Errors state
   const [signInErrors, setSignInErrors] = useState<SignInFormErrors>(initialSignInErrors);
   const [signUpErrors, setSignUpErrors] = useState<SignUpFormErrors>(initialSignUpErrors);
-  const [forgotPasswordErrors, setForgotPasswordErrors] = useState<ForgotPasswordFormErrors>(
-    initialForgotPasswordErrors
-  );
+  const [forgotPasswordErrors, setForgotPasswordErrors] =
+    useState<ForgotPasswordFormErrors>(initialForgotPasswordErrors);
 
   // Form state
-  const [submissionState, setSubmissionState] = useState<FormSubmissionState>('idle');
+  const [submissionState, setSubmissionState] = useState<FormSubmissionState>("idle");
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
 
   // Get current form data and errors based on mode
-  const currentData =
-    mode === 'signin' ? signInData : mode === 'signup' ? signUpData : forgotPasswordData;
-  const currentErrors =
-    mode === 'signin' ? signInErrors : mode === 'signup' ? signUpErrors : forgotPasswordErrors;
+  const currentData = mode === "signin" ? signInData : mode === "signup" ? signUpData : forgotPasswordData;
+  const currentErrors = mode === "signin" ? signInErrors : mode === "signup" ? signUpErrors : forgotPasswordErrors;
 
   // Update field value
   const updateField = useCallback(
     (field: string, value: string | boolean) => {
-      if (mode === 'signin') {
-        setSignInData((prev) => ({ ...prev, [field]: value }));
+      if (mode === "signin") {
+        setSignInData(prev => ({ ...prev, [field]: value }));
         // Clear field error when user starts typing
         if (signInErrors[field as keyof SignInFormErrors]) {
-          setSignInErrors((prev) => ({ ...prev, [field]: undefined }));
+          setSignInErrors(prev => ({ ...prev, [field]: undefined }));
         }
-      } else if (mode === 'signup') {
-        setSignUpData((prev) => ({ ...prev, [field]: value }));
+      } else if (mode === "signup") {
+        setSignUpData(prev => ({ ...prev, [field]: value }));
         // Clear field error when user starts typing
         if (signUpErrors[field as keyof SignUpFormErrors]) {
-          setSignUpErrors((prev) => ({ ...prev, [field]: undefined }));
+          setSignUpErrors(prev => ({ ...prev, [field]: undefined }));
         }
       } else {
-        setForgotPasswordData((prev) => ({ ...prev, [field]: value }));
+        setForgotPasswordData(prev => ({ ...prev, [field]: value }));
         // Clear field error when user starts typing
         if (forgotPasswordErrors[field as keyof ForgotPasswordFormErrors]) {
-          setForgotPasswordErrors((prev) => ({ ...prev, [field]: undefined }));
+          setForgotPasswordErrors(prev => ({ ...prev, [field]: undefined }));
         }
       }
     },
-    [mode, signInErrors, signUpErrors, forgotPasswordErrors]
+    [mode, signInErrors, signUpErrors, forgotPasswordErrors],
   );
 
   // Mark field as touched
   const markFieldTouched = useCallback((field: string) => {
-    setTouchedFields((prev) => new Set(prev).add(field));
+    setTouchedFields(prev => new Set(prev).add(field));
   }, []);
 
   // Validate current form
   const validateForm = useCallback(() => {
-    if (mode === 'signin') {
+    if (mode === "signin") {
       const result = validateSignInForm(signInData);
       setSignInErrors(result.errors as SignInFormErrors);
       return result.isValid;
-    } else if (mode === 'signup') {
+    } else if (mode === "signup") {
       const result = validateSignUpForm(signUpData);
       setSignUpErrors(result.errors as SignUpFormErrors);
       return result.isValid;
@@ -113,14 +105,12 @@ export const useAuthForm = (mode: AuthMode) => {
 
   // Submit form
   const submitForm = useCallback(
-    async (
-      onSubmit: (data: SignInFormData | SignUpFormData | ForgotPasswordFormData) => Promise<void>
-    ) => {
+    async (onSubmit: (data: SignInFormData | SignUpFormData | ForgotPasswordFormData) => Promise<void>) => {
       // Mark all fields as touched
       const allFields =
-        mode === 'signin'
+        mode === "signin"
           ? Object.keys(signInData)
-          : mode === 'signup'
+          : mode === "signup"
             ? Object.keys(signUpData)
             : Object.keys(forgotPasswordData);
       setTouchedFields(new Set(allFields));
@@ -132,17 +122,17 @@ export const useAuthForm = (mode: AuthMode) => {
       }
 
       // Set loading state
-      setSubmissionState('loading');
+      setSubmissionState("loading");
 
       try {
         await onSubmit(currentData);
-        setSubmissionState('success');
+        setSubmissionState("success");
 
         // Reset form on successful submission
-        if (mode === 'signin') {
+        if (mode === "signin") {
           setSignInData(initialSignInData);
           setSignInErrors(initialSignInErrors);
-        } else if (mode === 'signup') {
+        } else if (mode === "signup") {
           setSignUpData(initialSignUpData);
           setSignUpErrors(initialSignUpErrors);
         } else {
@@ -151,32 +141,29 @@ export const useAuthForm = (mode: AuthMode) => {
         }
         setTouchedFields(new Set());
       } catch (error) {
-        setSubmissionState('error');
+        setSubmissionState("error");
 
         // Set general error
-        const generalError =
-          error instanceof Error
-            ? error.message
-            : 'An unexpected error occurred. Please try again.';
+        const generalError = error instanceof Error ? error.message : "An unexpected error occurred. Please try again.";
 
-        if (mode === 'signin') {
-          setSignInErrors((prev) => ({ ...prev, general: generalError }));
-        } else if (mode === 'signup') {
-          setSignUpErrors((prev) => ({ ...prev, general: generalError }));
+        if (mode === "signin") {
+          setSignInErrors(prev => ({ ...prev, general: generalError }));
+        } else if (mode === "signup") {
+          setSignUpErrors(prev => ({ ...prev, general: generalError }));
         } else {
-          setForgotPasswordErrors((prev) => ({ ...prev, general: generalError }));
+          setForgotPasswordErrors(prev => ({ ...prev, general: generalError }));
         }
       }
     },
-    [mode, signInData, signUpData, forgotPasswordData, currentData, validateForm]
+    [mode, signInData, signUpData, forgotPasswordData, currentData, validateForm],
   );
 
   // Reset form state
   const resetForm = useCallback(() => {
-    if (mode === 'signin') {
+    if (mode === "signin") {
       setSignInData(initialSignInData);
       setSignInErrors(initialSignInErrors);
-    } else if (mode === 'signup') {
+    } else if (mode === "signup") {
       setSignUpData(initialSignUpData);
       setSignUpErrors(initialSignUpErrors);
     } else {
@@ -184,17 +171,17 @@ export const useAuthForm = (mode: AuthMode) => {
       setForgotPasswordErrors(initialForgotPasswordErrors);
     }
     setTouchedFields(new Set());
-    setSubmissionState('idle');
+    setSubmissionState("idle");
   }, [mode]);
 
   // Clear general error
   const clearGeneralError = useCallback(() => {
-    if (mode === 'signin') {
-      setSignInErrors((prev) => ({ ...prev, general: undefined }));
-    } else if (mode === 'signup') {
-      setSignUpErrors((prev) => ({ ...prev, general: undefined }));
+    if (mode === "signin") {
+      setSignInErrors(prev => ({ ...prev, general: undefined }));
+    } else if (mode === "signup") {
+      setSignUpErrors(prev => ({ ...prev, general: undefined }));
     } else {
-      setForgotPasswordErrors((prev) => ({ ...prev, general: undefined }));
+      setForgotPasswordErrors(prev => ({ ...prev, general: undefined }));
     }
   }, [mode]);
 
@@ -204,9 +191,9 @@ export const useAuthForm = (mode: AuthMode) => {
     errors: currentErrors,
 
     // Form state
-    isLoading: submissionState === 'loading',
-    isSuccess: submissionState === 'success',
-    isError: submissionState === 'error',
+    isLoading: submissionState === "loading",
+    isSuccess: submissionState === "success",
+    isError: submissionState === "error",
     touchedFields,
 
     // Actions

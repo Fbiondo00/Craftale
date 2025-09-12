@@ -9,7 +9,7 @@ export interface BuyerPersona {
     min: number;
     max: number;
   };
-  digitalMaturity: 'low' | 'medium' | 'high';
+  digitalMaturity: "low" | "medium" | "high";
   painPoints: string[];
   motivations: string[];
   recommendedTier: string;
@@ -31,7 +31,7 @@ export interface ServiceTier {
 export interface ServicePackage {
   id: string;
   name: string;
-  level: 'base' | 'standard' | 'premium';
+  level: "base" | "standard" | "premium";
   price: number;
   description: string;
   pages: number;
@@ -53,7 +53,7 @@ export interface TierFeature {
 
 export interface OptionalService {
   id: string;
-  category: 'photography' | 'copywriting' | 'technical' | 'marketing' | 'integration' | 'premium';
+  category: "photography" | "copywriting" | "technical" | "marketing" | "integration" | "premium";
   name: string;
   description: string;
   price: number;
@@ -63,13 +63,18 @@ export interface OptionalService {
 }
 
 export interface PersonaMatcherForm {
-  businessType: 'trattoria-familiare' | 'nuovo-imprenditore' | 'upscale-affermato' | 'catena-franchising' | 'specialista-regionale';
-  operationLength: 'new' | '1-3-years' | '3-10-years' | '10plus-years';
-  currentWebsite: 'none' | 'basic' | 'advanced' | 'needs-upgrade';
+  businessType:
+    | "trattoria-familiare"
+    | "nuovo-imprenditore"
+    | "upscale-affermato"
+    | "catena-franchising"
+    | "specialista-regionale";
+  operationLength: "new" | "1-3-years" | "3-10-years" | "10plus-years";
+  currentWebsite: "none" | "basic" | "advanced" | "needs-upgrade";
   primaryGoals: string[];
-  budget: 'under-1500' | '1500-3000' | '3000-5000' | '5000plus';
-  location: 'rural' | 'suburban' | 'urban' | 'tourist-area';
-  digitalComfort: 'low' | 'medium' | 'high';
+  budget: "under-1500" | "1500-3000" | "3000-5000" | "5000plus";
+  location: "rural" | "suburban" | "urban" | "tourist-area";
+  digitalComfort: "low" | "medium" | "high";
   services: string[];
 }
 
@@ -101,7 +106,7 @@ export interface PricingState {
   recommendation?: RecommendationResult;
   showComparison: boolean;
   expandedTier?: string;
-  currentStep: 'browse' | 'form' | 'recommendation' | 'customize' | 'quote';
+  currentStep: "browse" | "form" | "recommendation" | "customize" | "quote";
 }
 
 export interface TierCardProps {
@@ -133,4 +138,4 @@ export interface OptionalServicesProps {
   recommendedIds: string[];
   onToggle: (optionalId: string) => void;
   tierFilter?: string;
-} 
+}

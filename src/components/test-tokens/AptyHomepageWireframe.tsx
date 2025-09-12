@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 interface Section {
   name: string;
@@ -16,10 +16,10 @@ interface Section {
 function MobileWireframe() {
   const mobileSections: Section[] = [
     {
-      name: 'Header',
-      className: 'bg-apty-bg-base border-b border-apty-border-default',
-      height: 'h-14',
-      colorCode: 'bg-base / border-default',
+      name: "Header",
+      className: "bg-apty-bg-base border-b border-apty-border-default",
+      height: "h-14",
+      colorCode: "bg-base / border-default",
       elements: (
         <div className="flex items-center justify-between h-full px-4">
           {/* Logo */}
@@ -31,13 +31,13 @@ function MobileWireframe() {
             <div className="w-6 h-0.5 bg-apty-text-primary/60"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Hero Section',
-      className: 'bg-apty-bg-subtle',
-      height: 'h-[480px]',
-      colorCode: 'bg-subtle',
+      name: "Hero Section",
+      className: "bg-apty-bg-subtle",
+      height: "h-[480px]",
+      colorCode: "bg-subtle",
       elements: (
         <div className="px-4 py-12 space-y-6">
           {/* Badge */}
@@ -60,13 +60,13 @@ function MobileWireframe() {
             <div className="w-full h-12 rounded-lg border-[1.5px] border-apty-tertiary bg-transparent"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Trusted By Section',
-      className: 'bg-apty-bg-subtle border-b border-apty-border-default',
-      height: 'h-32',
-      colorCode: 'bg-subtle',
+      name: "Trusted By Section",
+      className: "bg-apty-bg-subtle border-b border-apty-border-default",
+      height: "h-32",
+      colorCode: "bg-subtle",
       elements: (
         <div className="px-4 py-8">
           {/* Section title */}
@@ -78,13 +78,13 @@ function MobileWireframe() {
             ))}
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Features Grid',
-      className: 'bg-apty-bg-base',
-      height: 'h-[600px]',
-      colorCode: 'bg-base',
+      name: "Features Grid",
+      className: "bg-apty-bg-base",
+      height: "h-[600px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-4 py-12 space-y-6">
           {/* Section title */}
@@ -106,13 +106,13 @@ function MobileWireframe() {
             ))}
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Stats Section',
-      className: 'bg-apty-bg-muted',
-      height: 'h-64',
-      colorCode: 'bg-muted',
+      name: "Stats Section",
+      className: "bg-apty-bg-muted",
+      height: "h-64",
+      colorCode: "bg-muted",
       elements: (
         <div className="px-4 py-12">
           {/* Section title */}
@@ -137,13 +137,13 @@ function MobileWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Code Section',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-[600px]',
-      colorCode: 'bg-inverse',
+      name: "Code Section",
+      className: "bg-apty-bg-inverse",
+      height: "h-[600px]",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-4 py-12 space-y-8">
           {/* Text content */}
@@ -189,13 +189,13 @@ function MobileWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Get SDK Section',
-      className: 'bg-apty-bg-base',
-      height: 'h-[400px]',
-      colorCode: 'bg-base',
+      name: "Get SDK Section",
+      className: "bg-apty-bg-base",
+      height: "h-[400px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-4 py-12">
           {/* Section title */}
@@ -210,13 +210,13 @@ function MobileWireframe() {
             ))}
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Alternating Features',
-      className: 'bg-apty-bg-base',
-      height: 'h-[1600px]',
-      colorCode: 'bg-base',
+      name: "Alternating Features",
+      className: "bg-apty-bg-base",
+      height: "h-[1600px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-4 py-12 space-y-12">
           {/* Feature 1 */}
@@ -298,13 +298,13 @@ function MobileWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Testimonials Carousel',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-96',
-      colorCode: 'bg-inverse',
+      name: "Testimonials Carousel",
+      className: "bg-apty-bg-inverse",
+      height: "h-96",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-4 py-12">
           {/* Section title */}
@@ -334,13 +334,13 @@ function MobileWireframe() {
             <div className="w-2 h-2 rounded-full bg-apty-text-inverse/20"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Enterprise Platform',
-      className: 'bg-apty-bg-base',
-      height: 'h-[500px]',
-      colorCode: 'bg-base',
+      name: "Enterprise Platform",
+      className: "bg-apty-bg-base",
+      height: "h-[500px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-4 py-12">
           {/* Section title */}
@@ -406,13 +406,13 @@ function MobileWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'CTA Section',
-      className: 'bg-apty-bg-subtle',
-      height: 'h-64',
-      colorCode: 'bg-subtle',
+      name: "CTA Section",
+      className: "bg-apty-bg-subtle",
+      height: "h-64",
+      colorCode: "bg-subtle",
       elements: (
         <div className="flex flex-col items-center justify-center h-full px-4">
           {/* Title */}
@@ -428,13 +428,13 @@ function MobileWireframe() {
             <div className="w-full h-12 rounded-lg border-[1.5px] border-apty-tertiary bg-transparent"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Customer Cases',
-      className: 'bg-apty-bg-muted',
-      height: 'h-[600px]',
-      colorCode: 'bg-muted',
+      name: "Customer Cases",
+      className: "bg-apty-bg-muted",
+      height: "h-[600px]",
+      colorCode: "bg-muted",
       elements: (
         <div className="px-4 py-12">
           {/* Section title */}
@@ -442,7 +442,10 @@ function MobileWireframe() {
           {/* Case study carousel - horizontal scroll */}
           <div className="flex space-x-4 overflow-x-auto pb-4">
             {[1, 2, 3, 4, 5, 6].map(i => (
-              <div key={i} className="w-72 flex-shrink-0 rounded-xl p-5 bg-apty-bg-base border border-apty-border-default">
+              <div
+                key={i}
+                className="w-72 flex-shrink-0 rounded-xl p-5 bg-apty-bg-base border border-apty-border-default"
+              >
                 <div className="flex items-center mb-3">
                   <div className="w-10 h-10 rounded-lg bg-apty-primary/20 mr-3"></div>
                   <div>
@@ -464,13 +467,13 @@ function MobileWireframe() {
             <div className="w-32 h-10 rounded-lg bg-apty-primary/10 border border-apty-primary/30"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Footer',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-[500px]',
-      colorCode: 'bg-inverse',
+      name: "Footer",
+      className: "bg-apty-bg-inverse",
+      height: "h-[500px]",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-4 py-8 space-y-8">
           {/* Logo and description */}
@@ -538,15 +541,13 @@ function MobileWireframe() {
             </div>
           </div>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
     <div className="w-full">
-      <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">
-        Mobile View
-      </h3>
+      <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">Mobile View</h3>
       <div className="w-full max-w-[375px] mx-auto">
         <div className="relative rounded-xl overflow-hidden border border-apty-border-default shadow-apty-xl">
           {mobileSections.map((section, index) => (
@@ -555,19 +556,15 @@ function MobileWireframe() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`relative ${section.height} ${section.className || ''}`}
+              className={`relative ${section.height} ${section.className || ""}`}
               style={section.additionalStyles}
             >
               {section.elements}
               {/* Section label overlay */}
               <div className="absolute top-2 right-2 bg-apty-bg-base/90 backdrop-blur-sm rounded-md px-2 py-1">
-                <p className="text-xs font-semibold text-apty-text-primary">
-                  {section.name}
-                </p>
+                <p className="text-xs font-semibold text-apty-text-primary">{section.name}</p>
                 {section.colorCode && (
-                  <p className="text-[10px] font-mono text-apty-text-secondary">
-                    {section.colorCode}
-                  </p>
+                  <p className="text-[10px] font-mono text-apty-text-secondary">{section.colorCode}</p>
                 )}
               </div>
             </motion.div>
@@ -581,10 +578,10 @@ function MobileWireframe() {
 export default function AptyHomepageWireframe() {
   const sections: Section[] = [
     {
-      name: 'Header',
-      className: 'bg-apty-bg-base border-b border-apty-border-default',
-      height: 'h-16',
-      colorCode: 'bg-base / border-default',
+      name: "Header",
+      className: "bg-apty-bg-base border-b border-apty-border-default",
+      height: "h-16",
+      colorCode: "bg-base / border-default",
       elements: (
         <div className="flex items-center justify-between h-full px-6">
           {/* Logo */}
@@ -602,13 +599,13 @@ export default function AptyHomepageWireframe() {
             <div className="w-24 h-9 rounded-lg bg-apty-primary"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Hero Section',
-      className: 'bg-apty-bg-subtle',
-      height: 'h-[480px]',
-      colorCode: 'bg-subtle',
+      name: "Hero Section",
+      className: "bg-apty-bg-subtle",
+      height: "h-[480px]",
+      colorCode: "bg-subtle",
       elements: (
         <div className="flex flex-col items-center justify-center h-full px-8 space-y-6">
           {/* Badge */}
@@ -629,13 +626,13 @@ export default function AptyHomepageWireframe() {
             <div className="w-36 h-12 rounded-lg border-[1.5px] border-apty-tertiary bg-transparent"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Trusted By Section',
-      className: 'bg-apty-bg-subtle border-b border-apty-border-default',
-      height: 'h-32',
-      colorCode: 'bg-subtle',
+      name: "Trusted By Section",
+      className: "bg-apty-bg-subtle border-b border-apty-border-default",
+      height: "h-32",
+      colorCode: "bg-subtle",
       elements: (
         <div className="px-8 py-8">
           {/* Section title */}
@@ -647,13 +644,13 @@ export default function AptyHomepageWireframe() {
             ))}
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Features Grid',
-      className: 'bg-apty-bg-base',
-      height: 'h-96',
-      colorCode: 'bg-base',
+      name: "Features Grid",
+      className: "bg-apty-bg-base",
+      height: "h-96",
+      colorCode: "bg-base",
       elements: (
         <div className="px-8 py-12">
           {/* Section title */}
@@ -689,13 +686,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Stats Section',
-      className: 'bg-apty-bg-muted',
-      height: 'h-64',
-      colorCode: 'bg-muted',
+      name: "Stats Section",
+      className: "bg-apty-bg-muted",
+      height: "h-64",
+      colorCode: "bg-muted",
       elements: (
         <div className="px-8 py-12">
           {/* Section title */}
@@ -722,13 +719,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Code Section',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-[480px]',
-      colorCode: 'bg-inverse',
+      name: "Code Section",
+      className: "bg-apty-bg-inverse",
+      height: "h-[480px]",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-8 py-12 flex">
           {/* Left content */}
@@ -783,13 +780,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Alternating Features',
-      className: 'bg-apty-bg-base',
-      height: 'h-[720px]',
-      colorCode: 'bg-base',
+      name: "Alternating Features",
+      className: "bg-apty-bg-base",
+      height: "h-[720px]",
+      colorCode: "bg-base",
       elements: (
         <div className="px-8 py-12 space-y-16">
           {/* Feature 1 - Left text, right image */}
@@ -821,13 +818,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Testimonials Carousel',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-96',
-      colorCode: 'bg-inverse',
+      name: "Testimonials Carousel",
+      className: "bg-apty-bg-inverse",
+      height: "h-96",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-8 py-12">
           {/* Section title */}
@@ -863,13 +860,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Enterprise Platform',
-      className: 'bg-apty-bg-base',
-      height: 'h-96',
-      colorCode: 'bg-base',
+      name: "Enterprise Platform",
+      className: "bg-apty-bg-base",
+      height: "h-96",
+      colorCode: "bg-base",
       elements: (
         <div className="px-8 py-16">
           {/* Section title */}
@@ -947,13 +944,13 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'CTA Section',
-      className: 'bg-apty-bg-subtle',
-      height: 'h-64',
-      colorCode: 'bg-subtle',
+      name: "CTA Section",
+      className: "bg-apty-bg-subtle",
+      height: "h-64",
+      colorCode: "bg-subtle",
       elements: (
         <div className="flex flex-col items-center justify-center h-full px-8">
           {/* Title */}
@@ -969,13 +966,13 @@ export default function AptyHomepageWireframe() {
             <div className="w-40 h-12 rounded-lg border-[1.5px] border-apty-tertiary bg-transparent"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Customer Cases',
-      className: 'bg-apty-bg-muted',
-      height: 'h-[800px]',
-      colorCode: 'bg-muted',
+      name: "Customer Cases",
+      className: "bg-apty-bg-muted",
+      height: "h-[800px]",
+      colorCode: "bg-muted",
       elements: (
         <div className="px-8 py-16">
           {/* Section title */}
@@ -1128,13 +1125,13 @@ export default function AptyHomepageWireframe() {
             <div className="w-32 h-10 rounded-lg bg-apty-primary/10 border border-apty-primary/30"></div>
           </div>
         </div>
-      )
+      ),
     },
     {
-      name: 'Footer',
-      className: 'bg-apty-bg-inverse',
-      height: 'h-80',
-      colorCode: 'bg-inverse',
+      name: "Footer",
+      className: "bg-apty-bg-inverse",
+      height: "h-80",
+      colorCode: "bg-inverse",
       elements: (
         <div className="px-8 py-10">
           {/* Top section */}
@@ -1148,7 +1145,7 @@ export default function AptyHomepageWireframe() {
               </div>
             </div>
             {/* Links columns */}
-            {[1, 2, 3, 4].map((col) => (
+            {[1, 2, 3, 4].map(col => (
               <div key={col}>
                 <div className="w-24 h-4 rounded mb-4 bg-apty-text-inverse/20"></div>
                 <div className="space-y-2">
@@ -1173,8 +1170,8 @@ export default function AptyHomepageWireframe() {
             </div>
           </div>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -1185,12 +1182,10 @@ export default function AptyHomepageWireframe() {
       <p className="text-base mb-8 text-apty-text-secondary">
         Visual representation with Apty design system - fully theme-aware
       </p>
-      
+
       {/* Desktop/Tablet View - Hidden on mobile */}
       <div className="hidden md:block mb-8">
-        <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">
-          Desktop View
-        </h3>
+        <h3 className="text-sm font-semibold tracking-[1.8px] uppercase mb-6 text-apty-text-secondary">Desktop View</h3>
         <div className="relative w-full max-w-7xl mx-auto">
           {/* Main wireframe container */}
           <div className="relative rounded-xl overflow-hidden border border-apty-border-default shadow-apty-xl">
@@ -1200,19 +1195,15 @@ export default function AptyHomepageWireframe() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className={`relative ${section.height} ${section.className || ''}`}
+                className={`relative ${section.height} ${section.className || ""}`}
                 style={section.additionalStyles}
               >
                 {section.elements}
                 {/* Tablet overlay labels - appear on tablets only */}
                 <div className="absolute top-2 right-2 lg:hidden bg-apty-bg-base/90 backdrop-blur-sm rounded-md px-2 py-1">
-                  <p className="text-xs font-semibold text-apty-text-primary">
-                    {section.name}
-                  </p>
+                  <p className="text-xs font-semibold text-apty-text-primary">{section.name}</p>
                   {section.colorCode && (
-                    <p className="text-[10px] font-mono text-apty-text-secondary">
-                      {section.colorCode}
-                    </p>
+                    <p className="text-[10px] font-mono text-apty-text-secondary">{section.colorCode}</p>
                   )}
                 </div>
               </motion.div>
@@ -1229,13 +1220,9 @@ export default function AptyHomepageWireframe() {
                 className={`${section.height} flex items-center`}
               >
                 <div className="pl-4">
-                  <p className="text-sm font-semibold text-apty-text-primary">
-                    {section.name}
-                  </p>
+                  <p className="text-sm font-semibold text-apty-text-primary">{section.name}</p>
                   {section.colorCode && (
-                    <p className="text-[11px] mt-1 font-mono text-apty-text-secondary">
-                      {section.colorCode}
-                    </p>
+                    <p className="text-[11px] mt-1 font-mono text-apty-text-secondary">{section.colorCode}</p>
                   )}
                 </div>
               </motion.div>

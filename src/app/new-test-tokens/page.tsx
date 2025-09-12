@@ -1,36 +1,1116 @@
 /**
  * new-test-tokens/page.tsx
- * 
+ *
  * APTY Design System test page with comprehensive dark mode implementation.
- * 
+ *
  * Purpose:
  * - Showcase all APTY design tokens in both light and dark modes
  * - Test theme switching functionality with real-time updates
  * - Demonstrate hover states, micro-interactions, and transitions
  * - Validate color contrast ratios for accessibility
  * - Serve as a living style guide for the design system
- * 
+ *
  * Features:
  * - Theme-aware components that adapt to light/dark mode
  * - Interactive elements showcasing all design tokens
  * - Comprehensive hover and focus states
  * - Loading state to prevent hydration mismatches
  * - Storage status indicator for debugging
- * 
+ *
  * Structure:
  * - ThemeProvider wrapper for context access
  * - TestTokensContent component for theme-aware rendering
  * - Fixed position theme toggle for easy access
- * 
+ *
  * @page
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import AptyHomepageWireframe from '@/components/test-tokens/AptyHomepageWireframe';
-import AptyPricingWireframe from '@/components/test-tokens/AptyPricingWireframe';
-import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import { useState } from "react";
+import AptyHomepageWireframe from "@/components/test-tokens/AptyHomepageWireframe";
+import AptyPricingWireframe from "@/components/test-tokens/AptyPricingWireframe";
+import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
+
+/**
+ * new-test-tokens/page.tsx
+ *
+ * APTY Design System test page with comprehensive dark mode implementation.
+ *
+ * Purpose:
+ * - Showcase all APTY design tokens in both light and dark modes
+ * - Test theme switching functionality with real-time updates
+ * - Demonstrate hover states, micro-interactions, and transitions
+ * - Validate color contrast ratios for accessibility
+ * - Serve as a living style guide for the design system
+ *
+ * Features:
+ * - Theme-aware components that adapt to light/dark mode
+ * - Interactive elements showcasing all design tokens
+ * - Comprehensive hover and focus states
+ * - Loading state to prevent hydration mismatches
+ * - Storage status indicator for debugging
+ *
+ * Structure:
+ * - ThemeProvider wrapper for context access
+ * - TestTokensContent component for theme-aware rendering
+ * - Fixed position theme toggle for easy access
+ *
+ * @page
+ */
 
 // Inner component that uses theme context
 function TestTokensContent() {
@@ -38,28 +1118,26 @@ function TestTokensContent() {
   const [isFocused, setIsFocused] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<string | null>(null);
   const { isDarkMode, hasStorageSupport, isInitialized } = useTheme();
-  
+
   return (
     <div className="min-h-screen bg-apty-bg-base text-apty-text-primary font-apty-body">
       <div className="container mx-auto p-8">
-        <h1 className="text-6xl font-bold mb-8 font-apty-heading apty-gradient-text">
-          APTY Design System Test Page
-        </h1>
+        <h1 className="text-6xl font-bold mb-8 font-apty-heading apty-gradient-text">APTY Design System Test Page</h1>
         <p className="text-lg text-apty-text-secondary mb-8">
           Production-grade design tokens with comprehensive hover states and micro-interactions
         </p>
-        
+
         {/* Dark Mode Status Indicator */}
         <div className="mb-8 p-4 bg-apty-bg-subtle rounded-apty-lg border border-apty-border-default">
           <p className="text-sm text-apty-text-tertiary">
             {isInitialized ? (
               <>
-                Current Mode: <span className="font-semibold text-apty-primary">{isDarkMode ? 'Dark' : 'Light'}</span>
-                {' • '}
+                Current Mode: <span className="font-semibold text-apty-primary">{isDarkMode ? "Dark" : "Light"}</span>
+                {" • "}
                 All APTY design tokens automatically adapt to the selected theme
                 {!hasStorageSupport && (
                   <>
-                    {' • '}
+                    {" • "}
                     <span className="text-apty-warning">Storage unavailable - preferences won't persist</span>
                   </>
                 )}
@@ -69,7 +1147,7 @@ function TestTokensContent() {
             )}
           </p>
         </div>
-        
+
         {/* Brand Colors with Interactive States */}
         <section className="mb-12">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-apty-text-secondary mb-6 font-apty-heading">
@@ -78,24 +1156,44 @@ function TestTokensContent() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="apty-hover-lift">
               <div className="w-full h-20 bg-apty-primary rounded-apty-lg mb-2 apty-transition hover:bg-apty-primary-hover active:bg-apty-primary-active"></div>
-              <p className="text-sm">apty-primary<br/>#6720FF</p>
+              <p className="text-sm">
+                apty-primary
+                <br />
+                #6720FF
+              </p>
               <p className="text-xs text-apty-text-tertiary">Hover & Active states</p>
             </div>
             <div className="apty-hover-lift">
               <div className="w-full h-20 bg-apty-secondary rounded-apty-lg mb-2 apty-transition hover:bg-apty-secondary-hover"></div>
-              <p className="text-sm">apty-secondary<br/>#5033FF</p>
+              <p className="text-sm">
+                apty-secondary
+                <br />
+                #5033FF
+              </p>
             </div>
             <div className="apty-hover-lift">
               <div className="w-full h-20 bg-apty-tertiary rounded-apty-lg mb-2 apty-transition hover:bg-apty-tertiary-hover"></div>
-              <p className="text-sm">apty-tertiary<br/>#A176FF</p>
+              <p className="text-sm">
+                apty-tertiary
+                <br />
+                #A176FF
+              </p>
             </div>
             <div className="apty-hover-lift">
               <div className="w-full h-20 bg-apty-accent rounded-apty-lg mb-2 apty-transition hover:bg-apty-accent-hover active:bg-apty-accent-active"></div>
-              <p className="text-sm">apty-accent<br/>#FF4E8C</p>
+              <p className="text-sm">
+                apty-accent
+                <br />
+                #FF4E8C
+              </p>
             </div>
             <div className="apty-hover-lift">
               <div className="w-full h-20 bg-apty-bg-inverse rounded-apty-lg mb-2 apty-transition hover:bg-apty-bg-inverse-hover"></div>
-              <p className="text-sm">apty-inverse<br/>#191919</p>
+              <p className="text-sm">
+                apty-inverse
+                <br />
+                #191919
+              </p>
             </div>
           </div>
         </section>
@@ -106,14 +1204,14 @@ function TestTokensContent() {
             Gradients with Hover Effects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div 
+            <div
               className="h-20 rounded-apty-lg bg-apty-gradient-primary apty-transition apty-hover-lift cursor-pointer"
-              onMouseEnter={() => setIsHovered('gradient1')}
+              onMouseEnter={() => setIsHovered("gradient1")}
               onMouseLeave={() => setIsHovered(null)}
             >
               <div className="h-full rounded-apty-lg flex items-center justify-center">
                 <p className="text-apty-text-on-brand font-semibold">
-                  {isHovered === 'gradient1' ? 'Hovered!' : 'apty-gradient-primary'}
+                  {isHovered === "gradient1" ? "Hovered!" : "apty-gradient-primary"}
                 </p>
               </div>
             </div>
@@ -132,9 +1230,7 @@ function TestTokensContent() {
             <h1 className="text-6xl font-bold font-apty-heading text-apty-text-primary apty-transition hover:text-apty-primary cursor-pointer">
               Heading with Hover Effect
             </h1>
-            <h2 className="text-4xl font-semibold font-apty-heading text-apty-text-primary">
-              Section Heading
-            </h2>
+            <h2 className="text-4xl font-semibold font-apty-heading text-apty-text-primary">Section Heading</h2>
             <p className="text-lg text-apty-text-secondary apty-transition hover:text-apty-text-secondary-hover">
               Body text that changes color on hover - a key APTY interaction pattern
             </p>
@@ -154,12 +1250,8 @@ function TestTokensContent() {
             Buttons with Micro-interactions
           </h2>
           <div className="flex flex-wrap gap-4">
-            <button className="apty-button apty-button-primary">
-              Primary Button
-            </button>
-            <button className="apty-button apty-button-secondary">
-              Secondary Button
-            </button>
+            <button className="apty-button apty-button-primary">Primary Button</button>
+            <button className="apty-button apty-button-secondary">Secondary Button</button>
             <button className="px-4 py-2 bg-apty-bg-inverse text-apty-text-inverse rounded-apty-md apty-transition hover:bg-apty-bg-inverse-hover apty-hover-lift apty-active-scale">
               Dark Button
             </button>
@@ -182,24 +1274,24 @@ function TestTokensContent() {
               type="text"
               placeholder="Text input with hover and focus states"
               className="apty-input"
-              onFocus={() => setIsFocused('input1')}
+              onFocus={() => setIsFocused("input1")}
               onBlur={() => setIsFocused(null)}
             />
-            {isFocused === 'input1' && (
+            {isFocused === "input1" && (
               <p className="text-sm text-apty-primary animate-apty-fade">Focus ring active with brand color</p>
             )}
-            
+
             <select className="apty-input">
               <option>Select with APTY styling</option>
               <option>Option 1</option>
               <option>Option 2</option>
             </select>
-            
+
             <textarea
               placeholder="Textarea with all interactive states"
               className="apty-input min-h-[100px] resize-none"
             />
-            
+
             <div className="flex items-center space-x-3">
               <label className="flex items-center cursor-pointer group">
                 <input type="checkbox" className="mr-2" />
@@ -228,25 +1320,19 @@ function TestTokensContent() {
               <h3 className="text-lg font-semibold mb-2 text-apty-text-primary hover:text-apty-primary apty-transition cursor-pointer">
                 Feature Card
               </h3>
-              <p className="text-sm text-apty-text-secondary">
-                Card lifts on hover with smooth shadow transition
-              </p>
+              <p className="text-sm text-apty-text-secondary">Card lifts on hover with smooth shadow transition</p>
             </div>
-            
+
             <div className="bg-apty-bg-elevated p-6 rounded-apty-lg border-2 border-apty-primary shadow-apty-brand apty-transition hover:shadow-apty-brand-lg hover:-translate-y-1">
               <div className="w-12 h-12 bg-apty-gradient-primary rounded-apty-md mb-4"></div>
               <h3 className="text-lg font-semibold mb-2">Highlighted Card</h3>
-              <p className="text-sm text-apty-text-secondary">
-                Primary border with brand shadow
-              </p>
+              <p className="text-sm text-apty-text-secondary">Primary border with brand shadow</p>
             </div>
-            
+
             <div className="bg-apty-bg-inverse p-6 rounded-apty-lg apty-transition hover:bg-apty-bg-inverse-hover apty-hover-lift">
               <div className="w-12 h-12 bg-apty-accent rounded-apty-md mb-4"></div>
               <h3 className="text-lg font-semibold mb-2 text-apty-text-inverse">Dark Card</h3>
-              <p className="text-sm text-apty-text-inverse opacity-80">
-                Dark theme with hover background change
-              </p>
+              <p className="text-sm text-apty-text-inverse opacity-80">Dark theme with hover background change</p>
             </div>
           </div>
         </section>
@@ -304,8 +1390,11 @@ function TestTokensContent() {
           </h2>
           <div className="space-y-4">
             <p className="text-lg">
-              This is a paragraph with an <a href="#" className="apty-link underline">inline link</a> that changes from black to purple on hover,
-              matching APTY's signature interaction pattern.
+              This is a paragraph with an{" "}
+              <a href="#" className="apty-link underline">
+                inline link
+              </a>{" "}
+              that changes from black to purple on hover, matching APTY's signature interaction pattern.
             </p>
             <p className="text-lg text-apty-text-secondary apty-transition hover:text-apty-text-primary cursor-pointer">
               Entire paragraph becomes primary color on hover
@@ -333,8 +1422,14 @@ function TestTokensContent() {
             <div className="animate-spin h-8 w-8 border-4 border-apty-primary border-t-transparent rounded-full"></div>
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-apty-primary rounded-full animate-apty-pulse"></div>
-              <div className="w-3 h-3 bg-apty-primary rounded-full animate-apty-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-3 h-3 bg-apty-primary rounded-full animate-apty-pulse" style={{ animationDelay: '0.4s' }}></div>
+              <div
+                className="w-3 h-3 bg-apty-primary rounded-full animate-apty-pulse"
+                style={{ animationDelay: "0.2s" }}
+              ></div>
+              <div
+                className="w-3 h-3 bg-apty-primary rounded-full animate-apty-pulse"
+                style={{ animationDelay: "0.4s" }}
+              ></div>
             </div>
             <div className="h-2 w-32 bg-apty-bg-muted rounded-full overflow-hidden">
               <div className="h-full w-1/2 bg-apty-gradient-primary animate-pulse"></div>
@@ -397,9 +1492,7 @@ function TestTokensContent() {
             Transition Timing & Easing
           </h2>
           <div className="space-y-4">
-            <div 
-              className="bg-apty-primary text-white p-4 rounded-apty-md text-center duration-apty-fast ease-apty-smooth hover:bg-apty-primary-hover cursor-pointer"
-            >
+            <div className="bg-apty-primary text-white p-4 rounded-apty-md text-center duration-apty-fast ease-apty-smooth hover:bg-apty-primary-hover cursor-pointer">
               Fast Transition (150ms)
             </div>
             <div className="bg-apty-secondary text-white p-4 rounded-apty-md text-center duration-apty-normal ease-apty-smooth hover:bg-apty-secondary-hover cursor-pointer">
@@ -456,24 +1549,22 @@ function TestTokensContent() {
             Micro-interactions Showcase
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button 
+            <button
               className="p-4 bg-apty-bg-subtle rounded-apty-lg apty-transition hover:bg-apty-bg-selected group"
-              onMouseEnter={() => setIsHovered('micro1')}
+              onMouseEnter={() => setIsHovered("micro1")}
               onMouseLeave={() => setIsHovered(null)}
             >
               <div className="text-apty-text-primary group-hover:text-apty-primary apty-transition">
-                {isHovered === 'micro1' ? '✓' : '+'} Hover Transform
+                {isHovered === "micro1" ? "✓" : "+"} Hover Transform
               </div>
             </button>
-            
-            <button className="p-4 bg-apty-bg-subtle rounded-apty-lg apty-hover-scale">
-              Scale on Hover
-            </button>
-            
+
+            <button className="p-4 bg-apty-bg-subtle rounded-apty-lg apty-hover-scale">Scale on Hover</button>
+
             <button className="p-4 bg-apty-bg-subtle rounded-apty-lg apty-transition hover:rotate-3">
               Rotate on Hover
             </button>
-            
+
             <button className="p-4 bg-apty-gradient-primary text-white rounded-apty-lg apty-transition hover:opacity-90 active:scale-95">
               Multi-state Button
             </button>

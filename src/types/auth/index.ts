@@ -33,7 +33,7 @@ export interface SignUpFormErrors extends BaseFormErrors {
 }
 
 // Form submission states
-export type FormSubmissionState = 'idle' | 'loading' | 'success' | 'error';
+export type FormSubmissionState = "idle" | "loading" | "success" | "error";
 
 // Forgot password form data
 export interface ForgotPasswordFormData {
@@ -46,7 +46,7 @@ export interface ForgotPasswordFormErrors {
 }
 
 // Authentication mode
-export type AuthMode = 'signin' | 'signup' | 'forgot-password';
+export type AuthMode = "signin" | "signup" | "forgot-password";
 
 // Form validation result
 export interface ValidationResult {

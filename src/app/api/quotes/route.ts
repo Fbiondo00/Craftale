@@ -1,29 +1,30 @@
-import { createClient } from '@/lib/supabase/server'
-import { NextRequest, NextResponse } from 'next/server'
-import type { QuoteSummary } from '@/types/database-extended'
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import type { QuoteSummary } from "@/types/database-extended";
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     }
-    
-    const searchParams = request.nextUrl.searchParams
-    const status = searchParams.get('status')
-    const limit = parseInt(searchParams.get('limit') || '10')
-    const offset = parseInt(searchParams.get('offset') || '0')
-    
+
+    const searchParams = request.nextUrl.searchParams;
+    const status = searchParams.get("status");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const offset = parseInt(searchParams.get("offset") || "0");
+
     // Build query
     let query = supabase
-      .from('user_quotes')
-      .select(`
+      .from("user_quotes")
+      .select(
+        `
         id,
         quote_number,
         status,
@@ -37,23 +38,25 @@ export async function GET(request: NextRequest) {
           name,
           level_code
         )
-      `, { count: 'exact' })
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
-    
+      `,
+        { count: "exact" },
+      )
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .range(offset, offset + limit - 1);
+
     // Apply status filter if provided
-    if (status && status !== 'all') {
-      query = query.eq('status', status)
+    if (status && status !== "all") {
+      query = query.eq("status", status);
     }
-    
-    const { data: quotes, error, count } = await query
-    
+
+    const { data: quotes, error, count } = await query;
+
     if (error) {
-      console.error('Error fetching quotes:', error)
-      throw error
+      console.error("Error fetching quotes:", error);
+      throw error;
     }
-    
+
     // Transform to QuoteSummary format
     const quoteSummaries: QuoteSummary[] = (quotes || []).map((quote: any) => ({
       id: quote.id,
@@ -63,20 +66,17 @@ export async function GET(request: NextRequest) {
       created_at: quote.created_at,
       expires_at: quote.expires_at,
       tier_name: quote.pricing_tiers?.name,
-      level_name: quote.pricing_levels?.name
-    }))
-    
-    return NextResponse.json({ 
+      level_name: quote.pricing_levels?.name,
+    }));
+
+    return NextResponse.json({
       quotes: quoteSummaries,
       total: count || 0,
       limit,
-      offset
-    })
+      offset,
+    });
   } catch (error) {
-    console.error('Error fetching quotes:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch quotes' },
-      { status: 500 }
-    )
+    console.error("Error fetching quotes:", error);
+    return NextResponse.json({ error: "Failed to fetch quotes" }, { status: 500 });
   }
 }

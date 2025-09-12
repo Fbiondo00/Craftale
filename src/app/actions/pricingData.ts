@@ -1,21 +1,21 @@
-'use server'
+"use server";
 
 // Server Actions for pricing data
 // These use direct calls instead of FormData for efficient data fetching
-
-import { createClient } from '@/lib/supabase/server'
-import type { TierWithLevels } from '@/types/database-extended'
+import { createClient } from "@/lib/supabase/server";
+import type { TierWithLevels } from "@/types/database-extended";
 
 // Server Action to get pricing tiers with levels
 // Called directly from Server and Client Components for data fetching
 export async function getPricingTiers() {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     // Fetch tiers with their levels
     const { data: tiers, error } = await supabase
-      .from('pricing_tiers')
-      .select(`
+      .from("pricing_tiers")
+      .select(
+        `
         *,
         pricing_levels (
           id,
@@ -27,17 +27,18 @@ export async function getPricingTiers() {
           sort_order,
           is_active
         )
-      `)
-      .eq('is_active', true)
-      .order('sort_order')
-      
+      `,
+      )
+      .eq("is_active", true)
+      .order("sort_order");
+
     if (error) {
-      console.error('Error fetching pricing tiers:', error)
-      throw error
+      console.error("Error fetching pricing tiers:", error);
+      throw error;
     }
-    
+
     // Transform data to match expected format
-  const tiersWithLevels: TierWithLevels[] = (tiers || []).map((tier: any) => ({
+    const tiersWithLevels: TierWithLevels[] = (tiers || []).map((tier: any) => ({
       id: tier.id,
       slug: tier.slug,
       name: tier.name,
@@ -52,22 +53,22 @@ export async function getPricingTiers() {
           name: level.name,
           price: level.price,
           original_price: level.original_price,
-          features: level.features || []
-        }))
-    }))
-    
+          features: level.features || [],
+        })),
+    }));
+
     return {
       success: true,
-      tiers: tiersWithLevels
-    }
+      tiers: tiersWithLevels,
+    };
   } catch (error) {
-    console.error('Error in getPricingTiersAction:', error)
+    console.error("Error in getPricingTiersAction:", error);
     return {
       success: false,
-      error: 'Failed to fetch pricing data'
-    }
+      error: "Failed to fetch pricing data",
+    };
   }
 }
 
 // Alias for backward compatibility
-export const getPricingTiersAction = getPricingTiers
+export const getPricingTiersAction = getPricingTiers;

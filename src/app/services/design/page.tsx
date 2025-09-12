@@ -1,84 +1,109 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
-import { 
-  Clock, Shield, 
-  ArrowRight, CheckCircle2, AlertCircle, 
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { AptyPrimaryButton } from "@/components/apty/AptyButton";
+import CTASection from "@/components/home/CTASection";
+import FAQSection from "@/components/sections/FAQSection";
+import { LumaSpin } from "@/components/ui/luma-spin";
+import { animate, motion, useInView } from "framer-motion";
+import {
+  AlertCircle,
+  ArrowRight,
+  Brain,
+  CheckCircle2,
+  Clock,
   Eye,
-  MousePointer, Layers, Monitor,
-  Brain, Timer,
-  Globe, Lock, Gauge
-} from 'lucide-react';
-import { AptyPrimaryButton } from '@/components/apty/AptyButton';
-import CTASection from '@/components/home/CTASection';
-import FAQSection from '@/components/sections/FAQSection';
-import Link from 'next/link';
-import { LumaSpin } from '@/components/ui/luma-spin';
+  Gauge,
+  Globe,
+  Layers,
+  Lock,
+  Monitor,
+  MousePointer,
+  Shield,
+  Timer,
+} from "lucide-react";
 
 // Animated counter component
-function Counter({ from = 0, to, duration = 2, suffix = '', prefix = '' }: { from?: number; to: number; duration?: number; suffix?: string; prefix?: string }) {
+function Counter({
+  from = 0,
+  to,
+  duration = 2,
+  suffix = "",
+  prefix = "",
+}: {
+  from?: number;
+  to: number;
+  duration?: number;
+  suffix?: string;
+  prefix?: string;
+}) {
   const nodeRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(nodeRef, { once: true, margin: '-100px' });
-  
+  const inView = useInView(nodeRef, { once: true, margin: "-100px" });
+
   useEffect(() => {
     if (!inView) return;
-    
+
     const node = nodeRef.current;
     if (!node) return;
-    
+
     const controls = animate(from, to, {
       duration,
       onUpdate(value) {
         node.textContent = prefix + Math.floor(value).toString() + suffix;
       },
     });
-    
+
     return () => controls.stop();
   }, [from, to, duration, suffix, prefix, inView]);
-  
-  return <span ref={nodeRef}>{prefix}{from}</span>;
+
+  return (
+    <span ref={nodeRef}>
+      {prefix}
+      {from}
+    </span>
+  );
 }
 
 // FAQ Questions for Italian SMBs - Design Services
 const designFAQs = [
   {
     q: "Quanto costa un design professionale per una PMI? Vale l'investimento?",
-    a: "Un design professionale costa tra €1.500-5.000 per PMI italiane. Il ROI è concreto: il 70% delle PMI con presenza online professionale vede aumenti di preventivi e conversioni entro 12 mesi. In 50ms i clienti giudicano la vostra credibilità - il 94% delle decisioni dipende dal design. Un investimento che si ripaga con autorevolezza e conversioni misurabili."
+    a: "Un design professionale costa tra €1.500-5.000 per PMI italiane. Il ROI è concreto: il 70% delle PMI con presenza online professionale vede aumenti di preventivi e conversioni entro 12 mesi. In 50ms i clienti giudicano la vostra credibilità - il 94% delle decisioni dipende dal design. Un investimento che si ripaga con autorevolezza e conversioni misurabili.",
   },
   {
     q: "Quanto conta davvero il design per trasmettere fiducia nel mercato italiano?",
-    a: "Fondamentale. La prima impressione si forma in 50 millisecondi e il 94% è basata sul design. Per le PMI italiane, comunicare professionalità è vitale. Un design curato con 'segnali di fiducia' (recensioni verificate, certificazioni, dati aziendali trasparenti) aumenta la credibilità del 75%. Nel mercato italiano, l'estetica e la cura dei dettagli sono sinonimo di affidabilità e qualità del servizio."
+    a: "Fondamentale. La prima impressione si forma in 50 millisecondi e il 94% è basata sul design. Per le PMI italiane, comunicare professionalità è vitale. Un design curato con 'segnali di fiducia' (recensioni verificate, certificazioni, dati aziendali trasparenti) aumenta la credibilità del 75%. Nel mercato italiano, l'estetica e la cura dei dettagli sono sinonimo di affidabilità e qualità del servizio.",
   },
   {
     q: "Il design responsive è davvero necessario per il nostro target?",
-    a: "Assolutamente sì. Il 65% del traffico italiano è mobile, con picchi del 78% per ricerche locali. Senza design responsive perdete oltre metà dei clienti potenziali. Gli italiani utilizzano lo smartphone per tutto: prenotazioni, acquisti, ricerca fornitori, confronto prezzi. Un sito non ottimizzato per mobile nel 2024 comunica inadeguatezza tecnologica e scarsa attenzione all'esperienza cliente."
+    a: "Assolutamente sì. Il 65% del traffico italiano è mobile, con picchi del 78% per ricerche locali. Senza design responsive perdete oltre metà dei clienti potenziali. Gli italiani utilizzano lo smartphone per tutto: prenotazioni, acquisti, ricerca fornitori, confronto prezzi. Un sito non ottimizzato per mobile nel 2024 comunica inadeguatezza tecnologica e scarsa attenzione all'esperienza cliente.",
   },
   {
     q: "Come garantite che il brand sia coerente ovunque?",
-    a: "Creiamo un design system completo: logo, palette colori, tipografia, tono di voce coerenti su sito web, social media, email marketing, materiali stampati. Nel mercato italiano la coerenza visiva equivale ad affidabilità professionale. Un'identità coordinata rafforza il ricordo del marchio del 40% e aumenta la fiducia dei clienti. L'immagine aziendale coerente diventa asset strategico per la crescita."
+    a: "Creiamo un design system completo: logo, palette colori, tipografia, tono di voce coerenti su sito web, social media, email marketing, materiali stampati. Nel mercato italiano la coerenza visiva equivale ad affidabilità professionale. Un'identità coordinata rafforza il ricordo del marchio del 40% e aumenta la fiducia dei clienti. L'immagine aziendale coerente diventa asset strategico per la crescita.",
   },
   {
     q: "Perché non usare semplicemente un template o strumenti fai-da-te?",
-    a: "Template e strumenti DIY hanno costi iniziali bassi ma limitazioni critiche. Un design custom offre: differenziazione totale dai competitor (zero rischio di siti identici), ottimizzazione specifica per il vostro settore e target, conversioni superiori del 30-50%, integrazione di funzionalità su misura, SEO ottimizzato per il mercato locale. L'unicità del design comunica professionalità e attenzione al cliente che i template non possono garantire."
+    a: "Template e strumenti DIY hanno costi iniziali bassi ma limitazioni critiche. Un design custom offre: differenziazione totale dai competitor (zero rischio di siti identici), ottimizzazione specifica per il vostro settore e target, conversioni superiori del 30-50%, integrazione di funzionalità su misura, SEO ottimizzato per il mercato locale. L'unicità del design comunica professionalità e attenzione al cliente che i template non possono garantire.",
   },
   {
     q: "Il design influenza davvero le vendite e i contatti?",
-    a: "Dati alla mano: sì. Il 88% degli utenti non ritorna dopo una cattiva esperienza visiva. Un design professionale aumenta le conversioni del 30-50%, riduce il bounce rate dal 55% al 35%, incrementa il tempo di permanenza del 40%. Per le PMI italiane significa più preventivi qualificati, clienti che completano gli acquisti, maggiore autorevolezza percepita. Il design non è estetica, è strategia di business misurabile."
+    a: "Dati alla mano: sì. Il 88% degli utenti non ritorna dopo una cattiva esperienza visiva. Un design professionale aumenta le conversioni del 30-50%, riduce il bounce rate dal 55% al 35%, incrementa il tempo di permanenza del 40%. Per le PMI italiane significa più preventivi qualificati, clienti che completano gli acquisti, maggiore autorevolezza percepita. Il design non è estetica, è strategia di business misurabile.",
   },
   {
     q: "Come verifico che il design stia funzionando?",
-    a: "Con metriche concrete: tasso di conversione (quanti visitatori diventano clienti), tempo permanenza sul sito, percentuale di abbandono, profondità di navigazione, heatmap delle interazioni. Forniamo report mensili con analisi del comportamento utenti, A/B test per ottimizzazioni continue, confronto con benchmark di settore. Ogni modifica è guidata da dati reali, non opinioni."
+    a: "Con metriche concrete: tasso di conversione (quanti visitatori diventano clienti), tempo permanenza sul sito, percentuale di abbandono, profondità di navigazione, heatmap delle interazioni. Forniamo report mensili con analisi del comportamento utenti, A/B test per ottimizzazioni continue, confronto con benchmark di settore. Ogni modifica è guidata da dati reali, non opinioni.",
   },
   {
     q: "Quali sono le tempistiche per un progetto di design completo?",
-    a: "15-45 giorni lavorativi secondo complessità e obiettivi. Fase 1: analisi aziendale e competitor (3-5 giorni). Fase 2: concept e proposte creative (5-7 giorni). Fase 3: sviluppo design definitivo (7-15 giorni). Fase 4: implementazione e ottimizzazioni (5-10 giorni). Fase 5: test e formazione team (3-5 giorni). Comunicazione costante con milestone settimanali per garantire allineamento totale."
-  }
+    a: "15-45 giorni lavorativi secondo complessità e obiettivi. Fase 1: analisi aziendale e competitor (3-5 giorni). Fase 2: concept e proposte creative (5-7 giorni). Fase 3: sviluppo design definitivo (7-15 giorni). Fase 4: implementazione e ottimizzazioni (5-10 giorni). Fase 5: test e formazione team (3-5 giorni). Comunicazione costante con milestone settimanali per garantire allineamento totale.",
+  },
 ];
 
 export default function WebsiteDesignPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'psychology' | 'metrics' | 'technical'>('psychology');
+  const [activeTab, setActiveTab] = useState<"psychology" | "metrics" | "technical">("psychology");
 
   useEffect(() => {
     setIsLoading(false);
@@ -86,92 +111,97 @@ export default function WebsiteDesignPage() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen bg-apty-bg-base flex items-center justify-center'>
+      <div className="min-h-screen bg-apty-bg-base flex items-center justify-center">
         <LumaSpin size={80} />
       </div>
     );
   }
 
   return (
-    <div className='min-h-screen bg-apty-bg-base overflow-x-hidden'>
+    <div className="min-h-screen bg-apty-bg-base overflow-x-hidden">
       {/* Hero Section - Full Width Immersive */}
-      <section className='relative min-h-[90vh] flex items-center justify-center bg-apty-bg-inverse py-16 md:py-0'>
-        <div className='container mx-auto px-4'>
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-apty-bg-inverse py-16 md:py-0">
+        <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className='max-w-5xl mx-auto text-center pt-8 md:pt-0'
+            className="max-w-5xl mx-auto text-center pt-8 md:pt-0"
           >
             {/* Badge */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className='inline-flex items-center gap-2 px-6 py-3 bg-apty-bg-base/10 backdrop-blur-md rounded-full mb-6 md:mb-8 border border-white/20'
+              className="inline-flex items-center gap-2 px-6 py-3 bg-apty-bg-base/10 backdrop-blur-md rounded-full mb-6 md:mb-8 border border-white/20"
             >
-              <Timer className='w-4 h-4 text-apty-text-inverse' />
-              <span className='text-sm font-medium text-apty-text-inverse'>50ms per creare un'impressione</span>
+              <Timer className="w-4 h-4 text-apty-text-inverse" />
+              <span className="text-sm font-medium text-apty-text-inverse">50ms per creare un'impressione</span>
             </motion.div>
 
             {/* Main Headline */}
-            <h1 className='text-[48px] md:text-[72px] leading-[1.1] font-bold font-apty-heading text-apty-text-inverse mb-6'>
-              <span className='text-apty-primary'>94%</span> delle prime impressioni
+            <h1 className="text-[48px] md:text-[72px] leading-[1.1] font-bold font-apty-heading text-apty-text-inverse mb-6">
+              <span className="text-apty-primary">94%</span> delle prime impressioni
               <br />
-              sono <span className='bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent'>legate al design</span>
+              sono{" "}
+              <span className="bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent">
+                legate al design
+              </span>
             </h1>
 
             {/* Subheadline */}
-            <p className='text-xl md:text-2xl text-apty-text-inverse/80 mb-8 max-w-3xl mx-auto leading-relaxed'>
-              Gli utenti decidono in 50 millisecondi. Un design mediocre ti fa perdere 
-              <span className='font-semibold text-apty-text-inverse'> l'88% dei visitatori per sempre</span>. 
-              Creiamo esperienze che trasformano i visitatori in clienti.
+            <p className="text-xl md:text-2xl text-apty-text-inverse/80 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Gli utenti decidono in 50 millisecondi. Un design mediocre ti fa perdere
+              <span className="font-semibold text-apty-text-inverse"> l'88% dei visitatori per sempre</span>. Creiamo
+              esperienze che trasformano i visitatori in clienti.
             </p>
 
             {/* Key Stats Bar */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className='grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto'
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto"
             >
-              <div className='text-center'>
-                <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
-                  <Counter to={50} suffix='ms' />
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-apty-text-inverse">
+                  <Counter to={50} suffix="ms" />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Per formare un'impressione</div>
+                <div className="text-xs md:text-sm text-apty-text-inverse/60">Per formare un'impressione</div>
               </div>
-              <div className='text-center'>
-                <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
-                  <Counter to={94} suffix='%' />
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-apty-text-inverse">
+                  <Counter to={94} suffix="%" />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Giudizio basato sul visual</div>
+                <div className="text-xs md:text-sm text-apty-text-inverse/60">Giudizio basato sul visual</div>
               </div>
-              <div className='text-center'>
-                <div className='text-3xl md:text-4xl font-bold text-apty-text-inverse'>
-                  <Counter to={88} suffix='%' />
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-apty-text-inverse">
+                  <Counter to={88} suffix="%" />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Non tornano dopo cattiva UX</div>
+                <div className="text-xs md:text-sm text-apty-text-inverse/60">Non tornano dopo cattiva UX</div>
               </div>
-              <div className='text-center'>
-                <div className='text-3xl md:text-4xl font-bold text-apty-primary'>
-                  <Counter to={48} suffix='%' />
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-apty-primary">
+                  <Counter to={48} suffix="%" />
                 </div>
-                <div className='text-xs md:text-sm text-apty-text-inverse/60'>Conversioni in più con segnali di fiducia</div>
+                <div className="text-xs md:text-sm text-apty-text-inverse/60">
+                  Conversioni in più con segnali di fiducia
+                </div>
               </div>
             </motion.div>
 
             {/* CTAs */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className='flex flex-col sm:flex-row gap-4 justify-center mb-16 md:mb-0'
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-16 md:mb-0"
             >
-              <Link href='/pricing'>
-                <AptyPrimaryButton size='xl' className='min-w-[200px]'>
+              <Link href="/pricing">
+                <AptyPrimaryButton size="xl" className="min-w-[200px]">
                   Richiedi il Tuo Design Audit
-                  <ArrowRight className='w-5 h-5 ml-2' />
+                  <ArrowRight className="w-5 h-5 ml-2" />
                 </AptyPrimaryButton>
               </Link>
             </motion.div>
@@ -179,47 +209,67 @@ export default function WebsiteDesignPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
-          className='absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block'
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          <div className='w-6 h-10 border-2 border-white/30 rounded-full flex justify-center'>
-            <div className='w-1 h-3 bg-apty-bg-base/60 rounded-full mt-2' />
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-apty-bg-base/60 rounded-full mt-2" />
           </div>
         </motion.div>
       </section>
 
       {/* First Impressions & User Psychology Section */}
-      <section className='py-24 md:py-32 bg-apty-bg-base'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-24 md:py-32 bg-apty-bg-base">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              La <span className='text-apty-primary'>Psicologia</span> delle Prime Impressioni
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              La <span className="text-apty-primary">Psicologia</span> delle Prime Impressioni
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Capire come gli utenti prendono decisioni in millisecondi sul tuo brand
             </p>
           </motion.div>
 
           {/* Timeline Visual */}
-          <div className='max-w-5xl mx-auto mb-16'>
-            <div className='relative'>
+          <div className="max-w-5xl mx-auto mb-16">
+            <div className="relative">
               {/* Timeline bar */}
-              <div className='absolute left-0 right-0 top-[30px] md:top-[34px] h-2 bg-gradient-to-r from-apty-primary via-apty-secondary to-apty-tertiary rounded-full' />
-              
+              <div className="absolute left-0 right-0 top-[30px] md:top-[34px] h-2 bg-gradient-to-r from-apty-primary via-apty-secondary to-apty-tertiary rounded-full" />
+
               {/* Timeline points */}
-              <div className='relative flex justify-between'>
+              <div className="relative flex justify-between">
                 {[
-                  { time: '0-50ms', event: 'Elaborazione Visiva', desc: 'Il cervello elabora la gerarchia visiva', impact: '94% dell\'impressione' },
-                  { time: '50-500ms', event: 'Risposta Emotiva', desc: 'Si forma fiducia & credibilità', impact: '75% giudica la credibilità' },
-                  { time: '1-3s', event: 'Punto di Decisione', desc: 'Decisione resta o abbandona', impact: '88% non torna' },
-                  { time: '3-5s', event: 'Engagement', desc: 'Inizia valutazione contenuti', impact: 'Solo se il design convince' }
+                  {
+                    time: "0-50ms",
+                    event: "Elaborazione Visiva",
+                    desc: "Il cervello elabora la gerarchia visiva",
+                    impact: "94% dell'impressione",
+                  },
+                  {
+                    time: "50-500ms",
+                    event: "Risposta Emotiva",
+                    desc: "Si forma fiducia & credibilità",
+                    impact: "75% giudica la credibilità",
+                  },
+                  {
+                    time: "1-3s",
+                    event: "Punto di Decisione",
+                    desc: "Decisione resta o abbandona",
+                    impact: "88% non torna",
+                  },
+                  {
+                    time: "3-5s",
+                    event: "Engagement",
+                    desc: "Inizia valutazione contenuti",
+                    impact: "Solo se il design convince",
+                  },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -227,14 +277,14 @@ export default function WebsiteDesignPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className='flex flex-col items-center relative'
+                    className="flex flex-col items-center relative"
                   >
-                    <div className='absolute top-[24px] md:top-[28px] w-4 h-4 md:w-5 md:h-5 bg-apty-bg-base border-4 border-apty-primary rounded-full z-10' />
-                    <div className='text-center pt-14 md:pt-16'>
-                      <div className='text-xs md:text-sm font-bold text-apty-primary mb-1'>{item.time}</div>
-                      <div className='text-xs md:text-base font-semibold text-apty-text-primary mb-1'>{item.event}</div>
-                      <div className='text-xs text-apty-text-secondary hidden md:block'>{item.desc}</div>
-                      <div className='text-xs md:text-sm font-bold text-apty-tertiary mt-1'>{item.impact}</div>
+                    <div className="absolute top-[24px] md:top-[28px] w-4 h-4 md:w-5 md:h-5 bg-apty-bg-base border-4 border-apty-primary rounded-full z-10" />
+                    <div className="text-center pt-14 md:pt-16">
+                      <div className="text-xs md:text-sm font-bold text-apty-primary mb-1">{item.time}</div>
+                      <div className="text-xs md:text-base font-semibold text-apty-text-primary mb-1">{item.event}</div>
+                      <div className="text-xs text-apty-text-secondary hidden md:block">{item.desc}</div>
+                      <div className="text-xs md:text-sm font-bold text-apty-tertiary mt-1">{item.impact}</div>
                     </div>
                   </motion.div>
                 ))}
@@ -243,18 +293,19 @@ export default function WebsiteDesignPage() {
           </div>
 
           {/* Visual Impact Stats */}
-          <div className='grid md:grid-cols-3 gap-6 max-w-5xl mx-auto'>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
+              className="bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle"
             >
-              <Brain className='w-12 h-12 text-apty-primary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Elaborazione Visiva</h3>
-              <div className='text-4xl font-bold text-apty-primary mb-2'>50ms</div>
-              <p className='text-apty-text-secondary'>
-                Il cervello umano elabora le informazioni visive in soli 50 millisecondi – più veloce di un battito di ciglia.
+              <Brain className="w-12 h-12 text-apty-primary mb-4" />
+              <h3 className="text-2xl font-bold text-apty-text-primary mb-2">Elaborazione Visiva</h3>
+              <div className="text-4xl font-bold text-apty-primary mb-2">50ms</div>
+              <p className="text-apty-text-secondary">
+                Il cervello umano elabora le informazioni visive in soli 50 millisecondi – più veloce di un battito di
+                ciglia.
               </p>
             </motion.div>
 
@@ -263,13 +314,14 @@ export default function WebsiteDesignPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
+              className="bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle"
             >
-              <Eye className='w-12 h-12 text-apty-secondary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Peso Visivo</h3>
-              <div className='text-4xl font-bold text-apty-secondary mb-2'>94%</div>
-              <p className='text-apty-text-secondary'>
-                L'aspetto visivo determina il 94% delle prime impressioni, superando di gran lunga il contenuto al primo sguardo.
+              <Eye className="w-12 h-12 text-apty-secondary mb-4" />
+              <h3 className="text-2xl font-bold text-apty-text-primary mb-2">Peso Visivo</h3>
+              <div className="text-4xl font-bold text-apty-secondary mb-2">94%</div>
+              <p className="text-apty-text-secondary">
+                L'aspetto visivo determina il 94% delle prime impressioni, superando di gran lunga il contenuto al primo
+                sguardo.
               </p>
             </motion.div>
 
@@ -278,75 +330,91 @@ export default function WebsiteDesignPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
+              className="bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle"
             >
-              <Shield className='w-12 h-12 text-apty-tertiary mb-4' />
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-2'>Decisione di Fiducia</h3>
-              <div className='text-4xl font-bold text-apty-tertiary mb-2'>3 sec</div>
-              <p className='text-apty-text-secondary'>
-                Gli utenti decidono se fidarsi del tuo sito entro 3 secondi. I segnali di fiducia devono essere immediatamente visibili.
+              <Shield className="w-12 h-12 text-apty-tertiary mb-4" />
+              <h3 className="text-2xl font-bold text-apty-text-primary mb-2">Decisione di Fiducia</h3>
+              <div className="text-4xl font-bold text-apty-tertiary mb-2">3 sec</div>
+              <p className="text-apty-text-secondary">
+                Gli utenti decidono se fidarsi del tuo sito entro 3 secondi. I segnali di fiducia devono essere
+                immediatamente visibili.
               </p>
             </motion.div>
           </div>
 
           {/* Source Links */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Fonti: 
-              <a href='https://thesis.unipd.it/retrieve/f13e24c5-a1db-4dc2-b7e6-3aea71493acd/Lazzaro_Mattia.pdf' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Università di Padova</a>,
-              <a href='https://www.shopify.com/it/blog/design-psicologico' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Shopify Italia</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Fonti:
+              <a
+                href="https://thesis.unipd.it/retrieve/f13e24c5-a1db-4dc2-b7e6-3aea71493acd/Lazzaro_Mattia.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Università di Padova
+              </a>
+              ,
+              <a
+                href="https://www.shopify.com/it/blog/design-psicologico"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Shopify Italia
+              </a>
             </p>
           </div>
         </div>
       </section>
 
       {/* Conversion Benchmarks by Industry */}
-      <section id='conversion-data' className='py-24 md:py-32 bg-apty-bg-subtle'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section id="conversion-data" className="py-24 md:py-32 bg-apty-bg-subtle">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Benchmark di <span className='text-apty-primary'>Conversione per Settore</span> 2025
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Benchmark di <span className="text-apty-primary">Conversione per Settore</span> 2025
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Insight basati sui dati da migliaia di siti in diversi settori
             </p>
           </motion.div>
 
           {/* Tabbed Content */}
-          <div className='max-w-6xl mx-auto'>
-            <div className='flex justify-center mb-12'>
-              <div className='bg-apty-bg-base rounded-lg p-1 flex gap-1'>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex justify-center mb-12">
+              <div className="bg-apty-bg-base rounded-lg p-1 flex gap-1">
                 <button
-                  onClick={() => setActiveTab('psychology')}
+                  onClick={() => setActiveTab("psychology")}
                   className={`px-6 py-3 rounded-md transition-all ${
-                    activeTab === 'psychology' 
-                      ? 'bg-apty-primary text-apty-text-inverse' 
-                      : 'text-apty-text-secondary hover:text-apty-text-primary'
+                    activeTab === "psychology"
+                      ? "bg-apty-primary text-apty-text-inverse"
+                      : "text-apty-text-secondary hover:text-apty-text-primary"
                   }`}
                 >
                   Comportamento Utenti
                 </button>
                 <button
-                  onClick={() => setActiveTab('metrics')}
+                  onClick={() => setActiveTab("metrics")}
                   className={`px-6 py-3 rounded-md transition-all ${
-                    activeTab === 'metrics' 
-                      ? 'bg-apty-primary text-apty-text-inverse' 
-                      : 'text-apty-text-secondary hover:text-apty-text-primary'
+                    activeTab === "metrics"
+                      ? "bg-apty-primary text-apty-text-inverse"
+                      : "text-apty-text-secondary hover:text-apty-text-primary"
                   }`}
                 >
                   Metriche di Settore
                 </button>
                 <button
-                  onClick={() => setActiveTab('technical')}
+                  onClick={() => setActiveTab("technical")}
                   className={`px-6 py-3 rounded-md transition-all ${
-                    activeTab === 'technical' 
-                      ? 'bg-apty-primary text-apty-text-inverse' 
-                      : 'text-apty-text-secondary hover:text-apty-text-primary'
+                    activeTab === "technical"
+                      ? "bg-apty-primary text-apty-text-inverse"
+                      : "text-apty-text-secondary hover:text-apty-text-primary"
                   }`}
                 >
                   Impatto Tecnico
@@ -356,81 +424,91 @@ export default function WebsiteDesignPage() {
 
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, x: activeTab === 'psychology' ? -20 : activeTab === 'metrics' ? 0 : 20 }}
+              initial={{ opacity: 0, x: activeTab === "psychology" ? -20 : activeTab === "metrics" ? 0 : 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3 }}
             >
-              {activeTab === 'psychology' && (
-                <div className='grid md:grid-cols-2 gap-6'>
+              {activeTab === "psychology" && (
+                <div className="grid md:grid-cols-2 gap-6">
                   {/* Tasso di Rimbalzo per Complessità del Design */}
-                  <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Impatto della Complessità del Design</h3>
-                    <div className='space-y-4'>
-                      <div className='flex justify-between items-center'>
-                        <span className='text-apty-text-primary font-medium'>Design Affollato</span>
-                        <div className='flex items-center gap-2'>
-                          <div className='text-2xl font-bold text-apty-state-error'>55-70%</div>
-                          <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
+                  <div className="bg-apty-bg-base rounded-2xl p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-apty-text-primary mb-6">
+                      Impatto della Complessità del Design
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-apty-text-primary font-medium">Design Affollato</span>
+                        <div className="flex items-center gap-2">
+                          <div className="text-2xl font-bold text-apty-state-error">55-70%</div>
+                          <span className="text-sm text-apty-text-secondary">tasso di rimbalzo</span>
                         </div>
                       </div>
-                      <div className='w-full bg-apty-bg-base rounded-full h-3'>
-                        <div className='h-3 bg-gradient-to-r from-apty-state-error to-apty-accent rounded-full' style={{ width: '70%' }} />
-                      </div>
-                      
-                      <div className='flex justify-between items-center mt-6'>
-                        <span className='text-apty-text-primary font-medium'>Design Minimalista</span>
-                        <div className='flex items-center gap-2'>
-                          <div className='text-2xl font-bold text-apty-state-success'>35-50%</div>
-                          <span className='text-sm text-apty-text-secondary'>tasso di rimbalzo</span>
-                        </div>
-                      </div>
-                      <div className='w-full bg-apty-bg-base rounded-full h-3'>
-                        <div className='h-3 bg-gradient-to-r from-apty-state-success to-apty-primary rounded-full' style={{ width: '42%' }} />
+                      <div className="w-full bg-apty-bg-base rounded-full h-3">
+                        <div
+                          className="h-3 bg-gradient-to-r from-apty-state-error to-apty-accent rounded-full"
+                          style={{ width: "70%" }}
+                        />
                       </div>
 
-                      <div className='mt-6 p-4 bg-apty-bg-subtle rounded-lg'>
-                        <p className='text-sm text-apty-text-secondary'>
-                          <strong className='text-apty-primary'>-22% conversione</strong> con layout affollati per sovraccarico cognitivo
+                      <div className="flex justify-between items-center mt-6">
+                        <span className="text-apty-text-primary font-medium">Design Minimalista</span>
+                        <div className="flex items-center gap-2">
+                          <div className="text-2xl font-bold text-apty-state-success">35-50%</div>
+                          <span className="text-sm text-apty-text-secondary">tasso di rimbalzo</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-apty-bg-base rounded-full h-3">
+                        <div
+                          className="h-3 bg-gradient-to-r from-apty-state-success to-apty-primary rounded-full"
+                          style={{ width: "42%" }}
+                        />
+                      </div>
+
+                      <div className="mt-6 p-4 bg-apty-bg-subtle rounded-lg">
+                        <p className="text-sm text-apty-text-secondary">
+                          <strong className="text-apty-primary">-22% conversione</strong> con layout affollati per
+                          sovraccarico cognitivo
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Scroll Depth Analysis */}
-                  <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Comportamento di Scroll Utente</h3>
-                    <div className='space-y-6'>
+                  <div className="bg-apty-bg-base rounded-2xl p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-apty-text-primary mb-6">Comportamento di Scroll Utente</h3>
+                    <div className="space-y-6">
                       <div>
-                        <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>Prima schermata</span>
-                          <span className='font-bold text-apty-primary'>100%</span>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-apty-text-primary">Prima schermata</span>
+                          <span className="font-bold text-apty-primary">100%</span>
                         </div>
-                        <div className='w-full bg-apty-bg-base rounded-full h-3'>
-                          <div className='h-3 bg-apty-primary rounded-full w-full' />
+                        <div className="w-full bg-apty-bg-base rounded-full h-3">
+                          <div className="h-3 bg-apty-primary rounded-full w-full" />
                         </div>
                       </div>
                       <div>
-                        <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>Profondità scroll 50%</span>
-                          <span className='font-bold text-apty-secondary'>70%</span>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-apty-text-primary">Profondità scroll 50%</span>
+                          <span className="font-bold text-apty-secondary">70%</span>
                         </div>
-                        <div className='w-full bg-apty-bg-base rounded-full h-3'>
-                          <div className='h-3 bg-apty-secondary rounded-full' style={{ width: '70%' }} />
+                        <div className="w-full bg-apty-bg-base rounded-full h-3">
+                          <div className="h-3 bg-apty-secondary rounded-full" style={{ width: "70%" }} />
                         </div>
                       </div>
                       <div>
-                        <div className='flex justify-between mb-2'>
-                          <span className='text-apty-text-primary'>Fondo pagina</span>
-                          <span className='font-bold text-apty-tertiary'>20%</span>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-apty-text-primary">Fondo pagina</span>
+                          <span className="font-bold text-apty-tertiary">20%</span>
                         </div>
-                        <div className='w-full bg-apty-bg-base rounded-full h-3'>
-                          <div className='h-3 bg-apty-tertiary rounded-full' style={{ width: '20%' }} />
+                        <div className="w-full bg-apty-bg-base rounded-full h-3">
+                          <div className="h-3 bg-apty-tertiary rounded-full" style={{ width: "20%" }} />
                         </div>
                       </div>
-                      
-                      <div className='p-4 bg-apty-primary/10 rounded-lg'>
-                        <p className='text-sm text-apty-text-primary'>
-                          <strong>Pagine ad alte performance:</strong> oltre il 70% degli utenti raggiunge il 50% di scroll
+
+                      <div className="p-4 bg-apty-primary/10 rounded-lg">
+                        <p className="text-sm text-apty-text-primary">
+                          <strong>Pagine ad alte performance:</strong> oltre il 70% degli utenti raggiunge il 50% di
+                          scroll
                         </p>
                       </div>
                     </div>
@@ -438,41 +516,41 @@ export default function WebsiteDesignPage() {
                 </div>
               )}
 
-              {activeTab === 'metrics' && (
-                <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
+              {activeTab === "metrics" && (
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { 
-                      industry: 'E-commerce', 
-                      icon: '🛍️', 
-                      average: '2.5-3%', 
-                      top: '5%+',
-                      improvement: '+30-50%',
-                      color: 'from-apty-primary to-apty-secondary'
+                    {
+                      industry: "E-commerce",
+                      icon: "🛍️",
+                      average: "2.5-3%",
+                      top: "5%+",
+                      improvement: "+30-50%",
+                      color: "from-apty-primary to-apty-secondary",
                     },
-                    { 
-                      industry: 'B2B/SaaS', 
-                      icon: '💼', 
-                      average: '1.5-2.9%', 
-                      top: '5%',
-                      improvement: '+40%',
-                      color: 'from-apty-state-success to-apty-tertiary'
+                    {
+                      industry: "B2B/SaaS",
+                      icon: "💼",
+                      average: "1.5-2.9%",
+                      top: "5%",
+                      improvement: "+40%",
+                      color: "from-apty-state-success to-apty-tertiary",
                     },
-                    { 
-                      industry: 'Financial', 
-                      icon: '💳', 
-                      average: '5-7%', 
-                      top: '10%+',
-                      improvement: '+25%',
-                      color: 'from-apty-primary to-apty-accent'
+                    {
+                      industry: "Financial",
+                      icon: "💳",
+                      average: "5-7%",
+                      top: "10%+",
+                      improvement: "+25%",
+                      color: "from-apty-primary to-apty-accent",
                     },
-                    { 
-                      industry: 'Healthcare', 
-                      icon: '🏥', 
-                      average: '3-5%', 
-                      top: '8%+',
-                      improvement: '+35%',
-                      color: 'from-apty-secondary to-apty-primary'
-                    }
+                    {
+                      industry: "Healthcare",
+                      icon: "🏥",
+                      average: "3-5%",
+                      top: "8%+",
+                      improvement: "+35%",
+                      color: "from-apty-secondary to-apty-primary",
+                    },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -480,28 +558,32 @@ export default function WebsiteDesignPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
-                      className='group relative'
+                      className="group relative"
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl blur-xl`} />
-                      <div className='relative bg-apty-bg-base rounded-2xl p-6 border border-apty-border-subtle hover:border-apty-primary/30 transition-all hover:shadow-lg'>
-                        <div className='text-4xl mb-4'>{item.icon}</div>
-                        <h3 className='text-xl font-semibold text-apty-text-primary mb-4'>{item.industry}</h3>
-                        
-                        <div className='space-y-3'>
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl blur-xl`}
+                      />
+                      <div className="relative bg-apty-bg-base rounded-2xl p-6 border border-apty-border-subtle hover:border-apty-primary/30 transition-all hover:shadow-lg">
+                        <div className="text-4xl mb-4">{item.icon}</div>
+                        <h3 className="text-xl font-semibold text-apty-text-primary mb-4">{item.industry}</h3>
+
+                        <div className="space-y-3">
                           <div>
-                            <div className='text-sm text-apty-text-secondary mb-1'>Media di Settore</div>
-                            <div className='text-2xl font-bold text-apty-text-primary'>{item.average}</div>
+                            <div className="text-sm text-apty-text-secondary mb-1">Media di Settore</div>
+                            <div className="text-2xl font-bold text-apty-text-primary">{item.average}</div>
                           </div>
-                          <div className='h-px bg-apty-border-subtle' />
+                          <div className="h-px bg-apty-border-subtle" />
                           <div>
-                            <div className='text-sm text-apty-text-secondary mb-1'>Migliori Risultati</div>
-                            <div className={`text-2xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+                            <div className="text-sm text-apty-text-secondary mb-1">Migliori Risultati</div>
+                            <div
+                              className={`text-2xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
+                            >
                               {item.top}
                             </div>
                           </div>
-                          <div className='pt-3 border-t border-apty-border-subtle'>
-                            <div className='text-sm text-apty-text-secondary'>Con Design Professionale</div>
-                            <div className='text-lg font-bold text-apty-state-success'>{item.improvement}</div>
+                          <div className="pt-3 border-t border-apty-border-subtle">
+                            <div className="text-sm text-apty-text-secondary">Con Design Professionale</div>
+                            <div className="text-lg font-bold text-apty-state-success">{item.improvement}</div>
                           </div>
                         </div>
                       </div>
@@ -510,92 +592,98 @@ export default function WebsiteDesignPage() {
                 </div>
               )}
 
-              {activeTab === 'technical' && (
-                <div className='space-y-8'>
+              {activeTab === "technical" && (
+                <div className="space-y-8">
                   {/* Loading Time Impact */}
-                  <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Soglie di Performance & Abbandono</h3>
-                    <div className='grid md:grid-cols-3 gap-6'>
-                      <div className='text-center p-4 bg-apty-state-success/10 rounded-lg'>
-                        <Gauge className='w-8 h-8 text-apty-state-success mx-auto mb-2' />
-                        <div className='text-3xl font-bold text-apty-state-success'>{'<2.5s'}</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>Obiettivo LCP</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>10% abbandono</div>
+                  <div className="bg-apty-bg-base rounded-2xl p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-apty-text-primary mb-6">
+                      Soglie di Performance & Abbandono
+                    </h3>
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="text-center p-4 bg-apty-state-success/10 rounded-lg">
+                        <Gauge className="w-8 h-8 text-apty-state-success mx-auto mb-2" />
+                        <div className="text-3xl font-bold text-apty-state-success">{"<2.5s"}</div>
+                        <div className="text-sm text-apty-text-secondary mt-1">Obiettivo LCP</div>
+                        <div className="text-xs text-apty-text-primary mt-2">10% abbandono</div>
                       </div>
-                      <div className='text-center p-4 bg-apty-accent/10 rounded-lg'>
-                        <Clock className='w-8 h-8 text-apty-accent mx-auto mb-2' />
-                        <div className='text-3xl font-bold text-apty-accent'>3-4s</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>Zona Attenzione</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>25% abbandono</div>
+                      <div className="text-center p-4 bg-apty-accent/10 rounded-lg">
+                        <Clock className="w-8 h-8 text-apty-accent mx-auto mb-2" />
+                        <div className="text-3xl font-bold text-apty-accent">3-4s</div>
+                        <div className="text-sm text-apty-text-secondary mt-1">Zona Attenzione</div>
+                        <div className="text-xs text-apty-text-primary mt-2">25% abbandono</div>
                       </div>
-                      <div className='text-center p-4 bg-apty-state-error/10 rounded-lg'>
-                        <AlertCircle className='w-8 h-8 text-apty-state-error mx-auto mb-2' />
-                        <div className='text-3xl font-bold text-apty-state-error'>{'>4s'}</div>
-                        <div className='text-sm text-apty-text-secondary mt-1'>Critico</div>
-                        <div className='text-xs text-apty-text-primary mt-2'>50%+ abbandono</div>
+                      <div className="text-center p-4 bg-apty-state-error/10 rounded-lg">
+                        <AlertCircle className="w-8 h-8 text-apty-state-error mx-auto mb-2" />
+                        <div className="text-3xl font-bold text-apty-state-error">{">4s"}</div>
+                        <div className="text-sm text-apty-text-secondary mt-1">Critico</div>
+                        <div className="text-xs text-apty-text-primary mt-2">50%+ abbandono</div>
                       </div>
                     </div>
-                    
-                    <div className='mt-6 space-y-4'>
-                      <div className='flex items-start gap-3'>
-                        <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
+
+                    <div className="mt-6 space-y-4">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-apty-primary mt-1" />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Ottimizzazione Immagini</div>
-                          <div className='text-sm text-apty-text-secondary'>Formati WebP/AVIF e lazy loading riducono l'LCP del 30-50%</div>
+                          <div className="font-medium text-apty-text-primary">Ottimizzazione Immagini</div>
+                          <div className="text-sm text-apty-text-secondary">
+                            Formati WebP/AVIF e lazy loading riducono l'LCP del 30-50%
+                          </div>
                         </div>
                       </div>
-                      <div className='flex items-start gap-3'>
-                        <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-apty-primary mt-1" />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Strategia Font</div>
-                          <div className='text-sm text-apty-text-secondary'>Precaricare i font critici migliora l'FCP del 20%</div>
+                          <div className="font-medium text-apty-text-primary">Strategia Font</div>
+                          <div className="text-sm text-apty-text-secondary">
+                            Precaricare i font critici migliora l'FCP del 20%
+                          </div>
                         </div>
                       </div>
-                      <div className='flex items-start gap-3'>
-                        <CheckCircle2 className='w-5 h-5 text-apty-primary mt-1' />
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-apty-primary mt-1" />
                         <div>
-                          <div className='font-medium text-apty-text-primary'>Performance Animazioni</div>
-                          <div className='text-sm text-apty-text-secondary'>INP {'<200ms'} per interazioni fluide</div>
+                          <div className="font-medium text-apty-text-primary">Performance Animazioni</div>
+                          <div className="text-sm text-apty-text-secondary">INP {"<200ms"} per interazioni fluide</div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Core Web Vitals Impact */}
-                  <div className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'>
-                    <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Core Web Vitals & Impatto SEO</h3>
-                    <div className='grid md:grid-cols-2 gap-6'>
+                  <div className="bg-apty-bg-base rounded-2xl p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-apty-text-primary mb-6">Core Web Vitals & Impatto SEO</h3>
+                    <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className='font-semibold text-apty-text-primary mb-4'>Soddisfare i Core Web Vitals</h4>
-                        <div className='space-y-3'>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Tasso di Conversione</span>
-                            <span className='font-bold text-apty-state-success'>+10-30%</span>
+                        <h4 className="font-semibold text-apty-text-primary mb-4">Soddisfare i Core Web Vitals</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Tasso di Conversione</span>
+                            <span className="font-bold text-apty-state-success">+10-30%</span>
                           </div>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Traffico Organico</span>
-                            <span className='font-bold text-apty-state-success'>+15-25%</span>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Traffico Organico</span>
+                            <span className="font-bold text-apty-state-success">+15-25%</span>
                           </div>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Conversioni Mobile</span>
-                            <span className='font-bold text-apty-state-success'>+27%</span>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Conversioni Mobile</span>
+                            <span className="font-bold text-apty-state-success">+27%</span>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h4 className='font-semibold text-apty-text-primary mb-4'>Non Soddisfare i Core Web Vitals</h4>
-                        <div className='space-y-3'>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Calo Posizionamenti</span>
-                            <span className='font-bold text-apty-state-error'>-10-20%</span>
+                        <h4 className="font-semibold text-apty-text-primary mb-4">Non Soddisfare i Core Web Vitals</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Calo Posizionamenti</span>
+                            <span className="font-bold text-apty-state-error">-10-20%</span>
                           </div>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Coinvolgimento Utenti</span>
-                            <span className='font-bold text-apty-state-error'>-15-40%</span>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Coinvolgimento Utenti</span>
+                            <span className="font-bold text-apty-state-error">-15-40%</span>
                           </div>
-                          <div className='flex items-center justify-between'>
-                            <span className='text-sm text-apty-text-secondary'>Impatto sui Ricavi</span>
-                            <span className='font-bold text-apty-state-error'>-20%+</span>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-apty-text-secondary">Impatto sui Ricavi</span>
+                            <span className="font-bold text-apty-state-error">-20%+</span>
                           </div>
                         </div>
                       </div>
@@ -607,45 +695,68 @@ export default function WebsiteDesignPage() {
           </div>
 
           {/* Source Links */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Fonti: 
-              <a href='https://www.consorzionetcomm.it/servizi/studi-e-ricerche/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Consorzio Netcomm</a>,
-              <a href='https://web.dev/vitals/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Google Web Vitals 2024</a>,
-              <a href='https://www.osservatori.net/it/ricerche/osservatori/ecommerce-b2c' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Politecnico di Milano</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Fonti:
+              <a
+                href="https://www.consorzionetcomm.it/servizi/studi-e-ricerche/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Consorzio Netcomm
+              </a>
+              ,
+              <a
+                href="https://web.dev/vitals/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Google Web Vitals 2024
+              </a>
+              ,
+              <a
+                href="https://www.osservatori.net/it/ricerche/osservatori/ecommerce-b2c"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Politecnico di Milano
+              </a>
             </p>
           </div>
         </div>
       </section>
 
       {/* Forms & Conversion Optimization */}
-      <section className='py-24 md:py-32 bg-apty-bg-base'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-24 md:py-32 bg-apty-bg-base">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Design dei Form & <span className='text-apty-primary'>Scienza della Conversione</span>
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Design dei Form & <span className="text-apty-primary">Scienza della Conversione</span>
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Ogni campo conta. Insight guidati dai dati sull'ottimizzazione dei form.
             </p>
           </motion.div>
 
-          <div className='max-w-5xl mx-auto'>
+          <div className="max-w-5xl mx-auto">
             {/* Form Field Impact Chart */}
-            <div className='bg-apty-bg-elevated rounded-2xl p-8 mb-8'>
-              <h3 className='text-2xl font-bold text-apty-text-primary mb-6'>Abbandono del Form in base ai Campi</h3>
-              
-              <div className='space-y-6'>
+            <div className="bg-apty-bg-elevated rounded-2xl p-8 mb-8">
+              <h3 className="text-2xl font-bold text-apty-text-primary mb-6">Abbandono del Form in base ai Campi</h3>
+
+              <div className="space-y-6">
                 {[
-                  { fields: '3 campi', rate: 12, color: 'bg-apty-primary' },
-                  { fields: '5 campi', rate: 25, color: 'bg-apty-accent' },
-                  { fields: '6 campi', rate: 33, color: 'bg-apty-secondary' },
-                  { fields: '8+ campi', rate: 60, color: 'bg-apty-tertiary' }
+                  { fields: "3 campi", rate: 12, color: "bg-apty-primary" },
+                  { fields: "5 campi", rate: 25, color: "bg-apty-accent" },
+                  { fields: "6 campi", rate: 33, color: "bg-apty-secondary" },
+                  { fields: "8+ campi", rate: 60, color: "bg-apty-tertiary" },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -654,12 +765,12 @@ export default function WebsiteDesignPage() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <div className='flex items-center justify-between mb-2'>
-                      <span className='font-medium text-apty-text-primary'>{item.fields}</span>
-                      <span className='text-2xl font-bold text-apty-text-primary'>{item.rate}%</span>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-apty-text-primary">{item.fields}</span>
+                      <span className="text-2xl font-bold text-apty-text-primary">{item.rate}%</span>
                     </div>
-                    <div className='w-full bg-apty-bg-base rounded-full h-4 overflow-hidden'>
-                      <div 
+                    <div className="w-full bg-apty-bg-base rounded-full h-4 overflow-hidden">
+                      <div
                         className={`h-full ${item.color} rounded-full transition-all duration-1000 ease-out`}
                         style={{ width: `${item.rate}%` }}
                       />
@@ -668,49 +779,49 @@ export default function WebsiteDesignPage() {
                 ))}
               </div>
 
-              <div className='mt-8 p-4 bg-apty-primary/10 rounded-lg'>
-                <p className='text-sm text-apty-text-primary'>
+              <div className="mt-8 p-4 bg-apty-primary/10 rounded-lg">
+                <p className="text-sm text-apty-text-primary">
                   <strong>Evidenza Chiave:</strong> Ogni campo aggiuntivo aumenta l'abbandono dell'8-10%
                 </p>
               </div>
             </div>
 
             {/* Form Optimization Techniques */}
-            <div className='grid md:grid-cols-2 gap-6'>
+            <div className="grid md:grid-cols-2 gap-6">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-elevated rounded-xl p-6'
+                className="bg-apty-bg-elevated rounded-xl p-6"
               >
-                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Tecniche di Ottimizzazione Provate</h3>
-                <div className='space-y-3'>
-                  <div className='flex items-start gap-3'>
-                    <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
+                <h3 className="text-xl font-bold text-apty-text-primary mb-4">Tecniche di Ottimizzazione Provate</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-apty-state-success mt-1" />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Indicatori di Progresso</div>
-                      <div className='text-sm text-apty-text-secondary'>+14-23% tasso completamento</div>
+                      <div className="font-medium text-apty-text-primary">Indicatori di Progresso</div>
+                      <div className="text-sm text-apty-text-secondary">+14-23% tasso completamento</div>
                     </div>
                   </div>
-                  <div className='flex items-start gap-3'>
-                    <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-apty-state-success mt-1" />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Validazione in Tempo Reale</div>
-                      <div className='text-sm text-apty-text-secondary'>-22% abbandono</div>
+                      <div className="font-medium text-apty-text-primary">Validazione in Tempo Reale</div>
+                      <div className="text-sm text-apty-text-secondary">-22% abbandono</div>
                     </div>
                   </div>
-                  <div className='flex items-start gap-3'>
-                    <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-apty-state-success mt-1" />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Layout a Colonna Singola</div>
-                      <div className='text-sm text-apty-text-secondary'>+15-24% completamento mobile</div>
+                      <div className="font-medium text-apty-text-primary">Layout a Colonna Singola</div>
+                      <div className="text-sm text-apty-text-secondary">+15-24% completamento mobile</div>
                     </div>
                   </div>
-                  <div className='flex items-start gap-3'>
-                    <CheckCircle2 className='w-5 h-5 text-apty-state-success mt-1' />
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-apty-state-success mt-1" />
                     <div>
-                      <div className='font-medium text-apty-text-primary'>Supporto Autofill</div>
-                      <div className='text-sm text-apty-text-secondary'>-30% tempo di compilazione</div>
+                      <div className="font-medium text-apty-text-primary">Supporto Autofill</div>
+                      <div className="text-sm text-apty-text-secondary">-30% tempo di compilazione</div>
                     </div>
                   </div>
                 </div>
@@ -720,39 +831,39 @@ export default function WebsiteDesignPage() {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-elevated rounded-xl p-6'
+                className="bg-apty-bg-elevated rounded-xl p-6"
               >
-                <h3 className='text-xl font-bold text-apty-text-primary mb-4'>Impatto Elementi di Fiducia</h3>
-                <div className='space-y-4'>
+                <h3 className="text-xl font-bold text-apty-text-primary mb-4">Impatto Elementi di Fiducia</h3>
+                <div className="space-y-4">
                   <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Badge SSL</span>
-                      <span className='font-bold text-apty-primary'>+20%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Badge SSL</span>
+                      <span className="font-bold text-apty-primary">+20%</span>
                     </div>
-                    <div className='w-full bg-apty-bg-base rounded-full h-2'>
-                      <div className='h-2 bg-apty-primary rounded-full' style={{ width: '20%' }} />
+                    <div className="w-full bg-apty-bg-base rounded-full h-2">
+                      <div className="h-2 bg-apty-primary rounded-full" style={{ width: "20%" }} />
                     </div>
                   </div>
                   <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Testimonianze</span>
-                      <span className='font-bold text-apty-secondary'>+34%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Testimonianze</span>
+                      <span className="font-bold text-apty-secondary">+34%</span>
                     </div>
-                    <div className='w-full bg-apty-bg-base rounded-full h-2'>
-                      <div className='h-2 bg-apty-secondary rounded-full' style={{ width: '34%' }} />
+                    <div className="w-full bg-apty-bg-base rounded-full h-2">
+                      <div className="h-2 bg-apty-secondary rounded-full" style={{ width: "34%" }} />
                     </div>
                   </div>
                   <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Badge Fiducia</span>
-                      <span className='font-bold text-apty-tertiary'>+48%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Badge Fiducia</span>
+                      <span className="font-bold text-apty-tertiary">+48%</span>
                     </div>
-                    <div className='w-full bg-apty-bg-base rounded-full h-2'>
-                      <div className='h-2 bg-apty-tertiary rounded-full' style={{ width: '48%' }} />
+                    <div className="w-full bg-apty-bg-base rounded-full h-2">
+                      <div className="h-2 bg-apty-tertiary rounded-full" style={{ width: "48%" }} />
                     </div>
                   </div>
-                  <div className='mt-4 p-3 bg-apty-accent/10 rounded-lg'>
-                    <p className='text-xs text-apty-text-primary'>
+                  <div className="mt-4 p-3 bg-apty-accent/10 rounded-lg">
+                    <p className="text-xs text-apty-text-primary">
                       Tutti i segnali di fiducia devono essere visibili entro i primi 3 secondi
                     </p>
                   </div>
@@ -762,70 +873,85 @@ export default function WebsiteDesignPage() {
           </div>
 
           {/* Source Links */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Fonti: 
-              <a href='https://www.html.it/articoli/form-web-usabilita/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>HTML.it</a>,
-              <a href='https://www.webperformance.it/blog/ottimizzare-moduli-contatto-conversioni/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>WebPerformance</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Fonti:
+              <a
+                href="https://www.html.it/articoli/form-web-usabilita/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                HTML.it
+              </a>
+              ,
+              <a
+                href="https://www.webperformance.it/blog/ottimizzare-moduli-contatto-conversioni/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                WebPerformance
+              </a>
             </p>
           </div>
         </div>
       </section>
 
       {/* Accessibility & Compliance */}
-      <section className='py-24 md:py-32 bg-apty-bg-subtle'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-24 md:py-32 bg-apty-bg-subtle">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Accessibilità & <span className='text-apty-primary'>Conformità Legale</span>
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Accessibilità & <span className="text-apty-primary">Conformità Legale</span>
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Gli standard WCAG 2.2 sono ora obbligatori. Espandi il tuo mercato del 20%.
             </p>
           </motion.div>
 
-          <div className='max-w-6xl mx-auto'>
-            <div className='grid md:grid-cols-2 gap-8'>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8">
               {/* WCAG Requirements */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
+                className="bg-apty-bg-base rounded-2xl p-8 shadow-lg"
               >
-                <Lock className='w-12 h-12 text-apty-primary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Requisiti WCAG 2.2</h3>
-                
-                <div className='space-y-4'>
-                  <div className='p-4 bg-apty-bg-subtle rounded-lg'>
-                    <h4 className='font-semibold text-apty-text-primary mb-2'>Base Legale: Livello AA</h4>
-                    <ul className='space-y-2 text-sm text-apty-text-secondary'>
-                      <li className='flex items-start gap-2'>
-                        <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
+                <Lock className="w-12 h-12 text-apty-primary mb-4" />
+                <h3 className="text-2xl font-bold text-apty-text-primary mb-4">Requisiti WCAG 2.2</h3>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-apty-bg-subtle rounded-lg">
+                    <h4 className="font-semibold text-apty-text-primary mb-2">Base Legale: Livello AA</h4>
+                    <ul className="space-y-2 text-sm text-apty-text-secondary">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
                         <span>Target tattili minimo 24x24px</span>
                       </li>
-                      <li className='flex items-start gap-2'>
-                        <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
                         <span>Meccanismi di aiuto coerenti</span>
                       </li>
-                      <li className='flex items-start gap-2'>
-                        <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
                         <span>Autenticazione accessibile</span>
                       </li>
-                      <li className='flex items-start gap-2'>
-                        <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
                         <span>Focus sempre visibile</span>
                       </li>
                     </ul>
                   </div>
 
-                  <div className='p-4 bg-apty-state-error/10 rounded-lg'>
-                    <p className='text-sm text-apty-text-primary'>
+                  <div className="p-4 bg-apty-state-error/10 rounded-lg">
+                    <p className="text-sm text-apty-text-primary">
                       <strong>Rischio Legale:</strong> cause ADA aumentate del 300% dal 2022
                     </p>
                   </div>
@@ -837,38 +963,38 @@ export default function WebsiteDesignPage() {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
+                className="bg-apty-bg-base rounded-2xl p-8 shadow-lg"
               >
-                <Globe className='w-12 h-12 text-apty-secondary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Impatto sul Business</h3>
-                
-                <div className='space-y-6'>
+                <Globe className="w-12 h-12 text-apty-secondary mb-4" />
+                <h3 className="text-2xl font-bold text-apty-text-primary mb-4">Impatto sul Business</h3>
+
+                <div className="space-y-6">
                   <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Copertura di Mercato</span>
-                      <span className='text-2xl font-bold text-apty-state-success'>+20%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Copertura di Mercato</span>
+                      <span className="text-2xl font-bold text-apty-state-success">+20%</span>
                     </div>
-                    <p className='text-sm text-apty-text-secondary'>Accesso agli utenti con disabilità</p>
-                  </div>
-                  
-                  <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Fedeltà Cliente</span>
-                      <span className='text-2xl font-bold text-apty-state-success'>+35%</span>
-                    </div>
-                    <p className='text-sm text-apty-text-secondary'>Usabilità migliorata per tutti</p>
+                    <p className="text-sm text-apty-text-secondary">Accesso agli utenti con disabilità</p>
                   </div>
 
                   <div>
-                    <div className='flex justify-between mb-2'>
-                      <span className='text-apty-text-primary'>Costo Compliance</span>
-                      <span className='text-xl font-bold text-apty-text-primary'>$3-15k</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Fedeltà Cliente</span>
+                      <span className="text-2xl font-bold text-apty-state-success">+35%</span>
                     </div>
-                    <p className='text-sm text-apty-text-secondary'>Investimento una tantum di adeguamento</p>
+                    <p className="text-sm text-apty-text-secondary">Usabilità migliorata per tutti</p>
                   </div>
 
-                  <div className='p-4 bg-apty-primary/10 rounded-lg'>
-                    <p className='text-sm text-apty-text-primary'>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-apty-text-primary">Costo Compliance</span>
+                      <span className="text-xl font-bold text-apty-text-primary">$3-15k</span>
+                    </div>
+                    <p className="text-sm text-apty-text-secondary">Investimento una tantum di adeguamento</p>
+                  </div>
+
+                  <div className="p-4 bg-apty-primary/10 rounded-lg">
+                    <p className="text-sm text-apty-text-primary">
                       <strong>ROI:</strong> Siti accessibili ottengono miglior SEO e pubblico più ampio
                     </p>
                   </div>
@@ -878,80 +1004,102 @@ export default function WebsiteDesignPage() {
           </div>
 
           {/* Source Links */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Fonti: 
-              <a href='https://www.w3.org/TR/WCAG22/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>W3C WCAG 2.2</a>,
-              <a href='https://www.agid.gov.it/it/design-servizi/linee-guida' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>AgID Linee Guida</a>,
-              <a href='https://www.agid.gov.it/it/design-servizi/accessibilita-usabilita' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>AgID Accessibilità</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Fonti:
+              <a
+                href="https://www.w3.org/TR/WCAG22/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                W3C WCAG 2.2
+              </a>
+              ,
+              <a
+                href="https://www.agid.gov.it/it/design-servizi/linee-guida"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                AgID Linee Guida
+              </a>
+              ,
+              <a
+                href="https://www.agid.gov.it/it/design-servizi/accessibilita-usabilita"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                AgID Accessibilità
+              </a>
             </p>
           </div>
         </div>
       </section>
 
-
       {/* Design Trends with Impact */}
-      <section className='py-24 md:py-32 bg-apty-bg-subtle'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-24 md:py-32 bg-apty-bg-subtle">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Tendenze Design 2025 che <span className='text-apty-primary'>Convertono Davvero</span>
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Tendenze Design 2025 che <span className="text-apty-primary">Convertono Davvero</span>
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Non solo mode: impatti provati sulle metriche di business
             </p>
           </motion.div>
 
-          <div className='max-w-6xl mx-auto'>
-            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
-                  trend: 'Focus Core Web Vitals',
-                  impact: '+10-30%',
-                  metric: 'tasso di conversione',
+                  trend: "Focus Core Web Vitals",
+                  impact: "+10-30%",
+                  metric: "tasso di conversione",
                   icon: Gauge,
-                  color: 'bg-apty-primary'
+                  color: "bg-apty-primary",
                 },
                 {
-                  trend: 'Micro-interazioni',
-                  impact: '+6-15%',
-                  metric: 'clic CTA',
+                  trend: "Micro-interazioni",
+                  impact: "+6-15%",
+                  metric: "clic CTA",
                   icon: MousePointer,
-                  color: 'bg-apty-secondary'
+                  color: "bg-apty-secondary",
                 },
                 {
-                  trend: 'Opzioni Dark Mode',
-                  impact: '+12-22%',
-                  metric: 'coinvolgimento (tech)',
+                  trend: "Opzioni Dark Mode",
+                  impact: "+12-22%",
+                  metric: "coinvolgimento (tech)",
                   icon: Monitor,
-                  color: 'bg-apty-tertiary'
+                  color: "bg-apty-tertiary",
                 },
                 {
-                  trend: 'Accessibilità Prima',
-                  impact: '+35%',
-                  metric: 'copertura di mercato',
+                  trend: "Accessibilità Prima",
+                  impact: "+35%",
+                  metric: "copertura di mercato",
                   icon: Globe,
-                  color: 'bg-apty-accent'
+                  color: "bg-apty-accent",
                 },
                 {
-                  trend: 'Minimalismo',
-                  impact: '+42%',
-                  metric: 'conversione iscrizione',
+                  trend: "Minimalismo",
+                  impact: "+42%",
+                  metric: "conversione iscrizione",
                   icon: Layers,
-                  color: 'bg-apty-primary'
+                  color: "bg-apty-primary",
                 },
                 {
-                  trend: 'Personalizzazione AI',
-                  impact: '+20-80%',
-                  metric: 'durata sessione',
+                  trend: "Personalizzazione AI",
+                  impact: "+20-80%",
+                  metric: "durata sessione",
                   icon: Brain,
-                  color: 'bg-apty-secondary'
-                }
+                  color: "bg-apty-secondary",
+                },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -959,71 +1107,88 @@ export default function WebsiteDesignPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className='bg-apty-bg-base rounded-xl p-6 hover:shadow-lg transition-shadow'
+                  className="bg-apty-bg-base rounded-xl p-6 hover:shadow-lg transition-shadow"
                 >
                   <div className={`w-12 h-12 ${item.color} rounded-lg flex items-center justify-center mb-4`}>
-                    <item.icon className='w-6 h-6 text-apty-text-inverse' />
+                    <item.icon className="w-6 h-6 text-apty-text-inverse" />
                   </div>
-                  <h3 className='text-lg font-semibold text-apty-text-primary mb-2'>{item.trend}</h3>
-                  <div className='text-2xl font-bold text-apty-state-success mb-1'>{item.impact}</div>
-                  <p className='text-sm text-apty-text-secondary'>{item.metric}</p>
+                  <h3 className="text-lg font-semibold text-apty-text-primary mb-2">{item.trend}</h3>
+                  <div className="text-2xl font-bold text-apty-state-success mb-1">{item.impact}</div>
+                  <p className="text-sm text-apty-text-secondary">{item.metric}</p>
                 </motion.div>
               ))}
             </div>
           </div>
 
           {/* Source Links */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Fonti: 
-              <a href='https://www.html.it/articoli/tendenze-web-design/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>HTML.it Trends</a>,
-              <a href='https://www.shopify.com/it/blog/tendenze-web-design' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Shopify Italia Trends</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Fonti:
+              <a
+                href="https://www.html.it/articoli/tendenze-web-design/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                HTML.it Trends
+              </a>
+              ,
+              <a
+                href="https://www.shopify.com/it/blog/tendenze-web-design"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Shopify Italia Trends
+              </a>
             </p>
           </div>
         </div>
       </section>
 
       {/* Our Data-Driven Process */}
-      <section className='py-24 md:py-32 bg-apty-bg-base'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-24 md:py-32 bg-apty-bg-base">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-16'
+            className="text-center mb-16"
           >
-            <h2 className='text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Il Nostro <span className='text-apty-primary'>Processo Guidato dai Dati</span>
+            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Il Nostro <span className="text-apty-primary">Processo Guidato dai Dati</span>
             </h2>
-            <p className='text-xl text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-xl text-apty-text-secondary max-w-3xl mx-auto">
               Ogni decisione supportata da ricerca, ogni pixel ottimizzato per la conversione
             </p>
           </motion.div>
 
-          <div className='max-w-6xl mx-auto'>
+          <div className="max-w-6xl mx-auto">
             {/* Process Cards */}
-            <div className='grid md:grid-cols-3 gap-6 mb-12'>
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
+                className="bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle"
               >
-                <div className='text-sm text-apty-primary font-semibold mb-2'>Settimane 1-2</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Ricerca & Analisi Iniziale</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>Ricerca utenti, analisi competitor, mappatura funnel di conversione</div>
-                <ul className='space-y-2 text-sm'>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Personas Utente</span>
+                <div className="text-sm text-apty-primary font-semibold mb-2">Settimane 1-2</div>
+                <div className="text-2xl font-bold text-apty-text-primary mb-1">Ricerca & Analisi Iniziale</div>
+                <div className="text-sm text-apty-text-secondary mb-4">
+                  Ricerca utenti, analisi competitor, mappatura funnel di conversione
+                </div>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Personas Utente</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Audit Competitor</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Audit Competitor</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Strategia di Conversione</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Strategia di Conversione</span>
                   </li>
                 </ul>
               </motion.div>
@@ -1033,23 +1198,25 @@ export default function WebsiteDesignPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className='bg-gradient-to-br from-apty-primary/5 to-apty-secondary/5 rounded-xl p-6 border-2 border-apty-primary'
+                className="bg-gradient-to-br from-apty-primary/5 to-apty-secondary/5 rounded-xl p-6 border-2 border-apty-primary"
               >
-                <div className='text-sm text-apty-primary font-semibold mb-2'>Settimane 3-5</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Design & Test</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>Design guidato dai dati con A/B test e feedback utenti</div>
-                <ul className='space-y-2 text-sm'>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Wireframe</span>
+                <div className="text-sm text-apty-primary font-semibold mb-2">Settimane 3-5</div>
+                <div className="text-2xl font-bold text-apty-text-primary mb-1">Design & Test</div>
+                <div className="text-sm text-apty-text-secondary mb-4">
+                  Design guidato dai dati con A/B test e feedback utenti
+                </div>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Wireframe</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Design Visivo</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Design Visivo</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-primary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Test di Usabilità</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-primary mt-0.5" />
+                    <span className="text-apty-text-secondary">Test di Usabilità</span>
                   </li>
                 </ul>
               </motion.div>
@@ -1059,23 +1226,25 @@ export default function WebsiteDesignPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className='bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle'
+                className="bg-apty-bg-elevated rounded-xl p-6 border border-apty-border-subtle"
               >
-                <div className='text-sm text-apty-tertiary font-semibold mb-2'>Settimane 6-8</div>
-                <div className='text-2xl font-bold text-apty-text-primary mb-1'>Ottimizzazione & Lancio</div>
-                <div className='text-sm text-apty-text-secondary mb-4'>Ottimizzazione prestazioni, Core Web Vitals, conformità accessibilità</div>
-                <ul className='space-y-2 text-sm'>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Ottimizzazione Velocità</span>
+                <div className="text-sm text-apty-tertiary font-semibold mb-2">Settimane 6-8</div>
+                <div className="text-2xl font-bold text-apty-text-primary mb-1">Ottimizzazione & Lancio</div>
+                <div className="text-sm text-apty-text-secondary mb-4">
+                  Ottimizzazione prestazioni, Core Web Vitals, conformità accessibilità
+                </div>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-tertiary mt-0.5" />
+                    <span className="text-apty-text-secondary">Ottimizzazione Velocità</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Conformità WCAG</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-tertiary mt-0.5" />
+                    <span className="text-apty-text-secondary">Conformità WCAG</span>
                   </li>
-                  <li className='flex items-start gap-2'>
-                    <CheckCircle2 className='w-4 h-4 text-apty-tertiary mt-0.5' />
-                    <span className='text-apty-text-secondary'>Supporto Lancio</span>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-apty-tertiary mt-0.5" />
+                    <span className="text-apty-text-secondary">Supporto Lancio</span>
                   </li>
                 </ul>
               </motion.div>
@@ -1085,11 +1254,7 @@ export default function WebsiteDesignPage() {
       </section>
 
       {/* FAQ Section */}
-      <FAQSection 
-        title="Le Domande delle"
-        titleHighlight="PMI Italiane"
-        questions={designFAQs}
-      />
+      <FAQSection title="Le Domande delle" titleHighlight="PMI Italiane" questions={designFAQs} />
 
       {/* CTA Section */}
       <CTASection />

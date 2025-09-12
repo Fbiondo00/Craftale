@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Check, Plus } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { AptyPrimaryButton, AptySecondaryButton } from '@/components/apty/AptyButton';
+import React from "react";
+import { AptyPrimaryButton, AptySecondaryButton } from "@/components/apty/AptyButton";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { Check, Plus } from "lucide-react";
 
 interface Feature {
   text: string;
@@ -27,7 +27,7 @@ interface PricingCardProps {
   features: Feature[];
   inheritedFeatures?: InheritedFeature;
   onCTAClick: () => void;
-  badge?: 'popular' | 'enterprise';
+  badge?: "popular" | "enterprise";
   isCustomCard?: boolean;
   idealFor?: string;
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -38,47 +38,47 @@ interface PricingCardProps {
 }
 
 const cardVariants = {
-  rest: { 
-    scale: 1, 
+  rest: {
+    scale: 1,
     y: 0,
     zIndex: 1,
   },
-  hover: { 
-    scale: 1.02, 
+  hover: {
+    scale: 1.02,
     y: -30,
     zIndex: 40,
   },
 };
 
 const getRoundedClasses = (isCustomCard: boolean, position?: CardPosition, isHovered?: boolean) => {
-  if (isCustomCard) return 'rounded-apty-lg';
-  if (!position) return 'border border-apty-border-default';
+  if (isCustomCard) return "rounded-apty-lg";
+  if (!position) return "border border-apty-border-default";
 
   const { isFirst, isLast } = position;
-  
+
   // When hovered, return full rounded corners
   if (isHovered) {
-    if (isFirst) return 'rounded-lg border border-apty-border-default';
-    if (isLast) return 'rounded-lg border border-apty-border-default';
-    return 'rounded-lg border border-apty-border-default';
+    if (isFirst) return "rounded-lg border border-apty-border-default";
+    if (isLast) return "rounded-lg border border-apty-border-default";
+    return "rounded-lg border border-apty-border-default";
   }
-  
+
   // Default non-hovered state
-  if (isFirst) return 'rounded-l-lg border border-apty-border-default';
-  if (isLast) return 'rounded-r-lg border-l-0 border border-apty-border-default';
-  return 'border-l-0 border border-apty-border-default';
+  if (isFirst) return "rounded-l-lg border border-apty-border-default";
+  if (isLast) return "rounded-r-lg border-l-0 border border-apty-border-default";
+  return "border-l-0 border border-apty-border-default";
 };
 
 const getBorderClasses = (isCustomCard: boolean) => {
-  return isCustomCard ? 'shadow-apty-lg' : 'shadow-apty-sm hover:shadow-apty-md';
+  return isCustomCard ? "shadow-apty-lg" : "shadow-apty-sm hover:shadow-apty-md";
 };
 
 const getStandardizedCTAText = (isCustomCard: boolean) => {
-  if (isCustomCard) return 'Trova Soluzione Perfetta';
-  return 'Configura Pacchetto';
+  if (isCustomCard) return "Trova Soluzione Perfetta";
+  return "Configura Pacchetto";
 };
 
-const CardBadge: React.FC<{ badge?: 'popular' | 'enterprise' }> = () => {
+const CardBadge: React.FC<{ badge?: "popular" | "enterprise" }> = () => {
   // Badges removed per design requirements
   return null;
 };
@@ -88,42 +88,46 @@ const CardHeader: React.FC<{
   title: string;
   isCustomCard?: boolean;
 }> = ({ icon: IconComponent, title, isCustomCard }) => (
-  <div className='h-[80px] flex items-center gap-3 mb-3'>
+  <div className="h-[80px] flex items-center gap-3 mb-3">
     {IconComponent && (
       <motion.div
         className={`p-2 rounded-apty-lg shadow-apty-sm ${
-          isCustomCard ? 'bg-apty-bg-base/20' : 'bg-apty-gradient-primary'
+          isCustomCard ? "bg-apty-bg-base/20" : "bg-apty-gradient-primary"
         }`}
         whileHover={{ scale: 1.1 }}
       >
-        <IconComponent className={`w-6 h-6 ${
-          isCustomCard ? 'text-apty-text-inverse' : 'text-apty-text-on-brand'
-        }`} />
+        <IconComponent className={`w-6 h-6 ${isCustomCard ? "text-apty-text-inverse" : "text-apty-text-on-brand"}`} />
       </motion.div>
     )}
-    <div className='flex-1'>
-      <h3 className={`text-xl font-semibold leading-tight ${
-        isCustomCard ? 'text-apty-text-inverse' : 'text-apty-text-primary'
-      }`}>{title}</h3>
+    <div className="flex-1">
+      <h3
+        className={`text-xl font-semibold leading-tight ${
+          isCustomCard ? "text-apty-text-inverse" : "text-apty-text-primary"
+        }`}
+      >
+        {title}
+      </h3>
     </div>
   </div>
 );
 
 const CardIdealFor: React.FC<{ idealFor?: string; isCustomCard?: boolean }> = ({ idealFor, isCustomCard }) => (
-  <div className='h-[60px] flex items-center mb-4'>
+  <div className="h-[60px] flex items-center mb-4">
     {idealFor && (
-      <div className='w-full'>
-        <div className={`rounded-apty-lg p-3 text-center ${
-          isCustomCard 
-            ? 'bg-apty-bg-base/10 border border-apty-text-inverse/20' 
-            : 'bg-apty-bg-base/5 border border-apty-border-default'
-        }`}>
-          <p className={`text-xs mb-1 ${
-            isCustomCard ? 'text-apty-text-inverse/80' : 'text-apty-text-tertiary'
-          }`}>Ideale per:</p>
-          <p className={`text-sm font-medium ${
-            isCustomCard ? 'text-apty-text-inverse' : 'text-apty-text-primary'
-          }`}>{idealFor}</p>
+      <div className="w-full">
+        <div
+          className={`rounded-apty-lg p-3 text-center ${
+            isCustomCard
+              ? "bg-apty-bg-base/10 border border-apty-text-inverse/20"
+              : "bg-apty-bg-base/5 border border-apty-border-default"
+          }`}
+        >
+          <p className={`text-xs mb-1 ${isCustomCard ? "text-apty-text-inverse/80" : "text-apty-text-tertiary"}`}>
+            Ideale per:
+          </p>
+          <p className={`text-sm font-medium ${isCustomCard ? "text-apty-text-inverse" : "text-apty-text-primary"}`}>
+            {idealFor}
+          </p>
         </div>
       </div>
     )}
@@ -135,38 +139,38 @@ const CardButton: React.FC<{
   onCTAClick: () => void;
   tierSlug?: string;
 }> = ({ isCustomCard, onCTAClick, tierSlug }) => (
-  <div className='flex items-center justify-center mb-4'>
+  <div className="flex items-center justify-center mb-4">
     {!isCustomCard ? (
-      tierSlug === 'pro' ? (
+      tierSlug === "pro" ? (
         <AptyPrimaryButton
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
             onCTAClick();
           }}
-          className='w-full'
-          size='lg'
+          className="w-full"
+          size="lg"
         >
           {getStandardizedCTAText(false)}
         </AptyPrimaryButton>
       ) : (
         <AptySecondaryButton
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
             onCTAClick();
           }}
-          className='w-full'
-          size='lg'
+          className="w-full"
+          size="lg"
         >
           {getStandardizedCTAText(false)}
         </AptySecondaryButton>
       )
     ) : (
       <button
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
           onCTAClick();
         }}
-        className='w-full py-3 px-6 rounded-apty-lg font-semibold text-sm border-2 border-apty-text-inverse text-apty-text-inverse hover:bg-apty-text-inverse hover:text-apty-primary apty-transition'
+        className="w-full py-3 px-6 rounded-apty-lg font-semibold text-sm border-2 border-apty-text-inverse text-apty-text-inverse hover:bg-apty-text-inverse hover:text-apty-primary apty-transition"
       >
         {getStandardizedCTAText(true)}
       </button>
@@ -179,40 +183,42 @@ const CardFeatures: React.FC<{
   inheritedFeatures?: InheritedFeature;
   isCustomCard?: boolean;
 }> = ({ features, inheritedFeatures, isCustomCard }) => (
-  <div className='flex-1 overflow-y-auto'>
-    <hr className={`mb-3 ${
-      isCustomCard ? 'border-apty-text-inverse/20' : 'border-apty-border-default'
-    }`} />
+  <div className="flex-1 overflow-y-auto">
+    <hr className={`mb-3 ${isCustomCard ? "border-apty-text-inverse/20" : "border-apty-border-default"}`} />
 
     {inheritedFeatures && (
-      <div className='flex items-center mb-2'>
-        <Check className={`w-4 h-4 mr-2 ${
-          isCustomCard ? 'text-apty-text-inverse' : 'text-apty-success'
-        }`} />
-        <span className={`text-sm font-medium ${
-          isCustomCard ? 'text-apty-text-inverse' : 'text-apty-text-secondary'
-        }`}>
+      <div className="flex items-center mb-2">
+        <Check className={`w-4 h-4 mr-2 ${isCustomCard ? "text-apty-text-inverse" : "text-apty-success"}`} />
+        <span className={`text-sm font-medium ${isCustomCard ? "text-apty-text-inverse" : "text-apty-text-secondary"}`}>
           Tutto da {inheritedFeatures.fromTier}
         </span>
       </div>
     )}
 
     {features.length > 0 && (
-      <div className='space-y-2'>
+      <div className="space-y-2">
         {features.map((feature, index) => (
-          <div key={index} className='flex items-start'>
+          <div key={index} className="flex items-start">
             {inheritedFeatures ? (
-              <Plus className={`w-4 h-4 mr-3 mt-0.5 flex-shrink-0 ${
-                isCustomCard ? 'text-apty-accent' : 'text-apty-primary'
-              }`} />
+              <Plus
+                className={`w-4 h-4 mr-3 mt-0.5 flex-shrink-0 ${
+                  isCustomCard ? "text-apty-accent" : "text-apty-primary"
+                }`}
+              />
             ) : (
-              <Check className={`w-4 h-4 mr-3 mt-0.5 flex-shrink-0 ${
-                isCustomCard ? 'text-apty-text-inverse' : 'text-apty-success'
-              }`} />
+              <Check
+                className={`w-4 h-4 mr-3 mt-0.5 flex-shrink-0 ${
+                  isCustomCard ? "text-apty-text-inverse" : "text-apty-success"
+                }`}
+              />
             )}
-            <span className={`text-sm leading-relaxed ${
-              isCustomCard ? 'text-apty-text-inverse/90' : 'text-apty-text-secondary'
-            }`}>{feature.text}</span>
+            <span
+              className={`text-sm leading-relaxed ${
+                isCustomCard ? "text-apty-text-inverse/90" : "text-apty-text-secondary"
+              }`}
+            >
+              {feature.text}
+            </span>
           </div>
         ))}
       </div>
@@ -221,7 +227,7 @@ const CardFeatures: React.FC<{
 );
 
 const PricingCardContent: React.FC<{
-  badge?: 'popular' | 'enterprise';
+  badge?: "popular" | "enterprise";
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   isCustomCard: boolean;
@@ -231,18 +237,7 @@ const PricingCardContent: React.FC<{
   features: Feature[];
   inheritedFeatures?: InheritedFeature;
   tierSlug?: string;
-}> = ({
-  badge,
-  icon,
-  title,
-  isCustomCard,
-  price,
-  idealFor,
-  onCTAClick,
-  features,
-  inheritedFeatures,
-  tierSlug,
-}) => (
+}> = ({ badge, icon, title, isCustomCard, price, idealFor, onCTAClick, features, inheritedFeatures, tierSlug }) => (
   <>
     <CardBadge badge={badge} />
     <CardHeader icon={icon} title={title} isCustomCard={isCustomCard} />
@@ -269,26 +264,26 @@ const PricingCard: React.FC<PricingCardProps> = ({
 }) => {
   // Use group hover for connected cards, individual hover for custom card
   const shouldRoundCorners = isCustomCard ? false : isGroupHovered;
-  
+
   return (
     <motion.div
       className={cn(
-        'relative p-5 h-[530px] flex flex-col',
-        isCustomCard ? 'bg-apty-bg-inverse' : 'bg-apty-bg-base/90 backdrop-blur-sm',
+        "relative p-5 h-[530px] flex flex-col",
+        isCustomCard ? "bg-apty-bg-inverse" : "bg-apty-bg-base/90 backdrop-blur-sm",
         getRoundedClasses(isCustomCard, position, shouldRoundCorners),
         getBorderClasses(isCustomCard),
-        'md:transition-all md:duration-200 md:ease-out',
-        'md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.25)]'
+        "md:transition-all md:duration-200 md:ease-out",
+        "md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.25)]",
       )}
-      style={{ position: 'relative' }}
+      style={{ position: "relative" }}
       variants={cardVariants}
-      initial='rest'
-      whileHover='hover'
+      initial="rest"
+      whileHover="hover"
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
+      transition={{
         duration: 0.2,
-        ease: [0.4, 0, 0.2, 1]
+        ease: [0.4, 0, 0.2, 1],
       }}
       onMouseEnter={() => {
         if (onHoverChange && !isCustomCard) {

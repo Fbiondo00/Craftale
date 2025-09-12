@@ -1,88 +1,88 @@
-'use server'
+"use server";
 
-import { createClient } from '@/lib/supabase/server'
-import { createAdminClient } from '@/lib/secure/database-utils'
-import { revalidatePath } from 'next/cache'
-import { QuoteDraftSchema, QuoteSubmissionSchema, ApplyDiscountSchema } from '@/lib/validations/quote'
-import { calculateQuoteTotals } from '@/lib/pricing/calculations'
+import { revalidatePath } from "next/cache";
+import { calculateQuoteTotals } from "@/lib/pricing/calculations";
+import { createAdminClient } from "@/lib/secure/database-utils";
+import { createClient } from "@/lib/supabase/server";
+import { ApplyDiscountSchema, QuoteDraftSchema, QuoteSubmissionSchema } from "@/lib/validations/quote";
 
 // Standardized action state type
-export type ActionState = 
+export type ActionState =
   | { success: true; data: any }
-  | { success: false; message: string; errors?: Record<string, string[]> }
+  | { success: false; message: string; errors?: Record<string, string[]> };
 
 // Save or update draft quote
-export async function saveDraftAction(
-  prevState: ActionState | null,
-  formData: FormData
-): Promise<ActionState> {
+export async function saveDraftAction(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return {
         success: false,
-        message: 'Authentication required'
-      }
+        message: "Authentication required",
+      };
     }
-    
+
     // Parse and validate form data
     const rawData = {
-      tier_id: formData.get('tier_id'),
-      level_id: formData.get('level_id'),
-      selected_services: formData.getAll('selected_services'),
-      notes: formData.get('notes'),
-      contact_preferences: formData.get('contact_preferences')
-    }
-    
-    console.log('💾 SERVER: saveDraftAction called with data:', {
+      tier_id: formData.get("tier_id"),
+      level_id: formData.get("level_id"),
+      selected_services: formData.getAll("selected_services"),
+      notes: formData.get("notes"),
+      contact_preferences: formData.get("contact_preferences"),
+    };
+
+    console.log("💾 SERVER: saveDraftAction called with data:", {
       tier_id: rawData.tier_id,
       tier_id_type: typeof rawData.tier_id,
       level_id: rawData.level_id,
       level_id_type: typeof rawData.level_id,
       selected_services: rawData.selected_services,
-      notes: rawData.notes ? 'has notes' : 'no notes',
-      contact_preferences: rawData.contact_preferences ? 'has contact_preferences' : 'no contact_preferences'
-    })
-    
-    const validation = QuoteDraftSchema.safeParse(rawData)
+      notes: rawData.notes ? "has notes" : "no notes",
+      contact_preferences: rawData.contact_preferences ? "has contact_preferences" : "no contact_preferences",
+    });
+
+    const validation = QuoteDraftSchema.safeParse(rawData);
     if (!validation.success) {
-      console.error('❌ Validation failed:', {
+      console.error("❌ Validation failed:", {
         rawData,
         errors: validation.error.flatten().fieldErrors,
-        formErrors: validation.error.flatten().formErrors
-      })
+        formErrors: validation.error.flatten().formErrors,
+      });
       return {
         success: false,
-        message: 'Validation failed',
-        errors: validation.error.flatten().fieldErrors
-      }
+        message: "Validation failed",
+        errors: validation.error.flatten().fieldErrors,
+      };
     }
-    
-    const data = validation.data
-    
+
+    const data = validation.data;
+
     // Try to find existing draft
     const { data: drafts, error: checkError } = await supabase
-      .from('user_quotes')
-      .select('id, created_at')
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .order('created_at', { ascending: false })
-      .limit(1)
-    
+      .from("user_quotes")
+      .select("id, created_at")
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .order("created_at", { ascending: false })
+      .limit(1);
+
     if (checkError) {
-      console.error('Error checking for existing draft:', checkError)
+      console.error("Error checking for existing draft:", checkError);
       return {
         success: false,
-        message: 'Failed to check for existing draft'
-      }
+        message: "Failed to check for existing draft",
+      };
     }
-    
-    const existingQuote = drafts && drafts.length > 0 ? drafts[0] : null
-    let quoteId: number
-    
+
+    const existingQuote = drafts && drafts.length > 0 ? drafts[0] : null;
+    let quoteId: number;
+
     if (existingQuote) {
       // Update existing draft
       const updateData: any = {
@@ -92,337 +92,341 @@ export async function saveDraftAction(
         updated_at: new Date().toISOString(),
         metadata: {
           last_updated: new Date().toISOString(),
-          update_source: 'saveDraftAction'
-        }
-      }
-      
+          update_source: "saveDraftAction",
+        },
+      };
+
       // Handle contact preferences if provided
       if (rawData.contact_preferences) {
         try {
           updateData.contact_preferences = JSON.parse(rawData.contact_preferences as string);
         } catch (e) {
-          console.error('Failed to parse contact_preferences:', e);
+          console.error("Failed to parse contact_preferences:", e);
         }
       }
-      
+
       // Handle notes separately if provided
       if (data.notes) {
         updateData.notes = data.notes;
       }
-      
+
       const { data: updated, error: updateError } = await supabase
-        .from('user_quotes')
+        .from("user_quotes")
         .update(updateData)
-        .eq('id', existingQuote.id)
+        .eq("id", existingQuote.id)
         .select()
-        .single()
-      
+        .single();
+
       if (updateError) {
-        console.error('Error updating draft:', updateError)
+        console.error("Error updating draft:", updateError);
         return {
           success: false,
-          message: 'Failed to update draft'
-        }
+          message: "Failed to update draft",
+        };
       }
-      
-      quoteId = updated.id
+
+      quoteId = updated.id;
     } else {
       // Create new draft
       const insertData: any = {
         user_id: user.id,
-        status: 'draft',
+        status: "draft",
         tier_id: data.tier_id,
         level_id: data.level_id,
         selected_services: data.selected_services,
         metadata: {
-          created_source: 'server_action',
-          created_at: new Date().toISOString()
-        }
-      }
-      
+          created_source: "server_action",
+          created_at: new Date().toISOString(),
+        },
+      };
+
       // Handle contact preferences if provided
       if (rawData.contact_preferences) {
         try {
           insertData.contact_preferences = JSON.parse(rawData.contact_preferences as string);
         } catch (e) {
-          console.error('Failed to parse contact_preferences:', e);
+          console.error("Failed to parse contact_preferences:", e);
         }
       }
-      
+
       // Handle notes separately if provided
       if (data.notes) {
         insertData.notes = data.notes;
       }
-      
+
       const { data: created, error: createError } = await supabase
-        .from('user_quotes')
+        .from("user_quotes")
         .insert(insertData)
         .select()
-        .single()
-      
+        .single();
+
       if (createError) {
-        console.error('Error creating draft:', createError)
+        console.error("Error creating draft:", createError);
         return {
           success: false,
-          message: 'Failed to create draft'
-        }
+          message: "Failed to create draft",
+        };
       } else {
-        quoteId = created.id
+        quoteId = created.id;
       }
     }
-    
+
     // Calculate totals
     try {
-      await calculateQuoteTotals(quoteId.toString())
+      await calculateQuoteTotals(quoteId.toString());
     } catch (calcError) {
-      console.error('Error calculating totals:', calcError)
+      console.error("Error calculating totals:", calcError);
     }
-    
+
     // Revalidate the pricing page to show updated draft
-    revalidatePath('/pricing')
-    
+    revalidatePath("/pricing");
+
     return {
       success: true,
-      data: { 
-        message: 'Draft saved successfully',
-        quote_id: quoteId 
-      }
-    }
+      data: {
+        message: "Draft saved successfully",
+        quote_id: quoteId,
+      },
+    };
   } catch (error) {
-    console.error('Error in saveDraftAction:', error)
+    console.error("Error in saveDraftAction:", error);
     return {
       success: false,
-      message: 'An unexpected error occurred'
-    }
+      message: "An unexpected error occurred",
+    };
   }
 }
 
 // Submit quote for approval
-export async function submitQuoteAction(
-  prevState: ActionState | null,
-  formData: FormData
-): Promise<ActionState> {
+export async function submitQuoteAction(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return {
         success: false,
-        message: 'Authentication required'
-      }
+        message: "Authentication required",
+      };
     }
-    
+
     // Get quote ID
-    const quoteId = parseInt(formData.get('quote_id')?.toString() || '0', 10)
+    const quoteId = parseInt(formData.get("quote_id")?.toString() || "0", 10);
     if (!quoteId) {
       return {
         success: false,
-        message: 'No draft quote to submit'
-      }
+        message: "No draft quote to submit",
+      };
     }
-    
+
     // Verify quote belongs to user and is in draft status
     const { data: quote, error: quoteError } = await supabase
-      .from('user_quotes')
-      .select('*')
-      .eq('id', quoteId)
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .single()
-    
+      .from("user_quotes")
+      .select("*")
+      .eq("id", quoteId)
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .single();
+
     if (quoteError || !quote) {
       return {
         success: false,
-        message: 'Quote not found or not in draft status'
-      }
+        message: "Quote not found or not in draft status",
+      };
     }
-    
+
     // Validate quote has required fields
     if (!quote.tier_id || !quote.level_id) {
       return {
         success: false,
-        message: 'Please select a package before submitting'
-      }
+        message: "Please select a package before submitting",
+      };
     }
-    
+
     // Get quote expiry days from config
     const { data: expiryConfig } = await supabase
-      .from('pricing_config')
-      .select('config_value')
-      .eq('config_key', 'quote_expiry_days')
-      .single()
-    
-    const expiryDays = Number(expiryConfig?.config_value || 30)
-    const expiresAt = new Date()
-    expiresAt.setDate(expiresAt.getDate() + expiryDays)
-    
+      .from("pricing_config")
+      .select("config_value")
+      .eq("config_key", "quote_expiry_days")
+      .single();
+
+    const expiryDays = Number(expiryConfig?.config_value || 30);
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + expiryDays);
+
     // Update quote status
     const { data: updated, error: updateError } = await supabase
-      .from('user_quotes')
+      .from("user_quotes")
       .update({
-        status: 'submitted',
+        status: "submitted",
         submitted_at: new Date().toISOString(),
         expires_at: expiresAt.toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
-      .eq('id', quoteId)
+      .eq("id", quoteId)
       .select()
-      .single()
-    
+      .single();
+
     if (updateError) {
-      console.error('Error updating quote status:', updateError)
+      console.error("Error updating quote status:", updateError);
       return {
         success: false,
-        message: 'Failed to submit quote'
-      }
+        message: "Failed to submit quote",
+      };
     }
-    
+
     // Revalidate the pricing page
-    revalidatePath('/pricing')
-    revalidatePath('/quotes')
-    
+    revalidatePath("/pricing");
+    revalidatePath("/quotes");
+
     return {
       success: true,
       data: {
-        message: 'Quote submitted successfully',
+        message: "Quote submitted successfully",
         quote_id: updated.id,
         quote_number: updated.quote_number,
-        expires_at: updated.expires_at
-      }
-    }
+        expires_at: updated.expires_at,
+      },
+    };
   } catch (error) {
-    console.error('Error in submitQuoteAction:', error)
+    console.error("Error in submitQuoteAction:", error);
     return {
       success: false,
-      message: 'An unexpected error occurred'
-    }
+      message: "An unexpected error occurred",
+    };
   }
 }
 
 // Apply discount code to quote
-export async function applyDiscountAction(
-  prevState: ActionState | null,
-  formData: FormData
-): Promise<ActionState> {
+export async function applyDiscountAction(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return {
         success: false,
-        message: 'Authentication required'
-      }
+        message: "Authentication required",
+      };
     }
-    
+
     // Parse and validate form data
     const rawData = {
-      quote_id: formData.get('quote_id'),
-      discount_code: formData.get('discount_code')
-    }
-    
-    const validation = ApplyDiscountSchema.safeParse(rawData)
+      quote_id: formData.get("quote_id"),
+      discount_code: formData.get("discount_code"),
+    };
+
+    const validation = ApplyDiscountSchema.safeParse(rawData);
     if (!validation.success) {
       return {
         success: false,
-        message: 'Validation failed',
-        errors: validation.error.flatten().fieldErrors
-      }
+        message: "Validation failed",
+        errors: validation.error.flatten().fieldErrors,
+      };
     }
-    
-    const { quote_id, discount_code } = validation.data
-    
+
+    const { quote_id, discount_code } = validation.data;
+
     // Verify quote belongs to user
     const { data: quote, error: quoteError } = await supabase
-      .from('user_quotes')
-      .select('id, user_id')
-      .eq('id', quote_id)
-      .eq('user_id', user.id)
-      .single()
-    
+      .from("user_quotes")
+      .select("id, user_id")
+      .eq("id", quote_id)
+      .eq("user_id", user.id)
+      .single();
+
     if (quoteError || !quote) {
       return {
         success: false,
-        message: 'Quote not found'
-      }
+        message: "Quote not found",
+      };
     }
-    
+
     // Apply discount using database function
     const { data, error } = await supabase
-      .rpc('apply_discount_to_quote', {
+      .rpc("apply_discount_to_quote", {
         p_quote_id: quote_id,
-        p_discount_code: discount_code
+        p_discount_code: discount_code,
       })
-      .single()
-    
+      .single();
+
     if (error) {
-      console.error('Error applying discount:', error)
+      console.error("Error applying discount:", error);
       return {
         success: false,
-        message: 'Failed to apply discount'
-      }
+        message: "Failed to apply discount",
+      };
     }
-    
-    const discountResult = data as { 
-      success: boolean
-      message?: string
-      discount_amount?: number 
-    }
-    
+
+    const discountResult = data as {
+      success: boolean;
+      message?: string;
+      discount_amount?: number;
+    };
+
     if (!discountResult.success) {
       return {
         success: false,
-        message: discountResult.message || 'Invalid discount code'
-      }
+        message: discountResult.message || "Invalid discount code",
+      };
     }
-    
+
     // Revalidate the pricing page
-    revalidatePath('/pricing')
-    
+    revalidatePath("/pricing");
+
     return {
       success: true,
       data: {
-        message: discountResult.message || 'Discount applied successfully',
-        discount_amount: discountResult.discount_amount
-      }
-    }
+        message: discountResult.message || "Discount applied successfully",
+        discount_amount: discountResult.discount_amount,
+      },
+    };
   } catch (error) {
-    console.error('Error in applyDiscountAction:', error)
+    console.error("Error in applyDiscountAction:", error);
     return {
       success: false,
-      message: 'An unexpected error occurred'
-    }
+      message: "An unexpected error occurred",
+    };
   }
 }
 
 // Check for active quotes (draft or recently submitted)
 export async function checkActiveQuoteAction(): Promise<ActionState> {
   try {
-    console.log('🔍 SERVER: checkActiveQuoteAction called')
-    const supabase = await createClient()
-    
+    console.log("🔍 SERVER: checkActiveQuoteAction called");
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      console.log('🔍 SERVER: checkActiveQuoteAction - No authenticated user')
+      console.log("🔍 SERVER: checkActiveQuoteAction - No authenticated user");
       return {
         success: false,
-        message: 'Authentication required'
-      }
+        message: "Authentication required",
+      };
     }
-    
-    console.log(`🔍 SERVER: checkActiveQuoteAction - Checking quotes for user: ${user.id}`)
-    
+
+    console.log(`🔍 SERVER: checkActiveQuoteAction - Checking quotes for user: ${user.id}`);
+
     // Check for recently submitted quote (within last 24 hours)
     // const recentDate = new Date()
     // recentDate.setDate(recentDate.getDate() - 1)
-    
+
     const { data: recentQuote } = await supabase
-      .from('user_quotes')
-      .select(`
+      .from("user_quotes")
+      .select(
+        `
         id,
         quote_number,
         status,
@@ -438,30 +442,32 @@ export async function checkActiveQuoteAction(): Promise<ActionState> {
         contact_preferences,
         pricing_tiers!inner(name, slug),
         pricing_levels!inner(name, level_code, price)
-      `)
-      .eq('user_id', user.id)
-      .eq('status', 'submitted')
+      `,
+      )
+      .eq("user_id", user.id)
+      .eq("status", "submitted")
       //.gte('submitted_at', recentDate.toISOString())
-      .order('submitted_at', { ascending: false })
+      .order("submitted_at", { ascending: false })
       .limit(1)
-      .single()
-    
+      .single();
+
     if (recentQuote) {
       return {
         success: true,
         data: {
-          type: 'active',
+          type: "active",
           quote: recentQuote,
           can_create_new: false,
-          message: `You have recently submitted quote #${recentQuote.quote_number}`
-        }
-      }
+          message: `You have recently submitted quote #${recentQuote.quote_number}`,
+        },
+      };
     }
-    
+
     // Check for draft quote
     const { data: draftQuote } = await supabase
-      .from('user_quotes')
-      .select(`
+      .from("user_quotes")
+      .select(
+        `
         id,
         quote_number,
         status,
@@ -477,64 +483,69 @@ export async function checkActiveQuoteAction(): Promise<ActionState> {
         contact_preferences,
         pricing_tiers(name, slug),
         pricing_levels(name, level_code, price)
-      `)
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .order('created_at', { ascending: false })
+      `,
+      )
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .order("created_at", { ascending: false })
       .limit(1)
-      .single()
-    
+      .single();
+
     if (draftQuote) {
       return {
         success: true,
         data: {
-          type: 'draft',
+          type: "draft",
           quote: draftQuote,
           can_create_new: true,
-          can_continue: true
-        }
-      }
+          can_continue: true,
+        },
+      };
     }
-    
+
     // No active quotes
     return {
       success: true,
       data: {
-        type: 'none',
-        can_create_new: true
-      }
-    }
+        type: "none",
+        can_create_new: true,
+      },
+    };
   } catch (error) {
-    console.error('Error checking active quotes:', error)
+    console.error("Error checking active quotes:", error);
     return {
       success: false,
-      message: 'Failed to check active quotes'
-    }
+      message: "Failed to check active quotes",
+    };
   }
 }
 
 // Load current draft quote
 export async function loadDraftAction(): Promise<ActionState> {
   try {
-    console.log('📋 SERVER: loadDraftAction called')
-    const supabase = await createClient()
-    
+    console.log("📋 SERVER: loadDraftAction called");
+    const supabase = await createClient();
+
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      console.log('📋 SERVER: loadDraftAction - No authenticated user')
+      console.log("📋 SERVER: loadDraftAction - No authenticated user");
       return {
         success: false,
-        message: 'Authentication required'
-      }
+        message: "Authentication required",
+      };
     }
-    
-    console.log(`📋 SERVER: loadDraftAction - Loading draft for user: ${user.id}`)
-    
+
+    console.log(`📋 SERVER: loadDraftAction - Loading draft for user: ${user.id}`);
+
     // Get current draft
     const { data: draft, error } = await supabase
-      .from('user_quotes')
-      .select(`
+      .from("user_quotes")
+      .select(
+        `
         *,
         pricing_tiers (
           id,
@@ -547,30 +558,31 @@ export async function loadDraftAction(): Promise<ActionState> {
           level_code,
           price
         )
-      `)
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .single()
-    
-    if (error && error.code !== 'PGRST116') {
+      `,
+      )
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .single();
+
+    if (error && error.code !== "PGRST116") {
       // Not found is ok
-      console.error('Error fetching draft:', error)
+      console.error("Error fetching draft:", error);
       return {
         success: false,
-        message: 'Failed to fetch draft'
-      }
+        message: "Failed to fetch draft",
+      };
     }
-    
+
     return {
       success: true,
-      data: { draft: draft || null }
-    }
+      data: { draft: draft || null },
+    };
   } catch (error) {
-    console.error('Error in loadDraftAction:', error)
+    console.error("Error in loadDraftAction:", error);
     return {
       success: false,
-      message: 'An unexpected error occurred'
-    }
+      message: "An unexpected error occurred",
+    };
   }
 }
 
@@ -578,214 +590,226 @@ export async function loadDraftAction(): Promise<ActionState> {
 // This keeps resume capability accurate without forcing full draft save or totals recalculation.
 export async function updateQuoteProgressAction(
   prevState: ActionState | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionState> {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) return { success: false, message: 'Authentication required' };
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    if (authError || !user) return { success: false, message: "Authentication required" };
 
-    const quoteIdRaw = formData.get('quote_id');
-    const stepRaw = formData.get('current_step');
-    if (!quoteIdRaw || !stepRaw) return { success: false, message: 'Missing quote_id or current_step' };
+    const quoteIdRaw = formData.get("quote_id");
+    const stepRaw = formData.get("current_step");
+    if (!quoteIdRaw || !stepRaw) return { success: false, message: "Missing quote_id or current_step" };
 
     const quote_id = parseInt(String(quoteIdRaw), 10);
     const current_step = String(stepRaw);
-    const allowedSteps = ['browse', 'customize', 'optional', 'quote', 'success'];
-    if (!allowedSteps.includes(current_step)) return { success: false, message: 'Invalid step' };
+    const allowedSteps = ["browse", "customize", "optional", "quote", "success"];
+    if (!allowedSteps.includes(current_step)) return { success: false, message: "Invalid step" };
 
     const { data: quote } = await supabase
-      .from('user_quotes')
-      .select('id, user_id, metadata')
-      .eq('id', quote_id)
-      .eq('user_id', user.id)
+      .from("user_quotes")
+      .select("id, user_id, metadata")
+      .eq("id", quote_id)
+      .eq("user_id", user.id)
       .limit(1)
       .single();
 
-    if (!quote) return { success: false, message: 'Quote not found' };
+    if (!quote) return { success: false, message: "Quote not found" };
 
     const metadata: any = {
       ...(quote as any).metadata,
       current_step,
       last_progress_update: new Date().toISOString(),
-      update_source: 'updateQuoteProgressAction'
+      update_source: "updateQuoteProgressAction",
     };
 
     const { error: updateError } = await supabase
-      .from('user_quotes')
+      .from("user_quotes")
       .update({ metadata, updated_at: new Date().toISOString() } as any)
-      .eq('id', quote_id);
+      .eq("id", quote_id);
 
-    if (updateError) return { success: false, message: 'Failed to update progress' };
+    if (updateError) return { success: false, message: "Failed to update progress" };
     return { success: true, data: { quote_id, current_step } };
   } catch (e) {
-    return { success: false, message: 'An unexpected error occurred' };
+    return { success: false, message: "An unexpected error occurred" };
   }
 }
 
 // Delete a user's quote (only permitted for drafts belonging to the authenticated user)
-export async function deleteQuoteAction(
-  prevState: ActionState | null,
-  formData: FormData
-): Promise<ActionState> {
+export async function deleteQuoteAction(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   const supabase = await createClient();
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-  if (authError || !user) return { success: false, message: 'Authentication required' };
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+  if (authError || !user) return { success: false, message: "Authentication required" };
 
   try {
-    const quoteIdRaw = formData.get('quote_id');
+    const quoteIdRaw = formData.get("quote_id");
     const quote_id = quoteIdRaw ? parseInt(String(quoteIdRaw), 10) : 0;
 
-    console.log('🗑️ SERVER: deleteQuoteAction called for user:', user.id, 'quote_id:', quote_id || 'none');
+    console.log("🗑️ SERVER: deleteQuoteAction called for user:", user.id, "quote_id:", quote_id || "none");
 
     if (quote_id) {
       // Inspect the row before attempting delete so we can log its current state
       try {
         const { data: existingRow, error: selErr } = await supabase
-          .from('user_quotes')
-          .select('id, user_id, status, created_at, metadata')
-          .eq('id', quote_id)
+          .from("user_quotes")
+          .select("id, user_id, status, created_at, metadata")
+          .eq("id", quote_id)
           .limit(1)
           .single();
 
-        if (selErr && selErr.code !== 'PGRST116') {
-          console.warn('deleteQuoteAction: error selecting row for id', quote_id, selErr);
+        if (selErr && selErr.code !== "PGRST116") {
+          console.warn("deleteQuoteAction: error selecting row for id", quote_id, selErr);
         } else {
-          console.log('🗂️ SERVER: deleteQuoteAction inspected row before delete:', existingRow);
+          console.log("🗂️ SERVER: deleteQuoteAction inspected row before delete:", existingRow);
         }
       } catch (e) {
-        console.warn('deleteQuoteAction: select threw for id', quote_id, e);
+        console.warn("deleteQuoteAction: select threw for id", quote_id, e);
       }
 
       // Attempt to delete specific quote owned by user and return deleted rows
       const { data: deletedRows, error } = await supabase
-        .from('user_quotes')
+        .from("user_quotes")
         .delete()
-        .eq('id', quote_id)
-        .eq('user_id', user.id)
-        .select('id, status');
+        .eq("id", quote_id)
+        .eq("user_id", user.id)
+        .select("id, status");
 
       if (error) {
-        console.warn('deleteQuoteAction: delete error for id', quote_id, error);
+        console.warn("deleteQuoteAction: delete error for id", quote_id, error);
         // try marking as deleted instead of failing outright
       }
 
       const deletedCount = Array.isArray(deletedRows) ? deletedRows.length : 0;
-      console.log('🗑️ SERVER: deleteQuoteAction deleted rows for id:', quote_id, deletedRows || []);
+      console.log("🗑️ SERVER: deleteQuoteAction deleted rows for id:", quote_id, deletedRows || []);
 
       if (deletedCount === 0) {
         // The user-level delete didn't remove rows. Attempt service-role admin delete to bypass RLS.
         try {
           const admin = createAdminClient();
           const { data: adminDeleted, error: adminDelErr } = await admin
-            .from('user_quotes')
+            .from("user_quotes")
             .delete()
-            .eq('id', quote_id)
-            .select('id, status');
+            .eq("id", quote_id)
+            .select("id, status");
 
           if (adminDelErr) {
-            console.warn('deleteQuoteAction: admin delete failed for id', quote_id, adminDelErr);
+            console.warn("deleteQuoteAction: admin delete failed for id", quote_id, adminDelErr);
           } else if (Array.isArray(adminDeleted) && adminDeleted.length > 0) {
-            console.log('🛡️ SERVER: deleteQuoteAction admin client deleted rows for id:', quote_id, adminDeleted);
-            revalidatePath('/pricing');
-            revalidatePath('/quotes');
+            console.log("🛡️ SERVER: deleteQuoteAction admin client deleted rows for id:", quote_id, adminDeleted);
+            revalidatePath("/pricing");
+            revalidatePath("/quotes");
             return { success: true, data: { deletedCount: adminDeleted.length, deleted: adminDeleted } };
           }
 
           // If admin delete also returned nothing, try admin mark-as-deleted as last resort
           const { data: adminMarked, error: adminMarkErr } = await admin
-            .from('user_quotes')
-            .update({ status: 'deleted', updated_at: new Date().toISOString() })
-            .eq('id', quote_id)
-            .select('id, status');
+            .from("user_quotes")
+            .update({ status: "deleted", updated_at: new Date().toISOString() })
+            .eq("id", quote_id)
+            .select("id, status");
 
           if (adminMarkErr) {
-            console.warn('deleteQuoteAction: admin mark-as-deleted failed for id', quote_id, adminMarkErr);
-            return { success: false, message: 'Failed to delete or mark quote as deleted (admin)' };
+            console.warn("deleteQuoteAction: admin mark-as-deleted failed for id", quote_id, adminMarkErr);
+            return { success: false, message: "Failed to delete or mark quote as deleted (admin)" };
           }
 
-          console.log('�️ SERVER: deleteQuoteAction admin marked quote as deleted for id:', quote_id, adminMarked);
-          revalidatePath('/pricing');
-          revalidatePath('/quotes');
-          return { success: true, data: { deletedCount: Array.isArray(adminMarked) ? adminMarked.length : 0, deleted: adminMarked } };
+          console.log("�️ SERVER: deleteQuoteAction admin marked quote as deleted for id:", quote_id, adminMarked);
+          revalidatePath("/pricing");
+          revalidatePath("/quotes");
+          return {
+            success: true,
+            data: { deletedCount: Array.isArray(adminMarked) ? adminMarked.length : 0, deleted: adminMarked },
+          };
         } catch (e) {
-          console.error('deleteQuoteAction: admin fallback threw for id', quote_id, e);
-          return { success: false, message: 'Failed to delete quote (admin fallback)' };
+          console.error("deleteQuoteAction: admin fallback threw for id", quote_id, e);
+          return { success: false, message: "Failed to delete quote (admin fallback)" };
         }
       }
 
-      revalidatePath('/pricing');
-      revalidatePath('/quotes');
+      revalidatePath("/pricing");
+      revalidatePath("/quotes");
       return { success: true, data: { deletedCount, deleted: deletedRows } };
     } else {
       // No id: aggressively delete all draft quotes for this user and return details
       const { data: deletedRows, error } = await supabase
-        .from('user_quotes')
+        .from("user_quotes")
         .delete()
-        .eq('user_id', user.id)
-        .eq('status', 'draft')
-        .select('id, status');
+        .eq("user_id", user.id)
+        .eq("status", "draft")
+        .select("id, status");
 
       if (error) {
-        console.warn('deleteQuoteAction: failed to delete user drafts', error);
+        console.warn("deleteQuoteAction: failed to delete user drafts", error);
         // continue to attempt alternative strategies below
       }
 
       const deletedCount = Array.isArray(deletedRows) ? deletedRows.length : 0;
-      console.log('🗑️ SERVER: deleteQuoteAction deleted draft rows for user:', user.id, deletedRows);
+      console.log("🗑️ SERVER: deleteQuoteAction deleted draft rows for user:", user.id, deletedRows);
 
       // If nothing deleted, try a broader recent-delete (covers null/mis-set status)
       if (deletedCount === 0) {
         try {
           const recentThreshold = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(); // 24h
-          console.log('🗑️ SERVER: deleteQuoteAction no rows deleted by status filter; attempting recent delete since', recentThreshold);
+          console.log(
+            "🗑️ SERVER: deleteQuoteAction no rows deleted by status filter; attempting recent delete since",
+            recentThreshold,
+          );
           const { data: recentDeleted, error: recentError } = await supabase
-            .from('user_quotes')
+            .from("user_quotes")
             .delete()
-            .eq('user_id', user.id)
-            .gte('created_at', recentThreshold)
-            .select('id, status, created_at');
+            .eq("user_id", user.id)
+            .gte("created_at", recentThreshold)
+            .select("id, status, created_at");
 
           if (recentError) {
-            console.warn('deleteQuoteAction: recent delete failed', recentError);
+            console.warn("deleteQuoteAction: recent delete failed", recentError);
           } else {
-            console.log('🗑️ SERVER: deleteQuoteAction recent delete removed rows:', recentDeleted);
-            revalidatePath('/pricing');
-            revalidatePath('/quotes');
-            return { success: true, data: { deletedCount: Array.isArray(recentDeleted) ? recentDeleted.length : 0, deleted: recentDeleted } };
+            console.log("🗑️ SERVER: deleteQuoteAction recent delete removed rows:", recentDeleted);
+            revalidatePath("/pricing");
+            revalidatePath("/quotes");
+            return {
+              success: true,
+              data: { deletedCount: Array.isArray(recentDeleted) ? recentDeleted.length : 0, deleted: recentDeleted },
+            };
           }
         } catch (e) {
-          console.warn('deleteQuoteAction: recent delete threw', e);
+          console.warn("deleteQuoteAction: recent delete threw", e);
         }
       }
 
       // As a best-effort, mark remaining drafts as deleted
       try {
         const { data: markedRows } = await supabase
-          .from('user_quotes')
-          .update({ status: 'deleted', updated_at: new Date().toISOString() } as any)
-          .eq('user_id', user.id)
-          .eq('status', 'draft')
-          .select('id, status');
-        if (markedRows) console.log('deleteQuoteAction: marked rows as deleted:', markedRows);
+          .from("user_quotes")
+          .update({ status: "deleted", updated_at: new Date().toISOString() } as any)
+          .eq("user_id", user.id)
+          .eq("status", "draft")
+          .select("id, status");
+        if (markedRows) console.log("deleteQuoteAction: marked rows as deleted:", markedRows);
       } catch (e) {
-        console.warn('deleteQuoteAction: secondary mark-as-deleted failed', e);
+        console.warn("deleteQuoteAction: secondary mark-as-deleted failed", e);
       }
 
-      revalidatePath('/pricing');
-      revalidatePath('/quotes');
+      revalidatePath("/pricing");
+      revalidatePath("/quotes");
 
       return { success: true, data: { deletedCount, deleted: deletedRows } };
     }
 
     // Revalidate pages that may list the draft
-    revalidatePath('/pricing');
-    revalidatePath('/quotes');
+    revalidatePath("/pricing");
+    revalidatePath("/quotes");
 
     return { success: true, data: { deleted: true } };
   } catch (e) {
-    console.error('Error in deleteQuoteAction:', e);
-    return { success: false, message: 'An unexpected error occurred' };
+    console.error("Error in deleteQuoteAction:", e);
+    return { success: false, message: "An unexpected error occurred" };
   }
 }
 
@@ -793,25 +817,28 @@ export async function deleteQuoteAction(
 export async function listUserDraftsAction(): Promise<ActionState> {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) return { success: false, message: 'Authentication required' };
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    if (authError || !user) return { success: false, message: "Authentication required" };
 
     const { data, error } = await supabase
-      .from('user_quotes')
-      .select('id, status, created_at, metadata')
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .order('created_at', { ascending: false });
+      .from("user_quotes")
+      .select("id, status, created_at, metadata")
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('listUserDraftsAction error:', error);
-      return { success: false, message: 'Failed to list drafts' };
+      console.error("listUserDraftsAction error:", error);
+      return { success: false, message: "Failed to list drafts" };
     }
 
-    console.log('🧾 SERVER: listUserDraftsAction found drafts for user:', user.id, data);
+    console.log("🧾 SERVER: listUserDraftsAction found drafts for user:", user.id, data);
     return { success: true, data: { drafts: data || [] } };
   } catch (e) {
-    console.error('Error in listUserDraftsAction:', e);
-    return { success: false, message: 'An unexpected error occurred' };
+    console.error("Error in listUserDraftsAction:", e);
+    return { success: false, message: "An unexpected error occurred" };
   }
 }

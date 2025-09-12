@@ -1,13 +1,93 @@
 // BlogCard Component - Staggered Layout Optimized Design
 
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Calendar, Eye, TrendingUp, ArrowRight } from 'lucide-react';
-import { type BlogPost } from '@/types/blog';
-import { contentTypeConfigs } from '@/data/mockBlogData';
+import Image from "next/image";
+import Link from "next/link";
+import { contentTypeConfigs } from "@/data/mockBlogData";
+import { type BlogPost } from "@/types/blog";
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar, Eye, TrendingUp } from "lucide-react";
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
+
+// BlogCard Component - Staggered Layout Optimized Design
 
 interface BlogCardProps {
   post: BlogPost;
@@ -17,12 +97,12 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, featured = false, compact = false }: BlogCardProps) {
   const config = contentTypeConfigs.find(c => c.type === post.contentType);
-  
+
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     }).format(date);
   };
 
@@ -36,7 +116,6 @@ export default function BlogCard({ post, featured = false, compact = false }: Bl
     >
       <Link href={`/blog/${post.seo.slug}`}>
         <div className="relative bg-background rounded-xl shadow-sm border border-border overflow-hidden transition-all duration-300 ease-out hover:shadow-lg hover:border-border/80 group-hover:bg-muted/20 h-full flex flex-col">
-          
           {/* Featured Image */}
           <div className="relative">
             <div className="aspect-video relative overflow-hidden rounded-t-xl">
@@ -47,10 +126,10 @@ export default function BlogCard({ post, featured = false, compact = false }: Bl
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
-              
+
               {/* Subtle Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
+
               {/* Content Type Badge */}
               <div className="absolute top-4 left-4">
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-background/95 backdrop-blur-sm rounded-full border border-border/50 text-foreground">
@@ -88,13 +167,11 @@ export default function BlogCard({ post, featured = false, compact = false }: Bl
             </h3>
 
             {/* Description - Flexible length */}
-            <p className="text-muted-foreground leading-relaxed text-sm flex-1">
-              {post.description}
-            </p>
+            <p className="text-muted-foreground leading-relaxed text-sm flex-1">{post.description}</p>
 
             {/* Tags - Compact */}
             <div className="flex flex-wrap gap-2">
-              {post.tags.slice(0, 3).map((tag) => (
+              {post.tags.slice(0, 3).map(tag => (
                 <span
                   key={tag}
                   className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full hover:bg-muted/80 transition-colors"
@@ -110,26 +187,27 @@ export default function BlogCard({ post, featured = false, compact = false }: Bl
             </div>
 
             {/* Technology Stack (for portfolio and case studies) - Compact */}
-            {(post.contentType === 'portfolio' || post.contentType === 'case-study') && post.technologies.length > 0 && (
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">Built with:</div>
-                <div className="flex flex-wrap gap-1">
-                  {post.technologies.slice(0, 3).map((tech) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-brand-secondary/10 text-brand-secondary rounded border border-brand-secondary/30"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {post.technologies.length > 3 && (
-                    <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground rounded border">
-                      +{post.technologies.length - 3}
-                    </span>
-                  )}
+            {(post.contentType === "portfolio" || post.contentType === "case-study") &&
+              post.technologies.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-xs text-muted-foreground">Built with:</div>
+                  <div className="flex flex-wrap gap-1">
+                    {post.technologies.slice(0, 3).map(tech => (
+                      <span
+                        key={tech}
+                        className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-brand-secondary/10 text-brand-secondary rounded border border-brand-secondary/30"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {post.technologies.length > 3 && (
+                      <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground rounded border">
+                        +{post.technologies.length - 3}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Client Results - Inline Display */}
             {post.clientResults && (
@@ -173,4 +251,4 @@ export default function BlogCard({ post, featured = false, compact = false }: Bl
       </Link>
     </motion.article>
   );
-} 
+}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 // User data interfaces
 export interface User {
@@ -30,12 +30,12 @@ export interface UserProfile {
 }
 
 // User role and status types
-export type UserRole = 'admin' | 'user' | 'moderator' | 'guest';
-export type UserStatus = 'online' | 'offline' | 'away' | 'busy';
+export type UserRole = "admin" | "user" | "moderator" | "guest";
+export type UserStatus = "online" | "offline" | "away" | "busy";
 
 // User preferences
 export interface UserPreferences {
-  theme: 'light' | 'dark' | 'system';
+  theme: "light" | "dark" | "system";
   language: string;
   timezone: string;
   notifications: NotificationPreferences;
@@ -50,15 +50,15 @@ export interface NotificationPreferences {
 }
 
 export interface PrivacyPreferences {
-  profileVisibility: 'public' | 'private' | 'contacts';
+  profileVisibility: "public" | "private" | "contacts";
   showOnlineStatus: boolean;
   allowDirectMessages: boolean;
 }
 
 // Component prop types
 export interface UserAvatarProps {
-  user: Pick<User, 'fullName' | 'avatar'>;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  user: Pick<User, "fullName" | "avatar">;
+  size?: "sm" | "md" | "lg" | "xl";
   showStatus?: boolean;
   status?: UserStatus;
   className?: string;
@@ -67,12 +67,12 @@ export interface UserAvatarProps {
 
 export interface StatusIndicatorProps {
   status: UserStatus;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   className?: string;
 }
 
 export interface UserMenuTriggerProps {
-  user: Pick<User, 'fullName' | 'avatar' | 'status'>;
+  user: Pick<User, "fullName" | "avatar" | "status">;
   isOpen?: boolean;
   onClick?: () => void;
   className?: string;
@@ -83,13 +83,13 @@ export interface UserMenuItemProps {
   label: string;
   description?: string;
   onClick?: () => void;
-  variant?: 'default' | 'danger';
+  variant?: "default" | "danger";
   className?: string;
   children?: React.ReactNode;
 }
 
 export interface UserMenuProps {
-  user: Pick<User, 'fullName' | 'email' | 'avatar' | 'status'>;
+  user: Pick<User, "fullName" | "email" | "avatar" | "status">;
   onAccountClick?: () => void;
   onSettingsClick?: () => void;
   onLogoutClick?: () => void;
@@ -97,7 +97,7 @@ export interface UserMenuProps {
 }
 
 export interface UserMenuContentProps {
-  user: Pick<User, 'fullName' | 'email' | 'avatar'>;
+  user: Pick<User, "fullName" | "email" | "avatar">;
   menuItems: UserMenuItem[];
   className?: string;
 }
@@ -109,7 +109,7 @@ export interface UserMenuItem {
   label: string;
   description?: string;
   onClick?: () => void;
-  variant?: 'default' | 'danger';
+  variant?: "default" | "danger";
   href?: string;
   separator?: boolean;
 }
@@ -163,4 +163,4 @@ export interface UserMenuEventHandlers {
   onSettingsClick: () => void;
   onLogoutClick: () => void;
   onProfileUpdate: (updates: Partial<UserProfile>) => void;
-} 
+}

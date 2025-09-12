@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowRight } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import * as SocialIcons from "lucide-react";
 
 interface FooterProps {
@@ -8,10 +8,7 @@ interface FooterProps {
   companyName?: string;
 }
 
-export default function Footer({ 
-  logo = "Craftale", 
-  companyName = "Craftale Agency" 
-}: Readonly<FooterProps>) {
+export default function Footer({ logo = "Craftale", companyName = "Craftale Agency" }: Readonly<FooterProps>) {
   const currentYear = new Date().getFullYear();
 
   const serviceLinks = [
@@ -27,9 +24,9 @@ export default function Footer({
     { name: "Chi Siamo", href: "/about" },
     // { name: "Our Team", href: "/team" },
     // { name: "Careers", href: "/careers" },
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Termini di Servizio", href: "/terms" },
-  { name: "Cookie Policy", href: "/cookies" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Termini di Servizio", href: "/terms" },
+    { name: "Cookie Policy", href: "/cookies" },
   ];
 
   const resourceLinks = [
@@ -42,10 +39,10 @@ export default function Footer({
   ];
 
   const socialLinks = [
-  { name: "Facebook", href: "#", icon: (SocialIcons as any).Facebook },
-  { name: "Twitter", href: "#", icon: (SocialIcons as any).Twitter },
-  { name: "LinkedIn", href: "#", icon: (SocialIcons as any).Linkedin },
-  { name: "Instagram", href: "#", icon: (SocialIcons as any).Instagram },
+    { name: "Facebook", href: "#", icon: (SocialIcons as any).Facebook },
+    { name: "Twitter", href: "#", icon: (SocialIcons as any).Twitter },
+    { name: "LinkedIn", href: "#", icon: (SocialIcons as any).Linkedin },
+    { name: "Instagram", href: "#", icon: (SocialIcons as any).Instagram },
   ];
 
   return (
@@ -56,17 +53,13 @@ export default function Footer({
           {/* Company Info & CTA */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2">
-              <img 
-                src='/logo.png' 
-                alt='Craftale Logo' 
-                className='w-8 h-8'
-              />
+              <img src="/logo.png" alt="Craftale Logo" className="w-8 h-8" />
               <span className="text-xl font-bold text-apty-text-inverse">{logo}</span>
             </div>
-            
+
             <p className="text-apty-text-inverse opacity-90 text-sm leading-relaxed max-w-md">
-              Creiamo siti moderni orientati alla conversione che generano risultati per attività locali, 
-              startup e aziende in crescita. Ottieni più contatti, costruisci fiducia e fai crescere il tuo business online.
+              Creiamo siti moderni orientati alla conversione che generano risultati per attività locali, startup e
+              aziende in crescita. Ottieni più contatti, costruisci fiducia e fai crescere il tuo business online.
             </p>
 
             {/* Contact Info */}
@@ -77,10 +70,7 @@ export default function Footer({
               </div> */}
               <div className="flex items-center space-x-3 text-sm text-apty-text-inverse opacity-90">
                 <Mail className="w-4 h-4 text-apty-text-inverse opacity-90" />
-                <a 
-                  href="mailto:info@craftale.it" 
-                  className="hover:opacity-100 transition-opacity"
-                >
+                <a href="mailto:info@craftale.it" className="hover:opacity-100 transition-opacity">
                   info@craftale.it
                 </a>
               </div>
@@ -101,9 +91,9 @@ export default function Footer({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-apty-text-inverse">Servizi</h3>
             <ul className="space-y-2">
-              {serviceLinks.map((link) => (
+              {serviceLinks.map(link => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.href}
                     className="text-sm text-apty-text-inverse opacity-90 hover:opacity-100 transition-all"
                   >
@@ -118,9 +108,9 @@ export default function Footer({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-apty-text-inverse">Azienda</h3>
             <ul className="space-y-2">
-              {companyLinks.map((link) => (
+              {companyLinks.map(link => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.href}
                     className="text-sm text-apty-text-inverse opacity-90 hover:opacity-100 transition-all"
                   >
@@ -135,19 +125,17 @@ export default function Footer({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-apty-text-inverse">Risorse</h3>
             <ul className="space-y-2">
-              {resourceLinks.map((link) => (
+              {resourceLinks.map(link => (
                 <li key={link.name}>
                   {(link as any).comingSoon ? (
-                    <div 
-                      className="group inline-flex items-center text-sm text-apty-text-inverse opacity-70 cursor-pointer transition-all"
-                    >
+                    <div className="group inline-flex items-center text-sm text-apty-text-inverse opacity-70 cursor-pointer transition-all">
                       <span>{link.name}</span>
                       <span className="ml-2 px-2 py-0.5 text-[10px] font-semibold bg-apty-text-inverse/20 text-apty-text-inverse rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-apty-text-inverse/30 group-active:scale-95">
                         Presto
                       </span>
                     </div>
                   ) : (
-                    <a 
+                    <a
                       href={link.href}
                       className="text-sm text-apty-text-inverse opacity-90 hover:opacity-100 transition-all"
                     >
@@ -201,7 +189,7 @@ export default function Footer({
 
             {/* Social Links */}
             <div className="flex items-center space-x-4">
-              {socialLinks.map((social) => {
+              {socialLinks.map(social => {
                 const IconComponent = social.icon;
                 return (
                   <a
@@ -220,4 +208,4 @@ export default function Footer({
       </div>
     </footer>
   );
-} 
+}

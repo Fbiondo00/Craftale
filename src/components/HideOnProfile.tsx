@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 interface HideOnProfileProps {
   children: ReactNode;
@@ -11,7 +11,7 @@ interface HideOnProfileProps {
   path?: string;
 }
 
-export default function HideOnProfile({ children, path = '/profile' }: HideOnProfileProps) {
+export default function HideOnProfile({ children, path = "/profile" }: HideOnProfileProps) {
   const pathname = usePathname();
   if (pathname === path) return null;
   return <>{children}</>;

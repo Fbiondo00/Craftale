@@ -1,19 +1,14 @@
-import {
-  ValidationResult,
-  SignInFormData,
-  SignUpFormData,
-  ForgotPasswordFormData,
-} from '@/types/auth';
+import { ForgotPasswordFormData, SignInFormData, SignUpFormData, ValidationResult } from "@/types/auth";
 
 // Email validation utility
 export const validateEmail = (email: string): string | undefined => {
   if (!email.trim()) {
-    return 'Email is required';
+    return "Email is required";
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return 'Please enter a valid email address';
+    return "Please enter a valid email address";
   }
 
   return undefined;
@@ -22,11 +17,11 @@ export const validateEmail = (email: string): string | undefined => {
 // Password validation utility
 export const validatePassword = (password: string): string | undefined => {
   if (!password) {
-    return 'Password is required';
+    return "Password is required";
   }
 
   if (password.length < 8) {
-    return 'Password must be at least 8 characters long';
+    return "Password must be at least 8 characters long";
   }
 
   // Check for at least one uppercase letter, one lowercase letter, and one number
@@ -35,23 +30,20 @@ export const validatePassword = (password: string): string | undefined => {
   const hasNumber = /\d/.test(password);
 
   if (!hasUppercase || !hasLowercase || !hasNumber) {
-    return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    return "Password must contain at least one uppercase letter, one lowercase letter, and one number";
   }
 
   return undefined;
 };
 
 // Confirm password validation utility
-export const validateConfirmPassword = (
-  password: string,
-  confirmPassword: string
-): string | undefined => {
+export const validateConfirmPassword = (password: string, confirmPassword: string): string | undefined => {
   if (!confirmPassword) {
-    return 'Please confirm your password';
+    return "Please confirm your password";
   }
 
   if (password !== confirmPassword) {
-    return 'Passwords do not match';
+    return "Passwords do not match";
   }
 
   return undefined;
@@ -103,13 +95,13 @@ export const validateSignUpForm = (data: SignUpFormData): ValidationResult => {
   const errors: Record<string, string> = {};
 
   // Validate first name
-  const firstNameError = validateName(data.firstName, 'First name');
+  const firstNameError = validateName(data.firstName, "First name");
   if (firstNameError) {
     errors.firstName = firstNameError;
   }
 
   // Validate last name
-  const lastNameError = validateName(data.lastName, 'Last name');
+  const lastNameError = validateName(data.lastName, "Last name");
   if (lastNameError) {
     errors.lastName = lastNameError;
   }

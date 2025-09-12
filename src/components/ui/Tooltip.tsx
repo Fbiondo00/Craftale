@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, ReactNode, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 interface TooltipProps {
   children: ReactNode;
@@ -11,7 +11,7 @@ interface TooltipProps {
 // Global reference to track the currently open tooltip
 let activeTooltipSetter: ((value: boolean) => void) | null = null;
 
-const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) => {
+const Tooltip: React.FC<TooltipProps> = ({ children, content, className = "" }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [tooltipOffset, setTooltipOffset] = useState(0);
@@ -26,13 +26,13 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
   // Detect if device is mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Close tooltip when scrolling
@@ -47,9 +47,9 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
     };
 
     if (showTooltip) {
-      window.addEventListener('scroll', handleScroll, true); // Use capture phase
+      window.addEventListener("scroll", handleScroll, true); // Use capture phase
       return () => {
-        window.removeEventListener('scroll', handleScroll, true);
+        window.removeEventListener("scroll", handleScroll, true);
       };
     }
   }, [showTooltip]);
@@ -60,20 +60,20 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
     const tooltipWidth = 320; // w-80 = 20rem = 320px
     const padding = 16; // Minimum padding from screen edge
     const screenWidth = window.innerWidth;
-    
+
     // Calculate how much to offset the tooltip to keep it on screen
     let offset = 0;
-    
+
     // Check if tooltip would be cut off on the left
     if (centerX - tooltipWidth / 2 < padding) {
       offset = (centerX - tooltipWidth / 2 - padding) * -1;
     }
-    
+
     // Check if tooltip would be cut off on the right
     if (centerX + tooltipWidth / 2 > screenWidth - padding) {
       offset = (centerX + tooltipWidth / 2 - (screenWidth - padding)) * -1;
     }
-    
+
     setTooltipOffset(offset);
     setMousePosition({
       x: centerX,
@@ -84,7 +84,7 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
   const handleMouseEnter = (e: React.MouseEvent) => {
     // Only trigger on desktop
     if (isMobile) return;
-    
+
     calculatePosition(e);
     setShowTooltip(true);
   };
@@ -92,17 +92,17 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
   const handleMouseLeave = () => {
     // Only trigger on desktop
     if (isMobile) return;
-    
+
     setShowTooltip(false);
   };
 
   const handleClick = (e: React.MouseEvent) => {
     // Only handle clicks on mobile
     if (!isMobile) return;
-    
+
     e.stopPropagation();
     e.preventDefault();
-    
+
     if (showTooltip) {
       setShowTooltip(false);
       activeTooltipSetter = null;
@@ -111,7 +111,7 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
       if (activeTooltipSetter && activeTooltipSetter !== setterRef.current) {
         activeTooltipSetter(false);
       }
-      
+
       calculatePosition(e);
       setShowTooltip(true);
       activeTooltipSetter = setterRef.current;
@@ -130,24 +130,24 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content, className = '' }) 
       </span>
       {showTooltip && (
         <div
-          className='fixed z-[9999] w-80 max-w-[90vw] p-4 bg-color-inverse-subtle text-white text-sm rounded-2xl shadow-2xl border-0 transition-all duration-200 ease-out pointer-events-none'
+          className="fixed z-[9999] w-80 max-w-[90vw] p-4 bg-color-inverse-subtle text-white text-sm rounded-2xl shadow-2xl border-0 transition-all duration-200 ease-out pointer-events-none"
           style={{
             left: `${mousePosition.x}px`,
             top: `${mousePosition.y}px`,
             transform: `translate(calc(-50% + ${tooltipOffset}px), -100%)`,
           }}
         >
-          <div className='relative'>
-            <div className='leading-relaxed'>{content}</div>
+          <div className="relative">
+            <div className="leading-relaxed">{content}</div>
           </div>
           {/* Arrow pointing down towards the trigger element - moves opposite to tooltip offset */}
-          <div 
-            className='absolute top-full transform -translate-x-1/2'
+          <div
+            className="absolute top-full transform -translate-x-1/2"
             style={{
-              left: `calc(50% - ${tooltipOffset}px)`
+              left: `calc(50% - ${tooltipOffset}px)`,
             }}
           >
-            <div className='w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent border-t-slate-800'></div>
+            <div className="w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent border-t-slate-800"></div>
           </div>
         </div>
       )}

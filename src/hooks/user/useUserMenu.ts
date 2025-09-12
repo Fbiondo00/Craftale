@@ -1,10 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { 
-  User, 
-  UserMenuState, 
-  UserProfile, 
-  UserPreferences 
-} from '@/types/user';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { User, UserMenuState, UserPreferences, UserProfile } from "@/types/user";
 
 // Initial user menu state
 const initialState: UserMenuState = {
@@ -20,7 +15,7 @@ export const useUserMenu = (initialUser?: User | null) => {
     ...initialState,
     user: initialUser || null,
   });
-  
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -57,71 +52,72 @@ export const useUserMenu = (initialUser?: User | null) => {
   }, []);
 
   // Profile update with optimistic updates
-  const updateProfile = useCallback(async (
-    updates: Partial<UserProfile>,
-    apiCall: (updates: Partial<UserProfile>) => Promise<User>
-  ) => {
-    if (!state.user) return;
+  const updateProfile = useCallback(
+    async (updates: Partial<UserProfile>, apiCall: (updates: Partial<UserProfile>) => Promise<User>) => {
+      if (!state.user) return;
 
-    // Optimistic update
-    const updatedUser = { ...state.user, ...updates };
-    updateUser(updatedUser);
-    setLoading(true);
+      // Optimistic update
+      const updatedUser = { ...state.user, ...updates };
+      updateUser(updatedUser);
+      setLoading(true);
 
-    try {
-      const result = await apiCall(updates);
-      updateUser(result);
-    } catch (error) {
-      // Revert optimistic update
-      updateUser(state.user);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to update profile';
-      setError(errorMessage);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, [state.user, updateUser, setLoading, setError]);
+      try {
+        const result = await apiCall(updates);
+        updateUser(result);
+      } catch (error) {
+        // Revert optimistic update
+        updateUser(state.user);
+        const errorMessage = error instanceof Error ? error.message : "Failed to update profile";
+        setError(errorMessage);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [state.user, updateUser, setLoading, setError],
+  );
 
   // Preferences update
-  const updatePreferences = useCallback(async (
-    updates: Partial<UserPreferences>,
-    apiCall: (updates: Partial<UserPreferences>) => Promise<User>
-  ) => {
-    if (!state.user) return;
+  const updatePreferences = useCallback(
+    async (updates: Partial<UserPreferences>, apiCall: (updates: Partial<UserPreferences>) => Promise<User>) => {
+      if (!state.user) return;
 
-    setLoading(true);
-    
-    try {
-      const result = await apiCall(updates);
-      updateUser(result);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to update preferences';
-      setError(errorMessage);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, [state.user, updateUser, setLoading, setError]);
+      setLoading(true);
+
+      try {
+        const result = await apiCall(updates);
+        updateUser(result);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Failed to update preferences";
+        setError(errorMessage);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [state.user, updateUser, setLoading, setError],
+  );
 
   // Logout with cleanup
-  const logout = useCallback(async (
-    apiCall: () => Promise<void>
-  ) => {
-    setLoading(true);
-    
-    try {
-      await apiCall();
-      // Clear user state
-      setState(initialState);
-      closeMenu();
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to logout';
-      setError(errorMessage);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, [closeMenu, setLoading, setError]);
+  const logout = useCallback(
+    async (apiCall: () => Promise<void>) => {
+      setLoading(true);
+
+      try {
+        await apiCall();
+        // Clear user state
+        setState(initialState);
+        closeMenu();
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Failed to logout";
+        setError(errorMessage);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [closeMenu, setLoading, setError],
+  );
 
   // Auto-close menu when clicking outside
   useEffect(() => {
@@ -132,22 +128,22 @@ export const useUserMenu = (initialUser?: User | null) => {
     };
 
     if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isDropdownOpen, closeMenu]);
 
   // Auto-close menu on escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isDropdownOpen) {
+      if (event.key === "Escape" && isDropdownOpen) {
         closeMenu();
       }
     };
 
     if (isDropdownOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
+      return () => document.removeEventListener("keydown", handleEscape);
     }
   }, [isDropdownOpen, closeMenu]);
 
@@ -175,29 +171,27 @@ export const useUserMenu = (initialUser?: User | null) => {
     isOpen: isDropdownOpen,
     isLoading: state.isLoading,
     error: state.error,
-    
+
     // Menu controls
     openMenu,
     closeMenu,
     toggleMenu,
-    
+
     // User management
     updateUser,
     updateProfile,
     updatePreferences,
     logout,
-    
+
     // Utility
     setLoading,
     setError,
     clearError: () => setError(null),
-    
+
     // Computed values
     isLoggedIn: Boolean(state.user),
-    userInitials: state.user 
-      ? `${state.user.firstName[0]}${state.user.lastName[0]}`.toUpperCase()
-      : '',
-    displayName: state.user?.fullName || state.user?.email || 'User',
+    userInitials: state.user ? `${state.user.firstName[0]}${state.user.lastName[0]}`.toUpperCase() : "",
+    displayName: state.user?.fullName || state.user?.email || "User",
   };
 };
 
@@ -212,16 +206,16 @@ export const useUserSession = () => {
     const initializeSession = async () => {
       try {
         // Check for stored session
-        const storedUser = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        
+        const storedUser = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+
         if (storedUser && token) {
           const userData = JSON.parse(storedUser);
           setUser(userData);
           setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Failed to initialize user session:', error);
+        console.error("Failed to initialize user session:", error);
       } finally {
         setIsLoading(false);
       }
@@ -233,15 +227,15 @@ export const useUserSession = () => {
   const login = useCallback((userData: User, token: string) => {
     setUser(userData);
     setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', token);
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token);
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   }, []);
 
   return {
@@ -251,4 +245,4 @@ export const useUserSession = () => {
     login,
     logout,
   };
-}; 
+};

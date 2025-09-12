@@ -1,49 +1,115 @@
 // FilterPanel Component - Clean Web Agency Filtering
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Filter, 
-  X, 
-  ChevronDown, 
-  ChevronUp, 
-  RotateCcw,
-  Check
-} from 'lucide-react';
-import { type FilterPanelProps } from '@/types/blog';
+import { useEffect, useState } from "react";
+import { type FilterPanelProps } from "@/types/blog";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronDown, ChevronUp, Filter, RotateCcw, X } from "lucide-react";
 
-export default function FilterPanel({ 
-  filters, 
-  onFiltersChange, 
-  categories, 
-  loading = false 
-}: FilterPanelProps) {
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(['industries', 'technologies']);
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+// FilterPanel Component - Clean Web Agency Filtering
+
+export default function FilterPanel({ filters, onFiltersChange, categories, loading = false }: FilterPanelProps) {
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(["industries", "technologies"]);
   const [showPanel, setShowPanel] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   // Handle responsive breakpoint
   useEffect(() => {
     const checkScreenSize = () => {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         setIsLargeScreen(window.innerWidth >= 1024);
       }
     };
 
     checkScreenSize();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', checkScreenSize);
-      return () => window.removeEventListener('resize', checkScreenSize);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", checkScreenSize);
+      return () => window.removeEventListener("resize", checkScreenSize);
     }
   }, []);
 
   const toggleCategory = (categoryKey: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(categoryKey) 
-        ? prev.filter(k => k !== categoryKey)
-        : [...prev, categoryKey]
+    setExpandedCategories(prev =>
+      prev.includes(categoryKey) ? prev.filter(k => k !== categoryKey) : [...prev, categoryKey],
     );
   };
 
@@ -52,10 +118,10 @@ export default function FilterPanel({
     const newValues = currentValues.includes(value)
       ? currentValues.filter((v: string) => v !== value)
       : [...currentValues, value];
-    
+
     onFiltersChange({
       ...filters,
-      [categoryKey]: newValues
+      [categoryKey]: newValues,
     });
   };
 
@@ -73,7 +139,7 @@ export default function FilterPanel({
 
   const getTotalFilterCount = () => {
     return Object.entries(filters).reduce((total, [key, value]) => {
-      if (key === 'searchQuery') return total;
+      if (key === "searchQuery") return total;
       return total + (Array.isArray(value) ? value.length : 0);
     }, 0);
   };
@@ -94,9 +160,7 @@ export default function FilterPanel({
           className="flex items-center gap-2 px-4 py-2 bg-background border border-border rounded-lg hover:bg-muted/50 transition-colors w-full justify-center"
         >
           <Filter className="w-5 h-5 text-muted-foreground" />
-          <span className="font-medium text-foreground">
-            Filters {filterCount > 0 && `(${filterCount})`}
-          </span>
+          <span className="font-medium text-foreground">Filters {filterCount > 0 && `(${filterCount})`}</span>
           {showPanel ? (
             <ChevronUp className="w-4 h-4 text-muted-foreground" />
           ) : (
@@ -115,7 +179,7 @@ export default function FilterPanel({
             transition={{ duration: 0.3 }}
             className={`
               bg-background rounded-xl border border-border shadow-sm overflow-hidden
-              ${showPanel ? 'block lg:block' : 'hidden lg:block'}
+              ${showPanel ? "block lg:block" : "hidden lg:block"}
             `}
           >
             {/* Header */}
@@ -144,7 +208,7 @@ export default function FilterPanel({
 
             {/* Filter Categories */}
             <div className="divide-y divide-border/50">
-              {categories.map((category) => (
+              {categories.map(category => (
                 <motion.div
                   key={category.key}
                   initial={{ opacity: 0, y: 10 }}
@@ -178,12 +242,12 @@ export default function FilterPanel({
                     {expandedCategories.includes(category.key) && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.2 }}
                         className="space-y-1"
                       >
-                        {category.options.map((option) => {
+                        {category.options.map(option => {
                           const isSelected = isFilterSelected(category.key, option.value);
                           return (
                             <motion.label
@@ -192,44 +256,51 @@ export default function FilterPanel({
                               animate={{ opacity: 1, x: 0 }}
                               className={`
                                 flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 group
-                                ${isSelected 
-                                  ? 'bg-brand-secondary/10 border border-brand-secondary/30' 
-                                  : 'hover:bg-muted/50 border border-transparent'
+                                ${
+                                  isSelected
+                                    ? "bg-brand-secondary/10 border border-brand-secondary/30"
+                                    : "hover:bg-muted/50 border border-transparent"
                                 }
                               `}
                             >
                               <div className="flex items-center gap-3">
                                 {/* Custom Checkbox */}
-                                <div className={`
+                                <div
+                                  className={`
                                   w-4 h-4 rounded border flex items-center justify-center transition-all duration-200
-                                  ${isSelected 
-                                    ? 'bg-brand-secondary border-brand-secondary' 
-                                    : 'border-border group-hover:border-brand-secondary/40'
+                                  ${
+                                    isSelected
+                                      ? "bg-brand-secondary border-brand-secondary"
+                                      : "border-border group-hover:border-brand-secondary/40"
                                   }
-                                `}>
-                                  {isSelected && (
-                                    <Check className="w-3 h-3 text-white" />
-                                  )}
+                                `}
+                                >
+                                  {isSelected && <Check className="w-3 h-3 text-white" />}
                                 </div>
 
                                 {/* Option Label */}
-                                <span className={`
+                                <span
+                                  className={`
                                   text-sm font-medium transition-colors
-                                  ${isSelected ? 'text-indigo-900' : 'text-foreground group-hover:text-brand-secondary'}
-                                `}>
+                                  ${isSelected ? "text-indigo-900" : "text-foreground group-hover:text-brand-secondary"}
+                                `}
+                                >
                                   {option.label}
                                 </span>
                               </div>
 
                               {/* Option Count */}
                               {option.count && (
-                                <span className={`
+                                <span
+                                  className={`
                                   text-xs px-2 py-1 rounded-full transition-colors
-                                  ${isSelected 
-                                    ? 'bg-brand-secondary/20 text-brand-secondary' 
-                                    : 'bg-muted text-muted-foreground'
+                                  ${
+                                    isSelected
+                                      ? "bg-brand-secondary/20 text-brand-secondary"
+                                      : "bg-muted text-muted-foreground"
                                   }
-                                `}>
+                                `}
+                                >
                                   {option.count}
                                 </span>
                               )}
@@ -256,12 +327,12 @@ export default function FilterPanel({
                 <div className="text-sm text-muted-foreground mb-2">Active filters:</div>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(filters).map(([key, values]) => {
-                    if (key === 'searchQuery' || !Array.isArray(values) || values.length === 0) return null;
-                    
+                    if (key === "searchQuery" || !Array.isArray(values) || values.length === 0) return null;
+
                     return values.map((value: string) => {
                       const category = categories.find(c => c.key === key);
                       const option = category?.options.find(o => o.value === value);
-                      
+
                       return (
                         <span
                           key={`${key}-${value}`}
@@ -296,4 +367,4 @@ export default function FilterPanel({
       </AnimatePresence>
     </div>
   );
-} 
+}

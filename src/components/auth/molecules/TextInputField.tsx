@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { LucideIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { FormField, Label, Input, ErrorMessage } from '../atoms';
+import * as React from "react";
+import { ErrorMessage, FormField, Input, Label } from "../atoms";
+import { cn } from "@/lib/utils";
+import { LucideIcon } from "lucide-react";
 
 export interface TextInputFieldProps {
   id: string;
   label: string;
-  type?: 'text' | 'email';
+  type?: "text" | "email";
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
@@ -23,7 +23,7 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
     {
       id,
       label,
-      type = 'text',
+      type = "text",
       placeholder,
       value,
       onChange,
@@ -35,7 +35,7 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const errorId = `${id}-error`;
 
@@ -43,7 +43,7 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
       },
-      [onChange]
+      [onChange],
     );
 
     return (
@@ -52,10 +52,8 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
           {label}
         </Label>
 
-        <div className='relative'>
-          {Icon && (
-            <Icon className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-apty-text-tertiary' />
-          )}
+        <div className="relative">
+          {Icon && <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-apty-text-tertiary" />}
           <Input
             ref={ref}
             id={id}
@@ -68,7 +66,7 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
             required={required}
             disabled={disabled}
             aria-describedby={error ? errorId : undefined}
-            className={cn(Icon && 'pl-10', className)}
+            className={cn(Icon && "pl-10", className)}
             {...props}
           />
         </div>
@@ -76,7 +74,7 @@ export const TextInputField = React.forwardRef<HTMLInputElement, TextInputFieldP
         <ErrorMessage id={errorId}>{error}</ErrorMessage>
       </FormField>
     );
-  }
+  },
 );
 
-TextInputField.displayName = 'TextInputField';
+TextInputField.displayName = "TextInputField";

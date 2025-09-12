@@ -1,55 +1,79 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
-import { 
-  Shield, DollarSign, 
-  ArrowRight, CheckCircle2, XCircle, 
-  Smartphone, Code2, Clock,
-  AlertCircle, TrendingUp, Users,
-  ShoppingCart, Phone, MapPin,
-  CreditCard, Zap, HeartHandshake
-} from 'lucide-react';
-import { AptyPrimaryButton, AptySecondaryButton } from '@/components/apty/AptyButton';
-import CTASection from '@/components/home/CTASection';
-import FAQSection from '@/components/sections/FAQSection';
-import Link from 'next/link';
-import { LumaSpin } from '@/components/ui/luma-spin';
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { AptyPrimaryButton, AptySecondaryButton } from "@/components/apty/AptyButton";
+import CTASection from "@/components/home/CTASection";
+import FAQSection from "@/components/sections/FAQSection";
+import { LumaSpin } from "@/components/ui/luma-spin";
+import { animate, motion, useInView } from "framer-motion";
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Code2,
+  CreditCard,
+  DollarSign,
+  HeartHandshake,
+  MapPin,
+  Phone,
+  Shield,
+  ShoppingCart,
+  Smartphone,
+  TrendingUp,
+  Users,
+  XCircle,
+  Zap,
+} from "lucide-react";
 
 // Animated counter component with decimals and currency
-function Counter({ from = 0, to, duration = 2, suffix = '', prefix = '', decimals = 0, isCurrency = false }: { 
-  from?: number; 
-  to: number; 
-  duration?: number; 
-  suffix?: string; 
-  prefix?: string; 
+function Counter({
+  from = 0,
+  to,
+  duration = 2,
+  suffix = "",
+  prefix = "",
+  decimals = 0,
+  isCurrency = false,
+}: {
+  from?: number;
+  to: number;
+  duration?: number;
+  suffix?: string;
+  prefix?: string;
   decimals?: number;
   isCurrency?: boolean;
 }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(nodeRef, { once: true, margin: '-100px' });
-  
+  const inView = useInView(nodeRef, { once: true, margin: "-100px" });
+
   useEffect(() => {
     if (!inView) return;
-    
+
     const node = nodeRef.current;
     if (!node) return;
-    
+
     const controls = animate(from, to, {
       duration,
       onUpdate(value) {
         if (isCurrency && value >= 1000) {
-          node.textContent = prefix + (value / 1000).toFixed(1) + 'K' + suffix;
+          node.textContent = prefix + (value / 1000).toFixed(1) + "K" + suffix;
         } else {
           node.textContent = prefix + value.toFixed(decimals) + suffix;
         }
       },
     });
-    
+
     return () => controls.stop();
   }, [from, to, duration, suffix, prefix, decimals, isCurrency, inView]);
-  
-  return <span ref={nodeRef}>{prefix}{from.toFixed(decimals)}</span>;
+
+  return (
+    <span ref={nodeRef}>
+      {prefix}
+      {from.toFixed(decimals)}
+    </span>
+  );
 }
 
 // FAQ Questions for Italian SMBs
@@ -59,38 +83,38 @@ const developmentFAQs = [
   //   a: "Un sito custom costa tra €3.000-10.000 per PMI italiane, con ROI in 6-12 mesi. Secondo il Politecnico di Milano, le PMI che investono nel digitale vedono crescite del fatturato online fino al 25% annuo. La nostra soluzione React/Next.js offre performance e scalabilità superiori rispetto ai CMS tradizionali."
   // },
   {
-    q: 'Il sito rispetta GDPR e normative del Garante Privacy italiano?',
-    a: 'Assolutamente sì. Implementiamo cookie banner conformi alle Linee Guida 2021 del Garante, informative privacy complete, gestione consensi a norma. Per e-commerce e newsletter gestiamo anche DPIA quando necessario. La conformità GDPR è obbligatoria in Italia con sanzioni fino a €20 milioni.'
+    q: "Il sito rispetta GDPR e normative del Garante Privacy italiano?",
+    a: "Assolutamente sì. Implementiamo cookie banner conformi alle Linee Guida 2021 del Garante, informative privacy complete, gestione consensi a norma. Per e-commerce e newsletter gestiamo anche DPIA quando necessario. La conformità GDPR è obbligatoria in Italia con sanzioni fino a €20 milioni.",
   },
   {
-    q: 'Integrate pagamenti con Satispay, PostePay, PayPal e Stripe?',
-    a: 'Certamente! Integriamo tutti i sistemi di pagamento usati in Italia: Satispay (usato dal 12% delle PMI retail), PostePay (fondamentale per B2C), PayPal e Stripe. Le nostre soluzioni custom permettono integrazioni perfette con commissioni ottimizzate per il mercato italiano.'
+    q: "Integrate pagamenti con Satispay, PostePay, PayPal e Stripe?",
+    a: "Certamente! Integriamo tutti i sistemi di pagamento usati in Italia: Satispay (usato dal 12% delle PMI retail), PostePay (fondamentale per B2C), PayPal e Stripe. Le nostre soluzioni custom permettono integrazioni perfette con commissioni ottimizzate per il mercato italiano.",
   },
   {
-    q: 'Gestite la fatturazione elettronica obbligatoria?',
-    a: 'Sì, integriamo sistemi di fatturazione elettronica conformi (tracciato FatturaPA, invio SDI). Lavoriamo con provider accreditati come Aruba, FattureInCloud, TeamSystem. La fatturazione elettronica è obbligatoria per tutte le imprese italiane dal 2019.'
+    q: "Gestite la fatturazione elettronica obbligatoria?",
+    a: "Sì, integriamo sistemi di fatturazione elettronica conformi (tracciato FatturaPA, invio SDI). Lavoriamo con provider accreditati come Aruba, FattureInCloud, TeamSystem. La fatturazione elettronica è obbligatoria per tutte le imprese italiane dal 2019.",
   },
   {
     q: "Perché scegliere React/Next.js invece di WordPress o altri CMS?",
-    a: "React/Next.js offre siti 3x più veloci, più sicuri (WordPress è target del 45% degli attacchi secondo Clusit 2023), e completamente personalizzabili. Core Web Vitals migliori = ranking Google superiore. Perfetto per PMI innovative che vogliono distinguersi dalla concorrenza."
+    a: "React/Next.js offre siti 3x più veloci, più sicuri (WordPress è target del 45% degli attacchi secondo Clusit 2023), e completamente personalizzabili. Core Web Vitals migliori = ranking Google superiore. Perfetto per PMI innovative che vogliono distinguersi dalla concorrenza.",
   },
   {
-    q: 'Mi aiutate con SEO locale e Google Maps per il mercato italiano?',
-    a: 'Assolutamente! Ottimizziamo per ricerche locali italiane (78% da mobile), Google Business Profile, parole chiave specifiche per città/regione. Il 65% del traffico italiano è mobile-first. Struttura URL, meta descrizioni e dati strutturati ottimizzati per il pubblico italiano.'
+    q: "Mi aiutate con SEO locale e Google Maps per il mercato italiano?",
+    a: "Assolutamente! Ottimizziamo per ricerche locali italiane (78% da mobile), Google Business Profile, parole chiave specifiche per città/regione. Il 65% del traffico italiano è mobile-first. Struttura URL, meta descrizioni e dati strutturati ottimizzati per il pubblico italiano.",
   },
   // {
   //   q: 'Posso usare voucher digitalizzazione o contributi PMI?',
   //   a: 'Sì! Aiutiamo con bandi regionali e nazionali come Voucher Digitalizzazione (fino a €10.000), crediti d\'imposta innovazione digitale, bandi Camera di Commercio. Assistenza completa nella presentazione domande e rendicontazione.'
   // },
   {
-    q: 'Che assistenza fornite dopo la consegna del sito?',
-    a: 'Offriamo piani da €100/mese: backup, aggiornamenti sicurezza, conformità privacy, supporto tecnico diretto in italiano. Per PMI italiane è fondamentale avere un interlocutore reattivo. Piani personalizzati includono ore di sviluppo mensili e consulenza continua.'
-  }
+    q: "Che assistenza fornite dopo la consegna del sito?",
+    a: "Offriamo piani da €100/mese: backup, aggiornamenti sicurezza, conformità privacy, supporto tecnico diretto in italiano. Per PMI italiane è fondamentale avere un interlocutore reattivo. Piani personalizzati includono ore di sviluppo mensili e consulenza continua.",
+  },
 ];
 
 export default function WebDevelopmentPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedBudget, setSelectedBudget] = useState<'small' | 'medium' | 'custom'>('medium');
+  const [selectedBudget, setSelectedBudget] = useState<"small" | "medium" | "custom">("medium");
 
   useEffect(() => {
     setIsLoading(false);
@@ -98,22 +122,22 @@ export default function WebDevelopmentPage() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen bg-apty-bg-base flex items-center justify-center'>
+      <div className="min-h-screen bg-apty-bg-base flex items-center justify-center">
         <LumaSpin size={80} />
       </div>
     );
   }
 
   return (
-    <div className='min-h-screen bg-apty-bg-base overflow-x-hidden'>
+    <div className="min-h-screen bg-apty-bg-base overflow-x-hidden">
       {/* Hero Section - SMB Focused with Cost Reality */}
-      <section className='relative min-h-[85vh] flex items-center justify-center bg-gradient-to-b from-apty-bg-base to-apty-bg-subtle py-16 md:py-0'>
-        <div className='container mx-auto px-4'>
+      <section className="relative min-h-[85vh] flex items-center justify-center bg-gradient-to-b from-apty-bg-base to-apty-bg-subtle py-16 md:py-0">
+        <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className='max-w-5xl mx-auto mt-8 md:mt-40'
+            className="max-w-5xl mx-auto mt-8 md:mt-40"
           >
             {/* Badge - Cost Focus */}
             {/* <motion.div 
@@ -129,75 +153,76 @@ export default function WebDevelopmentPage() {
             </motion.div> */}
 
             {/* Main Headline - Direct SMB Pain Point */}
-            <h1 className='text-[44px] md:text-[64px] leading-[1.1] font-bold font-apty-heading text-apty-text-primary mb-6 text-center'>
+            <h1 className="text-[44px] md:text-[64px] leading-[1.1] font-bold font-apty-heading text-apty-text-primary mb-6 text-center">
               I tuoi competitor hanno già un sito.
               <br />
-              <span className='bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent'>
+              <span className="bg-gradient-to-r from-apty-primary to-apty-secondary bg-clip-text text-transparent">
                 L'80% dei clienti
-              </span> non aspetterà il tuo.
+              </span>{" "}
+              non aspetterà il tuo.
             </h1>
 
             {/* Subheadline with Real SMB Stats */}
-            <p className='text-lg md:text-xl text-apty-text-secondary mb-10 max-w-3xl mx-auto text-center leading-relaxed'>
-              <span className='font-semibold text-apty-text-primary'>Il 57% abbandona</span> dopo 3 secondi. 
-              <span className='font-semibold text-apty-text-primary'> Il 75% non completa</span> gli acquisti da mobile. 
+            <p className="text-lg md:text-xl text-apty-text-secondary mb-10 max-w-3xl mx-auto text-center leading-relaxed">
+              <span className="font-semibold text-apty-text-primary">Il 57% abbandona</span> dopo 3 secondi.
+              <span className="font-semibold text-apty-text-primary"> Il 75% non completa</span> gli acquisti da mobile.
               Realizziamo siti veloci e sicuri che convertono davvero clienti locali.
             </p>
 
             {/* Interactive Cost Calculator */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className='bg-apty-bg-base rounded-2xl p-8 shadow-xl mb-10 border border-apty-border-subtle'
+              className="bg-apty-bg-base rounded-2xl p-8 shadow-xl mb-10 border border-apty-border-subtle"
             >
-              <h3 className='text-xl font-semibold text-apty-text-primary mb-6 text-center'>
+              <h3 className="text-xl font-semibold text-apty-text-primary mb-6 text-center">
                 Quanto ti sta realmente costando il tuo sito?
               </h3>
-              
-              <div className='grid md:grid-cols-4 gap-6'>
-                <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Fatturato perso/anno</div>
-                  <div className='text-3xl font-bold text-apty-state-error'>
-                    $<Counter to={75} isCurrency={true} suffix='' />
+
+              <div className="grid md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-sm text-apty-text-secondary mb-2">Fatturato perso/anno</div>
+                  <div className="text-3xl font-bold text-apty-state-error">
+                    $<Counter to={75} isCurrency={true} suffix="" />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>per lentezza caricamento</div>
+                  <div className="text-xs text-apty-text-secondary mt-1">per lentezza caricamento</div>
                 </div>
-                <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Abbandono carrello</div>
-                  <div className='text-3xl font-bold text-apty-accent'>
-                    <Counter to={72} suffix='%' />
+                <div className="text-center">
+                  <div className="text-sm text-apty-text-secondary mb-2">Abbandono carrello</div>
+                  <div className="text-3xl font-bold text-apty-accent">
+                    <Counter to={72} suffix="%" />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>media per PMI</div>
+                  <div className="text-xs text-apty-text-secondary mt-1">media per PMI</div>
                 </div>
-                <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Rischio Sicurezza</div>
-                  <div className='text-3xl font-bold text-apty-state-error'>
-                    <Counter to={43} suffix='%' />
+                <div className="text-center">
+                  <div className="text-sm text-apty-text-secondary mb-2">Rischio Sicurezza</div>
+                  <div className="text-3xl font-bold text-apty-state-error">
+                    <Counter to={43} suffix="%" />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>degli attacchi colpisce PMI</div>
+                  <div className="text-xs text-apty-text-secondary mt-1">degli attacchi colpisce PMI</div>
                 </div>
-                <div className='text-center'>
-                  <div className='text-sm text-apty-text-secondary mb-2'>Perdite Mobile</div>
-                  <div className='text-3xl font-bold text-apty-primary'>
-                    <Counter to={75.5} decimals={1} suffix='%' />
+                <div className="text-center">
+                  <div className="text-sm text-apty-text-secondary mb-2">Perdite Mobile</div>
+                  <div className="text-3xl font-bold text-apty-primary">
+                    <Counter to={75.5} decimals={1} suffix="%" />
                   </div>
-                  <div className='text-xs text-apty-text-secondary mt-1'>abbandono su mobile</div>
+                  <div className="text-xs text-apty-text-secondary mt-1">abbandono su mobile</div>
                 </div>
               </div>
             </motion.div>
 
             {/* CTAs */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className='flex justify-center mb-12 md:mb-32'
+              className="flex justify-center mb-12 md:mb-32"
             >
-              <Link href='/pricing'>
-                <AptyPrimaryButton size='xl' className='min-w-[200px]'>
+              <Link href="/pricing">
+                <AptyPrimaryButton size="xl" className="min-w-[200px]">
                   Richiedi un Audit Gratuito
-                  <ArrowRight className='w-5 h-5 ml-2' />
+                  <ArrowRight className="w-5 h-5 ml-2" />
                 </AptyPrimaryButton>
               </Link>
               {/* <AptySecondaryButton size='xl' className='min-w-[200px]' onClick={() => document.getElementById('roi-calculator')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -209,85 +234,85 @@ export default function WebDevelopmentPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
-          className='absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block'
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          <div className='w-6 h-10 border-2 border-apty-text-secondary/30 rounded-full flex justify-center'>
-            <div className='w-1 h-3 bg-apty-text-secondary/60 rounded-full mt-2' />
+          <div className="w-6 h-10 border-2 border-apty-text-secondary/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-apty-text-secondary/60 rounded-full mt-2" />
           </div>
         </motion.div>
       </section>
 
       {/* Real SMB Problems Section */}
-      <section className='py-20 md:py-24 bg-apty-bg-base'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-20 md:py-24 bg-apty-bg-base">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-12'
+            className="text-center mb-12"
           >
-            <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Perché il <span className='text-apty-primary'>72% delle PMI</span> Perde Vendite Online
+            <h2 className="text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Perché il <span className="text-apty-primary">72% delle PMI</span> Perde Vendite Online
             </h2>
-            <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-lg text-apty-text-secondary max-w-3xl mx-auto">
               Non sono problemi enterprise: sono cause reali che bloccano il fatturato locale.
             </p>
           </motion.div>
 
           {/* Problem Cards with Solutions */}
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               {
-                problem: 'Costi Nascosti al Checkout',
-                stat: '48%',
-                impact: 'abbandono acquisto',
-                solution: 'Prezzi chiari subito',
+                problem: "Costi Nascosti al Checkout",
+                stat: "48%",
+                impact: "abbandono acquisto",
+                solution: "Prezzi chiari subito",
                 icon: ShoppingCart,
-                color: 'text-apty-state-error'
+                color: "text-apty-state-error",
               },
               {
-                problem: 'Form di Contatto Rotti',
-                stat: '67%',
-                impact: 'lead persi',
-                solution: 'Test settimanale form',
+                problem: "Form di Contatto Rotti",
+                stat: "67%",
+                impact: "lead persi",
+                solution: "Test settimanale form",
                 icon: XCircle,
-                color: 'text-apty-state-error'
+                color: "text-apty-state-error",
               },
               {
-                problem: 'Assenza Click-to-Call',
-                stat: '76%',
-                impact: 'vogliono contatto immediato',
-                solution: 'Bottoni chiamata mobile',
+                problem: "Assenza Click-to-Call",
+                stat: "76%",
+                impact: "vogliono contatto immediato",
+                solution: "Bottoni chiamata mobile",
                 icon: Phone,
-                color: 'text-apty-primary'
+                color: "text-apty-primary",
               },
               {
-                problem: 'Orari Errati',
-                stat: '55%',
-                impact: 'abbandonano per sempre',
-                solution: 'Info auto-aggiornate',
+                problem: "Orari Errati",
+                stat: "55%",
+                impact: "abbandonano per sempre",
+                solution: "Info auto-aggiornate",
                 icon: Clock,
-                color: 'text-apty-accent'
+                color: "text-apty-accent",
               },
               {
-                problem: 'Design Solo Desktop',
-                stat: '75.5%',
-                impact: 'abbandono mobile',
-                solution: 'Approccio mobile-first',
+                problem: "Design Solo Desktop",
+                stat: "75.5%",
+                impact: "abbandono mobile",
+                solution: "Approccio mobile-first",
                 icon: Smartphone,
-                color: 'text-apty-state-error'
+                color: "text-apty-state-error",
               },
               {
-                problem: 'Assenza SEO Locale',
-                stat: '46%',
-                impact: 'invisibile localmente',
-                solution: 'Integrazione mappa',
+                problem: "Assenza SEO Locale",
+                stat: "46%",
+                impact: "invisibile localmente",
+                solution: "Integrazione mappa",
                 icon: MapPin,
-                color: 'text-apty-tertiary'
-              }
+                color: "text-apty-tertiary",
+              },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -295,19 +320,19 @@ export default function WebDevelopmentPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className='group'
+                className="group"
               >
-                <div className='bg-apty-bg-elevated rounded-xl p-6 h-full border border-apty-border-subtle hover:border-apty-primary/30 transition-all hover:shadow-lg'>
-                  <div className='flex items-start justify-between mb-4'>
+                <div className="bg-apty-bg-elevated rounded-xl p-6 h-full border border-apty-border-subtle hover:border-apty-primary/30 transition-all hover:shadow-lg">
+                  <div className="flex items-start justify-between mb-4">
                     <item.icon className={`w-8 h-8 ${item.color}`} />
-                    <div className='text-3xl font-bold text-apty-text-primary'>{item.stat}</div>
+                    <div className="text-3xl font-bold text-apty-text-primary">{item.stat}</div>
                   </div>
-                  <h3 className='text-lg font-semibold text-apty-text-primary mb-2'>{item.problem}</h3>
-                  <p className='text-sm text-apty-text-secondary mb-3'>{item.impact}</p>
-                  <div className='pt-3 border-t border-apty-border-subtle'>
-                    <div className='flex items-center gap-2'>
-                      <CheckCircle2 className='w-4 h-4 text-apty-state-success' />
-                      <span className='text-sm font-medium text-apty-state-success'>{item.solution}</span>
+                  <h3 className="text-lg font-semibold text-apty-text-primary mb-2">{item.problem}</h3>
+                  <p className="text-sm text-apty-text-secondary mb-3">{item.impact}</p>
+                  <div className="pt-3 border-t border-apty-border-subtle">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-apty-state-success" />
+                      <span className="text-sm font-medium text-apty-state-success">{item.solution}</span>
                     </div>
                   </div>
                 </div>
@@ -316,11 +341,26 @@ export default function WebDevelopmentPage() {
           </div>
 
           {/* Source */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Sources: 
-              <a href='https://www.drip.com/blog/cart-abandonment-statistics' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Drip 2024</a>,
-              <a href='https://fitsmallbusiness.com/shopping-cart-abandonment-statistics/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>FitSmallBusiness</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Sources:
+              <a
+                href="https://www.drip.com/blog/cart-abandonment-statistics"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Drip 2024
+              </a>
+              ,
+              <a
+                href="https://fitsmallbusiness.com/shopping-cart-abandonment-statistics/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                FitSmallBusiness
+              </a>
             </p>
           </div>
         </div>
@@ -749,51 +789,51 @@ export default function WebDevelopmentPage() {
       </section> */}
 
       {/* Mobile Reality Check */}
-      <section className='py-20 md:py-24 bg-gradient-to-b from-apty-bg-subtle to-apty-bg-base'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-20 md:py-24 bg-gradient-to-b from-apty-bg-subtle to-apty-bg-base">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-12'
+            className="text-center mb-12"
           >
-            <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              La <span className='text-apty-primary'>Verità del Mobile</span> per le PMI
+            <h2 className="text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              La <span className="text-apty-primary">Verità del Mobile</span> per le PMI
             </h2>
-            <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-lg text-apty-text-secondary max-w-3xl mx-auto">
               Il 75% del traffico è mobile. Ma non compra. Ecco perché.
             </p>
           </motion.div>
 
-          <div className='max-w-5xl mx-auto'>
-            <div className='grid md:grid-cols-2 gap-8'>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8">
               {/* Mobile Problems */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-apty-bg-base rounded-2xl p-8 shadow-lg'
+                className="bg-apty-bg-base rounded-2xl p-8 shadow-lg"
               >
-                <Smartphone className='w-12 h-12 text-apty-state-error mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Perché il Mobile Fallisce</h3>
-                
-                <div className='space-y-4'>
-                  <div className='flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Abbandono carrello</span>
-                    <span className='text-2xl font-bold text-apty-state-error'>75.5%</span>
+                <Smartphone className="w-12 h-12 text-apty-state-error mb-4" />
+                <h3 className="text-2xl font-bold text-apty-text-primary mb-4">Perché il Mobile Fallisce</h3>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg">
+                    <span className="text-sm font-medium text-apty-text-primary">Abbandono carrello</span>
+                    <span className="text-2xl font-bold text-apty-state-error">75.5%</span>
                   </div>
-                  <div className='flex justify-between items-center p-3 bg-apty-accent/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Abbandonano dopo 3 secondi</span>
-                    <span className='text-2xl font-bold text-apty-accent'>57%</span>
+                  <div className="flex justify-between items-center p-3 bg-apty-accent/5 rounded-lg">
+                    <span className="text-sm font-medium text-apty-text-primary">Abbandonano dopo 3 secondi</span>
+                    <span className="text-2xl font-bold text-apty-accent">57%</span>
                   </div>
-                  <div className='flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg'>
-                    <span className='text-sm font-medium text-apty-text-primary'>Non tornano mai</span>
-                    <span className='text-2xl font-bold text-apty-state-error'>80%</span>
+                  <div className="flex justify-between items-center p-3 bg-apty-state-error/5 rounded-lg">
+                    <span className="text-sm font-medium text-apty-text-primary">Non tornano mai</span>
+                    <span className="text-2xl font-bold text-apty-state-error">80%</span>
                   </div>
                 </div>
 
-                <div className='mt-6 p-4 bg-apty-state-error/10 rounded-lg'>
-                  <p className='text-sm text-apty-text-primary'>
+                <div className="mt-6 p-4 bg-apty-state-error/10 rounded-lg">
+                  <p className="text-sm text-apty-text-primary">
                     Gli utenti mobile vogliono <strong>azioni immediate</strong>, non navigare
                   </p>
                 </div>
@@ -804,32 +844,32 @@ export default function WebDevelopmentPage() {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className='bg-gradient-to-br from-apty-primary/5 to-apty-state-success/5 rounded-2xl p-8 shadow-lg border-2 border-apty-primary'
+                className="bg-gradient-to-br from-apty-primary/5 to-apty-state-success/5 rounded-2xl p-8 shadow-lg border-2 border-apty-primary"
               >
-                <Phone className='w-12 h-12 text-apty-primary mb-4' />
-                <h3 className='text-2xl font-bold text-apty-text-primary mb-4'>Cosa Serve al Mobile</h3>
-                
-                <div className='space-y-3'>
+                <Phone className="w-12 h-12 text-apty-primary mb-4" />
+                <h3 className="text-2xl font-bold text-apty-text-primary mb-4">Cosa Serve al Mobile</h3>
+
+                <div className="space-y-3">
                   {[
-                    { feature: 'Pulsante click-to-call', impact: 'Primo driver di conversione' },
-                    { feature: 'Integrazione mappa', impact: 'Il 76% visita entro 24 ore' },
-                    { feature: 'Orari aggiornati visibili', impact: 'Evita visite a vuoto' },
-                    { feature: 'Prenotazione con un tocco', impact: 'Prenotazioni istantanee' },
-                    { feature: 'Pagamento wallet mobile', impact: 'Checkout rapido' },
-                    { feature: 'Caricamento sotto i 2 secondi', impact: 'Mantiene il coinvolgimento' }
+                    { feature: "Pulsante click-to-call", impact: "Primo driver di conversione" },
+                    { feature: "Integrazione mappa", impact: "Il 76% visita entro 24 ore" },
+                    { feature: "Orari aggiornati visibili", impact: "Evita visite a vuoto" },
+                    { feature: "Prenotazione con un tocco", impact: "Prenotazioni istantanee" },
+                    { feature: "Pagamento wallet mobile", impact: "Checkout rapido" },
+                    { feature: "Caricamento sotto i 2 secondi", impact: "Mantiene il coinvolgimento" },
                   ].map((item, i) => (
-                    <div key={i} className='flex items-start gap-3'>
-                      <CheckCircle2 className='w-5 h-5 text-apty-primary mt-0.5' />
-                      <div className='flex-1'>
-                        <div className='font-medium text-apty-text-primary'>{item.feature}</div>
-                        <div className='text-sm text-apty-text-secondary'>{item.impact}</div>
+                    <div key={i} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-apty-primary mt-0.5" />
+                      <div className="flex-1">
+                        <div className="font-medium text-apty-text-primary">{item.feature}</div>
+                        <div className="text-sm text-apty-text-secondary">{item.impact}</div>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className='mt-6 p-4 bg-apty-primary/10 rounded-lg'>
-                  <p className='text-sm text-apty-text-primary'>
+                <div className="mt-6 p-4 bg-apty-primary/10 rounded-lg">
+                  <p className="text-sm text-apty-text-primary">
                     Risultato: <strong>+40-60% conversioni mobile</strong>
                   </p>
                 </div>
@@ -838,73 +878,103 @@ export default function WebDevelopmentPage() {
           </div>
 
           {/* Source */}
-          <div className='mt-8 text-center'>
-            <p className='text-sm text-apty-text-secondary'>
-              Sources: 
-              <a href='https://www.sellerscommerce.com/blog/shopping-cart-abandonment-statistics/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Sellers Commerce</a>,
-              <a href='https://www.semrush.com/blog/mobile-vs-desktop-usage/' target='_blank' rel='noopener noreferrer' className='text-apty-primary hover:underline mx-1'>Semrush 2024</a>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-apty-text-secondary">
+              Sources:
+              <a
+                href="https://www.sellerscommerce.com/blog/shopping-cart-abandonment-statistics/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Sellers Commerce
+              </a>
+              ,
+              <a
+                href="https://www.semrush.com/blog/mobile-vs-desktop-usage/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apty-primary hover:underline mx-1"
+              >
+                Semrush 2024
+              </a>
             </p>
           </div>
         </div>
       </section>
 
       {/* Process Timeline */}
-      <section className='py-20 md:py-24 bg-apty-bg-subtle'>
-        <div className='container mx-auto px-4 max-w-7xl'>
+      <section className="py-20 md:py-24 bg-apty-bg-subtle">
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className='text-center mb-12'
+            className="text-center mb-12"
           >
-            <h2 className='text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4'>
-              Il Nostro Processo <span className='text-apty-primary'>Amico delle PMI</span>
+            <h2 className="text-[36px] md:text-[48px] leading-[1.2] font-bold font-apty-heading text-apty-text-primary mb-4">
+              Il Nostro Processo <span className="text-apty-primary">Amico delle PMI</span>
             </h2>
-            <p className='text-lg text-apty-text-secondary max-w-3xl mx-auto'>
+            <p className="text-lg text-apty-text-secondary max-w-3xl mx-auto">
               Pagamenti flessibili, milestone chiare, zero sorprese
             </p>
           </motion.div>
 
-          <div className='max-w-5xl mx-auto'>
+          <div className="max-w-5xl mx-auto">
             {/* Process Steps */}
-            <div className='relative'>
+            <div className="relative">
               {/* Progress Line */}
-              <div className='absolute left-8 top-0 bottom-0 w-0.5 bg-apty-border-subtle hidden md:block' />
-              
-              <div className='space-y-8'>
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-apty-border-subtle hidden md:block" />
+
+              <div className="space-y-8">
                 {[
                   {
-                    week: 'Settimana 1',
-                    title: 'Analisi & Pianificazione',
-                    payment: 'Acconto 30%',
-                    tasks: ['Comprendere il tuo business', 'Analisi competitor', 'Pianificazione tecnica', 'Strategia contenuti'],
+                    week: "Settimana 1",
+                    title: "Analisi & Pianificazione",
+                    payment: "Acconto 30%",
+                    tasks: [
+                      "Comprendere il tuo business",
+                      "Analisi competitor",
+                      "Pianificazione tecnica",
+                      "Strategia contenuti",
+                    ],
                     icon: HeartHandshake,
-                    color: 'text-apty-primary'
+                    color: "text-apty-primary",
                   },
                   {
-                    week: 'Settimane 2-4',
-                    title: 'Design & Sviluppo',
-                    payment: '40% alla approvazione design',
-                    tasks: ['Design mobile-first', 'Ottimizzazione velocità', 'Implementazione sicurezza', 'Integrazione contenuti'],
+                    week: "Settimane 2-4",
+                    title: "Design & Sviluppo",
+                    payment: "40% alla approvazione design",
+                    tasks: [
+                      "Design mobile-first",
+                      "Ottimizzazione velocità",
+                      "Implementazione sicurezza",
+                      "Integrazione contenuti",
+                    ],
                     icon: Code2,
-                    color: 'text-apty-secondary'
+                    color: "text-apty-secondary",
                   },
                   {
-                    week: 'Settimane 5-6',
-                    title: 'Test & Lancio',
-                    payment: '30% al lancio',
-                    tasks: ['Test form', 'Test mobile', 'Setup SEO', 'Formazione inclusa'],
+                    week: "Settimane 5-6",
+                    title: "Test & Lancio",
+                    payment: "30% al lancio",
+                    tasks: ["Test form", "Test mobile", "Setup SEO", "Formazione inclusa"],
                     icon: Zap,
-                    color: 'text-apty-tertiary'
+                    color: "text-apty-tertiary",
                   },
                   {
-                    week: 'Continuo',
-                    title: 'Crescita & Supporto',
-                    payment: 'Manutenzione mensile',
-                    tasks: ['Aggiornamenti sicurezza', 'Monitoraggio performance', 'Aggiornamenti contenuti', 'Ottimizzazione conversioni'],
+                    week: "Continuo",
+                    title: "Crescita & Supporto",
+                    payment: "Manutenzione mensile",
+                    tasks: [
+                      "Aggiornamenti sicurezza",
+                      "Monitoraggio performance",
+                      "Aggiornamenti contenuti",
+                      "Ottimizzazione conversioni",
+                    ],
                     icon: TrendingUp,
-                    color: 'text-apty-state-success'
-                  }
+                    color: "text-apty-state-success",
+                  },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -912,29 +982,31 @@ export default function WebDevelopmentPage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className='relative flex gap-6 items-start'
+                    className="relative flex gap-6 items-start"
                   >
-                    <div className={`hidden md:flex w-16 h-16 bg-apty-bg-base rounded-full items-center justify-center border-2 border-apty-border-subtle z-10 ${item.color}`}>
-                      <item.icon className='w-8 h-8' />
+                    <div
+                      className={`hidden md:flex w-16 h-16 bg-apty-bg-base rounded-full items-center justify-center border-2 border-apty-border-subtle z-10 ${item.color}`}
+                    >
+                      <item.icon className="w-8 h-8" />
                     </div>
-                    
-                    <div className='flex-1 bg-apty-bg-base rounded-xl p-6 shadow-lg border border-apty-border-subtle'>
-                      <div className='flex items-start justify-between mb-4'>
+
+                    <div className="flex-1 bg-apty-bg-base rounded-xl p-6 shadow-lg border border-apty-border-subtle">
+                      <div className="flex items-start justify-between mb-4">
                         <div>
-                          <div className='text-sm font-medium text-apty-primary mb-1'>{item.week}</div>
-                          <h3 className='text-xl font-bold text-apty-text-primary'>{item.title}</h3>
+                          <div className="text-sm font-medium text-apty-primary mb-1">{item.week}</div>
+                          <h3 className="text-xl font-bold text-apty-text-primary">{item.title}</h3>
                         </div>
-                        <div className='text-right'>
-                          <div className='text-sm text-apty-text-secondary'>Pagamento</div>
-                          <div className='font-semibold text-apty-primary'>{item.payment}</div>
+                        <div className="text-right">
+                          <div className="text-sm text-apty-text-secondary">Pagamento</div>
+                          <div className="font-semibold text-apty-primary">{item.payment}</div>
                         </div>
                       </div>
-                      
-                      <div className='grid grid-cols-2 gap-2'>
+
+                      <div className="grid grid-cols-2 gap-2">
                         {item.tasks.map((task, j) => (
-                          <div key={j} className='flex items-center gap-2'>
-                            <CheckCircle2 className='w-4 h-4 text-apty-state-success' />
-                            <span className='text-sm text-apty-text-secondary'>{task}</span>
+                          <div key={j} className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-apty-state-success" />
+                            <span className="text-sm text-apty-text-secondary">{task}</span>
                           </div>
                         ))}
                       </div>
@@ -949,14 +1021,14 @@ export default function WebDevelopmentPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className='mt-12 bg-apty-primary/10 rounded-xl p-6 text-center'
+              className="mt-12 bg-apty-primary/10 rounded-xl p-6 text-center"
             >
-              <CreditCard className='w-12 h-12 text-apty-primary mx-auto mb-3' />
-              <h3 className='text-lg font-semibold text-apty-text-primary mb-2'>Opzioni di Pagamento Flessibili</h3>
-              <p className='text-sm text-apty-text-secondary mb-3'>
+              <CreditCard className="w-12 h-12 text-apty-primary mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-apty-text-primary mb-2">Opzioni di Pagamento Flessibili</h3>
+              <p className="text-sm text-apty-text-secondary mb-3">
                 Piani di pagamento 3-12 mesi disponibili • Nessun costo nascosto • Disdici quando vuoi
               </p>
-              <p className='text-xs text-apty-text-secondary'>
+              <p className="text-xs text-apty-text-secondary">
                 Conosciamo i flussi di cassa delle PMI. Troviamo insieme una struttura di pagamento adatta a te.
               </p>
             </motion.div>
@@ -965,11 +1037,7 @@ export default function WebDevelopmentPage() {
       </section>
 
       {/* FAQ Section */}
-      <FAQSection 
-        title="Le Domande delle"
-        titleHighlight="PMI Italiane"
-        questions={developmentFAQs}
-      />
+      <FAQSection title="Le Domande delle" titleHighlight="PMI Italiane" questions={developmentFAQs} />
 
       {/* CTA Section */}
       <CTASection />

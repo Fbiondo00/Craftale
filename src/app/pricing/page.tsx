@@ -1,29 +1,29 @@
-import CompactPricingSection from '@/components/pricing/CompactPricingSection';
-import { 
-  saveDraftAction, 
-  submitQuoteAction, 
+import { trackPersonaMatcherAction, trackPricingJourneyAction } from "@/app/actions/analytics";
+import { getOptionalServicesAction } from "@/app/actions/optionalServices";
+import { getPricingTiersAction } from "@/app/actions/pricingData";
+import {
   applyDiscountAction,
+  checkActiveQuoteAction,
   loadDraftAction,
-  checkActiveQuoteAction
-} from '@/app/actions/quotes';
-import { updateQuoteProgressAction, deleteQuoteAction } from '@/app/actions/quotes';
-import { listUserDraftsAction } from '@/app/actions/quotes';
-import { getTimeSlotsAction, bookSlotAction } from '@/app/actions/timeSlots';
-import { getOptionalServicesAction } from '@/app/actions/optionalServices';
-import { getPricingTiersAction } from '@/app/actions/pricingData';
-import { checkUpgradeAction } from '@/app/actions/upgradeRecommendation';
-import { trackPricingJourneyAction, trackPersonaMatcherAction } from '@/app/actions/analytics';
-import CTASection from '@/components/home/CTASection';
+  saveDraftAction,
+  submitQuoteAction,
+} from "@/app/actions/quotes";
+import { deleteQuoteAction, updateQuoteProgressAction } from "@/app/actions/quotes";
+import { listUserDraftsAction } from "@/app/actions/quotes";
+import { bookSlotAction, getTimeSlotsAction } from "@/app/actions/timeSlots";
+import { checkUpgradeAction } from "@/app/actions/upgradeRecommendation";
+import CTASection from "@/components/home/CTASection";
+import CompactPricingSection from "@/components/pricing/CompactPricingSection";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function PricingPage() {
   // Pre-fetch pricing data on server
   const pricingData = await getPricingTiersAction();
-  
+
   return (
-    <div className='min-h-screen bg-apty-bg-subtle'>
-      <CompactPricingSection 
+    <div className="min-h-screen bg-apty-bg-subtle">
+      <CompactPricingSection
         // Quote actions
         saveDraftAction={saveDraftAction}
         submitQuoteAction={submitQuoteAction}
@@ -40,9 +40,9 @@ export default async function PricingPage() {
         // Analytics actions
         trackPricingJourneyAction={trackPricingJourneyAction}
         trackPersonaMatcherAction={trackPersonaMatcherAction}
-  updateQuoteProgressAction={updateQuoteProgressAction}
-  deleteQuoteAction={deleteQuoteAction}
-  listUserDraftsAction={listUserDraftsAction}
+        updateQuoteProgressAction={updateQuoteProgressAction}
+        deleteQuoteAction={deleteQuoteAction}
+        listUserDraftsAction={listUserDraftsAction}
         // Pre-fetched data
         initialPricingData={pricingData}
       />
