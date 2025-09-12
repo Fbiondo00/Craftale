@@ -302,12 +302,12 @@ const TierLevelSelector: React.FC<TierLevelSelectorProps> = ({
                       ></div>
                       <button
                         onClick={() => onLevelSelect(selectedTier.slug, level.level_code)}
-                        className={`mt-4 px-6 py-3 rounded-apty-lg text-sm font-medium apty-transition ${
+                        className={`mt-4 apty-transition ${
                           level.level_code === "B"
-                            ? "bg-apty-tertiary text-apty-text-on-brand hover:bg-apty-tertiary-hover"
+                            ? "inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-apty-gradient-primary text-apty-text-on-brand text-sm font-semibold shadow-md transition-all"
                             : level.level_code === "C"
-                              ? "bg-apty-bg-inverse text-apty-text-inverse hover:bg-apty-bg-inverse/90"
-                              : "bg-apty-bg-base border-2 border-apty-border-strong text-apty-text-primary hover:border-apty-primary hover:bg-apty-bg-hover"
+                              ? "bg-apty-bg-inverse text-apty-text-inverse hover:bg-apty-bg-inverse/90 px-6 py-3 rounded-apty-lg text-sm font-medium"
+                              : "bg-apty-bg-base border-2 border-apty-border-strong text-apty-text-primary hover:border-apty-primary hover:bg-apty-bg-hover px-6 py-3 rounded-apty-lg text-sm font-medium"
                         }`}
                       >
                         Scegli {level.name}
@@ -373,12 +373,12 @@ const TierLevelSelector: React.FC<TierLevelSelectorProps> = ({
                       >
                         <button
                           onClick={() => onLevelSelect(selectedTier.slug, level.level_code)}
-                          className={`px-6 py-3 rounded-apty-lg text-sm font-medium ${
+                          className={`${
                             level.level_code === "B"
-                              ? "bg-apty-tertiary text-apty-text-on-brand hover:bg-apty-tertiary-hover apty-transition"
+                              ? "inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-apty-gradient-primary text-apty-text-on-brand text-sm font-semibold shadow-md transition-all"
                               : level.level_code === "C"
-                                ? "bg-apty-bg-inverse text-apty-text-inverse hover:bg-apty-bg-inverse/90 apty-transition"
-                                : "bg-apty-bg-base border-2 border-apty-border-strong text-apty-text-primary hover:border-apty-primary hover:bg-apty-bg-hover apty-transition"
+                                ? "px-6 py-3 rounded-apty-lg text-sm font-medium bg-apty-bg-inverse text-apty-text-inverse hover:bg-apty-bg-inverse/90 apty-transition"
+                                : "px-6 py-3 rounded-apty-lg text-sm font-medium bg-apty-bg-base border-2 border-apty-border-strong text-apty-text-primary hover:border-apty-primary hover:bg-apty-bg-hover apty-transition"
                           }`}
                         >
                           Scegli {levelNames[level.level_code]}

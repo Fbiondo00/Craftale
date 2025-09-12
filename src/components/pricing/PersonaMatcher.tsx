@@ -228,7 +228,7 @@ const PersonaMatcher: React.FC<PersonaMatcherProps> = ({ isOpen, onClose, onSubm
             className="bg-color-base rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-color-border-default"
           >
             {/* Header */}
-            <div className="relative bg-gradient-to-r from-apty-primary to-apty-secondary dark:from-apty-primary dark:to-apty-secondary text-white p-6">
+            <div className="relative bg-apty-gradient-primary text-apty-text-on-brand p-6 dark:bg-transparent dark:text-color-primary">
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"

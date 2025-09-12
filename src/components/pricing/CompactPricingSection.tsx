@@ -212,6 +212,36 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
     }
   }, [servicesPreloaded, servicesLoading]);
 
+  // If configuration.optionalServices contains lightweight placeholders (ids only),
+  // map them to the prefetched full service objects as soon as `allServices` is available.
+  useEffect(() => {
+    try {
+      if (!allServices || allServices.length === 0) return;
+      if (!configuration.optionalServices || configuration.optionalServices.length === 0) return;
+      // Avoid running repeatedly once we've restored
+      if (hasRestoredServicesRef.current) return;
+
+      const needsMapping = configuration.optionalServices.some(s => !s.name || s.name === "" || !s.base_price);
+      if (!needsMapping) return;
+
+      const mapped = configuration.optionalServices.map(s => {
+        const found = allServices.find(a => a.id === s.id);
+        return found ? found : s;
+      });
+
+      // If mapping produced at least one enriched service, apply it
+      const hasEnriched = mapped.some(m => m && m.name && m.name !== "");
+      if (hasEnriched) {
+        setConfiguration(prev => ({ ...prev, optionalServices: mapped }));
+        hasRestoredServicesRef.current = true;
+        console.log("✅ CLIENT: Mapped placeholder optional services to full prefetched services:", mapped.map(m => m.id));
+      }
+    } catch (err) {
+      // Non-fatal - don't block the flow
+      console.error("Error mapping placeholder services to full services:", err);
+    }
+  }, [allServices, configuration.optionalServices]);
+
   const [personaMatcherState, setPersonaMatcherState] = useState<{
     isOpen: boolean;
     step: PersonaMatcherStep;
@@ -363,13 +393,39 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             }
 
             // Set configuration to success step - show the quote recap
+            // Convert selected service ids into lightweight service objects so the
+            // UI configuration.optionalServices always contains ApiOptionalService[]
+            const activeOptionalServices: ApiOptionalService[] = Array.isArray(data.quote.selected_services)
+              ? data.quote.selected_services.map((id: any) => ({ id: Number(id), name: "", slug: "", description: "", base_price: 0, category: "", features: [], is_active: true }))
+              : [];
+
             setConfiguration({
               tier: tierObj || data.quote.pricing_tiers,
               level: levelObj || data.quote.pricing_levels,
-              optionalServices: Array.isArray(data.quote.selected_services) ? data.quote.selected_services : [],
+              optionalServices: activeOptionalServices,
               completedSteps: new Set<PricingStep>(["browse", "customize", "optional", "quote"]),
               currentStep: "success",
             });
+
+            // Try to fetch full service objects immediately for the selected ids so
+            // the UI (step 4 summary) shows names/prices on first render.
+            try {
+              const fetchResult = await getOptionalServicesAction(data.quote.tier_id || undefined, data.quote.level_id || undefined);
+              if (fetchResult && fetchResult.success && Array.isArray(fetchResult.services) && fetchResult.services.length > 0) {
+                setAllServices(fetchResult.services);
+                setServicesPreloaded(true);
+                if (Array.isArray(data.quote.selected_services) && data.quote.selected_services.length > 0) {
+                  const mapped = fetchResult.services.filter((s: ApiOptionalService) => data.quote.selected_services.includes(s.id));
+                  if (mapped.length > 0) {
+                    setConfiguration(prev => ({ ...prev, optionalServices: mapped }));
+                    hasRestoredServicesRef.current = true;
+                    console.log("✅ CLIENT: Restored active quote selected services from fetched list:", mapped.map(m => m.id));
+                  }
+                }
+              }
+            } catch (err) {
+              console.error("Error fetching optional services for active quote mapping:", err);
+            }
           } else if (data.type === "can_create_new") {
             // User has a rejected/expired quote - show a notification but allow new quote
             const message =
@@ -416,15 +472,38 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
             }
 
             // If we can't find the full objects, use the partial data as fallback
-            // For now, store empty array for optionalServices - they'll be loaded when services are fetched
+            // Convert selected service ids into lightweight service objects so the
+            // UI configuration.optionalServices always contains ApiOptionalService[]
+            const draftOptionalServices: ApiOptionalService[] = Array.isArray(data.quote.selected_services)
+              ? data.quote.selected_services.map((id: any) => ({ id: Number(id), name: "", slug: "", description: "", base_price: 0, category: "", features: [], is_active: true }))
+              : [];
+
             setConfiguration({
               tier: tierObj || data.quote.pricing_tiers,
               level: levelObj || data.quote.pricing_levels,
-              optionalServices: [], // Will be populated when services are loaded
+              optionalServices: draftOptionalServices,
               completedSteps,
               currentStep,
             });
 
+            // Immediately try to fetch and map selected service ids to full objects
+            try {
+              const fetchResult = await getOptionalServicesAction(data.quote.tier_id || undefined, data.quote.level_id || undefined);
+              if (fetchResult && fetchResult.success && Array.isArray(fetchResult.services) && fetchResult.services.length > 0) {
+                setAllServices(fetchResult.services);
+                setServicesPreloaded(true);
+                if (Array.isArray(data.quote.selected_services) && data.quote.selected_services.length > 0) {
+                  const mapped = fetchResult.services.filter((s: ApiOptionalService) => data.quote.selected_services.includes(s.id));
+                  if (mapped.length > 0) {
+                    setConfiguration(prev => ({ ...prev, optionalServices: mapped }));
+                    hasRestoredServicesRef.current = true;
+                    console.log("✅ CLIENT: Restored draft selected services from fetched list:", mapped.map(m => m.id));
+                  }
+                }
+              }
+            } catch (err) {
+              console.error("Error fetching optional services for draft mapping:", err);
+            }
             // Store the service IDs in the quote for later use
             if (data.quote.selected_services) {
               data.quote._selectedServiceIds = data.quote.selected_services;
@@ -678,8 +757,10 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
   const currentIndex = orderedSteps.indexOf(configuration.currentStep);
   const prevIndex = prev ? orderedSteps.indexOf(prev) : -1;
 
-  if (configuration.currentStep === "quote") {
-    // For Step 4 (quote) never show avanti (per requirement)
+  // Never show forward ("Avanti") on Step 3 (optional) or Step 4 (quote).
+  // This prevents a flash of the forward button when navigating back from
+  // the Quote step to the Optional Services step.
+  if (configuration.currentStep === "quote" || configuration.currentStep === "optional") {
     canGoForwardForNavigator = false;
   } else {
     canGoForwardForNavigator = prevIndex > currentIndex;
@@ -1198,9 +1279,9 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                 <span className="font-medium text-apty-text-primary">Richiedi Preventivo</span>
               </div>
             </div>
-            {configuration.currentStep !== "browse" && (
+            {orderedSteps.indexOf(configuration.currentStep) !== 0 && (
               <StepNavigator
-                canGoBack={configuration.currentStep !== "browse"}
+                canGoBack={orderedSteps.indexOf(configuration.currentStep) !== 0}
                 // Forward button visibility now depends on whether the user
                 // came back from a later step (see prevStepRef logic)
                 canGoForward={canGoForwardForNavigator}
@@ -1447,7 +1528,7 @@ const CompactPricingSection: React.FC<CompactPricingSectionProps> = ({
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <h2 className="text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-4">
+                  <h2 className="mt-8 text-[32px] leading-[40px] font-semibold font-apty-heading text-apty-text-primary mb-4">
                     <span className="text-apty-primary">ESPLORA</span> I NOSTRI PACCHETTI
                   </h2>
                   <p className="text-lg text-apty-text-secondary max-w-3xl mx-auto leading-relaxed">
